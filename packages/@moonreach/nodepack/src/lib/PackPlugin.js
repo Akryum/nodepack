@@ -1,6 +1,7 @@
 /** @typedef {import('./PackPluginAPI.js')} PackPluginApi */
+/** @typedef {import('./PackService.js').ProjectOptions} ProjectOptions */
 /**
- * @typedef {(api?: PackPluginApi, options?: any) => void} PackPluginApply
+ * @typedef {(api?: PackPluginApi, options?: ProjectOptions) => void} PackPluginApply
  * @prop {Object.<string, string>} [defaultEnvs]
  */
 

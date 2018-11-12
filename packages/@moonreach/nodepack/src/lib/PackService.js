@@ -1,5 +1,5 @@
 /** @typedef {import('./PackPlugin.js')} PackPlugin */
-/** @typedef {(config) => void} WebpackChainFns */
+/** @typedef {(config: Config) => void} WebpackChainFns */
 /**
  * @typedef CommandOptions
  * @prop {string} [description]
@@ -14,6 +14,17 @@
  * @typedef Command
  * @prop {CommandFn} fn
  * @prop {CommandOptions?} opts
+ */
+/**
+ * @typedef ProjectOptions
+ * @prop {string} [outputDir] folder output for prod build
+ * @prop {string} [srcDir] folder containing source
+ * @prop {string} [entry] entry file
+ * @prop {boolean} [productionSourceMap] enable sourcemaps in production build
+ * @prop {any} [externals] webpack externals
+ * @prop {any} [nodeExternalsWhitelist] whitelist option for webpack-node-externals
+ * @prop {(config: Config) => void} [chainWebpack] modify webpack config with webpack-chain
+ * @prop {any} [pluginOptions] options for 3rd-party plugins
  */
 
 const path = require('path')
@@ -180,8 +191,10 @@ module.exports = class PackService {
 
   /**
    * @private
+   * @returns {ProjectOptions}
    */
   loadConfig () {
+    /** @type {ProjectOptions} */
     let options
     const explorer = cosmiconfig('nodepack')
     const result = explorer.searchSync(this.cwd)
@@ -234,11 +247,14 @@ module.exports = class PackService {
   }
 }
 
+/**
+ * @returns {ProjectOptions}
+ */
 function defaultOptions () {
   return {
-    // TODO default options
     outputDir: 'dist',
     srcDir: 'src',
     productionSourceMap: false,
+    externals: true,
   }
 }
