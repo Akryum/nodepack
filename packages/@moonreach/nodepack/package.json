@@ -1,0 +1,47 @@
+{
+  "name": "@moonreach/nodepack",
+  "version": "0.0.1",
+  "description": "Webpack for node apps",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonreach/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonreach/nodepack/issues"
+  },
+  "homepage": "https://github.com/moonreach/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.12"
+  },
+  "bin": {
+    "nodepack": "src/bin/nodepack.js"
+  },
+  "scripts": {
+    "test": "test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "@moonreach/env-check": "^0.0.1",
+    "@moonreach/nodepack-utils": "^0.0.1",
+    "cosmiconfig": "^5.0.7",
+    "dotenv": "^6.1.0",
+    "execa": "^1.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "fs-extra": "^7.0.1",
+    "inquirer": "^6.2.0",
+    "lodash.defaultsdeep": "^4.6.0",
+    "portfinder": "^1.0.19",
+    "minimist": "^1.2.0",
+    "slash": "^2.0.0",
+    "string.prototype.padend": "^3.0.0",
+    "terser-webpack-plugin": "^1.1.0",
+    "webpack": "^4.25.1",
+    "webpack-chain": "^5.0.1",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

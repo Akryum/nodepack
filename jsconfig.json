@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "target": "ES2017",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "rootDirs": [
+      "packages/@moonreach/env-check",
+      "packages/@moonreach/nodepack",
+      "packages/@moonreach/nodepack-utils",
+    ],
+  },
+  "include": [
+    "packages/@moonreach/*/src/**/*",
+  ],
+}
