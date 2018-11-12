@@ -1,7 +1,7 @@
 /** @typedef {import('../lib/PackPlugin.js').PackPluginApply} PackPluginApply */
 
 const path = require('path')
-const { info, error } = require('@moonreach/nodepack-utils')
+const { info, error, chalk } = require('@moonreach/nodepack-utils')
 
 /** @type {PackPluginApply} */
 module.exports = (api, options) => {
@@ -9,7 +9,7 @@ module.exports = (api, options) => {
     description: 'Build and live-reload the app',
     usage: 'nodepack dev [entry]',
   }, async (args) => {
-    info('Preparing development pack...')
+    info(chalk.blue('Preparing development pack...'))
 
     if (args._ && typeof args._[0] === 'string') {
       options.entry = args._[0]
@@ -39,9 +39,9 @@ module.exports = (api, options) => {
 
             if (child) {
               child.kill()
-              info('App restarting')
+              info(chalk.blue('App restarting...'))
             } else {
-              info('App starting')
+              info(chalk.blue('App starting...'))
             }
 
             const file = api.resolve(path.join(webpackConfig.output.path, webpackConfig.output.filename))
