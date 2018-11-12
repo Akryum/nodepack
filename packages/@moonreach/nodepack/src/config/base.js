@@ -9,7 +9,6 @@ module.exports = (api, options) => {
     config
       // Target
       .target('node')
-      .set('node', false)
       // Entry
       .entry('app')
         .add(api.resolve(options.entry))
@@ -20,7 +19,7 @@ module.exports = (api, options) => {
     config.output
       .set('path', api.resolve(options.outputDir))
       .set('filename', 'app.js')
-      .set('libraryTarget', 'commonjs')
+      .set('libraryTarget', 'commonjs2')
 
     // Resolve
     config.resolve
@@ -42,6 +41,25 @@ module.exports = (api, options) => {
         .add('node_modules')
         .add(api.resolve('node_modules'))
         .add(resolveLocal('node_modules'))
+
+    // Module
+    config.module
+      .set('exprContextCritical', options.externals)
+
+    // External modules (default are modules in package.json deps)
+    if (options.externals) {
+      if (options.externals === true) {
+        const nodeExternals = require('webpack-node-externals')
+        config.externals(nodeExternals({
+          whitelist: options.nodeExternalsWhitelist,
+          modulesFromFile: true,
+        }))
+      } else if (Array.isArray(options.externals)) {
+        config.externals(options.externals)
+      } else {
+        config.externals([options.externals])
+      }
+    }
 
     // Plugins
     config
