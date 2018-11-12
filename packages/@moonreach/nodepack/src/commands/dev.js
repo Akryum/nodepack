@@ -25,20 +25,21 @@ module.exports = (api, options) => {
     /** @type {execa.ExecaChildProcess} */
     let child
 
-    return new Promise((resolve, reject) => {
-      const compiler = webpack(webpackConfig)
-      compiler.watch(
-        webpackConfig.watchOptions,
-        (err, stats) => {
-          if (err) {
-            error(err)
-          } else {
-            if (stats.hasErrors()) {
-              return reject(`Build failed with errors.`)
-            }
+    const compiler = webpack(webpackConfig)
+    compiler.watch(
+      webpackConfig.watchOptions,
+      (err, stats) => {
+        if (err) {
+          error(err)
+        } else {
+          if (child) {
+            child.kill()
+          }
 
+          if (stats.hasErrors()) {
+            error(`Build failed with errors.`)
+          } else {
             if (child) {
-              child.kill()
               info(chalk.blue('App restarting...'))
             } else {
               info(chalk.blue('App starting...'))
@@ -60,7 +61,7 @@ module.exports = (api, options) => {
             })
           }
         }
-      )
-    })
+      }
+    )
   })
 }
