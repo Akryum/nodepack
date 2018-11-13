@@ -28,6 +28,7 @@
   "dependencies": {
     "@moonreach/env-check": "^0.0.1",
     "@moonreach/nodepack-utils": "^0.0.1",
+    "cliui": "^4.1.0",
     "cosmiconfig": "^5.0.7",
     "dotenv": "^6.1.0",
     "execa": "^1.0.0",

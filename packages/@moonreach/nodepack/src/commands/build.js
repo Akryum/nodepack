@@ -1,13 +1,13 @@
 /** @typedef {import('../lib/PackPlugin.js').PackPluginApply} PackPluginApply */
 
-const { info, error, done, log, chalk } = require('@moonreach/nodepack-utils')
-
 /** @type {PackPluginApply} */
 module.exports = (api, options) => {
   api.registerCommand('build', {
     description: 'Build the app for production',
     usage: 'nodepack build [entry]',
   }, async (args) => {
+    const { info, error, done, log, chalk } = require('@moonreach/nodepack-utils')
+
     info(chalk.blue('Preparing production pack...'))
 
     if (args._ && typeof args._[0] === 'string') {
@@ -19,6 +19,8 @@ module.exports = (api, options) => {
 
     const webpack = require('webpack')
     const webpackConfig = api.resolveWebpackConfig()
+    const path = require('path')
+    const formatStats = require('../util/formatStats')
 
     return new Promise((resolve, reject) => {
       const compiler = webpack(webpackConfig)
@@ -30,6 +32,12 @@ module.exports = (api, options) => {
             if (stats.hasErrors()) {
               return reject(`Build failed with errors.`)
             }
+
+            const targetDirShort = path.relative(
+              api.service.cwd,
+              webpackConfig.output.path
+            )
+            log(formatStats(stats, targetDirShort, api))
 
             done(chalk.green('Build complete! Your app is ready for production.'))
             log(chalk.dim(api.resolve(webpackConfig.output.path)))

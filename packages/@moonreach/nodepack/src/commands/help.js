@@ -1,8 +1,8 @@
-const { chalk } = require('@moonreach/nodepack-utils')
-const padEnd = require('string.prototype.padend')
-const { getPadLength } = require('../util/string')
-
 module.exports = (api, options) => {
+  const { chalk } = require('@moonreach/nodepack-utils')
+  const padEnd = require('string.prototype.padend')
+  const { getPadLength } = require('../util/string')
+
   api.registerCommand('help', args => {
     const command = args._[0]
     if (!command) {

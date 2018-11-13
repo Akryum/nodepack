@@ -1,14 +1,14 @@
 /** @typedef {import('../lib/PackPlugin.js').PackPluginApply} PackPluginApply */
 
-const path = require('path')
-const { info, error, chalk } = require('@moonreach/nodepack-utils')
-
 /** @type {PackPluginApply} */
 module.exports = (api, options) => {
   api.registerCommand('dev', {
     description: 'Build and live-reload the app',
     usage: 'nodepack dev [entry]',
   }, async (args) => {
+    const path = require('path')
+    const { info, error, chalk } = require('@moonreach/nodepack-utils')
+
     info(chalk.blue('Preparing development pack...'))
 
     if (args._ && typeof args._[0] === 'string') {
