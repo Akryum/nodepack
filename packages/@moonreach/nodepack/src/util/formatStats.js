@@ -25,7 +25,7 @@ module.exports = function formatStats (stats, dir, api) {
         return false
       }
       seenNames.set(a.name, true)
-      return isJS(a.name) || isCSS(a.name)
+      return true
     })
     .sort((a, b) => {
       if (isJS(a.name) && isCSS(b.name)) return -1
@@ -64,5 +64,5 @@ module.exports = function formatStats (stats, dir, api) {
     )).join(`\n`)
   )
 
-  return `${ui.toString()}\n\n  ${chalk.gray(`Images and other types of assets omitted.`)}\n`
+  return `${ui.toString()}\n`
 }
