@@ -18,6 +18,20 @@ module.exports = (api, options) => {
           .minimizer('terser')
           .use(TerserPlugin, [terserOptions(options)])
       }
+
+      if (options.externals === false) {
+        config
+          .optimization.splitChunks({
+            cacheGroups: {
+              vendors: {
+                name: `vendors`,
+                test: /[\\/]node_modules[\\/]/,
+                priority: -10,
+                chunks: 'initial',
+              },
+            },
+          })
+      }
     }
   })
 }

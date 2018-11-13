@@ -18,7 +18,7 @@ module.exports = (api, options) => {
     // Output
     config.output
       .set('path', api.resolve(options.outputDir))
-      .set('filename', 'app.js')
+      .set('filename', '[name].js')
       .set('libraryTarget', 'commonjs2')
 
     // Resolve
