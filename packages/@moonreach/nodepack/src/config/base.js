@@ -81,5 +81,6 @@ module.exports = (api, options) => {
 
     // Others
     config.stats('minimal')
+    config.performance.set('hints', false)
   })
 }
