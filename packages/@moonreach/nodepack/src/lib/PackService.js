@@ -239,14 +239,19 @@ module.exports = class PackService {
     return fn(args, rawArgv)
   }
 
-  resolveChainableWebpackConfig () {
+  async resolveChainableWebpackConfig () {
     const chainableConfig = new Config()
     // apply chains
-    this.webpackChainFns.forEach(fn => fn(chainableConfig))
+    for (const fn of this.webpackChainFns) {
+      await fn(chainableConfig)
+    }
     return chainableConfig
   }
 
-  resolveWebpackConfig (chainableConfig = this.resolveChainableWebpackConfig()) {
+  async resolveWebpackConfig (chainableConfig = null) {
+    if (chainableConfig === null) {
+      chainableConfig = await this.resolveChainableWebpackConfig()
+    }
     if (!this.initialized) {
       throw new Error('Service must call init() before calling resolveWebpackConfig().')
     }

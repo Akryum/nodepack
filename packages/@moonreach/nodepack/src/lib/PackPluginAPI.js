@@ -60,7 +60,7 @@ module.exports = class PackPluginAPI {
    * @param {Config} [chainableConfig]
    * @return Raw webpack config.
    */
-  resolveWebpackConfig (chainableConfig) {
+  async resolveWebpackConfig (chainableConfig) {
     return this.service.resolveWebpackConfig(chainableConfig)
   }
 
@@ -71,9 +71,9 @@ module.exports = class PackPluginAPI {
    * base webpack config.
    * See https://github.com/mozilla-neutrino/webpack-chain
    *
-   * @return {Config}
+   * @return {Promise.<Config>}
    */
-  resolveChainableWebpackConfig () {
+  async resolveChainableWebpackConfig () {
     return this.service.resolveChainableWebpackConfig()
   }
 
