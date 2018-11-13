@@ -51,7 +51,12 @@ module.exports = (api, options) => {
       if (options.externals === true) {
         const nodeExternals = require('webpack-node-externals')
         config.externals(nodeExternals({
-          whitelist: options.nodeExternalsWhitelist,
+          whitelist: options.nodeExternalsWhitelist || [
+            /\.(eot|woff|woff2|ttf|otf)$/,
+            /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
+            /\.(mp4|mp3|ogg|swf|webp)$/,
+            /\.(css|scss|sass|less|styl)$/,
+          ],
           modulesFromFile: true,
         }))
       } else if (Array.isArray(options.externals)) {
