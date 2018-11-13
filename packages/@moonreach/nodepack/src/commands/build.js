@@ -11,6 +11,7 @@ module.exports = (api, options) => {
     usage: 'nodepack build [entry]',
     options: {
       '--no-clean': 'do not delete the dist folder before building',
+      '--function': 'apply default config for serverless function',
     },
   }, async (args) => {
     // Default args
@@ -36,7 +37,13 @@ module.exports = (api, options) => {
     const fs = require('fs-extra')
     const formatStats = require('../util/formatStats')
 
-    const webpackConfig = api.resolveWebpackConfig()
+    // Sererless function
+    if (args.function) {
+      options.externals = false
+      options.productionSourceMap = false
+    }
+
+    const webpackConfig = await api.resolveWebpackConfig()
     const targetDir = webpackConfig.output.path
 
     if (args.clean) {
