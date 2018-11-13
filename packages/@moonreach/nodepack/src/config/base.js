@@ -66,6 +66,14 @@ module.exports = (api, options) => {
       .plugin('friendly-errors')
         .use(require('friendly-errors-webpack-plugin'))
 
+    const resolveClientEnv = require('../util/resolveClientEnv')
+    config
+      .plugin('define')
+        // @ts-ignore
+        .use(require('webpack/lib/DefinePlugin'), [
+          resolveClientEnv(options),
+        ])
+
     // Others
     config.stats('minimal')
   })
