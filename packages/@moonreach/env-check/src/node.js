@@ -12,5 +12,7 @@ exports.checkNode = function (id, wanted, exit = true) {
       ' requires Node ' + wanted + '.\nPlease upgrade your Node version.'
     ))
     if (exit) process.exit(1)
+    return false
   }
+  return true
 }

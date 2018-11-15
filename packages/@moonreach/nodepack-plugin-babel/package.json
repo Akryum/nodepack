@@ -1,7 +1,7 @@
 {
-  "name": "@moonreach/nodepack-utils",
+  "name": "@moonreach/nodepack-plugin-babel",
   "version": "0.0.1",
-  "description": "Webpack for node apps",
+  "description": "Babel plugin for nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -21,18 +21,8 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
-    "execa": "^1.0.0",
-    "find-up": "^3.0.0",
-    "fs-extra": "^7.0.1",
-    "inquirer": "^6.2.0",
-    "joi": "^14.0.6",
-    "listr": "^0.14.2",
-    "lodash.clonedeep": "^4.5.0",
-    "opn": "^5.4.0",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.5",
-    "semver": "^5.6.0",
-    "string.prototype.padstart": "^3.0.0"
+    "@babel/core": "^7.0.0",
+    "@moonreach/babel-preset-nodepack": "^0.0.1",
+    "babel-loader": "^8.0.4"
   }
 }

@@ -48,7 +48,7 @@ exports.error = (msg, tag = null) => {
 
 exports.clearConsole = title => {
   if (process.stdout.isTTY) {
-    const blank = '\n'.repeat(process.stdout.rows)
+    const blank = '\n'.repeat(process.stdout.rows || 100)
     console.log(blank)
     readline.cursorTo(process.stdout, 0, 0)
     readline.clearScreenDown(process.stdout)

@@ -11,6 +11,12 @@ module.exports = (api, options) => {
         .path(api.resolve(DEV_PATH))
 
       config.devtool('source-map')
+
+      // Plugins
+      config.plugin('diagnose-error')
+        .use(require('../webpack/DiagnoseErrorPlugin'), [api.service])
     }
   })
+
+  require('./error-diagnosers')(api, options)
 }

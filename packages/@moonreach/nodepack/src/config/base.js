@@ -11,13 +11,13 @@ module.exports = (api, options) => {
       .target('node')
       // Entry
       .entry('app')
-        .add(api.resolve(options.entry))
+        .add(api.resolve(options.entry || 'index.js'))
       .end()
       .context(api.getCwd())
 
     // Output
     config.output
-      .set('path', api.resolve(options.outputDir))
+      .set('path', api.resolve(options.outputDir || 'dist'))
       .set('filename', '[name].js')
       .set('libraryTarget', 'commonjs2')
 
@@ -32,7 +32,7 @@ module.exports = (api, options) => {
         .add(resolveLocal('node_modules'))
       .end()
       .alias
-        .set('@', api.resolve(options.srcDir))
+        .set('@', api.resolve(options.srcDir || 'src'))
       .end()
 
     // Loader resolve

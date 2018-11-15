@@ -11,21 +11,21 @@ module.exports = (api, options) => {
 
     info(chalk.blue('Preparing development pack...'))
 
-    if (args._ && typeof args._[0] === 'string') {
-      options.entry = args._[0]
-    } else if (!options.entry) {
-      const { getDefaultEntry } = require('../util/defaultEntry.js')
-      options.entry = getDefaultEntry(api.getCwd())
-    }
+    const { getDefaultEntry } = require('../util/defaultEntry.js')
+    options.entry = getDefaultEntry(api, options, args)
 
     const webpack = require('webpack')
-    const webpackConfig = api.resolveWebpackConfig()
+    const webpackConfig = await api.resolveWebpackConfig()
     const execa = require('execa')
 
-    /** @type {execa.ExecaChildProcess} */
     let child
 
     const compiler = webpack(webpackConfig)
+
+    // Implement pause to webpack compiler
+    // For example, this is useful for error diagnostics
+    injectPause(compiler)
+
     compiler.watch(
       webpackConfig.watchOptions,
       (err, stats) => {
@@ -45,7 +45,7 @@ module.exports = (api, options) => {
               info(chalk.blue('App starting...'))
             }
 
-            const file = api.resolve(path.join(webpackConfig.output.path, webpackConfig.output.filename))
+            const file = api.resolve(path.join(webpackConfig.output.path, 'app.js'))
 
             child = execa('node', [
               file,
@@ -64,4 +64,13 @@ module.exports = (api, options) => {
       }
     )
   })
+}
+
+function injectPause (compiler) {
+  compiler.$_pause = false
+  const compile = compiler.compile
+  compiler.compile = (...args) => {
+    if (compiler.$_pause) return
+    return compile.call(compiler, ...args)
+  }
 }

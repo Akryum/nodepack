@@ -1,4 +1,8 @@
 /** @typedef {import('./PackPlugin.js')} PackPlugin */
+/** @typedef {import('./options.js').ProjectOptions} ProjectOptions */
+/** @typedef {import('webpack').Compiler} Compiler */
+/** @typedef {import('webpack').Stats} Stats */
+/** @typedef {import('webpack-chain')} Config */
 /** @typedef {(config: Config) => void} WebpackChainFns */
 /**
  * @typedef CommandOptions
@@ -13,18 +17,21 @@
 /**
  * @typedef Command
  * @prop {CommandFn} fn
- * @prop {CommandOptions?} opts
+ * @prop {CommandOptions?} [opts]
  */
 /**
- * @typedef ProjectOptions
- * @prop {string} [outputDir] folder output for prod build
- * @prop {string} [srcDir] folder containing source
- * @prop {string} [entry] entry file
- * @prop {boolean} [productionSourceMap] enable sourcemaps in production build
- * @prop {any} [externals] webpack externals
- * @prop {any} [nodeExternalsWhitelist] whitelist option for webpack-node-externals
- * @prop {(config: Config) => void} [chainWebpack] modify webpack config with webpack-chain
- * @prop {any} [pluginOptions] options for 3rd-party plugins
+ * @typedef Suggestion
+ * @prop {string} id
+ * @prop {string} title
+ * @prop {string} [description]
+ * @prop {string} [link]
+ * @prop {string} question
+ */
+/**
+ * @typedef ErrorDiagnoser
+ * @prop {(err: any) => boolean} filter
+ * @prop {Suggestion | ((err: any) => Suggestion | void | false | Promise.<Suggestion | void | false>)} [suggestion]
+ * @prop {(compiler: Compiler, stats: Stats, err: any) => Promise | void} handler
  */
 
 const path = require('path')
@@ -36,6 +43,7 @@ const PackPlugin = require('./PackPlugin')
 const PackPluginAPI = require('./PackPluginAPI')
 const { warn, error, isPlugin, loadModule } = require('@moonreach/nodepack-utils')
 const { readPackageJson } = require('../util/pkgJson.js')
+const { defaultOptions } = require('./options')
 
 module.exports = class PackService {
   /**
@@ -58,6 +66,9 @@ module.exports = class PackService {
 
     /** @type {Object.<string, string>} */
     this.defaultEnvs = this.resolveDefaultEnvs()
+
+    /** @type {ErrorDiagnoser []} */
+    this.errorDiagnosers = []
   }
 
   resolvePlugins () {
@@ -127,9 +138,9 @@ module.exports = class PackService {
 
     this.projectOptions = this.loadConfig()
 
-    // apply plugins.
+    // apply plugins
     this.plugins.forEach(({ id, apply }) => {
-      apply(new PackPluginAPI(id, this), this.projectOptions)
+      apply(new PackPluginAPI(id, this), this.projectOptions || {})
     })
 
     // apply webpack configs from project config file
@@ -257,17 +268,5 @@ module.exports = class PackService {
     }
     // get raw config
     return chainableConfig.toConfig()
-  }
-}
-
-/**
- * @returns {ProjectOptions}
- */
-function defaultOptions () {
-  return {
-    outputDir: 'dist',
-    srcDir: 'src',
-    productionSourceMap: false,
-    externals: true,
   }
 }

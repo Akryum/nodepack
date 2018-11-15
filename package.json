@@ -5,13 +5,16 @@
     "packages/test/*"
   ],
   "scripts": {
-    "test:types": "tsc -p jsconfig.json"
+    "test": "yarn run test:types",
+    "test:types": "tsc"
   },
   "devDependencies": {
     "@types/events": "^1.2.0",
     "@types/fs-extra": "^5.0.4",
     "@types/node": "^10.12.5",
     "@types/semver": "^5.5.0",
+    "@types/webpack-chain": "^4.8.1",
+    "@types/webpack-env": "^1.13.6",
     "eslint": "^5.9.0",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-vue-libs": "^3.0.0",

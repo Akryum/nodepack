@@ -25,12 +25,8 @@ module.exports = (api, options) => {
 
     info(chalk.blue('Preparing production pack...'))
 
-    if (args._ && typeof args._[0] === 'string') {
-      options.entry = args._[0]
-    } else if (!options.entry) {
-      const { getDefaultEntry } = require('../util/defaultEntry.js')
-      options.entry = getDefaultEntry(api.getCwd())
-    }
+    const { getDefaultEntry } = require('../util/defaultEntry.js')
+    options.entry = getDefaultEntry(api, options, args)
 
     const webpack = require('webpack')
     const path = require('path')

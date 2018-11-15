@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "checkJs": true,
-    "target": "ES2017",
+    "target": "esnext",
+    "module": "es6",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "rootDirs": [
-      "packages/@moonreach/env-check",
-      "packages/@moonreach/nodepack",
-      "packages/@moonreach/nodepack-utils",
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "types": [
+      "webpack-env"
     ],
+    "noEmit": true
   },
   "include": [
     "packages/@moonreach/*/src/**/*",
   ],
+  "exclude": [
+    "node_modules"
+  ]
 }

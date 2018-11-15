@@ -3,6 +3,7 @@ const semver = require('semver')
 function resolveFallback (request, options) {
   const Module = require('module')
   const isMain = false
+  // @ts-ignore
   const fakeParent = new Module('', null)
 
   const paths = []
@@ -85,4 +86,16 @@ function clearRequireCache (id, map = new Map()) {
     })
     delete require.cache[id]
   }
+}
+
+exports.mayBeNodeModule = function (module) {
+  return !exports.isRelative(module) && !exports.isAbsolute(module) && !module.match(/^@\//)
+}
+
+exports.isRelative = function (module) {
+  return module.startsWith('./') || module.startsWith('../')
+}
+
+exports.isAbsolute = function (module) {
+  return module.startsWith('/') || module.match(/^\w:(\\|\/)/)
 }
