@@ -66,7 +66,7 @@ module.exports = (api, options) => {
     handler: async (compiler, stats, error) => {
       const name = getModuleName(error)
       await installModule(name)
-      await api.restart('auto-install-missing-dep')
+      await api.restart(`auto-install-missing-dep:${name}`)
     },
   })
 }
