@@ -12,7 +12,7 @@
  * @prop {string} [details]
  */
 /**
- * @typedef {(args: Object.<string, string>, rawArgs: string []) => (Promise | void)} CommandFn
+ * @typedef {(args: Object.<string, any>, rawArgs: string []) => (Promise | void)} CommandFn
  */
 /**
  * @typedef Command
@@ -80,6 +80,7 @@ module.exports = class PackService {
     const builtInPlugins = [
       '../commands/dev',
       '../commands/build',
+      '../commands/inspect',
       '../commands/help',
       // config plugins are order sensitive
       '../config/base',

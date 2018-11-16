@@ -74,3 +74,8 @@ function injectPause (compiler) {
     return compile.call(compiler, ...args)
   }
 }
+
+// @ts-ignore
+module.exports.defaultModes = {
+  inspect: 'development',
+}

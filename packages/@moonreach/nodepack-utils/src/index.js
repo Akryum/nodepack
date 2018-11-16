@@ -5,6 +5,7 @@ module.exports = {
   ...require('./global-options'),
   ...require('./logger'),
   ...require('./module'),
+  ...require('./object'),
   ...require('./openBrowser'),
   ...require('./plugin'),
   ...require('./request'),
