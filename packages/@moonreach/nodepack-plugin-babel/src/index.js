@@ -22,7 +22,7 @@ module.exports = (api, options) => {
     }
 
     if (hasBabelRc) {
-      console.log('> Using .babelrc defined in your app root')
+      console.log('> Using babel.config.js defined in your app root')
     } else {
       babelOptions.presets.push('@moonreach/nodepack')
     }
@@ -56,7 +56,7 @@ module.exports = (api, options) => {
           .loader('cache-loader')
           .options(api.genCacheConfig('babel-loader', {
             '@babel/core': require('@babel/core/package.json').version,
-            '@moonreach/babel-preset-app': require('@moonreach/babel-preset-nodepack/package.json').version,
+            '@moonreach/babel-preset-nodepack': require('@moonreach/babel-preset-nodepack/package.json').version,
             'babel-loader': require('babel-loader/package.json').version,
           }, [
             'babel.config.js',
