@@ -16,17 +16,23 @@ module.exports = (api, options) => {
   }, async args => {
     const { get } = require('@moonreach/nodepack-utils')
     const { toString } = require('webpack-chain')
-    const config = await api.resolveWebpackConfig()
     const { _: paths, verbose } = args
+    const chainable = await api.resolveChainableWebpackConfig()
+    chainable.plugins.delete('diagnose-error')
+    const config = chainable.toConfig()
 
     let res
-    if (args.rule) {
+    if (args.rule && config.module) {
+      // @ts-ignore
       res = config.module.rules.find(r => r.__ruleNames[0] === args.rule)
-    } else if (args.plugin) {
+    } else if (args.plugin && config.plugins) {
+      // @ts-ignore
       res = config.plugins.find(p => p.__pluginName === args.plugin)
-    } else if (args.rules) {
+    } else if (args.rules && config.module) {
+      // @ts-ignore
       res = config.module.rules.map(r => r.__ruleNames[0])
-    } else if (args.plugins) {
+    } else if (args.plugins && config.plugins) {
+      // @ts-ignore
       res = config.plugins.map(p => p.__pluginName || p.constructor.name)
     } else if (paths.length > 1) {
       res = {}
