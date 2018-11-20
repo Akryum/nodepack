@@ -1,24 +1,33 @@
 import Config from 'webpack-chain'
 
 export interface ProjectOptions {
-  /** folder output for prod build */
+  /** Folder output for prod build */
   outputDir?: string
-  /** folder containing source */
+  /**
+   * Folder containing source.  
+   * By default will be aliased to `@/`  
+   * (for example, `@/lib/foo.js` will be resolved as `src/lib/foo.js`).
+   */
   srcDir?: string
-  /** entry file */
+  /** Entry file (relative to project root) */
   entry?: string
-  /** enable sourcemaps in production build */
+  /** Enable sourcemaps in production build (can slow down build) */
   productionSourceMap?: boolean
-  /** webpack externals */
+  /** Webpack externals packages */
   externals?: any
-  /** whitelist option for webpack-node-externals */
+  /** Whitelist option for webpack-node-externals */
   nodeExternalsWhitelist?: any
-  /** modify webpack config with webpack-chain */
+  /** Modify webpack config with webpack-chain */
   chainWebpack?: (config: Config) => void
-  /** enable parallel compilation */
+  /** Enable parallel compilation */
   parallel?: boolean
-  /** force transpile node_modules packages with babel */
+  /** Force transpile `node_modules` packages with babel */
   transpileDependencies?: Array.<string | RegExp>
-  /** options for 3rd-party plugins */
+  /**
+   * Default port for `process.env.PORT` if it is not defined.  
+   * It will change to a free port automatically if it is not available.
+   */
+  defaultPort?: number
+  /** Options for 3rd-party plugins */
   pluginOptions?: any
 }

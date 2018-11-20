@@ -12,6 +12,7 @@ exports.defaultOptions = function () {
     externals: true,
     parallel: hasMultipleCores(),
     transpileDependencies: [],
+    defaultPort: 4000,
   }
 }
 
