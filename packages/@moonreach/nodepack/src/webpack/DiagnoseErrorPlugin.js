@@ -21,6 +21,7 @@ module.exports = class DiagnoseErrorPlugin {
       if (stats.hasErrors()) {
         // @ts-ignore
         compiler.$_pause = true
+        // Process webpack errors
         for (const e of stats.compilation.errors) {
           await this.processError(e, compiler, stats)
         }
@@ -39,6 +40,7 @@ module.exports = class DiagnoseErrorPlugin {
    * @param {Stats} stats
    */
   async processError (error, compiler, stats) {
+    // For development purposes
     if (process.env.DUMP_ERRORS) {
       this.dumpError(error)
     }
@@ -46,7 +48,9 @@ module.exports = class DiagnoseErrorPlugin {
     const diagnosers = []
     for (const diagnoser of this.service.errorDiagnosers) {
       try {
+        // Diagnoser can match an error
         if (await diagnoser.filter(error)) {
+          // Optional suggested fix to be presented to the user
           const suggestionOption = diagnoser.suggestion
           if (suggestionOption != null) {
             /** @type {Suggestion?} */
@@ -61,16 +65,21 @@ module.exports = class DiagnoseErrorPlugin {
             }
             if (suggestion) {
               if (!await this.suggestFix(suggestion)) {
+                // The user rejected the suggested fix
                 continue
               }
             }
           }
+
+          // Will apply this diagnoser's handler
           diagnosers.push(diagnoser)
         }
       } catch (e) {
         console.log(e)
       }
     }
+
+    // Apply all the selected handlers
     for (const diagnoser of diagnosers) {
       try {
         await diagnoser.handler(compiler, stats, error)
@@ -90,6 +99,7 @@ module.exports = class DiagnoseErrorPlugin {
 
     info(chalk.blue(`Error diagnostic: ${chalk.bold(suggestion.title)}`))
 
+    // Saved user answer to apply or skip automatically
     let { suggestions } = loadGlobalOptions()
     if (suggestions) {
       const settings = suggestions[suggestion.id]
@@ -153,6 +163,7 @@ module.exports = class DiagnoseErrorPlugin {
       },
     ])
 
+    // Save user answer if 'always apply' or 'always skip'
     if (applyFix.always) {
       suggestions[suggestion.id] = {
         alwaysApply: applyFix.apply,
