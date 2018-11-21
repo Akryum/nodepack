@@ -1,6 +1,6 @@
 {
   "name": "@moonreach/nodepack-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Webpack for node apps (CLI)",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -27,9 +27,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@moonreach/env-check": "^0.0.1",
-    "@moonreach/nodepack-generator": "^0.0.1",
-    "@moonreach/nodepack-utils": "^0.0.1",
+    "@moonreach/env-check": "^0.0.2",
+    "@moonreach/nodepack-generator": "^0.0.2",
+    "@moonreach/nodepack-utils": "^0.0.2",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "execa": "^1.0.0",

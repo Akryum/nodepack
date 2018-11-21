@@ -1,6 +1,6 @@
 {
   "name": "@moonreach/env-check",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Webpack for node apps",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
