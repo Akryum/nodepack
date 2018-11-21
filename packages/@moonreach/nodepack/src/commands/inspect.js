@@ -1,6 +1,4 @@
-/** @typedef {import('../lib/PackPlugin.js').PackPluginApply} PackPluginApply */
-
-/** @type {PackPluginApply} */
+/** @type {import('../lib/PackPlugin.js').PackPluginApply} */
 module.exports = (api, options) => {
   api.registerCommand('inspect', {
     description: 'inspect internal webpack config',

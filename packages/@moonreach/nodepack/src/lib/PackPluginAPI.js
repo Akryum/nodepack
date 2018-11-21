@@ -93,14 +93,15 @@ module.exports = class PackPluginAPI {
    * Register a command that will become available as `vue-cli-service [name]`.
    *
    * @param {string} name
-   * @param {CommandOptions?} opts
-   * @param {CommandFn} fn
+   * @param {CommandOptions? | CommandFn} opts
+   * @param {CommandFn} [fn]
    */
   registerCommand (name, opts, fn) {
     if (typeof opts === 'function') {
       fn = opts
       opts = null
     }
+    // @ts-ignore
     this.service.commands[name] = { fn, opts }
   }
 

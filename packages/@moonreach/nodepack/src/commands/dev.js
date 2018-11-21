@@ -1,6 +1,4 @@
-/** @typedef {import('../lib/PackPlugin.js').PackPluginApply} PackPluginApply */
-
-/** @type {PackPluginApply} */
+/** @type {import('../lib/PackPlugin.js').PackPluginApply} */
 module.exports = (api, options) => {
   api.registerCommand('dev', {
     description: 'Build and live-reload the app',

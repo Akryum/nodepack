@@ -1,6 +1,4 @@
-/** @typedef {import('../lib/PackPlugin.js').PackPluginApply} PackPluginApply */
-
-/** @type {PackPluginApply} */
+/** @type {import('../lib/PackPlugin.js').PackPluginApply} */
 module.exports = (api, options) => {
   api.chainWebpack(config => {
     if (process.env.NODE_ENV !== 'production') {

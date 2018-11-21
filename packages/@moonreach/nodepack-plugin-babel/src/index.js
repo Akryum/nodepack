@@ -1,6 +1,4 @@
-/** @typedef {import('@moonreach/nodepack/src/lib/PackPlugin.js').PackPluginApply} PackPluginApply */
-
-/** @type {PackPluginApply} */
+/** @type {import('@moonreach/nodepack').PackPluginApply} */
 module.exports = (api, options) => {
   const path = require('path')
   const fs = require('fs')

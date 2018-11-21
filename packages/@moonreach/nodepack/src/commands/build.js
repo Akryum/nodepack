@@ -1,10 +1,8 @@
-/** @typedef {import('../lib/PackPlugin.js').PackPluginApply} PackPluginApply */
-
 const defaultArgs = {
   clean: true,
 }
 
-/** @type {PackPluginApply} */
+/** @type {import('../lib/PackPlugin.js').PackPluginApply} */
 module.exports = (api, options) => {
   api.registerCommand('build', {
     description: 'Build the app for production',
