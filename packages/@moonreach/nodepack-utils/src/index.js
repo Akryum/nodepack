@@ -2,6 +2,7 @@ module.exports = {
   chalk: require('chalk').default,
   ...require('./deps'),
   ...require('./env'),
+  ...require('./files'),
   ...require('./global-options'),
   ...require('./logger'),
   ...require('./module'),
@@ -9,5 +10,7 @@ module.exports = {
   ...require('./openBrowser'),
   ...require('./plugin'),
   ...require('./request'),
+  shouldUseTaobao: require('./shouldUseTaobao'),
+  ...require('./spinner'),
   ...require('./validate'),
 }

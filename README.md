@@ -4,13 +4,25 @@
 
 # nodepack
 
+A modern node app development platform
+
 **Warning: work in progress**
 
 ## Getting started
 
+Install the CLI:
+
 ```
-yarn add -D @moonreach/nodepack
+yarn global add @moonreach/nodepack-cli
 ```
+
+Create a new project:
+
+```
+nodepack create my-app
+```
+
+## Usage in an existing project
 
 Then add these to your `package.json` scripts:
 

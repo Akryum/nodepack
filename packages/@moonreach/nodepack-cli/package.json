@@ -1,7 +1,7 @@
 {
-  "name": "@moonreach/nodepack-utils",
+  "name": "@moonreach/nodepack-cli",
   "version": "0.0.1",
-  "description": "Webpack for node apps",
+  "description": "Webpack for node apps (CLI)",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -15,26 +15,27 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "src/index.js",
+  "engines": {
+    "node": ">=8.12"
+  },
+  "bin": {
+    "nodepack": "src/bin/nodepack.js"
+  },
+  "typings": "types/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
     "test:lint": "eslint src"
   },
   "dependencies": {
+    "@moonreach/env-check": "^0.0.1",
+    "@moonreach/nodepack-generator": "^0.0.1",
+    "@moonreach/nodepack-utils": "^0.0.1",
     "chalk": "^2.4.1",
+    "commander": "^2.19.0",
     "execa": "^1.0.0",
-    "find-up": "^3.0.0",
     "fs-extra": "^7.0.1",
     "inquirer": "^6.2.0",
-    "joi": "^14.0.6",
-    "listr": "^0.14.2",
     "lodash.clonedeep": "^4.5.0",
-    "lru-cache": "^5.1.1",
-    "opn": "^5.4.0",
-    "ora": "^3.0.0",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.5",
-    "semver": "^5.6.0",
-    "string.prototype.padstart": "^3.0.0"
+    "validate-npm-package-name": "^3.0.0"
   }
 }

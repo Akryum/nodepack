@@ -14,5 +14,5 @@ if (require('@moonreach/env-check').checkNode(
   'nodepack',
   pkg.engines.node
 )) {
-  require('./process')
+  require('./commands')
 }

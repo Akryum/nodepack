@@ -39,13 +39,13 @@ const resolve = semver.satisfies(process.version, '>=10.0.0')
 
 /**
  * @param {string} request
- * @param {string} context working folder
+ * @param {string} cwd working folder
  */
-exports.resolveModule = function (request, context) {
+exports.resolveModule = function (request, cwd) {
   let resolvedPath
   try {
     resolvedPath = resolve(request, {
-      paths: [context],
+      paths: [cwd],
     })
   } catch (e) {}
   return resolvedPath
@@ -53,10 +53,10 @@ exports.resolveModule = function (request, context) {
 
 /**
  * @param {string} request
- * @param {string} context working folder
+ * @param {string} cwd working folder
  */
-exports.loadModule = function (request, context, force = false) {
-  const resolvedPath = exports.resolveModule(request, context)
+exports.loadModule = function (request, cwd, force = false) {
+  const resolvedPath = exports.resolveModule(request, cwd)
   if (resolvedPath) {
     if (force) {
       clearRequireCache(resolvedPath)
@@ -67,10 +67,10 @@ exports.loadModule = function (request, context, force = false) {
 
 /**
  * @param {string} request
- * @param {string} context working folder
+ * @param {string} cwd working folder
  */
-exports.clearModule = function (request, context) {
-  const resolvedPath = exports.resolveModule(request, context)
+exports.clearModule = function (request, cwd) {
+  const resolvedPath = exports.resolveModule(request, cwd)
   if (resolvedPath) {
     clearRequireCache(resolvedPath)
   }

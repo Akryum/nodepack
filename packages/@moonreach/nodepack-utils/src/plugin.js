@@ -2,12 +2,24 @@ const pluginRE = /^(@moonreach\/|nodepack-|@[\w-]+\/nodepack-)plugin-/
 const scopeRE = /^@[\w-]+\//
 const officialRE = /^@moonreach\//
 
+/**
+ * @param {string} id
+ */
 exports.isPlugin = id => pluginRE.test(id)
 
+/**
+ * @param {string} id
+ */
 exports.isOfficialPlugin = id => exports.isPlugin(id) && officialRE.test(id)
 
+/**
+ * @param {string} id
+ */
 exports.toShortPluginId = id => id.replace(pluginRE, '')
 
+/**
+ * @param {string} id
+ */
 exports.resolvePluginId = id => {
   // already full id
   // e.g. nodepack-plugin-foo, @moonreach/nodepack-plugin-foo, @bar/nodepack-plugin-foo
@@ -29,6 +41,10 @@ exports.resolvePluginId = id => {
   return `nodepack-plugin-${id}`
 }
 
+/**
+ * @param {string} input
+ * @param {string} full
+ */
 exports.matchesPluginId = (input, full) => {
   const short = full.replace(pluginRE, '')
   return (
@@ -41,6 +57,10 @@ exports.matchesPluginId = (input, full) => {
   )
 }
 
+/**
+ * @param {string} id
+ * @returns {string}
+ */
 exports.getPluginLink = id => {
   if (officialRE.test(id)) {
     return `https://github.com/moonreach/nodepack/tree/dev/packages/%40moonreach/nodepack-plugin-${
