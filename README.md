@@ -8,6 +8,30 @@ A modern node app development platform
 
 **Warning: work in progress**
 
+Nodepack is a modern, integrated and smart development environement for node backend developers. The bundling is done with Webpack.
+
+**Features:**
+
+- powerful plugin system
+- live-reload in development
+- function/lambda build
+- error diagnostics with suggested fix
+- import/export in .js files
+- middlewares/runtime (soon)
+- more to come!
+
+**Builtin Integrations:**
+
+- babel (to support old versions of node)
+- typescript (soon)
+- eslint (soon)
+- jest (soon)
+- apollo (soon)
+- express (soon)
+- koa (soon)
+- hapi (soon)
+- more to come!
+
 ## Getting started
 
 Install the CLI:
@@ -43,3 +67,21 @@ module.exports = {
   // If you use VS Code, options will be autocompleted here
 }
 ```
+
+## Plugins
+
+*For now, plugins must be manually installed. `nodepack add <plugin>` is planned!*
+
+### Babel
+
+Install the plugin into your project:
+
+```
+yarn add -D @moonreach/nodepack-plugin-babel
+```
+
+Babel now transpiles your code!
+
+## Prior Art
+
+[@vue/cli](https://github.com/vuejs/vue-cli)
