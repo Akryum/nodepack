@@ -127,7 +127,7 @@ module.exports = class PackService {
   /**
    * @param {string} env
    */
-  init (env) {
+  async init (env) {
     if (this.initialized) return
 
     this.env = env
@@ -139,10 +139,7 @@ module.exports = class PackService {
 
     this.projectOptions = this.loadConfig()
 
-    // apply plugins
-    this.plugins.forEach(({ id, apply }) => {
-      apply(new PackPluginAPI(id, this), this.projectOptions || {})
-    })
+    await this.applyPlugins()
 
     // apply webpack configs from project config file
     if (this.projectOptions.chainWebpack) {
@@ -150,6 +147,16 @@ module.exports = class PackService {
     }
 
     this.initialized = true
+  }
+
+  /**
+   * @private
+   */
+  async applyPlugins () {
+    // apply plugins
+    for (const { id, apply } of this.plugins) {
+      await apply(new PackPluginAPI(id, this), this.projectOptions || {})
+    }
   }
 
   /**
@@ -233,7 +240,7 @@ module.exports = class PackService {
     const env = args.env || this.defaultEnvs[name] || 'development'
 
     // load env variables, load user config, apply plugins
-    this.init(env)
+    await this.init(env)
 
     args._ = args._ || []
     let command = this.commands[name]
