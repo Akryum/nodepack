@@ -5,6 +5,8 @@
     "packages/test/*"
   ],
   "scripts": {
+    "clean": "rimraf packages/test/*",
+    "sync": "node scripts/syncDeps.js",
     "test": "yarn run test:types",
     "test:types": "tsc"
   },
@@ -19,10 +21,17 @@
     "@types/systeminformation": "^3.23.1",
     "@types/webpack-chain": "^4.8.1",
     "@types/webpack-env": "^1.13.6",
+    "chalk": "^2.4.1",
     "eslint": "^5.9.0",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-vue-libs": "^3.0.0",
+    "globby": "^8.0.1",
+    "inquirer": "^6.2.0",
     "lerna": "^3.4.3",
+    "minimist": "^1.2.0",
+    "request-promise-native": "^1.0.5",
+    "rimraf": "^2.6.2",
+    "semver": "^5.6.0",
     "typescript": "^3.1.6"
   }
 }
