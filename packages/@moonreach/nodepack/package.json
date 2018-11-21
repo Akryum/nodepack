@@ -46,7 +46,7 @@
     "string.prototype.padend": "^3.0.0",
     "terser-webpack-plugin": "^1.1.0",
     "thread-loader": "^1.2.0",
-    "webpack": "^4.25.1",
+    "webpack": "^4.26.0",
     "webpack-chain": "^5.0.1",
     "webpack-node-externals": "^1.7.2"
   }
