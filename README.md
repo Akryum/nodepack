@@ -12,9 +12,10 @@ Nodepack is a modern, integrated and smart development environement for node bac
 
 **Features:**
 
+- zero-config by default
 - powerful plugin system
 - live-reload in development
-- function/lambda build
+- single-file build (useful for function/lambda deployements)
 - error diagnostics with suggested fix
 - import/export in .js files
 - middlewares/runtime (soon)
