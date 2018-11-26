@@ -23,7 +23,7 @@ Nodepack is a modern, integrated and smart development environement for node bac
 
 **Builtin Integrations:**
 
-- babel (to support old versions of node)
+- babel (to support old versions of node and/or new JS syntax)
 - typescript (soon)
 - eslint (soon)
 - jest (soon)
