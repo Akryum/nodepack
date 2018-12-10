@@ -1,21 +1,8 @@
 #!/usr/bin/env node
 
-const { info } = require('@nodepack/utils')
-const fs = require('fs')
-const path = require('path')
-const slash = require('slash')
+const { checkDebug } = require('@nodepack/utils')
 
-// Enter debug mode when creating test repo
-if (
-  slash(process.cwd()).indexOf('/packages/test') > 0 && (
-    fs.existsSync(path.resolve(process.cwd(), '../@moonreach')) ||
-    fs.existsSync(path.resolve(process.cwd(), '../../@moonreach'))
-  )
-) {
-  // @ts-ignore
-  process.env.NODEPACK_DEBUG = true
-  info('Debug mode enabled')
-}
+checkDebug(process.cwd())
 
 const Service = require('../lib/Service')
 const service = new Service(process.env.NODEPACK_CONTEXT || process.cwd())

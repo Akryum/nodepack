@@ -1,5 +1,6 @@
 module.exports = {
   chalk: require('chalk').default,
+  ...require('./debug'),
   ...require('./deps'),
   ...require('./env'),
   ...require('./files'),

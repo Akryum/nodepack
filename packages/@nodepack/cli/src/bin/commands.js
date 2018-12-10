@@ -1,5 +1,7 @@
 const program = require('commander')
-const { chalk } = require('@nodepack/utils')
+const { chalk, checkDebug } = require('@nodepack/utils')
+
+checkDebug(process.cwd())
 
 program
   .version(require('../../package.json').version)
