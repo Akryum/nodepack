@@ -1,0 +1,40 @@
+{
+  "name": "@nodepack/utils",
+  "version": "0.0.2",
+  "description": "Webpack for node apps",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonreach/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonreach/nodepack/issues"
+  },
+  "homepage": "https://github.com/moonreach/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "execa": "^1.0.0",
+    "find-up": "^3.0.0",
+    "fs-extra": "^7.0.1",
+    "inquirer": "^6.2.1",
+    "joi": "^14.3.0",
+    "listr": "^0.14.3",
+    "lodash.clonedeep": "^4.5.0",
+    "lru-cache": "^5.1.1",
+    "opn": "^5.4.0",
+    "ora": "^3.0.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5",
+    "semver": "^5.6.0",
+    "string.prototype.padstart": "^3.0.0"
+  }
+}

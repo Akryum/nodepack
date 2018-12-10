@@ -1,7 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "packages/@moonreach/*",
+    "packages/@nodepack/*",
     "packages/test/*"
   ],
   "scripts": {

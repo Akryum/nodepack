@@ -12,10 +12,10 @@ const inquirer = require('inquirer')
 const readline = require('readline')
 
 const externalNodepackScopedPackages = {
-  '@moonreach/env-check': true,
-  '@moonreach/config-transformer': true,
+  '@nodepack/env-check': true,
+  '@nodepack/config-transformer': true,
 }
-const localPackageRE = /'(@moonreach\/(?:nodepack|eslint|babel|env|config)[\w-]+)': '\^([\w-.]+)'/g
+const localPackageRE = /'(@nodepack\/(?:service|cli|eslint|babel|env|config)[\w-]+)': '\^([\w-.]+)'/g
 
 const versionCache = {}
 
@@ -96,7 +96,7 @@ async function syncDeps ({ local, version, skipPrompt }) {
 
   if (!local) {
     console.log('Syncing remote deps...')
-    const packages = await globby(['packages/@moonreach/*/package.json'])
+    const packages = await globby(['packages/@nodepack/*/package.json'])
     const resolvedPackages = (await Promise.all(packages.filter(filePath => {
       return filePath.match(/nodepack|nodepack-plugin|babel-preset|eslint-config/)
     }).concat('package.json').map(async (filePath) => {
@@ -107,7 +107,7 @@ async function syncDeps ({ local, version, skipPrompt }) {
       const deps = pkg.dependencies
       const resolvedDeps = []
       for (const dep in deps) {
-        if (dep.match(/^@moonreach/) && !externalNodepackScopedPackages[dep]) {
+        if (dep.match(/^@nodepack/) && !externalNodepackScopedPackages[dep]) {
           continue
         }
         let local = deps[dep]
@@ -151,7 +151,7 @@ async function syncDeps ({ local, version, skipPrompt }) {
 
   console.log('Syncing local deps...')
   const updatedRE = new RegExp(`'(${Array.from(updatedDeps).join('|')})': '\\^(\\d+\\.\\d+\\.\\d+[^']*)'`)
-  const paths = await globby(['packages/@moonreach/**/*.js'])
+  const paths = await globby(['packages/@nodepack/**/*.js'])
   paths
     .filter(p => !/\/files\//.test(p) && !/\/node_modules/.test(p))
     .forEach(filePath => {
@@ -177,7 +177,7 @@ async function syncDeps ({ local, version, skipPrompt }) {
       const remoteReplacer = makeReplacer(getRemoteVersionSync)
 
       const updated = fs.readFileSync(filePath, 'utf-8')
-        // update @moonreach packages in this repo
+        // update @nodepack packages in this repo
         .replace(localPackageRE, localReplacer)
         .replace(updatedRE, remoteReplacer)
 

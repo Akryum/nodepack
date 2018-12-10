@@ -1,0 +1,30 @@
+{
+  "name": "@nodepack/config-transformer",
+  "version": "0.0.2",
+  "description": "Utilities to read and write to config files",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonreach/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonreach/nodepack/issues"
+  },
+  "homepage": "https://github.com/moonreach/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "@nodepack/utils": "^0.0.2",
+    "deepmerge": "^3.0.0",
+    "javascript-stringify": "^1.6.0",
+    "js-yaml": "^3.12.0",
+    "recast": "^0.16.1"
+  }
+}

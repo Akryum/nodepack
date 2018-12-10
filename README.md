@@ -38,7 +38,7 @@ Nodepack is a modern, integrated and smart development environement for node bac
 Install the CLI:
 
 ```
-yarn global add @moonreach/nodepack-cli
+yarn global add @nodepack/cli
 ```
 
 Create a new project:
@@ -53,15 +53,15 @@ Then add these to your `package.json` scripts:
 
 ```json
 {
-  "dev": "nodepack dev",
-  "build": "nodepack build"
+  "dev": "nodepack-service dev",
+  "build": "nodepack-service build"
 }
 ```
 
 Configure it with a `nodepack.config.js` file in the root folder of your app:
 
 ```js
-/** @typedef {import('@moonreach/nodepack').ProjectOptions} ProjectOptions */
+/** @typedef {import('@nodepack/service').ProjectOptions} ProjectOptions */
 
 /** @type {ProjectOptions} */
 module.exports = {
@@ -78,7 +78,7 @@ module.exports = {
 Install the plugin into your project:
 
 ```
-yarn add -D @moonreach/nodepack-plugin-babel
+yarn add -D @nodepack/plugin-babel
 ```
 
 Babel now transpiles your code!

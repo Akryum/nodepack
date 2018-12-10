@@ -1,0 +1,36 @@
+{
+  "name": "@nodepack/plugin-typescript",
+  "version": "0.0.1",
+  "description": "Typescript plugin for nodepack",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonreach/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonreach/nodepack/issues"
+  },
+  "homepage": "https://github.com/moonreach/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "fork-ts-checker-webpack-plugin": "^0.5.0",
+    "globby": "^8.0.1",
+    "ts-loader": "^5.3.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/fork-ts-checker-webpack-plugin": "^0.4.5"
+  },
+  "peerDependencies": {
+    "@nodepack/service": "^0.0.2"
+  }
+}

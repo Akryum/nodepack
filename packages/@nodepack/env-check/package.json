@@ -1,0 +1,29 @@
+{
+  "name": "@nodepack/env-check",
+  "version": "0.0.2",
+  "description": "Webpack for node apps",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonreach/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonreach/nodepack/issues"
+  },
+  "homepage": "https://github.com/moonreach/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "execa": "^1.0.0",
+    "semver": "^5.6.0",
+    "systeminformation": "^3.51.4"
+  }
+}
