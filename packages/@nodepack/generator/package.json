@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/generator",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Generator API for nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -21,9 +21,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/config-transformer": "^0.0.2",
-    "@nodepack/service": "^0.0.2",
-    "@nodepack/utils": "^0.0.2",
+    "@nodepack/config-transformer": "^0.0.1",
+    "@nodepack/service": "^0.0.1",
+    "@nodepack/utils": "^0.0.1",
     "deepmerge": "^3.0.0",
     "ejs": "^2.6.1",
     "fs-extra": "^7.0.1",

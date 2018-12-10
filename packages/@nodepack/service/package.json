@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/service",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Webpack for node apps",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -27,9 +27,9 @@
     "test:lint": "eslint src generator"
   },
   "dependencies": {
-    "@nodepack/env-check": "^0.0.2",
-    "@nodepack/generator": "^0.0.2",
-    "@nodepack/utils": "^0.0.2",
+    "@nodepack/env-check": "^0.0.1",
+    "@nodepack/generator": "^0.0.1",
+    "@nodepack/utils": "^0.0.1",
     "cache-loader": "^1.2.5",
     "cliui": "^4.1.0",
     "cosmiconfig": "^5.0.7",

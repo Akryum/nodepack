@@ -27,9 +27,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/env-check": "^0.0.2",
-    "@nodepack/generator": "^0.0.2",
-    "@nodepack/utils": "^0.0.2",
+    "@nodepack/env-check": "^0.0.1",
+    "@nodepack/generator": "^0.0.1",
+    "@nodepack/utils": "^0.0.1",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "execa": "^1.0.0",
