@@ -1,16 +1,16 @@
-/** @typedef {import('./PackService.js')} PackService */
-/** @typedef {import('./PackService.js').CommandOptions} CommandOptions */
-/** @typedef {import('./PackService.js').CommandFn} CommandFn */
-/** @typedef {import('./PackService.js').ErrorDiagnoser} ErrorDiagnoser */
+/** @typedef {import('./Service.js')} Service */
+/** @typedef {import('./Service.js').CommandOptions} CommandOptions */
+/** @typedef {import('./Service.js').CommandFn} CommandFn */
+/** @typedef {import('./Service.js').ErrorDiagnoser} ErrorDiagnoser */
 /** @typedef {import('webpack-chain')} Config */
 
 const path = require('path')
 const { matchesPluginId, info, chalk } = require('@moonreach/nodepack-utils')
 
-module.exports = class PackPluginAPI {
+module.exports = class ServicePluginAPI {
   /**
    * @param {string} id - Id of the plugin.
-   * @param {PackService} service
+   * @param {Service} service
    */
   constructor (id, service) {
     this.id = id
@@ -122,7 +122,7 @@ module.exports = class PackPluginAPI {
       'cli-service': require('../../package.json').version,
       'cache-loader': require('cache-loader/package.json').version,
       env: process.env.NODE_ENV,
-      test: !!process.env.VUE_CLI_TEST,
+      test: !!process.env.NODEPACK_TEST,
       config: [
         this.service.projectOptions && this.service.projectOptions.chainWebpack,
       ],

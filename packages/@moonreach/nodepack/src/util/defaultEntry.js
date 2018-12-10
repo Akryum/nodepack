@@ -1,7 +1,9 @@
-/** @typedef {import('../lib/PackPluginAPI.js')} PackPluginApi */
+/** @typedef {import('../lib/ServicePluginAPI.js')} PackPluginApi */
 /** @typedef {import('../lib/options.js').ProjectOptions} ProjectOptions */
 
-const DEFAULT_ENTRY = 'index.js'
+const config = exports.config = {
+  defaultEntry: 'index.js',
+}
 
 /**
  * @param {PackPluginApi} api
@@ -14,7 +16,7 @@ exports.getDefaultEntry = (api, options, args) => {
     return args._[0]
   } else if (!options.entry) {
     const path = require('path')
-    return path.resolve((options.srcDir && api.resolve(options.srcDir)) || api.resolve('src'), DEFAULT_ENTRY)
+    return path.resolve((options.srcDir && api.resolve(options.srcDir)) || api.resolve('src'), config.defaultEntry)
   } else {
     return options.entry
   }

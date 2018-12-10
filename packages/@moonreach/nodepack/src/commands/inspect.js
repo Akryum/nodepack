@@ -1,8 +1,8 @@
-/** @type {import('../lib/PackPlugin.js').PackPluginApply} */
+/** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
   api.registerCommand('inspect', {
     description: 'inspect internal webpack config',
-    usage: 'nodepack inspect [options] [...paths]',
+    usage: 'nodepack inspect [entry] [options] [...paths]',
     options: {
       '--mode': 'specify env mode (default: development)',
       '--rule <ruleName>': 'inspect a specific module rule',
@@ -12,8 +12,14 @@ module.exports = (api, options) => {
       '--verbose': 'show full function definitions in output',
     },
   }, async args => {
+    // Entry
     const { get } = require('@moonreach/nodepack-utils')
     const { toString } = require('webpack-chain')
+
+    // Default entry
+    const { getDefaultEntry } = require('../util/defaultEntry.js')
+    options.entry = getDefaultEntry(api, options, args)
+
     const { _: paths, verbose } = args
     const chainable = await api.resolveChainableWebpackConfig()
     chainable.plugins.delete('diagnose-error')

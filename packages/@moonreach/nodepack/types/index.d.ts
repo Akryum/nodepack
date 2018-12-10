@@ -1,3 +1,3 @@
 export { ProjectOptions } from './options'
-export { PackPluginApply } from './PackPlugin'
+export { ServicePlugin } from './ServicePlugin'
 export { GeneratorPluginApply } from './GeneratorPlugin'

@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@moonreach/nodepack-utils": "^0.0.2",
-    "deepmerge": "^2.2.1",
+    "deepmerge": "^3.0.0",
     "javascript-stringify": "^1.6.0",
     "js-yaml": "^3.12.0",
     "recast": "^0.16.1"

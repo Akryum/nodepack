@@ -2,7 +2,7 @@ const defaultArgs = {
   clean: true,
 }
 
-/** @type {import('../lib/PackPlugin.js').PackPluginApply} */
+/** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
   api.registerCommand('build', {
     description: 'Build the app for production',

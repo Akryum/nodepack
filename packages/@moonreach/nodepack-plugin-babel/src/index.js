@@ -1,4 +1,4 @@
-/** @type {import('@moonreach/nodepack').PackPluginApply} */
+/** @type {import('@moonreach/nodepack').ServicePlugin} */
 module.exports = (api, options) => {
   const path = require('path')
   const fs = require('fs')

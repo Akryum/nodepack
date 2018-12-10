@@ -19,7 +19,7 @@
     "node": ">=8.12"
   },
   "bin": {
-    "nodepack": "src/bin/nodepack.js"
+    "nodepack-service": "src/bin/nodepack-service.js"
   },
   "typings": "types/index.d.ts",
   "scripts": {
@@ -33,20 +33,20 @@
     "cache-loader": "^1.2.5",
     "cliui": "^4.1.0",
     "cosmiconfig": "^5.0.7",
-    "dotenv": "^6.1.0",
+    "dotenv": "^6.2.0",
     "execa": "^1.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^7.0.1",
     "hash-sum": "^1.0.2",
-    "inquirer": "^6.2.0",
+    "inquirer": "^6.2.1",
     "lodash.defaultsdeep": "^4.6.0",
     "minimist": "^1.2.0",
-    "portfinder": "^1.0.19",
+    "portfinder": "^1.0.20",
     "slash": "^2.0.0",
     "string.prototype.padend": "^3.0.0",
     "terser-webpack-plugin": "^1.1.0",
     "thread-loader": "^1.2.0",
-    "webpack": "^4.26.0",
+    "webpack": "^4.27.1",
     "webpack-chain": "^5.0.1",
     "webpack-node-externals": "^1.7.2"
   }

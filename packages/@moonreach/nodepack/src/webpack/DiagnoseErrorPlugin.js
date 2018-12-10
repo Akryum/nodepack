@@ -1,5 +1,5 @@
-/** @typedef {import('../lib/PackService')} PackService */
-/** @typedef {import('../lib/PackService').Suggestion} Suggestion */
+/** @typedef {import('../lib/Service')} Service */
+/** @typedef {import('../lib/Service').Suggestion} Suggestion */
 /** @typedef {import('webpack').Compiler} Compiler */
 /** @typedef {import('webpack').Stats} Stats */
 
@@ -7,7 +7,7 @@ const ID = 'diagnose-error'
 
 module.exports = class DiagnoseErrorPlugin {
   /**
-   * @param {PackService} service
+   * @param {Service} service
    */
   constructor (service) {
     this.service = service

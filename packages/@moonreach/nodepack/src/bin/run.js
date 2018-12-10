@@ -17,8 +17,8 @@ if (
   info('Debug mode enabled')
 }
 
-const PackService = require('../lib/PackService')
-const service = new PackService(process.env.NODEPACK_CONTEXT || process.cwd())
+const Service = require('../lib/Service')
+const service = new Service(process.env.NODEPACK_CONTEXT || process.cwd())
 
 const rawArgv = process.argv.slice(2)
 const args = require('minimist')(rawArgv)

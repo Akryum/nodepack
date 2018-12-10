@@ -1,4 +1,4 @@
-/** @type {import('../lib/PackPlugin.js').PackPluginApply} */
+/** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
   const { chalk } = require('@moonreach/nodepack-utils')
   const padEnd = require('string.prototype.padend')

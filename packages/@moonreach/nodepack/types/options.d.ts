@@ -28,6 +28,8 @@ export interface ProjectOptions {
    * It will change to a free port automatically if it is not available.
    */
   defaultPort?: number
+  /** Enable file linting as part of the build process */
+  lintOnBuild?: boolean
   /** Options for 3rd-party plugins */
   pluginOptions?: any
 }

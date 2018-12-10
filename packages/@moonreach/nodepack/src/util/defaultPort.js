@@ -1,4 +1,4 @@
-/** @typedef {import('../lib/PackPluginAPI.js')} PackPluginApi */
+/** @typedef {import('../lib/ServicePluginAPI.js')} PackPluginApi */
 /** @typedef {import('../lib/options.js').ProjectOptions} ProjectOptions */
 
 /**

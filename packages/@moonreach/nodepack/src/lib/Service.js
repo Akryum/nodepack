@@ -1,4 +1,4 @@
-/** @typedef {import('./PackPlugin.js')} PackPlugin */
+/** @typedef {import('./ServicePlugin.js')} ServicePlugin */
 /** @typedef {import('./options.js').ProjectOptions} ProjectOptions */
 /** @typedef {import('webpack').Compiler} Compiler */
 /** @typedef {import('webpack').Stats} Stats */
@@ -39,13 +39,13 @@ const fs = require('fs-extra')
 const Config = require('webpack-chain')
 const cosmiconfig = require('cosmiconfig')
 const defaultsDeep = require('lodash.defaultsdeep')
-const PackPlugin = require('./PackPlugin')
-const PackPluginAPI = require('./PackPluginAPI')
+const ServicePlugin = require('./ServicePlugin')
+const ServicePluginAPI = require('./ServicePluginAPI')
 const { warn, error, isPlugin, loadModule } = require('@moonreach/nodepack-utils')
 const { readPackageJson } = require('../util/pkgJson.js')
 const { defaultOptions } = require('./options')
 
-module.exports = class PackService {
+module.exports = class Service {
   /**
    * @param {string} cwd
    */
@@ -55,7 +55,7 @@ module.exports = class PackService {
 
     this.pkg = readPackageJson(cwd)
 
-    /** @type {PackPlugin []} */
+    /** @type {ServicePlugin []} */
     this.plugins = this.resolvePlugins()
 
     /** @type {WebpackChainFns []} */
@@ -72,7 +72,7 @@ module.exports = class PackService {
   }
 
   resolvePlugins () {
-    const idToPlugin = (id, builtin = false) => (new PackPlugin(
+    const idToPlugin = (id, builtin = false) => (new ServicePlugin(
       id.replace(/^..\//, 'built-in:'),
       builtin ? require(id) : loadModule(id, this.cwd)
     ))
@@ -103,7 +103,7 @@ module.exports = class PackService {
             warn(`Optional dependency ${id} is not installed.`)
           }
 
-          return new PackPlugin(id, apply)
+          return new ServicePlugin(id, apply)
         } else {
           return idToPlugin(id)
         }
@@ -155,7 +155,7 @@ module.exports = class PackService {
   async applyPlugins () {
     // apply plugins
     for (const { id, apply } of this.plugins) {
-      await apply(new PackPluginAPI(id, this), this.projectOptions || {})
+      await apply(new ServicePluginAPI(id, this), this.projectOptions || {})
     }
   }
 
