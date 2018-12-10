@@ -99,7 +99,7 @@ module.exports = class Creator {
     log()
     if (isTestOrDebug) {
       // in development, avoid installation process
-      // await require('./util/setupDevProject')(context)
+      await require('../util/setupDevProject')(this.cwd)
     } else {
       await installDeps(cwd, packageManager, cliOptions.registry)
     }
@@ -230,10 +230,10 @@ module.exports = class Creator {
     rawPlugins = sortObject(rawPlugins, ['@nodepack/service'], true)
     const plugins = []
     for (const id of Object.keys(rawPlugins)) {
-      const apply = loadModule(`${id}/generator`, this.cwd) || (() => {})
+      const apply = loadModule(`${id}/src/generator`, this.cwd) || (() => {})
       let options = rawPlugins[id] || {}
       if (options.prompts) {
-        const prompts = loadModule(`${id}/prompts`, this.cwd)
+        const prompts = loadModule(`${id}/src/prompts`, this.cwd)
         if (prompts) {
           log()
           log(`${chalk.cyan(options._isPreset ? `Preset options:` : id)}`)
