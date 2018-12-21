@@ -15,7 +15,7 @@
     "noEmit": true
   },
   "include": [
-    "packages/@nodepack/*/src/**/*",
+    "packages/@nodepack/*/src/**/*", "packages/@nodepack/migrator/types/MigratorPlugin.d.ts",
   ],
   "exclude": [
     "node_modules"

@@ -18,9 +18,9 @@ const {
   hasProjectGit,
   installDeps,
   sortObject,
-  loadModule,
 } = require('@nodepack/utils')
-const { Generator, GeneratorFile, writeFileTree } = require('@nodepack/generator')
+const { loadModule } = require('@nodepack/module')
+const { Migrator, MigratorPlugin, MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
 const generateReadme = require('../util/generateReadme')
 
 // TODO presets
@@ -105,15 +105,13 @@ module.exports = class Creator {
     }
 
     // run generator
-    log(`🚀  Invoking generators...`)
+    log(`🚀  Migrating...`)
     const plugins = await this.resolvePlugins(preset.plugins)
-    const generator = new Generator(cwd, {
-      pkg,
+    const migrator = new Migrator(cwd, {
       plugins,
       completeCbs: createCompleteCbs,
-      invoking: false,
     })
-    await generator.generate({
+    await migrator.migrate({
       extractConfigFiles: preset.useConfigFiles,
     })
 
@@ -134,7 +132,7 @@ module.exports = class Creator {
     stopSpinner()
     log()
     logWithSpinner('📄', 'Generating README.md...')
-    await this.writeFileToDisk('README.md', generateReadme(generator.pkg, packageManager))
+    await this.writeFileToDisk('README.md', generateReadme(migrator.pkg, packageManager))
 
     // commit initial state
     let gitCommitFailed = false
@@ -170,12 +168,12 @@ module.exports = class Creator {
       )
     }
 
-    generator.printExitLogs()
+    migrator.displayNotices()
   }
 
   async writeFileToDisk (filename, source) {
     await writeFileTree(this.cwd, {
-      [filename]: new GeneratorFile(filename, source, true),
+      [filename]: new MigrationOperationFile(filename, source, true),
     })
   }
 
@@ -224,23 +222,14 @@ module.exports = class Creator {
     }
   }
 
-  // { id: options } => [{ id, apply, options }]
   async resolvePlugins (rawPlugins) {
-    // ensure cli-service is invoked first
+    // ensure service is invoked first
     rawPlugins = sortObject(rawPlugins, ['@nodepack/service'], true)
     const plugins = []
     for (const id of Object.keys(rawPlugins)) {
-      const apply = loadModule(`${id}/src/generator`, this.cwd) || (() => {})
-      let options = rawPlugins[id] || {}
-      if (options.prompts) {
-        const prompts = loadModule(`${id}/src/prompts`, this.cwd)
-        if (prompts) {
-          log()
-          log(`${chalk.cyan(options._isPreset ? `Preset options:` : id)}`)
-          options = await inquirer.prompt(prompts)
-        }
-      }
-      plugins.push({ id, apply, options })
+      const apply = loadModule(`${id}/src/app-migrations`, this.cwd) || (() => {})
+      const options = rawPlugins[id] || {}
+      plugins.push(new MigratorPlugin(id, apply, options))
     }
     return plugins
   }

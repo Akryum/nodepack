@@ -40,6 +40,7 @@ const resolve = semver.satisfies(process.version, '>=10.0.0')
 /**
  * @param {string} request
  * @param {string} cwd working folder
+ * @returns {string?}
  */
 exports.resolveModule = function (request, cwd) {
   let resolvedPath

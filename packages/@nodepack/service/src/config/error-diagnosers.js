@@ -5,8 +5,8 @@ module.exports = (api, options) => {
     done,
     getPkgCommand,
     installPackage,
-    mayBeNodeModule,
   } = require('@nodepack/utils')
+  const { mayBeNodeModule } = require('@nodepack/module')
 
   const installModule = async (id, dev = false) => {
     info(`Installing ${id}...`)

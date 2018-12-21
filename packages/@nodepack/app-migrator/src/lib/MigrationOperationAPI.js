@@ -1,37 +1,39 @@
-/** @typedef {import('./Generator')} Generator */
-/** @typedef {import('./Generator').FileMiddleware} FileMiddleware */
-/** @typedef {import('./Generator').FilePostProcessor} FilePostProcessor */
+/** @typedef {import('./MigrationOperation')} MigrationOperation */
+/** @typedef {import('./Migrator').NoticeType} NoticeType */
+/** @typedef {import('./MigrationOperation').FileMiddleware} FileMiddleware */
+/** @typedef {import('./MigrationOperation').FilePostProcessor} FilePostProcessor */
 /** @typedef {import('@nodepack/config-transformer/src/lib/ConfigTransform').ConfigTransformOptions} ConfigTransformOptions */
+
+/**
+ * @typedef SimpleFile
+ * @prop {string} path Folder including last slash.
+ * @prop {string} name File name without extension.
+ * @prop {string} ext File extension without starting dot.
+ */
 
 const path = require('path')
 const fs = require('fs')
 const deepmerge = require('deepmerge')
 const isBinary = require('isbinaryfile')
 const ejs = require('ejs')
-const { toShortPluginId, getPluginLink, warn, resolveModule } = require('@nodepack/utils')
+const { resolveFile, resolveFiles } = require('../util/files')
+const { hasPlugin } = require('../util/plugins')
+const { warn } = require('@nodepack/utils')
 const { ConfigTransform, stringifyJS } = require('@nodepack/config-transformer')
 const mergeDeps = require('../util/mergeDeps')
+const { resolveModule } = require('@nodepack/module')
 
 const isString = val => typeof val === 'string'
 const isFunction = val => typeof val === 'function'
 const isObject = val => val && typeof val === 'object'
 const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
 
-module.exports = class GeneratorAPI {
+module.exports = class MigrationOperationAPI {
   /**
-   * @param {string} id Plugin id
-   * @param {Generator} generator
+   * @param {MigrationOperation} migrationOperation
    */
-  constructor (id, generator) {
-    this.id = id
-    this.generator = generator
-
-    this.pluginsData = generator.plugins
-      .filter(({ id }) => id !== `@nodepack/service`)
-      .map(({ id }) => ({
-        name: toShortPluginId(id),
-        link: getPluginLink(id),
-      }))
+  constructor (migrationOperation) {
+    this.migrationOperation = migrationOperation
   }
 
   /**
@@ -41,9 +43,8 @@ module.exports = class GeneratorAPI {
    */
   _resolveData (additionalData) {
     return Object.assign({
-      options: this.generator.projectOptions,
-      rootOptions: this.generator.rootOptions,
-      plugins: this.pluginsData,
+      options: this.migrationOperation.options,
+      rootOptions: this.migrationOperation.rootOptions,
     }, additionalData)
   }
 
@@ -55,27 +56,42 @@ module.exports = class GeneratorAPI {
    *   virtual files tree object, and an ejs render function. Can be async.
    */
   _injectFileMiddleware (middleware) {
-    this.generator.fileMiddlewares.push(middleware)
+    this.migrationOperation.fileMiddlewares.push(middleware)
   }
 
   /**
-   * Resolve path for a project.
+   * Plugin id.
+   */
+  get pluginId () {
+    return this.migrationOperation.migration.plugin.id
+  }
+
+  /**
+   * Current working directory.
+   */
+  get cwd () {
+    return this.migrationOperation.cwd
+  }
+
+  /**
+   * Resolve path in the project.
    *
    * @param {string} filePath - Relative path from project root
    * @return {string} The resolved absolute path.
    */
   resolve (filePath) {
-    return path.resolve(this.generator.cwd, filePath)
+    return resolveFile(this.cwd, filePath)
   }
 
   /**
-   * Check if the project has a given plugin.
-   *
-   * @param {string} id - Plugin id, can omit the (@nodepack/|nodepack-|@scope/nodepack)-plugin- prefix
-   * @return {boolean}
+   * Check if the project has a plugin installed
+   * @param {string} id Plugin id
    */
   hasPlugin (id) {
-    return this.generator.hasPlugin(id)
+    return hasPlugin(
+      id,
+      this.migrationOperation.migrator.plugins, this.migrationOperation.pkg
+    )
   }
 
   /**
@@ -85,7 +101,7 @@ module.exports = class GeneratorAPI {
    * @param {ConfigTransformOptions} options - Options
    */
   addConfigTransform (key, options) {
-    const hasReserved = Object.keys(this.generator.reservedConfigTransforms).includes(key)
+    const hasReserved = Object.keys(this.migrationOperation.reservedConfigTransforms).includes(key)
     if (
       hasReserved ||
       !options ||
@@ -97,7 +113,7 @@ module.exports = class GeneratorAPI {
       return
     }
 
-    this.generator.configTransforms[key] = new ConfigTransform(options)
+    this.migrationOperation.configTransforms[key] = new ConfigTransform(options)
   }
 
   /**
@@ -111,7 +127,7 @@ module.exports = class GeneratorAPI {
    * @param {boolean} merge - Deep-merge nested fields.
    */
   extendPackage (fields, merge = true) {
-    const pkg = this.generator.pkg
+    const pkg = this.migrationOperation.pkg
     const toMerge = isFunction(fields) ? fields(pkg) : fields
     for (const key in toMerge) {
       const value = toMerge[key]
@@ -119,10 +135,10 @@ module.exports = class GeneratorAPI {
       if (isObject(value) && (key === 'dependencies' || key === 'devDependencies')) {
         // use special version resolution merge
         pkg[key] = mergeDeps(
-          this.id,
+          this.pluginId,
           existing || {},
           value,
-          this.generator.depSources
+          this.migrationOperation.depSources
         )
       } else if (!(key in pkg)) {
         pkg[key] = value
@@ -171,7 +187,7 @@ module.exports = class GeneratorAPI {
           const content = renderFile(sourcePath, data, ejsOptions)
           // only set file if it's not all whitespace, or is a Buffer (binary files)
           if (Buffer.isBuffer(content) || /[^\s]/.test(content)) {
-            this.generator.writeFile(targetPath, content, files)
+            this.migrationOperation.writeFile(targetPath, content, files)
           }
         }
       })
@@ -182,7 +198,7 @@ module.exports = class GeneratorAPI {
           const sourcePath = path.resolve(baseDir, source[targetPath])
           const content = renderFile(sourcePath, data, ejsOptions)
           if (Buffer.isBuffer(content) || content.trim()) {
-            this.generator.writeFile(targetPath, content, files)
+            this.migrationOperation.writeFile(targetPath, content, files)
           }
         }
       })
@@ -192,32 +208,94 @@ module.exports = class GeneratorAPI {
   }
 
   /**
+   * Delete files from the virtual files tree object. Opposite of `render`.
+   *
+   * @param {string | object | FileMiddleware} source -
+   *   Can be one of:
+   *   - relative path to a directory;
+   *   - Object hash of { sourceTemplate: targetFile } mappings;
+   *   - a custom file middleware function.
+   */
+  unrender (source) {
+    const baseDir = extractCallDir()
+    if (isString(source)) {
+      source = path.resolve(baseDir, source)
+      this._injectFileMiddleware(async (files) => {
+        const globby = require('globby')
+        const _files = await globby(['**/*'], { cwd: source })
+        for (const rawPath of _files) {
+          const targetPath = rawPath.split('/').map(filename => {
+            // dotfiles are ignored when published to npm, therefore in templates
+            // we need to use underscore instead (e.g. "_gitignore")
+            if (filename.charAt(0) === '_' && filename.charAt(1) !== '_') {
+              return `.${filename.slice(1)}`
+            }
+            if (filename.charAt(0) === '_' && filename.charAt(1) === '_') {
+              return `${filename.slice(1)}`
+            }
+            return filename
+          }).join('/')
+          delete files[targetPath]
+        }
+      })
+    } else if (isObject(source)) {
+      this._injectFileMiddleware(files => {
+        for (const targetPath in source) {
+          delete files[targetPath]
+        }
+      })
+    } else if (isFunction(source)) {
+      this._injectFileMiddleware(source)
+    }
+  }
+
+  /**
+   * Move files.
+   *
+   * @param {string} from `globby` pattern.
+   * @param {(file: SimpleFile) => string} to Name transform.
+   */
+  move (from, to) {
+    this._injectFileMiddleware(async (files) => {
+      const resolvedFiles = await resolveFiles(this.cwd, from)
+      for (const file in resolvedFiles) {
+        const ext = path.extname(file)
+        const newFile = to({
+          path: path.dirname(file) + '/',
+          name: path.basename(file, ext),
+          ext: ext.substr(1),
+        })
+        if (newFile !== file) {
+          files[newFile] = files[file]
+          delete files[file]
+        }
+      }
+    })
+  }
+
+  /**
+   * Modify a file.
+   *
+   * @param {string} filePath Path of the file in the project.
+   * @param {(content: string | Buffer) => string | Buffer | Promise.<string | Buffer>} cb File transform.
+   */
+  modifyFile (filePath, cb) {
+    this._injectFileMiddleware(async (files) => {
+      const file = files[filePath]
+      if (file) {
+        file.source = await cb(file.source)
+      }
+    })
+  }
+
+  /**
    * Push a file middleware that will be applied after all normal file
    * middelwares have been applied.
    *
    * @param {FilePostProcessor} cb
    */
   postProcessFiles (cb) {
-    this.generator.postProcessFilesCbs.push(cb)
-  }
-
-  /**
-   * Push a callback to be called when the files have been written to disk.
-   *
-   * @param {function} cb
-   */
-  onCreateComplete (cb) {
-    this.generator.completeCbs.push(cb)
-  }
-
-  /**
-   * Add a message to be printed when the generator exits (after any other standard messages).
-   *
-   * @param {any} msg String or value to print after the generation is completed
-   * @param {('log'|'info'|'done'|'warn'|'error')} [type='log'] Type of message
-   */
-  exitLog (msg, type = 'log') {
-    this.generator.exitLogs.push({ id: this.id, msg, type })
+    this.migrationOperation.postProcessFilesCbs.push(cb)
   }
 
   /**
@@ -228,12 +306,24 @@ module.exports = class GeneratorAPI {
   }
 
   /**
-   * Is the plugin being invoked?
-   *
-   * @readonly
+   * Displays a message for the user at the end of all migration operations.
+   * @param {string} message
+   * @param {NoticeType} type
    */
-  get invoking () {
-    return this.generator.invoking
+  addNotice (message, type = 'info') {
+    this.migrationOperation.migrator.notices.push({
+      pluginId: this.migrationOperation.migration.plugin.id,
+      type,
+      message,
+    })
+  }
+
+  /**
+   * Called once after migration operation is completed.
+   * @param {function} cb
+   */
+  onComplete (cb) {
+    this.migrationOperation.completeCbs.push(cb)
   }
 }
 

@@ -17,7 +17,7 @@
  */
 
 const merge = require('deepmerge')
-const { loadModule } = require('@nodepack/utils')
+const { loadModule } = require('@nodepack/module')
 const extendJSConfig = require('./extendJSConfig')
 const stringifyJS = require('./stringifyJS')
 

@@ -1,9 +1,9 @@
 const fs = require('fs')
 const isBinary = require('isbinaryfile')
 
-module.exports = class GeneratorFile {
+module.exports = class MigrationOperationFile {
   /**
-   * @param {string} filename
+   * @param {string} filename Path relative to project.
    * @param {string | Buffer?} source
    * @param {boolean} modified
    */

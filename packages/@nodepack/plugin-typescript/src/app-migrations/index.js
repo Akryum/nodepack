@@ -1,0 +1,26 @@
+module.exports = api => {
+  api.register({
+    id: 'default-template@0.0.1',
+    title: 'Template: Render default template',
+    // when: api => api.fromVersion('<0.0.1') || api.isFirstInstall,
+    migrate: (api, options) => {
+      api.render('./templates-0.0.1/default')
+      api.move('./src/**/*.js', file => `${file.path}${file.name}.ts`)
+    },
+    rollback: (api, options) => {
+      api.unrender('./templates-0.0.1/default')
+      api.move('./src/**/*.ts', file => `${file.path}${file.name}.js`)
+    },
+  })
+
+  // api.register({
+  //   id: 'tsconfig-test-libs@0.0.1',
+  //   title: 'tsconfig: Added test libs',
+  //   migrate: (api, options) => {
+  //     // TODO
+  //   },
+  //   rollback: (api, options) => {
+  //     // TODO
+  //   },
+  // })
+}

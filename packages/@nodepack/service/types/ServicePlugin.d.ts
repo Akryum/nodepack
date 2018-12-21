@@ -1,4 +1,4 @@
-import { ProjectOptions } from './options'
+import { ProjectOptions } from './ProjectOptions'
 import PackPluginApi from '../src/lib/ServicePluginAPI.js'
 
 type ServicePluginApplyBase = (api: PackPluginApi, options: ProjectOptions) => void

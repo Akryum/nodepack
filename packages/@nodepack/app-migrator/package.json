@@ -1,7 +1,7 @@
 {
-  "name": "@nodepack/cli",
+  "name": "@nodepack/app-migrator",
   "version": "0.0.1",
-  "description": "Nodepack CLI",
+  "description": "Migration system for nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -15,29 +15,27 @@
   "publishConfig": {
     "access": "public"
   },
-  "engines": {
-    "node": ">=8.12"
-  },
-  "bin": {
-    "nodepack": "src/bin/nodepack.js"
-  },
+  "main": "src/index.js",
   "typings": "types/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-migrator": "^0.0.1",
-    "@nodepack/env-check": "^0.0.1",
+    "@nodepack/config-transformer": "^0.0.1",
     "@nodepack/module": "^0.0.1",
+    "@nodepack/service": "^0.0.1",
     "@nodepack/utils": "^0.0.1",
-    "chalk": "^2.4.1",
-    "cmd-shim": "^2.0.2",
-    "commander": "^2.19.0",
-    "execa": "^1.0.0",
+    "@types/inquirer": "^0.0.43",
+    "deepmerge": "^3.0.0",
+    "ejs": "^2.6.1",
     "fs-extra": "^7.0.1",
+    "globby": "^8.0.1",
     "inquirer": "^6.2.1",
+    "isbinaryfile": "^3.0.3",
     "lodash.clonedeep": "^4.5.0",
-    "validate-npm-package-name": "^3.0.0"
+    "semver": "^5.6.0",
+    "slash": "^2.0.0",
+    "yaml-front-matter": "^4.0.0"
   }
 }

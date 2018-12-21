@@ -1,3 +1,3 @@
-export { ProjectOptions } from './options'
+export { ProjectOptions } from './ProjectOptions'
 export { ServicePlugin } from './ServicePlugin'
-export { GeneratorPlugin } from './GeneratorPlugin'
+export { MigratorPlugin } from '@nodepack/migrator'

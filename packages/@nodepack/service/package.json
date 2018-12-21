@@ -24,13 +24,15 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
-    "test:lint": "eslint src generator"
+    "test:lint": "eslint src"
   },
   "dependencies": {
+    "@nodepack/app-migrator": "^0.0.1",
     "@nodepack/env-check": "^0.0.1",
-    "@nodepack/generator": "^0.0.1",
+    "@nodepack/module": "^0.0.1",
     "@nodepack/utils": "^0.0.1",
     "cache-loader": "^1.2.5",
+    "chalk": "^2.4.1",
     "cliui": "^4.1.0",
     "cosmiconfig": "^5.0.7",
     "dotenv": "^6.2.0",

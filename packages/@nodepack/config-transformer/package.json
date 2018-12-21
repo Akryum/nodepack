@@ -21,6 +21,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
+    "@nodepack/module": "^0.0.1",
     "@nodepack/utils": "^0.0.1",
     "deepmerge": "^3.0.0",
     "javascript-stringify": "^1.6.0",

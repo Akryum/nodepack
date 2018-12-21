@@ -1,5 +1,5 @@
 /** @typedef {import('webpack-chain')} Config */
-/** @typedef {import('../../types/options').ProjectOptions} ProjectOptions */
+/** @typedef {import('../../types/ProjectOptions').ProjectOptions} ProjectOptions */
 
 /**
  * @returns {ProjectOptions}

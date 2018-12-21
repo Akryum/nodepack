@@ -1,4 +1,4 @@
-/** @typedef {import('../lib/Generator').FileTree} FileTree */
+/** @typedef {import('../lib/MigrationOperation').FileTree} FileTree */
 
 const fs = require('fs-extra')
 const path = require('path')
