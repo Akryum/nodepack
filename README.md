@@ -10,6 +10,26 @@ A modern node app development platform
 
 Nodepack is a modern, integrated and smart development environement for node backend developers. The bundling is done with Webpack.
 
+<p align="center">
+  <a href="https://www.patreon.com/akryum" target="_blank">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+  </a>
+</p>
+
+## Sponsors
+
+### Silver
+
+<p align="center">
+  <a href="https://vueschool.io/" target="_blank">
+    <img src="https://vueschool.io/img/logo/vueschool_logo_multicolor.svg" alt="VueSchool logo" width="200px">
+  </a>
+</p>
+
+## About
+
+The Goal is to provide a modern building base for JS backends.
+
 **Features:**
 
 - zero-config by default
@@ -18,6 +38,8 @@ Nodepack is a modern, integrated and smart development environement for node bac
 - single-file build (useful for function/lambda deployements)
 - error diagnostics with suggested fix
 - import/export in .js files
+- app/code migrations
+- environment migrations (soon)
 - middlewares/runtime (soon)
 - more to come!
 
