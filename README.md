@@ -47,11 +47,13 @@ Nodepack is a modern, integrated and smart development environement for node bac
 - autoinstall missing dependencies
 - import/export in .js files
 - app/code migrations
+- more to come!
 
 **Builtin Integrations:**
 
 - babel (to support old versions of node and/or new JS syntax)
 - typescript
+- more to come!
 
 **Roadmap:** [v1.0.0](https://github.com/Akryum/nodepack/projects/1)
 
