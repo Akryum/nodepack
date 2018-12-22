@@ -28,82 +28,52 @@ Nodepack is a modern, integrated and smart development environement for node bac
 
 ## About
 
-The Goal is to provide a modern building base for JS backends.
+**Key benefits:**
+
+- Write backends or apps without worrying about tooling (for example, typescript)
+- Minimize configuration and boilerplate
+- Produce minimal code size for faster download from npm and quicker bootup in serverless environments
+- Migrate and Rollback code and environment (for example DBs) easily in a team
+- Integrate with plugins adding ready-to-use features
+- Best practices built-in
 
 **Features:**
 
 - zero-config by default
 - powerful plugin system
 - live-reload in development
-- single-file build (useful for function/lambda deployements)
+- compiled and minified build (useful for function/lambda deployements)
 - error diagnostics with suggested fix
+- autoinstall missing dependencies
 - import/export in .js files
 - app/code migrations
-- environment migrations (soon)
-- middlewares/runtime (soon)
-- more to come!
 
 **Builtin Integrations:**
 
 - babel (to support old versions of node and/or new JS syntax)
-- typescript (soon)
-- eslint (soon)
-- jest (soon)
-- apollo (soon)
-- express (soon)
-- koa (soon)
-- hapi (soon)
+- typescript
+
+**Roadmap:**
+
+Features:
+
+- environment migrations
+- middleware/runtime
+- autoplugins
+- V8 compiler cache
+- Native addons
+- dynamic module loading
 - more to come!
 
-## Getting started
+Integrations:
 
-Install the CLI:
-
-```
-yarn global add @nodepack/cli
-```
-
-Create a new project:
-
-```
-nodepack create my-app
-```
-
-## Usage in an existing project
-
-Then add these to your `package.json` scripts:
-
-```json
-{
-  "dev": "nodepack-service dev",
-  "build": "nodepack-service build"
-}
-```
-
-Configure it with a `nodepack.config.js` file in the root folder of your app:
-
-```js
-/** @typedef {import('@nodepack/service').ProjectOptions} ProjectOptions */
-
-/** @type {ProjectOptions} */
-module.exports = {
-  // If you use VS Code, options will be autocompleted here
-}
-```
-
-## Plugins
-
-*For now, plugins must be manually installed. `nodepack add <plugin>` is planned!*
-
-### Babel
-
-Install the plugin into your project:
-
-```
-yarn add -D @nodepack/plugin-babel
-```
-
-Babel now transpiles your code!
+- eslint
+- jest
+- apollo
+- express
+- koa
+- hapi
+- more to come!
 
 ## Prior Art
 
