@@ -53,27 +53,7 @@ Nodepack is a modern, integrated and smart development environement for node bac
 - babel (to support old versions of node and/or new JS syntax)
 - typescript
 
-**Roadmap:**
-
-Features:
-
-- environment migrations
-- middleware/runtime
-- autoplugins
-- V8 compiler cache
-- Native addons
-- dynamic module loading
-- more to come!
-
-Integrations:
-
-- eslint
-- jest
-- apollo
-- express
-- koa
-- hapi
-- more to come!
+**Roadmap:** [v1.0.0](https://github.com/Akryum/nodepack/projects/1)
 
 ## Prior Art
 
