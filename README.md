@@ -26,6 +26,14 @@ Nodepack is a modern, integrated and smart development environement for node bac
   </a>
 </p>
 
+### Bronze
+
+<p align="center">
+  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
+    <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" width="48" height="48">
+  </a>
+</p>
+
 ## About
 
 The Goal is to provide a modern building base for JS backends.
