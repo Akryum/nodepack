@@ -36,10 +36,7 @@ const MigrationAPI = require('./MigrationAPI')
 const MigrationWhenAPI = require('./MigrationWhenAPI')
 const MigrationOperation = require('./MigrationOperation')
 // Utils
-const path = require('path')
-const fs = require('fs-extra')
 const {
-  getConfigFolder,
   ensureConfigFile,
   readConfigFile,
   writeConfigFile,
