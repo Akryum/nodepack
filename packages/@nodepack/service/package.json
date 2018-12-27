@@ -1,7 +1,7 @@
 {
   "name": "@nodepack/service",
   "version": "0.0.1",
-  "description": "Webpack for node apps",
+  "description": "Local service powering Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {

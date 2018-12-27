@@ -1,7 +1,7 @@
 {
   "name": "@nodepack/app-migrator",
   "version": "0.0.1",
-  "description": "Migration system for nodepack",
+  "description": "App Code Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {

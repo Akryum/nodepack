@@ -1,7 +1,7 @@
 {
   "name": "@nodepack/env-check",
   "version": "0.0.1",
-  "description": "Webpack for node apps",
+  "description": "Tools related to user environment",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {

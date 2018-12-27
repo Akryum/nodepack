@@ -1,7 +1,7 @@
 {
   "name": "@nodepack/plugin-babel",
   "version": "0.0.1",
-  "description": "Babel plugin for nodepack",
+  "description": "Nodepack plugin for Babel",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {

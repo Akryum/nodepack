@@ -1,7 +1,7 @@
 {
   "name": "@nodepack/utils",
   "version": "0.0.1",
-  "description": "Webpack for node apps",
+  "description": "Common utilities for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
