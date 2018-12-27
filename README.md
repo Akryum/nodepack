@@ -4,6 +4,8 @@
 
 # nodepack
 
+[![circleci](https://img.shields.io/circleci/project/github/Akryum/nodepack/master.svg)](https://circleci.com/gh/Akryum/nodepack)
+
 A modern node app development platform
 
 **Warning: work in progress**
