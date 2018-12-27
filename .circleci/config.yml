@@ -1,0 +1,55 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/project/nodepack
+  docker:
+    - image: nodepackjs/ci
+
+workflow_filters: &filters
+  filters:
+    branches:
+      ignore:
+      - docs
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - nodepack-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - nodepack-{{ .Branch }}-
+            - nodepack
+      - run: yarn --network-timeout 600000
+      - save_cache:
+          key: nodepack-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
+            # Cypress bin
+            - ~/.cache
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/nodepack
+            - .cache/Cypress
+
+  group-1:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: yarn test:types
+      - run: eslint packages/@nodepack
+      - run: lerna run test
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - install:
+          <<: *filters
+      - group-1:
+          <<: *filters
+          requires:
+            - install
