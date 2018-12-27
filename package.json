@@ -8,9 +8,9 @@
     "clean": "rimraf packages/test/*",
     "sync": "node scripts/syncDeps.js",
     "release": "lerna publish",
-    "test": "yarn run test:types && lerna run test",
     "test:types": "tsc",
-    "test:lint": "eslint packages/@nodepack"
+    "test:lint": "eslint packages/@nodepack",
+    "test:lerna-all": "lerna run test"
   },
   "devDependencies": {
     "@types/ejs": "^2.6.0",

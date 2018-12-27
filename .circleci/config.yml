@@ -41,7 +41,7 @@ jobs:
           at: ~/
       - run: yarn test:types
       - run: yarn test:lint
-      - run: lerna run test
+      - run: yarn test:lerna-all
 
 workflows:
   version: 2
