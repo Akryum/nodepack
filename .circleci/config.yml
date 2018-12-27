@@ -40,7 +40,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: yarn test:types
-      - run: eslint packages/@nodepack
+      - run: yarn test:lint
       - run: lerna run test
 
 workflows:

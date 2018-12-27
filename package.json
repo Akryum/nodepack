@@ -9,7 +9,8 @@
     "sync": "node scripts/syncDeps.js",
     "release": "lerna publish",
     "test": "yarn run test:types && lerna run test",
-    "test:types": "tsc"
+    "test:types": "tsc",
+    "test:lint": "eslint packages/@nodepack"
   },
   "devDependencies": {
     "@types/ejs": "^2.6.0",
