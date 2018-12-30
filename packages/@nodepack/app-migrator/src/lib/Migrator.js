@@ -252,6 +252,7 @@ module.exports = class Migrator {
         if (!options) {
           options = rootOptions[migration.plugin.id] = {}
         }
+        log(chalk.grey(`${migration.plugin.id} is prompting:`))
         const answers = await inquirer.prompt(prompts)
         options[migration.options.id] = answers
       }
