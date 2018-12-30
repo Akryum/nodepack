@@ -253,7 +253,17 @@ module.exports = class Migrator {
           options = rootOptions[migration.plugin.id] = {}
         }
         log(chalk.grey(`${migration.plugin.id} is prompting:`))
-        const answers = await inquirer.prompt(prompts)
+        let answers = await inquirer.prompt(prompts)
+        // Check if answers are seriazable
+        try {
+          const oldAnswers = answers
+          answers = JSON.parse(JSON.stringify(answers))
+          if (Object.keys(answers).length !== Object.keys(oldAnswers).length) {
+            throw new Error(`Missing answers`)
+          }
+        } catch (e) {
+          error(`Answers are not serializable into JSON for plugin ${migration.plugin.id} migration ${migration.options.id}`)
+        }
         options[migration.options.id] = answers
       }
     }
