@@ -145,7 +145,7 @@ module.exports = class MigrationOperation {
     if (file) {
       file.source = source
     } else {
-      this.files[filename] = new GeneratorFile(filename, source, true)
+      this.files[filename] = new GeneratorFile(this.cwd, filename, source, true)
     }
   }
 

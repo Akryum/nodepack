@@ -1,6 +1,7 @@
 const { default: chalk } = require('chalk')
 const readline = require('readline')
 const padStart = require('string.prototype.padstart')
+const { hasSpinner } = require('./spinner')
 
 function _log (type, tag, message) {
   // Secondary logging
@@ -31,6 +32,7 @@ exports.log = (msg = '', tag = null) => {
  * @param {string?} tag
  */
 exports.info = (msg, tag = null) => {
+  if (hasSpinner()) console.log('')
   console.log(format(chalk.bgBlue.black(' INFO ') + (tag ? chalkTag(tag) : ''), msg))
   _log('info', tag, msg)
 }
@@ -40,6 +42,7 @@ exports.info = (msg, tag = null) => {
  * @param {string?} tag
  */
 exports.done = (msg, tag = null) => {
+  if (hasSpinner()) console.log('')
   console.log(format(chalk.bgGreen.black(' DONE ') + (tag ? chalkTag(tag) : ''), msg))
   _log('done', tag, msg)
 }
@@ -49,6 +52,7 @@ exports.done = (msg, tag = null) => {
  * @param {string?} tag
  */
 exports.warn = (msg, tag = null) => {
+  if (hasSpinner()) console.log('')
   console.warn(format(chalk.bgYellow.black(' WARN ') + (tag ? chalkTag(tag) : ''), chalk.yellow(msg)))
   _log('warn', tag, msg)
 }
@@ -58,6 +62,7 @@ exports.warn = (msg, tag = null) => {
  * @param {string?} tag
  */
 exports.error = (msg, tag = null) => {
+  if (hasSpinner()) console.log('')
   console.error(format(chalk.bgRed(' ERROR ') + (tag ? chalkTag(tag) : ''), chalk.red(msg)))
   _log('error', tag, msg)
   if (msg instanceof Error) {

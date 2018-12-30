@@ -10,6 +10,9 @@ program
 program
   .command('create <app-name>')
   .description('create a new project powered by nodepack')
+  .option('-p, --preset <presetName>', 'Skip prompts and use saved or remote preset')
+  .option('-d, --default', 'Skip prompts and use the default preset')
+  .option('-i, --inlinePreset <json>', 'Skip prompts and use inline JSON string as preset')
   .option('-m, --packageManager <command>', 'Use specified npm client when installing dependencies')
   .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
   .option('-g, --git [message]', 'Force git initialization with initial commit message')

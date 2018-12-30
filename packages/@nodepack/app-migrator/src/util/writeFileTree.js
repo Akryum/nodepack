@@ -2,6 +2,7 @@
 
 const fs = require('fs-extra')
 const path = require('path')
+const { error } = require('@nodepack/utils')
 
 /**
  * @param {string} cwd
@@ -32,11 +33,16 @@ module.exports = async function (cwd, files, previousFileNames) {
   }
 
   for (const filename of Object.keys(files)) {
-    const file = files[filename]
-    if (!file.modified) continue
-    const filePath = path.join(cwd, filename)
-    await fs.ensureDir(path.dirname(filePath))
-    await fs.writeFile(filePath, file.source)
+    try {
+      const file = files[filename]
+      if (!file.modified) continue
+      const filePath = path.join(cwd, filename)
+      await fs.ensureDir(path.dirname(filePath))
+      await fs.writeFile(filePath, file.source)
+    } catch (e) {
+      error(`Error while writing ${filename}`)
+      throw e
+    }
   }
 }
 

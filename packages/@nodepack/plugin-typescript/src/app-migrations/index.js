@@ -5,11 +5,11 @@ module.exports = api => {
     // when: api => api.fromVersion('<0.0.1') || api.isFirstInstall,
     migrate: (api, options) => {
       api.render('./templates-0.0.1/default')
-      api.move('./src/**/*.js', file => `${file.path}${file.name}.ts`)
+      api.move('src/**/*.js', file => `${file.path}${file.name}.ts`)
     },
     rollback: (api, options) => {
       api.unrender('./templates-0.0.1/default')
-      api.move('./src/**/*.ts', file => `${file.path}${file.name}.js`)
+      api.move('src/**/*.ts', file => `${file.path}${file.name}.js`)
     },
   })
 

@@ -1,13 +1,16 @@
 const fs = require('fs')
+const path = require('path')
 const isBinary = require('isbinaryfile')
 
 module.exports = class MigrationOperationFile {
   /**
+   * @param {string} cwd
    * @param {string} filename Path relative to project.
    * @param {string | Buffer?} source
    * @param {boolean} modified
    */
-  constructor (filename, source = null, modified = false) {
+  constructor (cwd, filename, source = null, modified = false) {
+    this.cwd = cwd
     this.filename = filename
     this._source = source
     this.modified = modified
@@ -19,9 +22,10 @@ module.exports = class MigrationOperationFile {
    */
   get source () {
     if (!this._source) {
-      this._source = isBinary.sync(name)
-        ? fs.readFileSync(name)
-        : fs.readFileSync(name, 'utf-8')
+      const filePath = path.resolve(this.cwd, this.filename)
+      this._source = isBinary.sync(filePath)
+        ? fs.readFileSync(filePath)
+        : fs.readFileSync(filePath, 'utf-8')
     }
     return this._source
   }
@@ -29,5 +33,11 @@ module.exports = class MigrationOperationFile {
   set source (value) {
     this._source = value
     this.modified = true
+  }
+
+  move (newName) {
+    // Copy original source
+    this.source = this.source
+    this.filename = newName
   }
 }

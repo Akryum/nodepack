@@ -266,7 +266,8 @@ module.exports = class MigrationOperationAPI {
           ext: ext.substr(1),
         })
         if (newFile !== file) {
-          files[newFile] = files[file]
+          const f = files[newFile] = files[file]
+          f.move(newFile)
           delete files[file]
         }
       }

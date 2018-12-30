@@ -44,7 +44,7 @@ exports.resolveFiles = async (cwd, pattern = '**', map = null) => {
  * @returns {Promise.<FileTree>}
  */
 exports.readFiles = async (cwd) => {
-  return exports.resolveFiles(cwd, '**', (file) => new MigrationOperationFile(file))
+  return exports.resolveFiles(cwd, '**', (file) => new MigrationOperationFile(cwd, file))
 }
 
 exports.normalizeFilePaths = (files) => {

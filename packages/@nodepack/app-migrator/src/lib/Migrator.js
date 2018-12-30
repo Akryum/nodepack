@@ -1,6 +1,9 @@
 /** @typedef {import('@nodepack/service').ProjectOptions} ProjectOptions */
 /** @typedef {import('./MigratorPlugin')} MigratorPlugin */
 /** @typedef {import('../../types/MigrationOptions').MigrationOptions} MigrationOptions */
+/** @typedef {import('@nodepack/utils').Preset} Preset */
+
+/** @typedef {Object.<string, Object.<string, any>>} MigrationsOptions */
 
 /**
  * @typedef MigratorOptions
@@ -36,11 +39,6 @@ const MigrationAPI = require('./MigrationAPI')
 const MigrationWhenAPI = require('./MigrationWhenAPI')
 const MigrationOperation = require('./MigrationOperation')
 // Utils
-const {
-  ensureConfigFile,
-  readConfigFile,
-  writeConfigFile,
-} = require('../util/configFiles')
 const { readPkg } = require('../util/pkg')
 const {
   toShortPluginId,
@@ -50,6 +48,14 @@ const {
   done,
   warn,
   error,
+  logWithSpinner,
+  stopSpinner,
+  chalk,
+  ensureConfigFile,
+  readConfigFile,
+  writeConfigFile,
+  FILE_APP_MIGRATIONS_PLUGIN_VERSIONS,
+  FILE_APP_MIGRATIONS_RECORDS,
 } = require('@nodepack/utils')
 const inquirer = require('inquirer')
 const { getVersion } = require('../util/plugins')
@@ -61,9 +67,6 @@ const logTypes = {
   warn,
   error,
 }
-
-const APP_MIGRATIONS_RECORDS = 'app-migration-records.json'
-const APP_MIGRATIONS_PLUGIN_VERSIONS = 'app-migration-plugin-versions.json'
 
 module.exports = class Migrator {
   /**
@@ -88,30 +91,46 @@ module.exports = class Migrator {
     this.notices = []
   }
 
-  async migrate ({
-    extractConfigFiles = false,
-  }) {
+  /**
+   * @param {Preset?} preset
+   */
+  async migrate (preset = null) {
+    /** @type {MigrationsOptions?} */
+    let options = null
+    let extractConfigFiles = false
+
+    if (preset) {
+      extractConfigFiles = preset.useConfigFiles || false
+      if (preset.appMigrations && preset.appMigrations.options) {
+        options = preset.appMigrations.options
+      }
+    }
+
     await this.setup()
     await this.readPluginVersions()
 
     const migrations = await this.resolveMigrations()
 
     // Prompts
-    const rootOptions = await this.resolvePrompts(migrations)
+    const rootOptions = options || await this.resolvePrompts(migrations)
 
     for (const migration of migrations) {
       // Prompts results
       const pluginOptions = rootOptions[migration.plugin.id]
-      const options = (pluginOptions && pluginOptions[migration.options.id]) || {}
+      const migrationOptions = (pluginOptions && pluginOptions[migration.options.id]) || {}
 
       const operation = new MigrationOperation(this, migration, {
-        options,
+        options: migrationOptions,
         rootOptions,
       })
+
+      logWithSpinner('✔️', `${chalk.grey(migration.plugin.id)} ${migration.options.title}`)
 
       await operation.migrate({
         extractConfigFiles,
       })
+
+      stopSpinner()
 
       // Mark migration as completed
       this.migrationRecords.push({
@@ -140,8 +159,8 @@ module.exports = class Migrator {
    */
   async setup () {
     // Ensure the config files exists in '.nodepack' folder
-    await ensureConfigFile(this.cwd, APP_MIGRATIONS_RECORDS, [])
-    await ensureConfigFile(this.cwd, APP_MIGRATIONS_PLUGIN_VERSIONS, {})
+    await ensureConfigFile(this.cwd, FILE_APP_MIGRATIONS_RECORDS, [])
+    await ensureConfigFile(this.cwd, FILE_APP_MIGRATIONS_PLUGIN_VERSIONS, {})
 
     // Read package.json
     this.pkg = readPkg(this.cwd)
@@ -165,7 +184,7 @@ module.exports = class Migrator {
    * @private
    */
   async readMigrationRecords () {
-    this.migrationRecords = await readConfigFile(this.cwd, APP_MIGRATIONS_RECORDS)
+    this.migrationRecords = await readConfigFile(this.cwd, FILE_APP_MIGRATIONS_RECORDS)
     // Cache ids
     for (const record of this.migrationRecords) {
       this.migratedIds.set(`${record.pluginId}${record.id}`, true)
@@ -176,7 +195,7 @@ module.exports = class Migrator {
    * @private
    */
   async writeMigrationRecords () {
-    await writeConfigFile(this.cwd, APP_MIGRATIONS_RECORDS, this.migrationRecords)
+    await writeConfigFile(this.cwd, FILE_APP_MIGRATIONS_RECORDS, this.migrationRecords)
   }
 
   /**
@@ -217,8 +236,10 @@ module.exports = class Migrator {
 
   /**
    * @param {Migration []} migrations
+   * @returns {Promise.<MigrationsOptions>}
    */
   async resolvePrompts (migrations) {
+    /** @type {MigrationsOptions} */
     const rootOptions = {}
     for (const migration of migrations) {
       if (migration.options.prompts) {
@@ -244,7 +265,7 @@ module.exports = class Migrator {
    * @private
    */
   async readPluginVersions () {
-    const pluginVersions = await readConfigFile(this.cwd, APP_MIGRATIONS_PLUGIN_VERSIONS)
+    const pluginVersions = await readConfigFile(this.cwd, FILE_APP_MIGRATIONS_PLUGIN_VERSIONS)
     for (const plugin of this.plugins) {
       plugin.currentVersion = getVersion(plugin.id, this.cwd)
       plugin.previousVersion = pluginVersions[plugin.id]
@@ -275,7 +296,7 @@ module.exports = class Migrator {
       }
     }
 
-    await writeConfigFile(this.cwd, APP_MIGRATIONS_PLUGIN_VERSIONS, result)
+    await writeConfigFile(this.cwd, FILE_APP_MIGRATIONS_PLUGIN_VERSIONS, result)
   }
 
   /**

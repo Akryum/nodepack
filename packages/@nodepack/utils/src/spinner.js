@@ -42,3 +42,5 @@ exports.pauseSpinner = () => {
 exports.resumeSpinner = () => {
   spinner.start()
 }
+
+exports.hasSpinner = () => !!lastMsg
