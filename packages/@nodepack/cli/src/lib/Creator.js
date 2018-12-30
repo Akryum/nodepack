@@ -1,6 +1,13 @@
 /** @typedef {import('inquirer').Question} Question */
+/** @typedef {import('inquirer').ChoiceType} ChoiceType */
 /** @typedef {import('@nodepack/utils').Preset} Preset */
+/** @typedef {import('./CreateModuleAPI')} CreateModuleAPI */
 
+/** @typedef {(api: CreateModuleAPI) => void} CreateModule */
+
+// API
+const CreateModuleAPI = require('./CreateModuleAPI')
+// Utils
 const path = require('path')
 const inquirer = require('inquirer')
 const execa = require('execa')
@@ -9,6 +16,7 @@ const getPackageVersion = require('../util/getPackageVersion')
 const {
   loadGlobalOptions,
   saveGlobalOptions,
+  defaultGlobalOptions,
   clearConsole,
   logWithSpinner,
   stopSpinner,
@@ -28,20 +36,31 @@ const { Migrator, MigratorPlugin, MigrationOperationFile, writeFileTree } = requ
 const generateReadme = require('../util/generateReadme')
 const loadLocalPreset = require('../util/loadLocalPreset')
 const loadRemotePreset = require('../util/loadRemotePreset')
+const { formatFeatures } = require('../util/features')
 
-// TODO presets
-const isManualMode = true
+const isManualMode = answers => answers.preset === '__manual__'
 
 module.exports = class Creator {
-  constructor (projectName, targetDir, promptModules) {
+  /**
+   * @param {string} projectName
+   * @param {string} targetDir
+   * @param {CreateModule []} createModules
+   */
+  constructor (projectName, targetDir, createModules) {
     this.projectName = projectName
     this.cwd = process.env.NODEPACK_CONTEXT = targetDir
-    // TODO
-    this.promptModules = promptModules
+    this.createModules = createModules
 
+    const { presetPrompt, featurePrompt } = this.resolveIntroPrompts()
+    this.presetPrompt = presetPrompt
+    this.featurePrompt = featurePrompt
+    /** @type {Question []} */
+    this.injectedPrompts = []
     this.outroPrompts = this.resolveOutroPrompts()
 
+    /** @type {function []} */
     this.promptCompleteCbs = []
+    /** @type {function []} */
     this.createCompleteCbs = []
 
     this.run = this.run.bind(this)
@@ -56,6 +75,12 @@ module.exports = class Creator {
     const { run, projectName, cwd, createCompleteCbs } = this
     // Are one of those vars non-empty?
     const isTestOrDebug = !!(process.env.NODEPACK_TEST || process.env.NODEPACK_DEBUG)
+
+    // Apply create modules
+    const createModuleAPI = new CreateModuleAPI(this)
+    for (const createModule of this.createModules) {
+      await createModule(createModuleAPI)
+    }
 
     // Preset resolution
     if (!preset) {
@@ -202,7 +227,9 @@ module.exports = class Creator {
       }
       answers.features = answers.features || []
       // run cb registered by prompt modules to finalize the preset
-      this.promptCompleteCbs.forEach(cb => cb(answers, preset))
+      for (const cb of this.promptCompleteCbs) {
+        await cb(answers, preset)
+      }
     }
 
     // validate
@@ -271,9 +298,44 @@ module.exports = class Creator {
     return plugins
   }
 
-  run (command, args) {
-    if (!args) { [command, ...args] = command.split(/\s+/) }
-    return execa(command, args, { cwd: this.cwd })
+  getPresets () {
+    const savedOptions = loadGlobalOptions()
+    return Object.assign({}, savedOptions.presets, defaultGlobalOptions.presets)
+  }
+
+  resolveIntroPrompts () {
+    const presets = this.getPresets()
+    const presetChoices = Object.keys(presets).map(name => {
+      return {
+        name: `${name} (${formatFeatures(presets[name])})`,
+        value: name,
+      }
+    })
+    const presetPrompt = {
+      name: 'preset',
+      type: 'list',
+      message: `Please pick a preset:`,
+      choices: [
+        ...presetChoices,
+        {
+          name: 'Manually select features',
+          value: '__manual__',
+        },
+      ],
+    }
+    const featurePrompt = {
+      name: 'features',
+      when: isManualMode,
+      type: 'checkbox',
+      message: 'Check the features needed for your project:',
+      /** @type {ChoiceType []} */
+      choices: [],
+      pageSize: 10,
+    }
+    return {
+      presetPrompt,
+      featurePrompt,
+    }
   }
 
   resolveOutroPrompts () {
@@ -335,6 +397,9 @@ module.exports = class Creator {
 
   resolveFinalPrompts () {
     const prompts = [
+      this.presetPrompt,
+      this.featurePrompt,
+      ...this.injectedPrompts,
       ...this.outroPrompts,
     ]
     return prompts
@@ -387,6 +452,11 @@ module.exports = class Creator {
       success = false
     }
     return success
+  }
+
+  run (command, args) {
+    if (!args) { [command, ...args] = command.split(/\s+/) }
+    return execa(command, args, { cwd: this.cwd })
   }
 
   async writeFileToDisk (filename, source) {

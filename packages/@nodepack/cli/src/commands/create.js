@@ -4,7 +4,7 @@ const { chalk, clearConsole, error, stopSpinner } = require('@nodepack/utils')
 const validateProjectName = require('validate-npm-package-name')
 const inquirer = require('inquirer')
 const Creator = require('../lib/Creator')
-const { getPromptModules } = require('../util/createTools')
+const { getPromptModules } = require('../lib/createModules')
 
 /**
  * @param {string} projectName
