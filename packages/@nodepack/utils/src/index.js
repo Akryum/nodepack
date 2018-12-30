@@ -4,7 +4,7 @@ module.exports = {
   ...require('./deps'),
   ...require('./env'),
   ...require('./files'),
-  ...require('./global-options'),
+  ...require('./globalOptions'),
   ...require('./logger'),
   ...require('./object'),
   ...require('./openBrowser'),

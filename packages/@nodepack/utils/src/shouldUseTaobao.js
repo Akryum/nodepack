@@ -3,7 +3,7 @@ const { default: chalk } = require('chalk')
 const { request } = require('./request')
 const inquirer = require('inquirer')
 const registries = require('./registries')
-const { loadGlobalOptions, saveGlobalOptions } = require('./global-options')
+const { loadGlobalOptions, saveGlobalOptions } = require('./globalOptions')
 
 async function ping (registry) {
   await request.get(`${registry}/vue-cli-version-marker/latest`)

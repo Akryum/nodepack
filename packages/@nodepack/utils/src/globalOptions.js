@@ -1,8 +1,20 @@
 /**
+ * @typedef Preset
+ * @prop {string?} [name]
+ * @prop {boolean?} [useConfigFiles]
+ * @prop {Object.<string,string>?} [plugins]
+ * @prop {PresetAppMigrations?} [appMigrations]
+ */
+/**
+ * @typedef PresetAppMigrations
+ * @prop {Object.<string, Object.<string, any>>} options
+ */
+/**
  * @typedef GlobalOptions
  * @prop {string?} [packageManager]
  * @prop {boolean?} [useTaobaoRegistry]
  * @prop {Object.<string, SuggestionSettings>?} [suggestions]
+ * @prop {Object.<string, Preset>?} [presets]
  */
 /**
  * @typedef SuggestionSettings
@@ -23,11 +35,23 @@ const schema = createSchema(joi => joi.object().keys({
   suggestions: joi.object(),
 }))
 
+/** @type {Preset} */
+exports.defaultPreset = {
+  name: 'Default preset',
+  useConfigFiles: false,
+  plugins: {
+    '@nodepack/plugin-babel': '^0.0.1',
+  },
+}
+
 /** @type {GlobalOptions} */
-exports.defaults = {
+exports.defaultGlobalOptions = {
   packageManager: null,
   useTaobaoRegistry: null,
   suggestions: null,
+  presets: {
+    default: exports.defaultPreset,
+  },
 }
 
 let cachedOptions
@@ -75,7 +99,7 @@ exports.saveGlobalOptions = function (toSave) {
   )
   // Remove invalid keys
   for (const key in options) {
-    if (!(key in exports.defaults)) {
+    if (!(key in exports.defaultGlobalOptions)) {
       delete options[key]
     }
   }
