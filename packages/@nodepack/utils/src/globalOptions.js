@@ -6,8 +6,7 @@
  * @prop {PresetAppMigrations?} [appMigrations]
  */
 /**
- * @typedef PresetAppMigrations
- * @prop {Object.<string, Object.<string, any>>} options
+ * @typedef {Object.<string, any>} PresetAppMigrations
  */
 /**
  * @typedef GlobalOptions
@@ -40,7 +39,7 @@ exports.defaultPreset = {
   name: 'Default preset',
   useConfigFiles: false,
   plugins: {
-    '@nodepack/plugin-babel': '^0.0.1',
+    '@nodepack/plugin-babel': '',
   },
 }
 

@@ -101,8 +101,8 @@ module.exports = class Migrator {
 
     if (preset) {
       extractConfigFiles = preset.useConfigFiles || false
-      if (preset.appMigrations && preset.appMigrations.options) {
-        options = preset.appMigrations.options
+      if (preset.appMigrations) {
+        options = preset.appMigrations
       }
     }
 
