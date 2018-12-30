@@ -396,6 +396,20 @@ module.exports = class Creator {
   }
 
   resolveFinalPrompts () {
+    // Skip injected prompts from create modules
+    // if not in manual mode
+    this.injectedPrompts.forEach(prompt => {
+      const originalWhen = prompt.when || (() => true)
+      // @ts-ignore
+      prompt.when = answers => {
+        if (!isManualMode(answers)) return false
+        if (typeof originalWhen === 'function') {
+          return originalWhen(answers)
+        } else if (typeof originalWhen === 'boolean') {
+          return originalWhen
+        }
+      }
+    })
     const prompts = [
       this.presetPrompt,
       this.featurePrompt,
