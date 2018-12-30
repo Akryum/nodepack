@@ -3,6 +3,7 @@ module.exports = api => {
   api.injectFeature({
     name: 'Babel',
     value: 'babel',
+    checked: true,
   })
 
   api.onPromptComplete((answers, preset) => {
