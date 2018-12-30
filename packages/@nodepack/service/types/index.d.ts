@@ -1,3 +1,3 @@
 export { ProjectOptions } from './ProjectOptions'
 export { ServicePlugin } from './ServicePlugin'
-export { MigratorPlugin } from '@nodepack/migrator'
+export { MigrationPlugin } from '@nodepack/app-migrator'

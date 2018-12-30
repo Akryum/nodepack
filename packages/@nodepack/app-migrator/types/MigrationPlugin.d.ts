@@ -1,3 +1,3 @@
-import MigratorAPI from '@nodepack/migrator/src/lib/MigrationAPI'
+import MigratorAPI from '../src/lib/MigrationAPI'
 
 export type MigrationPlugin = (api: MigratorAPI) => void

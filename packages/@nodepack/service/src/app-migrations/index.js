@@ -1,3 +1,4 @@
+/** @type {import('@nodepack/service').MigrationPlugin} */
 module.exports = api => {
   api.register({
     id: 'default-template@0.0.1',
@@ -18,6 +19,7 @@ module.exports = api => {
 
       // Remove scripts
       api.modifyFile('package.json', content => {
+        // @ts-ignore
         const data = JSON.parse(content)
         const scripts = data.scripts
         if (scripts) {

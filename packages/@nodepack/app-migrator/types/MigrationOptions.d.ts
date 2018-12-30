@@ -1,12 +1,12 @@
 import MigrationWhenAPI from '../src/lib/MigrationWhenAPI'
 import MigrationOperationAPI from '../src/lib/MigrationOperationAPI'
-import { Prompts } from 'inquirer'
+import { Question } from 'inquirer'
 
 export interface MigrationOptions {
   id: string
   title: string
   when?: (api: MigrationWhenAPI) => boolean | Promise<boolean>
-  prompts?: (rootOptions: any) => Prompts | Promise<Prompts>
+  prompts?: (rootOptions: any) => Question[] | Promise<Question[]>
   migrate: (api: MigrationOperationAPI, options: any, rootOptions: any) => void
   rollback?: (api: MigrationOperationAPI, options: any, rootOptions: any) => void
 }
