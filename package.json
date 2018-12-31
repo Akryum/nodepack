@@ -10,7 +10,9 @@
     "release": "lerna publish",
     "test:types": "tsc",
     "test:lint": "eslint packages/@nodepack",
-    "test:lerna-all": "lerna run test"
+    "test:lerna-all": "lerna run test",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "devDependencies": {
     "@types/ejs": "^2.6.0",
@@ -35,6 +37,7 @@
     "request-promise-native": "^1.0.5",
     "rimraf": "^2.6.2",
     "semver": "^5.6.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "vuepress": "^0.14.8"
   }
 }
