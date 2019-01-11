@@ -3,7 +3,7 @@ const fs = require('fs-extra')
 const { chalk, clearConsole, error, stopSpinner } = require('@nodepack/utils')
 const validateProjectName = require('validate-npm-package-name')
 const inquirer = require('inquirer')
-const Creator = require('../lib/Creator')
+const Creator = require('../lib/ProjectCreator')
 const { getPromptModules } = require('../lib/createModules')
 
 /**

@@ -1,4 +1,4 @@
-/** @type {import('../Creator').CreateModule} */
+/** @type {import('../ProjectCreator').CreateModule} */
 module.exports = api => {
   api.injectFeature({
     name: 'Typescript',

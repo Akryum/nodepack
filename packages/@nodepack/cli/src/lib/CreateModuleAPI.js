@@ -1,7 +1,7 @@
-/** @typedef {import('./Creator')} Creator */
+/** @typedef {import('./ProjectCreator')} Creator */
 /** @typedef {import('inquirer').ChoiceType} ChoiceType */
 /** @typedef {import('inquirer').Question} Question */
-/** @typedef {import('./Creator').Preset} Preset */
+/** @typedef {import('./ProjectCreator').Preset} Preset */
 
 module.exports = class CreateModuleAPI {
   /**
