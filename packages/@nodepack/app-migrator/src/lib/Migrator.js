@@ -148,6 +148,10 @@ module.exports = class Migrator {
     await this.applyCompleteCbs()
 
     await this.displayNotices()
+
+    return {
+      appMigrations: rootOptions,
+    }
   }
 
   async rollback () {

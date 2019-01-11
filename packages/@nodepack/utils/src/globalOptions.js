@@ -32,6 +32,7 @@ const schema = createSchema(joi => joi.object().keys({
   packageManager: joi.string().only(['yarn', 'npm']),
   useTaobaoRegistry: joi.boolean(),
   suggestions: joi.object(),
+  presets: joi.object(),
 }))
 
 /** @type {Preset} */

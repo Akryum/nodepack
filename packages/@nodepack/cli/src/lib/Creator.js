@@ -128,7 +128,8 @@ module.exports = class Creator {
       plugins,
       completeCbs: createCompleteCbs,
     })
-    await migrator.migrate(finalPreset)
+    const { appMigrations } = await migrator.migrate(finalPreset)
+    finalPreset.appMigrations = appMigrations
 
     // install additional deps (injected by generators)
     log(`📦  Installing additional dependencies...`)
@@ -147,13 +148,19 @@ module.exports = class Creator {
     logWithSpinner('📄', 'Generating README.md...')
     await this.writeFileToDisk('README.md', generateReadme(migrator.pkg, packageManager))
 
+    // initial commit
     let gitCommitSuccess = true
     if (shouldInitGit) {
       gitCommitSuccess = await this.commitInitialState(cliOptions, isTestOrDebug)
     }
+    stopSpinner()
+
+    // save preset
+    if (this.isPresetManual) {
+      await this.askSavePreset(finalPreset)
+    }
 
     // log instructions
-    stopSpinner()
     log()
     log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
     log(
@@ -235,10 +242,7 @@ module.exports = class Creator {
     // validate
     // TODO
 
-    // save preset
-    if (answers.save && answers.saveName) {
-      // TODO
-    }
+    this.isPresetManual = answers.preset === '__manual__'
 
     return preset
   }
@@ -357,19 +361,6 @@ module.exports = class Creator {
           },
         ],
       },
-      // {
-      //   name: 'save',
-      //   when: isManualMode,
-      //   type: 'confirm',
-      //   message: 'Save this as a preset for future projects?',
-      //   default: false,
-      // },
-      // {
-      //   name: 'saveName',
-      //   when: answers => answers.save,
-      //   type: 'input',
-      //   message: 'Save preset as:',
-      // },
     ]
 
     // ask for packageManager once
@@ -417,6 +408,36 @@ module.exports = class Creator {
       ...this.outroPrompts,
     ]
     return prompts
+  }
+
+  /**
+   * @param {Preset} preset
+   */
+  async askSavePreset (preset) {
+    const prompts = [
+      {
+        name: 'save',
+        type: 'confirm',
+        message: 'Save this as a preset for future projects?',
+        default: false,
+      },
+      {
+        name: 'saveName',
+        when: answers => answers.save,
+        type: 'input',
+        message: 'Save preset as:',
+      },
+    ]
+
+    const answers = await inquirer.prompt(prompts)
+
+    if (answers.save && answers.saveName) {
+      preset.name = answers.saveName
+      const globalOptions = loadGlobalOptions()
+      if (!globalOptions.presets) globalOptions.presets = {}
+      globalOptions.presets[answers.saveName] = preset
+      saveGlobalOptions(globalOptions)
+    }
   }
 
   /**
