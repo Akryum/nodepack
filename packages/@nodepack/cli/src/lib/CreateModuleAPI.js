@@ -1,34 +1,34 @@
-/** @typedef {import('./ProjectCreator')} Creator */
+/** @typedef {import('./ProjectCreateJob')} ProjectCreateJob */
 /** @typedef {import('inquirer').ChoiceType} ChoiceType */
 /** @typedef {import('inquirer').Question} Question */
-/** @typedef {import('./ProjectCreator').Preset} Preset */
+/** @typedef {import('./ProjectCreateJob').Preset} Preset */
 
 module.exports = class CreateModuleAPI {
   /**
-   * @param {Creator} creator
+   * @param {ProjectCreateJob} job
    */
-  constructor (creator) {
-    this.creator = creator
+  constructor (job) {
+    this.job = job
   }
 
   /**
    * @param {ChoiceType} feature
    */
   injectFeature (feature) {
-    this.creator.featurePrompt.choices.push(feature)
+    this.job.featurePrompt.choices.push(feature)
   }
 
   /**
    * @param {Question} prompt
    */
   injectPrompt (prompt) {
-    this.creator.injectedPrompts.push(prompt)
+    this.job.injectedPrompts.push(prompt)
   }
 
   /**
    * @param {(answers: any, preset: Preset) => void | Promise.<void>} cb
    */
   onPromptComplete (cb) {
-    this.creator.promptCompleteCbs.push(cb)
+    this.job.promptCompleteCbs.push(cb)
   }
 }

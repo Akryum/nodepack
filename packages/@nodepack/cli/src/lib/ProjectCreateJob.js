@@ -40,7 +40,7 @@ const { formatFeatures } = require('../util/features')
 
 const isManualMode = answers => answers.preset === '__manual__'
 
-module.exports = class ProjectCreator {
+module.exports = class ProjectCreateJob {
   /**
    * @param {string} projectName
    * @param {string} targetDir

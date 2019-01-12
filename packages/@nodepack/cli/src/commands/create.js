@@ -3,7 +3,7 @@ const fs = require('fs-extra')
 const { chalk, clearConsole, error, stopSpinner } = require('@nodepack/utils')
 const validateProjectName = require('validate-npm-package-name')
 const inquirer = require('inquirer')
-const Creator = require('../lib/ProjectCreator')
+const ProjectCreateJob = require('../lib/ProjectCreateJob')
 const { getPromptModules } = require('../lib/createModules')
 
 /**
@@ -70,8 +70,8 @@ async function create (projectName, options) {
     }
   }
 
-  const creator = new Creator(name, targetDir, getPromptModules())
-  await creator.create(options)
+  const job = new ProjectCreateJob(name, targetDir, getPromptModules())
+  await job.create(options)
 }
 
 module.exports = (...args) => {
