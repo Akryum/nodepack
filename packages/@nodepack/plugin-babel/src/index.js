@@ -6,7 +6,7 @@ module.exports = (api, options) => {
 
   let nodepackPath
   try {
-    nodepackPath = path.dirname(require.resolve('@nodepack/service'))
+    nodepackPath = path.dirname(require.resolve('@nodepack/nodepack'))
   } catch (e) {}
 
   api.chainWebpack(webpackConfig => {
@@ -22,7 +22,7 @@ module.exports = (api, options) => {
     if (hasBabelRc) {
       console.log('> Using babel.config.js defined in your app root')
     } else {
-      babelOptions.presets.push('@nodepack/service')
+      babelOptions.presets.push('@nodepack/nodepack')
     }
 
     webpackConfig.resolveLoader.modules.prepend(path.join(__dirname, 'node_modules'))
