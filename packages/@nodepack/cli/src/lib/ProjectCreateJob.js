@@ -143,7 +143,7 @@ module.exports = class ProjectCreateJob {
         log(
           `👉  Get started with the following commands:\n\n` +
           (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
-          chalk.cyan(` ${chalk.gray('$')} ${packageManager === 'yarn' ? 'yarn dev' : 'npm run dev'}`)
+          chalk.cyan(` ${chalk.gray('$')} nodepack`)
         )
         log()
 

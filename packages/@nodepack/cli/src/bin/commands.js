@@ -1,7 +1,9 @@
 const program = require('commander')
 const { chalk, checkDebug } = require('@nodepack/utils')
 
-checkDebug(process.cwd())
+const cwd = process.cwd()
+
+checkDebug(cwd)
 
 program
   .version(require('../../package.json').version)
@@ -101,7 +103,7 @@ enhanceErrorMessages('optionMissingArgument', (option, flag) => {
 program.parse(process.argv)
 
 if (!process.argv.slice(2).length) {
-  program.outputHelp()
+  noCommand()
 }
 
 function camelize (str) {
@@ -121,4 +123,44 @@ function cleanArgs (cmd) {
     }
   })
   return args
+}
+
+async function noCommand () {
+  const path = require('path')
+  const fs = require('fs-extra')
+
+  // In a nodepack project
+  if (fs.existsSync(path.resolve(cwd, '.nodepack')) || fs.existsSync(path.resolve(cwd, 'nodepack.config.js'))) {
+    const { installDeps, loadGlobalOptions, getPkgCommand, readPkg } = require('@nodepack/utils')
+    const execa = require('execa')
+
+    const packageManager = (
+      loadGlobalOptions().packageManager ||
+      getPkgCommand(cwd)
+    )
+
+    // Auto-install
+    if (!fs.existsSync(path.resolve(cwd, 'node_modules'))) {
+      await installDeps(cwd, packageManager)
+    }
+
+    // Run command
+    const pkg = readPkg(cwd)
+    let command = 'nodepack-service'
+    let args = ['dev']
+    if (pkg.scripts && pkg.scripts.dev) {
+      // Prefer 'run' script in package.json
+      command = packageManager
+      args = ['run', 'dev']
+    }
+    execa(command, args, {
+      stdio: [process.stdin, process.stdout, process.stderr],
+      cwd: process.cwd(),
+      cleanup: true,
+      shell: false,
+      env: process.env,
+    })
+  } else {
+    program.outputHelp()
+  }
 }
