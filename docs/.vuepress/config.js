@@ -43,7 +43,8 @@ module.exports = {
               collapsable: false,
               children: [
                 '/guide/creating-a-project',
-                '/guide/service'
+                '/guide/plugin',
+                '/guide/preset'
               ]
             },
           ]

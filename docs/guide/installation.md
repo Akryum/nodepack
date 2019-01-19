@@ -13,3 +13,9 @@ If you use Yarn:
 ```bash
 yarn global add @nodepack/cli
 ```
+
+To check if Nodepack CLI is correctly installed, run this command:
+
+```bash
+nodepack --version
+```

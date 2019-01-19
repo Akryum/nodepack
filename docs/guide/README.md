@@ -20,6 +20,8 @@ The plugin system is the key strength of Nodepack. It features:
 - App Migrator can generate and modify your project files and rollback changes if needed.
 - Environment Migrator allow your team to execute migrations or rollbacks on DBs, tools...
 
+You can create your own plugins and publish them on NPM!
+
 ## Sponsors
 
 ### Silver
