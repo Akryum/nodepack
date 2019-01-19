@@ -109,6 +109,8 @@ class Maintenance {
 
     // TODO Env Migrations
 
+    log(`🔧  Maintenance complete!`)
+
     if (this.afterHook) {
       await this.afterHook(this)
     }
