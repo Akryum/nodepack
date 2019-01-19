@@ -3,7 +3,7 @@
 /** @typedef {import('../../types/MigrationOptions').MigrationOptions} MigrationOptions */
 /** @typedef {import('@nodepack/utils').Preset} Preset */
 
-/** @typedef {Object.<string, Object.<string, any>>} MigrationsOptions */
+/** @typedef {Object.<string, Object.<string, any>>} MigrationAllOptions */
 
 /**
  * @typedef MigratorOptions
@@ -119,7 +119,7 @@ module.exports = class Migrator {
       await this.prepare()
     }
 
-    /** @type {MigrationsOptions?} */
+    /** @type {MigrationAllOptions?} */
     let options = null
     let extractConfigFiles = false
 
@@ -174,7 +174,7 @@ module.exports = class Migrator {
     await this.displayNotices()
 
     return {
-      appMigrations: rootOptions,
+      allOptions: rootOptions,
       migrationCount,
     }
   }
@@ -265,10 +265,10 @@ module.exports = class Migrator {
 
   /**
    * @param {Migration []} migrations
-   * @returns {Promise.<MigrationsOptions>}
+   * @returns {Promise.<MigrationAllOptions>}
    */
   async resolvePrompts (migrations) {
-    /** @type {MigrationsOptions} */
+    /** @type {MigrationAllOptions} */
     const rootOptions = {}
     for (const migration of migrations) {
       if (migration.options.prompts) {

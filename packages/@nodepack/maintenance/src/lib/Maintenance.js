@@ -1,4 +1,7 @@
-const { Migrator, getMigratorPlugins } = require('@nodepack/app-migrator')
+/** @typedef {import('@nodepack/utils').Preset} Preset */
+/** @typedef {import('@nodepack/app-migrator').MigrationAllOptions} AppMigrationAllOptions */
+
+const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = require('@nodepack/app-migrator')
 const {
   log,
   readPkg,
@@ -18,8 +21,15 @@ const inquirer = require('inquirer')
  * @prop {string} cwd Working directory
  * @prop {any} [cliOptions] CLI options if any
  * @prop {boolean} [skipCommit] Don't try to commit with git
+ * @prop {Preset?} [preset] Project preset (used for project creation)
  * @prop {MaintenanceHook?} [before] Called before the common maintenance operations
  * @prop {MaintenanceHook?} [after] Called after the common maintenance operations
+ */
+
+/**
+ * @typedef MaintenanceResults
+ * @prop {AppMigrationAllOptions?} appMigrationAllOptions
+ * @prop {number} appMigrationCount
  */
 
 /**
@@ -36,12 +46,14 @@ class Maintenance {
     cwd,
     cliOptions = {},
     skipCommit = false,
+    preset = null,
     before = null,
     after = null,
   }) {
     this.cwd = cwd
     this.cliOptions = cliOptions
     this.skipCommit = skipCommit
+    this.preset = preset
     this.beforeHook = before
     this.afterHook = after
 
@@ -58,6 +70,12 @@ class Maintenance {
       loadGlobalOptions().packageManager ||
       getPkgCommand(this.cwd)
     )
+
+    /** @type {MaintenanceResults} */
+    this.results = {
+      appMigrationAllOptions: null,
+      appMigrationCount: 0,
+    }
   }
 
   async run () {
@@ -68,16 +86,19 @@ class Maintenance {
     const { cwd, cliOptions, plugins, packageManager } = this
 
     // Run app migrations
-    const migratorPlugins = await getMigratorPlugins(cwd, plugins)
-    const migrator = new Migrator(cwd, {
+    const migratorPlugins = await getAppMigratorPlugins(cwd, plugins)
+    const migrator = new AppMigrator(cwd, {
       plugins: migratorPlugins,
     })
     const { migrations } = await migrator.prepare()
     if (migrations.length) {
       await this.shouldCommitState()
       log(`🚀  Migrating app code...`)
-      const { migrationCount } = await migrator.migrate()
+      const { migrationCount, allOptions } = await migrator.migrate(this.preset)
       log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
+
+      this.results.appMigrationCount = migrationCount
+      this.results.appMigrationAllOptions = allOptions
 
       // install additional deps (injected by migrations)
       log(`📦  Installing additional dependencies...`)

@@ -8,6 +8,7 @@
 // API
 const CreateModuleAPI = require('./CreateModuleAPI')
 // Utils
+const { Maintenance } = require('@nodepack/maintenance')
 const path = require('path')
 const inquirer = require('inquirer')
 const execa = require('execa')
@@ -30,12 +31,11 @@ const {
   shouldUseGit,
   commitOnGit,
 } = require('@nodepack/utils')
-const { Migrator, MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
+const { MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
 const generateReadme = require('../util/generateReadme')
 const loadLocalPreset = require('../util/loadLocalPreset')
 const loadRemotePreset = require('../util/loadRemotePreset')
 const { formatFeatures } = require('../util/features')
-const getMigratorPlugins = require('../util/getMigratorPlugins')
 
 const isManualMode = answers => answers.preset === '__manual__'
 
@@ -68,10 +68,7 @@ module.exports = class ProjectCreateJob {
    * @param {Preset?} preset
    */
   async create (cliOptions = {}, preset = null) {
-    // Helpers
     const { run, projectName, cwd } = this
-    // Are one of those vars non-empty?
-    const isTestOrDebug = !!(process.env.NODEPACK_TEST || process.env.NODEPACK_DEBUG)
 
     // Apply create modules
     const createModuleAPI = new CreateModuleAPI(this)
@@ -102,73 +99,63 @@ module.exports = class ProjectCreateJob {
       await run('git init')
     }
 
-    const packageManager = (
-      cliOptions.packageManager ||
-      loadGlobalOptions().packageManager ||
-      getPkgCommand(cwd)
-    )
+    const maintenance = new Maintenance({
+      cwd,
+      cliOptions,
+      skipCommit: true,
+      preset: finalPreset,
+      before: async ({ packageManager, isTestOrDebug }) => {
+        // install plugins
+        stopSpinner()
+        log(`⚙  Installing nodepack plugins. This might take a while...`)
+        if (isTestOrDebug) {
+          // in development, avoid installation process
+          await require('../util/setupDevProject')(cwd)
+        } else {
+          await installDeps(cwd, packageManager, cliOptions.registry)
+        }
+      },
+      after: async ({ results, pkg, packageManager, isTestOrDebug }) => {
+        // If migrations prompted the user, we need to get them in case we save the preset
+        finalPreset.appMigrations = results.appMigrationAllOptions
 
-    // install plugins
-    stopSpinner()
-    log(`⚙  Installing nodepack plugins. This might take a while...`)
-    if (isTestOrDebug) {
-      // in development, avoid installation process
-      await require('../util/setupDevProject')(this.cwd)
-    } else {
-      await installDeps(cwd, packageManager, cliOptions.registry)
-    }
+        // generate README.md
+        stopSpinner()
+        logWithSpinner('📄', 'Generating README.md...')
+        await this.writeFileToDisk('README.md', generateReadme(pkg, packageManager))
 
-    // Run app migrations
-    log(`🚀  Migrating app code...`)
-    const plugins = await getMigratorPlugins(cwd, Object.keys(finalPreset.plugins || {}))
-    const migrator = new Migrator(cwd, {
-      plugins,
+        // initial commit
+        let gitCommitSuccess = true
+        if (shouldInitGit) {
+          gitCommitSuccess = await commitOnGit(cliOptions, isTestOrDebug)
+        }
+        stopSpinner()
+
+        // save preset
+        if (this.isPresetManual) {
+          await this.askSavePreset(finalPreset)
+        }
+
+        // log instructions
+        log()
+        log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
+        log(
+          `👉  Get started with the following commands:\n\n` +
+          (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
+          chalk.cyan(` ${chalk.gray('$')} ${packageManager === 'yarn' ? 'yarn dev' : 'npm run dev'}`)
+        )
+        log()
+
+        if (!gitCommitSuccess) {
+          warn(
+            `Skipped git commit due to missing username and email in git config.\n` +
+            `You will need to perform the initial commit yourself.\n`
+          )
+        }
+      },
     })
-    const { appMigrations, migrationCount } = await migrator.migrate(finalPreset)
-    finalPreset.appMigrations = appMigrations
-    log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
 
-    // install additional deps (injected by migrations)
-    log(`📦  Installing additional dependencies...`)
-    if (!isTestOrDebug) {
-      await installDeps(cwd, packageManager, cliOptions.registry)
-    }
-
-    // generate README.md
-    stopSpinner()
-    logWithSpinner('📄', 'Generating README.md...')
-    await this.writeFileToDisk('README.md', generateReadme(migrator.pkg, packageManager))
-
-    // initial commit
-    let gitCommitSuccess = true
-    if (shouldInitGit) {
-      gitCommitSuccess = await commitOnGit(cliOptions, isTestOrDebug)
-    }
-    stopSpinner()
-
-    // save preset
-    if (this.isPresetManual) {
-      await this.askSavePreset(finalPreset)
-    }
-
-    // log instructions
-    log()
-    log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
-    log(
-      `👉  Get started with the following commands:\n\n` +
-      (this.cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
-      chalk.cyan(` ${chalk.gray('$')} ${packageManager === 'yarn' ? 'yarn dev' : 'npm run dev'}`)
-    )
-    log()
-
-    if (!gitCommitSuccess) {
-      warn(
-        `Skipped git commit due to missing username and email in git config.\n` +
-        `You will need to perform the initial commit yourself.\n`
-      )
-    }
-
-    migrator.displayNotices()
+    await maintenance.run()
   }
 
   /**
