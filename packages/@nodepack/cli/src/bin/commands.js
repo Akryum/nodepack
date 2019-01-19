@@ -42,8 +42,8 @@ program
   .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
   .option('-x, --proxy', 'Use specified proxy when creating project')
   // Git
-  .option('-g, --git [message]', 'Force git initialization with initial commit message')
-  .option('-n, --no-git', 'Skip git initialization')
+  .option('-g, --git [message]', 'Force git commit with message before maintenance')
+  .option('-n, --no-git', 'Skip git commit before maintenance')
   .action((pluginName, cmd) => {
     const options = cleanArgs(cmd)
     // --no-git makes commander to default git to true
