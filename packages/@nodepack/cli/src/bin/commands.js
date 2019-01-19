@@ -37,7 +37,7 @@ program
   .description('add a plugin to the project')
   // Install
   .option('--no-install', `Don't try to install the plugin with package manager`)
-  .option('--force-install', `Force installation with package manager even if already installed`)
+  .option('--forceInstall', `Force installation with package manager even if already installed`)
   .option('-m, --packageManager <command>', 'Use specified npm client when installing dependencies')
   .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
   .option('-x, --proxy', 'Use specified proxy when creating project')
