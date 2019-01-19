@@ -12,7 +12,6 @@ const path = require('path')
 const inquirer = require('inquirer')
 const execa = require('execa')
 const cloneDeep = require('lodash.clonedeep')
-const getPackageVersion = require('../util/getPackageVersion')
 const {
   loadGlobalOptions,
   saveGlobalOptions,
@@ -25,18 +24,17 @@ const {
   error,
   chalk,
   getPkgCommand,
-  hasGit,
-  hasProjectGit,
   installDeps,
-  sortObject,
   defaultPreset,
+  getPackageTaggedVersion,
 } = require('@nodepack/utils')
-const { loadModule } = require('@nodepack/module')
-const { Migrator, MigratorPlugin, MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
+const { Migrator, MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
 const generateReadme = require('../util/generateReadme')
 const loadLocalPreset = require('../util/loadLocalPreset')
 const loadRemotePreset = require('../util/loadRemotePreset')
 const { formatFeatures } = require('../util/features')
+const { shouldUseGit, commitOnGit } = require('../util/git')
+const getMigratorPlugins = require('../util/getMigratorPlugins')
 
 const isManualMode = answers => answers.preset === '__manual__'
 
@@ -99,7 +97,7 @@ module.exports = class ProjectCreateJob {
 
     // initialize git repository before installing deps
     // so that vue-cli-service can setup git hooks.
-    const shouldInitGit = await this.shouldInitGit(cliOptions)
+    const shouldInitGit = await shouldUseGit(this.cwd, cliOptions)
     if (shouldInitGit) {
       logWithSpinner(`🗃`, `Initializing git repository...`)
       await run('git init')
@@ -121,15 +119,16 @@ module.exports = class ProjectCreateJob {
       await installDeps(cwd, packageManager, cliOptions.registry)
     }
 
-    // run generator
+    // Run app migrations
     log(`🚀  Migrating app code...`)
-    const plugins = await this.resolvePlugins(finalPreset.plugins)
+    const plugins = await getMigratorPlugins(cwd, Object.keys(finalPreset.plugins || {}))
     const migrator = new Migrator(cwd, {
       plugins,
       completeCbs: createCompleteCbs,
     })
-    const { appMigrations } = await migrator.migrate(finalPreset)
+    const { appMigrations, migrationCount } = await migrator.migrate(finalPreset)
     finalPreset.appMigrations = appMigrations
+    log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
 
     // install additional deps (injected by generators)
     log(`📦  Installing additional dependencies...`)
@@ -151,7 +150,7 @@ module.exports = class ProjectCreateJob {
     // initial commit
     let gitCommitSuccess = true
     if (shouldInitGit) {
-      gitCommitSuccess = await this.commitInitialState(cliOptions, isTestOrDebug)
+      gitCommitSuccess = await commitOnGit(cliOptions, isTestOrDebug)
     }
     stopSpinner()
 
@@ -288,18 +287,6 @@ module.exports = class ProjectCreateJob {
       process.exit(1)
     }
     return preset
-  }
-
-  async resolvePlugins (rawPlugins) {
-    // ensure service is invoked first
-    rawPlugins = sortObject(rawPlugins, ['@nodepack/service'], true)
-    const plugins = []
-    for (const id of Object.keys(rawPlugins)) {
-      const apply = loadModule(`${id}/src/app-migrations`, this.cwd) || (() => {})
-      const options = rawPlugins[id] || {}
-      plugins.push(new MigratorPlugin(id, apply, options))
-    }
-    return plugins
   }
 
   getPresets () {
@@ -459,34 +446,12 @@ module.exports = class ProjectCreateJob {
     for (const dep of deps) {
       pkg.devDependencies[dep] = (
         preset.plugins[dep] ||
-        await this.getDepVersion(dep) ||
+        await getPackageTaggedVersion(dep).then(version => version && `^${version}`) ||
         'latest'
       )
     }
     // write package.json
     await this.writeFileToDisk('package.json', JSON.stringify(pkg, null, 2))
-  }
-
-  /**
-   * @param {any} cliOptions
-   * @param {boolean} isTestOrDebug
-   * @returns {Promise.<boolean>} Git commit success
-   */
-  async commitInitialState (cliOptions, isTestOrDebug) {
-    const { run } = this
-    let success = true
-    await run('git add -A')
-    if (isTestOrDebug) {
-      await run('git', ['config', 'user.name', 'test'])
-      await run('git', ['config', 'user.email', 'test@test.com'])
-    }
-    const msg = typeof cliOptions.git === 'string' ? cliOptions.git : 'init'
-    try {
-      await run('git', ['commit', '-m', msg])
-    } catch (e) {
-      success = false
-    }
-    return success
   }
 
   run (command, args) {
@@ -498,34 +463,5 @@ module.exports = class ProjectCreateJob {
     await writeFileTree(this.cwd, {
       [filename]: new MigrationOperationFile(this.cwd, filename, source, true),
     })
-  }
-
-  /**
-   * @param {string} dep Dep id
-   * @returns {Promise.<string?>}
-   */
-  async getDepVersion (dep) {
-    try {
-      const res = await getPackageVersion(dep)
-      return res.body['dist-tags'].latest
-    } catch (e) {
-      return null
-    }
-  }
-
-  async shouldInitGit (cliOptions) {
-    if (!hasGit()) {
-      return false
-    }
-    // --git
-    if (cliOptions.forceGit) {
-      return true
-    }
-    // --no-git
-    if (cliOptions.git === false || cliOptions.git === 'false') {
-      return false
-    }
-    // default: true unless already in a git repo
-    return !hasProjectGit(this.cwd)
   }
 }

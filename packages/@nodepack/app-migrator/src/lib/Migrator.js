@@ -39,7 +39,6 @@ const MigrationAPI = require('./MigrationAPI')
 const MigrationWhenAPI = require('./MigrationWhenAPI')
 const MigrationOperation = require('./MigrationOperation')
 // Utils
-const { readPkg } = require('../util/pkg')
 const {
   toShortPluginId,
   isPlugin,
@@ -54,6 +53,7 @@ const {
   ensureConfigFile,
   readConfigFile,
   writeConfigFile,
+  readPkg,
   FILE_APP_MIGRATIONS_PLUGIN_VERSIONS,
   FILE_APP_MIGRATIONS_RECORDS,
 } = require('@nodepack/utils')
@@ -114,6 +114,7 @@ module.exports = class Migrator {
     // Prompts
     const rootOptions = options || await this.resolvePrompts(migrations)
 
+    let migrationCount = 0
     for (const migration of migrations) {
       // Prompts results
       const pluginOptions = rootOptions[migration.plugin.id]
@@ -139,6 +140,8 @@ module.exports = class Migrator {
         pluginVersion: migration.plugin.currentVersion || '',
         options: operation.options,
       })
+
+      migrationCount++
     }
 
     // Write config files
@@ -151,6 +154,7 @@ module.exports = class Migrator {
 
     return {
       appMigrations: rootOptions,
+      migrationCount,
     }
   }
 

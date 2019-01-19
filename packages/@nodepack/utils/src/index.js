@@ -11,6 +11,7 @@ module.exports = {
   ...require('./logger'),
   ...require('./object'),
   ...require('./openBrowser'),
+  ...require('./pkg'),
   ...require('./plugin'),
   ...require('./request'),
   shouldUseTaobao: require('./shouldUseTaobao'),

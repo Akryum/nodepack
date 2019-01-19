@@ -41,9 +41,8 @@ const cosmiconfig = require('cosmiconfig')
 const defaultsDeep = require('lodash.defaultsdeep')
 const ServicePlugin = require('./ServicePlugin')
 const ServicePluginAPI = require('./ServicePluginAPI')
-const { warn, error, isPlugin } = require('@nodepack/utils')
+const { warn, error, readPkg, getPlugins } = require('@nodepack/utils')
 const { loadModule } = require('@nodepack/module')
-const { readPackageJson } = require('../util/pkgJson.js')
 const { defaultOptions } = require('./options')
 
 module.exports = class Service {
@@ -54,7 +53,7 @@ module.exports = class Service {
     this.initialized = false
     this.cwd = cwd
 
-    this.pkg = readPackageJson(cwd)
+    this.pkg = readPkg(cwd)
 
     /** @type {ServicePlugin []} */
     this.plugins = this.resolvePlugins()
@@ -89,9 +88,7 @@ module.exports = class Service {
       '../config/prod',
     ].map(id => idToPlugin(id, true))
 
-    const projectPlugins = Object.keys(this.pkg.devDependencies || {})
-      .concat(Object.keys(this.pkg.dependencies || {}))
-      .filter(isPlugin)
+    const projectPlugins = getPlugins(this.pkg)
       .map(id => {
         if (
           this.pkg.optionalDependencies &&

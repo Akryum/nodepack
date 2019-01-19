@@ -48,7 +48,11 @@ exports.unset = function (target, path) {
   }
 }
 
-exports.sortObject = function (obj, keyOrder, dontSortByUnicode) {
+/**
+ * @param {Object} obj
+ * @param {string []?} keyOrder
+ */
+exports.sortObject = function (obj, keyOrder = null, dontSortByUnicode = false) {
   if (!obj) return
   const res = {}
 
@@ -65,6 +69,28 @@ exports.sortObject = function (obj, keyOrder, dontSortByUnicode) {
   keys.forEach(key => {
     res[key] = obj[key]
   })
+
+  return res
+}
+
+/**
+ * @param {Array} array
+ * @param {string []?} keyOrder
+ */
+exports.sortArray = function (array, keyOrder = null, dontSortByUnicode = false) {
+  let res = []
+
+  if (keyOrder) {
+    if (!dontSortByUnicode) {
+      keyOrder = keyOrder.slice().sort()
+    }
+    res = res.concat(keyOrder)
+  }
+
+  if (!dontSortByUnicode) {
+    array = array.slice().sort()
+  }
+  res = res.concat(array)
 
   return res
 }

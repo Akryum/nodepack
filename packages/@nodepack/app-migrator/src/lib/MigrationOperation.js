@@ -18,10 +18,9 @@ const MigrationOperationAPI = require('./MigrationOperationAPI')
 // Utils
 const ejs = require('ejs')
 const { ConfigTransform } = require('@nodepack/config-transformer')
-const { ensureEOL } = require('@nodepack/utils')
+const { ensureEOL, sortPkg, readPkg } = require('@nodepack/utils')
 const GeneratorFile = require('./MigrationOperationFile')
 const writeFileTree = require('../util/writeFileTree')
-const { sortPkg, readPkg } = require('../util/pkg')
 const { readFiles, normalizeFilePaths } = require('../util/files')
 
 const defaultConfigTransforms = {

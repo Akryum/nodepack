@@ -10,22 +10,47 @@ program
 program
   .command('create <app-name>')
   .description('create a new project powered by nodepack')
+  // Preset
   .option('-p, --preset <presetName>', 'Skip prompts and use saved or remote preset')
   .option('-d, --default', 'Skip prompts and use the default preset')
   .option('-i, --inlinePreset <json>', 'Skip prompts and use inline JSON string as preset')
+  // Install
   .option('-m, --packageManager <command>', 'Use specified npm client when installing dependencies')
   .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
+  .option('-x, --proxy', 'Use specified proxy when creating project')
+  // Git
   .option('-g, --git [message]', 'Force git initialization with initial commit message')
   .option('-n, --no-git', 'Skip git initialization')
+  // Folder
   .option('-f, --force', 'Overwrite target directory if it exists')
-  .option('-x, --proxy', 'Use specified proxy when creating project')
-  .action((name, cmd) => {
+  .action((appName, cmd) => {
     const options = cleanArgs(cmd)
     // --no-git makes commander to default git to true
     if (process.argv.includes('-g') || process.argv.includes('--git')) {
       options.forceGit = true
     }
-    require('../commands/create')(name, options)
+    require('../commands/create')(appName, options)
+  })
+
+program
+  .command('add <plugin>')
+  .description('add a plugin to the project')
+  // Install
+  .option('--no-install', `Don't try to install the plugin with package manager`)
+  .option('--force-install', `Force installation with package manager even if already installed`)
+  .option('-m, --packageManager <command>', 'Use specified npm client when installing dependencies')
+  .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
+  .option('-x, --proxy', 'Use specified proxy when creating project')
+  // Git
+  .option('-g, --git [message]', 'Force git initialization with initial commit message')
+  .option('-n, --no-git', 'Skip git initialization')
+  .action((pluginName, cmd) => {
+    const options = cleanArgs(cmd)
+    // --no-git makes commander to default git to true
+    if (process.argv.includes('-g') || process.argv.includes('--git')) {
+      options.forceGit = true
+    }
+    require('../commands/add')(pluginName, options)
   })
 
 program

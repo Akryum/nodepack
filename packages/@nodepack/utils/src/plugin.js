@@ -33,7 +33,7 @@ exports.resolvePluginId = id => {
     if (scopeMatch) {
       const scope = scopeMatch[0]
       const shortId = id.replace(scopeRE, '')
-      return `${scope}nodepack-plugin-${shortId}`
+      return `${scope}${scope === '@nodepack/' ? `` : `nodepack-`}plugin-${shortId}`
     }
   }
   // default short
@@ -76,4 +76,10 @@ exports.getPluginLink = id => {
     (pkg.repository && pkg.repository.url) ||
     `https://www.npmjs.com/package/${id.replace(`/`, `%2F`)}`
   )
+}
+
+exports.getPlugins = function (pkg) {
+  return Object.keys(pkg.devDependencies || {})
+    .concat(Object.keys(pkg.dependencies || {}))
+    .filter(exports.isPlugin)
 }
