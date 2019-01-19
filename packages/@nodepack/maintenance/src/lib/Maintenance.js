@@ -16,9 +16,10 @@ const inquirer = require('inquirer')
 /**
  * @typedef MaintenanceOptions
  * @prop {string} cwd Working directory
- * @prop {any} cliOptions CLI options if any
- * @prop {MaintenanceHook} before Called before the common maintenance operations
- * @prop {MaintenanceHook} after Called after the common maintenance operations
+ * @prop {any} [cliOptions] CLI options if any
+ * @prop {boolean} [skipCommit] Don't try to commit with git
+ * @prop {MaintenanceHook?} [before] Called before the common maintenance operations
+ * @prop {MaintenanceHook?} [after] Called after the common maintenance operations
  */
 
 /**
@@ -31,34 +32,40 @@ class Maintenance {
   /**
    * @param {MaintenanceOptions} options
    */
-  constructor (options) {
-    this.options = options
+  constructor ({
+    cwd,
+    cliOptions = {},
+    skipCommit = false,
+    before = null,
+    after = null,
+  }) {
+    this.cwd = cwd
+    this.cliOptions = cliOptions
+    this.skipCommit = skipCommit
+    this.beforeHook = before
+    this.afterHook = after
+
     this.preCommitAttempted = false
 
     // Are one of those vars non-empty?
     this.isTestOrDebug = !!(process.env.NODEPACK_TEST || process.env.NODEPACK_DEBUG)
 
-    this.pkg = readPkg(this.options.cwd)
+    this.pkg = readPkg(this.cwd)
     this.plugins = getPlugins(this.pkg)
 
     this.packageManager = (
-      this.options.cliOptions.packageManager ||
+      this.cliOptions.packageManager ||
       loadGlobalOptions().packageManager ||
       getPkgCommand(this.cwd)
     )
   }
 
-  get cwd () {
-    return this.options.cwd
-  }
-
   async run () {
-    if (this.options.before) {
-      await this.options.before(this)
+    if (this.beforeHook) {
+      await this.beforeHook(this)
     }
 
-    const { plugins, packageManager } = this
-    const { cwd, cliOptions } = this.options
+    const { cwd, cliOptions, plugins, packageManager } = this
 
     // Run app migrations
     const migratorPlugins = await getMigratorPlugins(cwd, plugins)
@@ -81,8 +88,8 @@ class Maintenance {
 
     // TODO Env Migrations
 
-    if (this.options.after) {
-      await this.options.after(this)
+    if (this.afterHook) {
+      await this.afterHook(this)
     }
 
     migrator.displayNotices()
@@ -92,12 +99,12 @@ class Maintenance {
    * Should be called each time the project is about to be modified.
    */
   async shouldCommitState () {
-    if (this.preCommitAttempted) return
+    if (this.preCommitAttempted || this.skipCommit) return
     // Commit app code before installing a new plugin
     // in case it modify files
-    const shouldCommitState = await shouldUseGit(this.options.cwd, this.options.cliOptions)
+    const shouldCommitState = await shouldUseGit(this.cwd, this.cliOptions)
     if (shouldCommitState) {
-      const result = await commitOnGit(this.options.cliOptions, this.isTestOrDebug)
+      const result = await commitOnGit(this.cliOptions, this.isTestOrDebug)
       if (!result) {
         // Commit failed confirmation
         const answers = await inquirer.prompt([
