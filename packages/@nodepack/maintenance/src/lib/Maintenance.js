@@ -25,6 +25,7 @@ const inquirer = require('inquirer')
  * A Maintenance is a special system that should be run on user project
  * on most occasions (for example: project create, plugin add/update/remove...).
  * It will automatically execute maintenance operations like app and env migrations if needed.
+ * It also has useful helpers for those occasions to reduce code duplication.
  */
 class Maintenance {
   /**
