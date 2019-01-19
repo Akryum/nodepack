@@ -1,7 +1,4 @@
-const {
-  hasGit,
-  hasProjectGit,
-} = require('@nodepack/utils')
+const { hasGit, hasProjectGit } = require('./env')
 
 /**
  * @param {any} cliOptions

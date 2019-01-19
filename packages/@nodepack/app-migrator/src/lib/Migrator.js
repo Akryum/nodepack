@@ -81,8 +81,12 @@ module.exports = class Migrator {
     this.plugins = plugins
     this.completeCbs = completeCbs
 
+    this.prepared = false
+
     /** @type {Migration []} */
     this.migrations = []
+    /** @type {Migration []} */
+    this.queuedMigrations = []
     /** @type {MigrationRecord []} */
     this.migrationRecords = []
     /** @type {Map<string, boolean>} */
@@ -91,10 +95,30 @@ module.exports = class Migrator {
     this.notices = []
   }
 
+  async prepare () {
+    if (!this.prepared) {
+      await this.setup()
+      await this.readPluginVersions()
+
+      // Migrations that will be applied
+      this.queuedMigrations = await this.resolveMigrations()
+
+      this.prepared = true
+    }
+
+    return {
+      migrations: this.queuedMigrations,
+    }
+  }
+
   /**
    * @param {Preset?} preset
    */
   async migrate (preset = null) {
+    if (!this.prepared) {
+      await this.prepare()
+    }
+
     /** @type {MigrationsOptions?} */
     let options = null
     let extractConfigFiles = false
@@ -106,10 +130,7 @@ module.exports = class Migrator {
       }
     }
 
-    await this.setup()
-    await this.readPluginVersions()
-
-    const migrations = await this.resolveMigrations()
+    const migrations = this.queuedMigrations
 
     // Prompts
     const rootOptions = options || await this.resolvePrompts(migrations)

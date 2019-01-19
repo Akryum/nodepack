@@ -29,6 +29,7 @@
   "dependencies": {
     "@nodepack/app-migrator": "^0.0.1",
     "@nodepack/env-check": "^0.0.1",
+    "@nodepack/maintenance": "^0.0.1",
     "@nodepack/module": "^0.0.1",
     "@nodepack/utils": "^0.0.1",
     "chalk": "^2.4.1",

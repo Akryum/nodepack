@@ -7,6 +7,7 @@ module.exports = {
   ...require('./deps'),
   ...require('./env'),
   ...require('./files'),
+  ...require('./git'),
   ...require('./globalOptions'),
   ...require('./logger'),
   ...require('./object'),

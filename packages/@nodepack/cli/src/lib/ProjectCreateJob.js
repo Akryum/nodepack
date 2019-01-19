@@ -27,13 +27,14 @@ const {
   installDeps,
   defaultPreset,
   getPackageTaggedVersion,
+  shouldUseGit,
+  commitOnGit,
 } = require('@nodepack/utils')
 const { Migrator, MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
 const generateReadme = require('../util/generateReadme')
 const loadLocalPreset = require('../util/loadLocalPreset')
 const loadRemotePreset = require('../util/loadRemotePreset')
 const { formatFeatures } = require('../util/features')
-const { shouldUseGit, commitOnGit } = require('../util/git')
 const getMigratorPlugins = require('../util/getMigratorPlugins')
 
 const isManualMode = answers => answers.preset === '__manual__'
@@ -58,8 +59,6 @@ module.exports = class ProjectCreateJob {
 
     /** @type {function []} */
     this.promptCompleteCbs = []
-    /** @type {function []} */
-    this.createCompleteCbs = []
 
     this.run = this.run.bind(this)
   }
@@ -70,7 +69,7 @@ module.exports = class ProjectCreateJob {
    */
   async create (cliOptions = {}, preset = null) {
     // Helpers
-    const { run, projectName, cwd, createCompleteCbs } = this
+    const { run, projectName, cwd } = this
     // Are one of those vars non-empty?
     const isTestOrDebug = !!(process.env.NODEPACK_TEST || process.env.NODEPACK_DEBUG)
 
@@ -124,22 +123,15 @@ module.exports = class ProjectCreateJob {
     const plugins = await getMigratorPlugins(cwd, Object.keys(finalPreset.plugins || {}))
     const migrator = new Migrator(cwd, {
       plugins,
-      completeCbs: createCompleteCbs,
     })
     const { appMigrations, migrationCount } = await migrator.migrate(finalPreset)
     finalPreset.appMigrations = appMigrations
     log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
 
-    // install additional deps (injected by generators)
+    // install additional deps (injected by migrations)
     log(`📦  Installing additional dependencies...`)
     if (!isTestOrDebug) {
       await installDeps(cwd, packageManager, cliOptions.registry)
-    }
-
-    // run complete cbs if any (injected by generators)
-    logWithSpinner('⚓', `Running completion hooks...`)
-    for (const cb of createCompleteCbs) {
-      await cb()
     }
 
     // generate README.md
