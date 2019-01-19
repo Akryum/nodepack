@@ -75,6 +75,25 @@ program
   })
 
 program
+  .command('service <command>')
+  .description('run a command with `nodepack-service` installed in a project')
+  .allowUnknownOption()
+  .action((action, cmd) => {
+    const { pkg, packageManager } = getPkgInfo()
+    let command = 'nodepack-service'
+    let args = [action]
+    if (pkg.scripts && pkg.scripts[action]) {
+      // Prefer 'run' script in package.json
+      command = packageManager
+      args = ['run', action]
+    }
+    exec(command, [
+      ...args,
+      ...process.argv.slice(4),
+    ])
+  })
+
+program
   .command('env-info')
   .description('print your environment infos for debugging')
   .option('-e, --env', 'Output env variables')
