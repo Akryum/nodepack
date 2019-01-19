@@ -57,13 +57,13 @@ program
 
 program
   .command('build')
-  .description('build your project using `nodepack-service build`')
+  .description('build your project using `nodepack-service build` in a project')
   .allowUnknownOption()
   .action(cmd => {
     const { pkg, packageManager } = getPkgInfo()
     let command = 'nodepack-service'
     let args = ['build']
-    if (pkg.scripts && pkg.scripts.dev) {
+    if (pkg.scripts && pkg.scripts.build) {
       // Prefer 'run' script in package.json
       command = packageManager
       args = ['run', 'build']
