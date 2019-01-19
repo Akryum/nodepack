@@ -56,6 +56,25 @@ program
   })
 
 program
+  .command('build')
+  .description('build your project using `nodepack-service build`')
+  .allowUnknownOption()
+  .action(cmd => {
+    const { pkg, packageManager } = getPkgInfo()
+    let command = 'nodepack-service'
+    let args = ['build']
+    if (pkg.scripts && pkg.scripts.dev) {
+      // Prefer 'run' script in package.json
+      command = packageManager
+      args = ['run', 'build']
+    }
+    exec(command, [
+      ...args,
+      ...process.argv.slice(3),
+    ])
+  })
+
+program
   .command('env-info')
   .description('print your environment infos for debugging')
   .option('-e, --env', 'Output env variables')
@@ -131,13 +150,8 @@ async function noCommand () {
 
   // In a nodepack project
   if (fs.existsSync(path.resolve(cwd, '.nodepack')) || fs.existsSync(path.resolve(cwd, 'nodepack.config.js'))) {
-    const { installDeps, loadGlobalOptions, getPkgCommand, readPkg } = require('@nodepack/utils')
-    const execa = require('execa')
-
-    const packageManager = (
-      loadGlobalOptions().packageManager ||
-      getPkgCommand(cwd)
-    )
+    const { installDeps } = require('@nodepack/utils')
+    const { pkg, packageManager } = getPkgInfo()
 
     // Auto-install
     if (!fs.existsSync(path.resolve(cwd, 'node_modules'))) {
@@ -145,7 +159,6 @@ async function noCommand () {
     }
 
     // Run command
-    const pkg = readPkg(cwd)
     let command = 'nodepack-service'
     let args = ['dev']
     if (pkg.scripts && pkg.scripts.dev) {
@@ -153,14 +166,33 @@ async function noCommand () {
       command = packageManager
       args = ['run', 'dev']
     }
-    execa(command, args, {
-      stdio: [process.stdin, process.stdout, process.stderr],
-      cwd: process.cwd(),
-      cleanup: true,
-      shell: false,
-      env: process.env,
-    })
+    exec(command, args)
   } else {
     program.outputHelp()
   }
+}
+
+function getPkgInfo () {
+  const { loadGlobalOptions, getPkgCommand, readPkg } = require('@nodepack/utils')
+
+  const packageManager = (
+    loadGlobalOptions().packageManager ||
+    getPkgCommand(cwd)
+  )
+  const pkg = readPkg(cwd)
+  return {
+    packageManager,
+    pkg,
+  }
+}
+
+function exec (command, args) {
+  const execa = require('execa')
+  execa(command, args, {
+    stdio: [process.stdin, process.stdout, process.stderr],
+    cwd: process.cwd(),
+    cleanup: true,
+    shell: false,
+    env: process.env,
+  })
 }
