@@ -1,3 +1,5 @@
+const commonCommandOptions = require('../util/commonCommandOptions')
+
 const defaultArgs = {
   clean: true,
 }
@@ -10,6 +12,7 @@ module.exports = (api, options) => {
     options: {
       '--no-clean': 'do not delete the dist folder before building',
       '--function': 'apply default config for serverless function',
+      ...commonCommandOptions,
     },
   }, async (args) => {
     // Default args

@@ -1,3 +1,5 @@
+const commonCommandOptions = require('../util/commonCommandOptions')
+
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
   api.registerCommand('dev', {
@@ -5,6 +7,7 @@ module.exports = (api, options) => {
     usage: 'nodepack dev [entry]',
     options: {
       '-p, --port [port]': 'Specify a default port for process.env.PORT (it may automatically change if not available)',
+      ...commonCommandOptions,
     },
   }, async (args) => {
     const path = require('path')
