@@ -102,8 +102,9 @@ module.exports = class ProjectCreateJob {
     const maintenance = new Maintenance({
       cwd,
       cliOptions,
-      skipCommit: true,
       preset: finalPreset,
+      skipCommit: true,
+      skipPreInstall: true,
       before: async ({ packageManager, isTestOrDebug }) => {
         // install plugins
         stopSpinner()

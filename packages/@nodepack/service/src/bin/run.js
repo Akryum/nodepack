@@ -17,6 +17,7 @@ async function run () {
     const maintenance = new Maintenance({
       cwd,
       cliOptions: args,
+      skipPreInstall: args.preInstall === false,
     })
     await maintenance.run()
   }

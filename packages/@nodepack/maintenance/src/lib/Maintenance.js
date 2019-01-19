@@ -20,8 +20,9 @@ const inquirer = require('inquirer')
  * @typedef MaintenanceOptions
  * @prop {string} cwd Working directory
  * @prop {any} [cliOptions] CLI options if any
- * @prop {boolean} [skipCommit] Don't try to commit with git
  * @prop {Preset?} [preset] Project preset (used for project creation)
+ * @prop {boolean} [skipCommit] Don't try to commit with git
+ * @prop {boolean} [skipPreInstall] Don't run install package at the begining of the maintenance
  * @prop {MaintenanceHook?} [before] Called before the common maintenance operations
  * @prop {MaintenanceHook?} [after] Called after the common maintenance operations
  */
@@ -45,15 +46,17 @@ class Maintenance {
   constructor ({
     cwd,
     cliOptions = {},
-    skipCommit = false,
     preset = null,
+    skipCommit = false,
+    skipPreInstall = false,
     before = null,
     after = null,
   }) {
     this.cwd = cwd
     this.cliOptions = cliOptions
-    this.skipCommit = skipCommit
     this.preset = preset
+    this.skipCommit = skipCommit
+    this.skipPreInstall = skipPreInstall
     this.beforeHook = before
     this.afterHook = after
 
@@ -84,6 +87,14 @@ class Maintenance {
     }
 
     const { cwd, cliOptions, plugins, packageManager } = this
+
+    if (!this.skipPreInstall && !this.isTestOrDebug) {
+      // pre-run install to be sure everything is up-to-date
+      log(`📦  Checking dependencies installation...`)
+      if (!this.isTestOrDebug) {
+        await installDeps(cwd, packageManager, cliOptions.registry)
+      }
+    }
 
     // Run app migrations
     const migratorPlugins = await getAppMigratorPlugins(cwd, plugins)

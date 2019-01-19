@@ -36,6 +36,7 @@ module.exports = class PluginAddJob {
     const maintenance = new Maintenance({
       cwd,
       cliOptions,
+      skipPreInstall: true,
       before: async ({ pkg, plugins, shouldCommitState, isTestOrDebug }) => {
         // Plugins
         const alreadyInPkg = plugins.includes(packageName)
