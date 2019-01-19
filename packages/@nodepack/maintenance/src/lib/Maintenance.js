@@ -5,6 +5,9 @@ const {
   getPlugins,
   commitOnGit,
   shouldUseGit,
+  installDeps,
+  loadGlobalOptions,
+  getPkgCommand,
 } = require('@nodepack/utils')
 const inquirer = require('inquirer')
 
@@ -36,6 +39,16 @@ class Maintenance {
 
     this.pkg = readPkg(this.options.cwd)
     this.plugins = getPlugins(this.pkg)
+
+    this.packageManager = (
+      this.options.cliOptions.packageManager ||
+      loadGlobalOptions().packageManager ||
+      getPkgCommand(this.cwd)
+    )
+  }
+
+  get cwd () {
+    return this.options.cwd
   }
 
   async run () {
@@ -43,8 +56,8 @@ class Maintenance {
       await this.options.before(this)
     }
 
-    const { plugins } = this
-    const { cwd } = this.options
+    const { plugins, packageManager } = this
+    const { cwd, cliOptions } = this.options
 
     // Run app migrations
     const migratorPlugins = await getMigratorPlugins(cwd, plugins)
@@ -57,6 +70,12 @@ class Maintenance {
       log(`🚀  Migrating app code...`)
       const { migrationCount } = await migrator.migrate()
       log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
+
+      // install additional deps (injected by migrations)
+      log(`📦  Installing additional dependencies...`)
+      if (!this.isTestOrDebug) {
+        await installDeps(cwd, packageManager, cliOptions.registry)
+      }
     }
 
     // TODO Env Migrations
