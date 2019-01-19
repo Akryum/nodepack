@@ -18,6 +18,11 @@ const inquirer = require('inquirer')
  * @prop {MaintenanceHook} after Called after the common maintenance operations
  */
 
+/**
+ * A Maintenance is a special system that should be run on user project
+ * on most occasions (for example: project create, plugin add/update/remove...).
+ * It will automatically execute maintenance operations like app and env migrations if needed.
+ */
 class Maintenance {
   /**
    * @param {MaintenanceOptions} options
