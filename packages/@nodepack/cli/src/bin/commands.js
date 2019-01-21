@@ -56,6 +56,29 @@ program
   })
 
 program
+  .command('upgrade [plugins...]')
+  .description(`upgrade one or more plugins`)
+  // Version
+  .option('-w, --wanted', 'Use wanted versions')
+  .option('-l, --latest', 'Use latest versions (may inclide breaking changes!)')
+  .option('-y, --yes', 'Skip asking for upgrade confirmation')
+  // Install
+  .option('-m, --packageManager <command>', 'Use specified npm client when installing dependencies')
+  .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
+  .option('-x, --proxy', 'Use specified proxy when creating project')
+  // Git
+  .option('-g, --git [message]', 'Force git commit with message before maintenance')
+  .option('-n, --no-git', 'Skip git commit before maintenance')
+  .action((plugins, cmd) => {
+    const options = cleanArgs(cmd)
+    // --no-git makes commander to default git to true
+    if (process.argv.includes('-g') || process.argv.includes('--git')) {
+      options.forceGit = true
+    }
+    require('../commands/upgrade')(plugins, options)
+  })
+
+program
   .command('build')
   .description('build your project using `nodepack-service build` in a project')
   .allowUnknownOption()

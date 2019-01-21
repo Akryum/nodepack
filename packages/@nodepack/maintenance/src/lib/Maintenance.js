@@ -86,14 +86,11 @@ class Maintenance {
       await this.beforeHook(this)
     }
 
-    const { cwd, cliOptions, plugins, packageManager } = this
+    const { cwd, plugins } = this
 
-    if (!this.skipPreInstall && !this.isTestOrDebug) {
-      // pre-run install to be sure everything is up-to-date
-      log(`📦  Checking dependencies installation...`)
-      if (!this.isTestOrDebug) {
-        await installDeps(cwd, packageManager, cliOptions.registry)
-      }
+    // pre-run install to be sure everything is up-to-date
+    if (!this.skipPreInstall) {
+      await this.installDeps(`📦  Checking dependencies installation...`)
     }
 
     // Run app migrations
@@ -112,10 +109,7 @@ class Maintenance {
       this.results.appMigrationAllOptions = allOptions
 
       // install additional deps (injected by migrations)
-      log(`📦  Installing additional dependencies...`)
-      if (!this.isTestOrDebug) {
-        await installDeps(cwd, packageManager, cliOptions.registry)
-      }
+      await this.installDeps(`📦  Installing additional dependencies...`)
     }
 
     // TODO Env Migrations
@@ -155,6 +149,16 @@ class Maintenance {
       }
     }
     this.preCommitAttempted = true
+  }
+
+  /**
+   * @param {string?} message
+   */
+  async installDeps (message = null) {
+    if (!this.isTestOrDebug) {
+      if (message) log(message)
+      await installDeps(this.cwd, this.packageManager, this.cliOptions.registry)
+    }
   }
 }
 

@@ -1,8 +1,6 @@
 const path = require('path')
 const fs = require('fs-extra')
 const { sortObject } = require('./object')
-const { request } = require('./request')
-const shouldUseTaobao = require('./shouldUseTaobao')
 
 /**
  * Read the package.json file of a project folder.
@@ -17,6 +15,18 @@ exports.readPkg = cwd => {
     return pkg
   }
   return null
+}
+
+/**
+ * Write the package.json file of a project folder.
+ * @param {string} cwd Project folder.
+ * @param {any} data Object
+ */
+exports.writePkg = (cwd, data) => {
+  const pkgFile = path.resolve(cwd, 'package.json')
+  fs.writeJsonSync(pkgFile, data, {
+    spaces: 2,
+  })
 }
 
 /**
@@ -51,32 +61,4 @@ exports.sortPkg = pkg => {
     'jest',
   ])
   return pkg
-}
-
-exports.getPackageMetadata = async function (id, range = '') {
-  const registry = (await shouldUseTaobao())
-    ? `https://registry.npm.taobao.org`
-    : `https://registry.npmjs.org`
-
-  let result
-  try {
-    result = await request.get(`${registry}/${encodeURIComponent(id).replace(/^%40/, '@')}/${range}`)
-  } catch (e) {
-    return e
-  }
-  return result
-}
-
-/**
- * @param {string} id Package id
- * @param {string} tag Release tag
- * @returns {Promise.<string?>}
- */
-exports.getPackageTaggedVersion = async function (id, tag = 'latest') {
-  try {
-    const res = await exports.getPackageMetadata(id)
-    return res.body['dist-tags'][tag]
-  } catch (e) {
-    return null
-  }
 }

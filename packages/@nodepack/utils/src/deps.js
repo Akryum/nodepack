@@ -1,10 +1,29 @@
+/**
+ * @typedef PackageVersionsInfo
+ * @prop {string?} current Current installed version
+ * @prop {string?} wanted Wanted version depending on version range in package.json
+ * @prop {string?} latest Latest version from registry (with 'latest' tag)
+ */
+
 const { default: chalk } = require('chalk')
 const execa = require('execa')
 const readline = require('readline')
 const registries = require('./registries')
 const shouldUseTaobao = require('./shouldUseTaobao')
+const { request } = require('./request')
+const { resolveModule } = require('@nodepack/module')
+const semver = require('semver')
+const path = require('path')
+const fs = require('fs-extra')
+const { warn, error } = require('./logger')
+const LRU = require('lru-cache')
 
-const taobaoDistURL = 'https://npm.taobao.org/dist'
+const TAOBAO_DIST_URL = 'https://npm.taobao.org/dist'
+
+const metadataCache = new LRU({
+  max: 200,
+  maxAge: 3 * 60 * 1000,
+})
 
 function toStartOfLine (stream) {
   if (!chalk.supportsColor) {
@@ -38,7 +57,7 @@ async function addRegistryToArgs (command, args, cliRegistry) {
   if (altRegistry) {
     args.push(`--registry=${altRegistry}`)
     if (altRegistry === registries.taobao) {
-      args.push(`--disturl=${taobaoDistURL}`)
+      args.push(`--disturl=${TAOBAO_DIST_URL}`)
     }
   }
 }
@@ -157,4 +176,80 @@ exports.updatePackage = async function (targetDir, command, cliRegistry, package
   packageName.split(' ').forEach(name => args.push(name))
 
   await executeCommand(command, args, targetDir)
+}
+
+exports.getPackageMetadata = async function (id, range = '') {
+  const cacheId = `${id}@${range}`
+  const cached = metadataCache.get(cacheId)
+  if (cached) return cached
+  const registry = (await shouldUseTaobao())
+    ? `https://registry.npm.taobao.org`
+    : `https://registry.npmjs.org`
+  let result
+  try {
+    result = await request.get(`${registry}/${encodeURIComponent(id).replace(/^%40/, '@')}/${range}`)
+    if (result) metadataCache.set(cacheId, result)
+  } catch (e) {
+    warn(`Couldn't get medata for ${cacheId}: ${e.message}`)
+    return null
+  }
+  return result
+}
+
+/**
+ * @param {string} id Package id
+ * @param {string} tag Release tag
+ * @returns {Promise.<string?>}
+ */
+exports.getPackageTaggedVersion = async function (id, tag = 'latest') {
+  try {
+    const res = await exports.getPackageMetadata(id)
+    if (res) res.body['dist-tags'][tag]
+  } catch (e) {
+    error(e)
+  }
+  return null
+}
+
+/**
+ * @param {string} cwd Current working directory
+ * @param {string} id Package id
+ * @param {string} versionRange Wanted version range (ex: from package.json)
+ * @returns {Promise.<PackageVersionsInfo>}
+ */
+exports.getPackageVersionsInfo = async function (cwd, id, versionRange) {
+  /** @type {PackageVersionsInfo} */
+  const result = {
+    current: null,
+    latest: null,
+    wanted: null,
+  }
+
+  const pkgFile = path.resolve(exports.getPackageRoot(cwd, id), 'package.json')
+  if (fs.existsSync(pkgFile)) {
+    result.current = (await fs.readJson(pkgFile)).version
+  }
+
+  const metadata = await exports.getPackageMetadata(id)
+  if (metadata) {
+    result.latest = metadata['dist-tags'].latest
+
+    const versions = Array.isArray(metadata.versions) ? metadata.versions : Object.keys(metadata.versions)
+    result.wanted = semver.maxSatisfying(versions, versionRange)
+  }
+
+  return result
+}
+
+/**
+ * @param {string} cwd Current working directory
+ * @param {string} id Package id
+ * @returns {string}
+ */
+exports.getPackageRoot = function (cwd, id) {
+  const filePath = resolveModule(path.join(id, 'package.json'), cwd)
+  if (!filePath) {
+    return path.join(cwd, `node_modules`, id)
+  }
+  return path.dirname(filePath)
 }

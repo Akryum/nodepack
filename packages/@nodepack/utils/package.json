@@ -21,6 +21,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
+    "@nodepack/module": "^0.0.1",
     "chalk": "^2.4.1",
     "execa": "^1.0.0",
     "find-up": "^3.0.0",

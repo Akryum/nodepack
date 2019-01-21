@@ -9,9 +9,8 @@ const {
   getPkgCommand,
   installPackage,
   getPackageTaggedVersion,
+  writePkg,
 } = require('@nodepack/utils')
-const fs = require('fs-extra')
-const path = require('path')
 const officialPluginShorthands = require('../util/officialPluginShorthands')
 
 module.exports = class PluginAddJob {
@@ -49,10 +48,7 @@ module.exports = class PluginAddJob {
         if (isTestOrDebug) {
           pkg.devDependencies = pkg.devDependencies || {}
           pkg.devDependencies[packageName] = await getPackageTaggedVersion(packageName).then(version => version && `^${version}`) || 'latest'
-          const pkgFile = path.resolve(cwd, 'package.json')
-          await fs.writeJson(pkgFile, pkg, {
-            spaces: 2,
-          })
+          writePkg(cwd, pkg)
           if (!alreadyInPkg) {
             plugins.push(packageName)
           }
