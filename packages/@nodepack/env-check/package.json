@@ -23,6 +23,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "execa": "^1.0.0",
+    "fs-extra": "^7.0.1",
     "semver": "^5.6.0",
     "systeminformation": "^3.51.4"
   }

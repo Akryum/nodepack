@@ -120,10 +120,11 @@ program
   .command('env-info')
   .description('print your environment infos for debugging')
   .option('-e, --env', 'Output env variables')
-  .action((cmd) => {
+  .action(async (cmd) => {
     const options = cleanArgs(cmd)
-    const { printEnvInfo } = require('@nodepack/env-check')
-    printEnvInfo(options.env)
+    const { printEnvInfo, printInstalledPackages } = require('@nodepack/env-check')
+    await printEnvInfo(options.env)
+    await printInstalledPackages(process.cwd())
   })
 
 // output help information on unknown commands
