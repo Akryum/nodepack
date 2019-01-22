@@ -1,5 +1,6 @@
 const program = require('commander')
-const { chalk, checkDebug } = require('@nodepack/utils')
+const { chalk, error, checkDebug } = require('@nodepack/utils')
+const isInProject = require('../util/isInProject')
 
 const cwd = process.cwd()
 
@@ -47,6 +48,7 @@ program
   .option('-g, --git [message]', 'Force git commit with message before maintenance')
   .option('-n, --no-git', 'Skip git commit before maintenance')
   .action((pluginName, cmd) => {
+    checkInProject()
     const options = cleanArgs(cmd)
     // --no-git makes commander to default git to true
     if (process.argv.includes('-g') || process.argv.includes('--git')) {
@@ -70,6 +72,7 @@ program
   .option('-g, --git [message]', 'Force git commit with message before maintenance')
   .option('-n, --no-git', 'Skip git commit before maintenance')
   .action((plugins, cmd) => {
+    checkInProject()
     const options = cleanArgs(cmd)
     // --no-git makes commander to default git to true
     if (process.argv.includes('-g') || process.argv.includes('--git')) {
@@ -83,6 +86,7 @@ program
   .description('build your project using `nodepack-service build` in a project')
   .allowUnknownOption()
   .action(cmd => {
+    checkInProject()
     const { pkg, packageManager } = getPkgInfo()
     let command = 'nodepack-service'
     let args = ['build']
@@ -102,6 +106,7 @@ program
   .description('run a command with `nodepack-service` installed in a project')
   .allowUnknownOption()
   .action((action, cmd) => {
+    checkInProject()
     const { pkg, packageManager } = getPkgInfo()
     let command = 'nodepack-service'
     let args = [action]
@@ -192,7 +197,7 @@ async function noCommand () {
   const fs = require('fs-extra')
 
   // In a nodepack project
-  if (fs.existsSync(path.resolve(cwd, '.nodepack')) || fs.existsSync(path.resolve(cwd, 'nodepack.config.js'))) {
+  if (isInProject(cwd)) {
     const { installDeps } = require('@nodepack/utils')
     const { pkg, packageManager } = getPkgInfo()
 
@@ -238,4 +243,11 @@ function exec (command, args) {
     shell: false,
     env: process.env,
   })
+}
+
+function checkInProject () {
+  if (!isInProject(cwd)) {
+    error(`Can't run this command: it seems the current working directory is not a nodepack project.`)
+    process.exit(1)
+  }
 }
