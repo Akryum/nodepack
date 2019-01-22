@@ -82,6 +82,24 @@ program
   })
 
 program
+  .command('remove <plugin>')
+  .description(`remove a plugin from the project`)
+  .option('-y, --yes', 'Skip asking for confirmation')
+  .option('--skipUninstall', `Don't uninstall with package manager (npm/yarn) after removing`)
+  // Git
+  .option('-g, --git [message]', 'Force git commit with message before maintenance')
+  .option('-n, --no-git', 'Skip git commit before maintenance')
+  .action((pluginId, cmd) => {
+    checkInProject()
+    const options = cleanArgs(cmd)
+    // --no-git makes commander to default git to true
+    if (process.argv.includes('-g') || process.argv.includes('--git')) {
+      options.forceGit = true
+    }
+    require('../commands/remove')(pluginId, options)
+  })
+
+program
   .command('build')
   .description('build your project using `nodepack-service build` in a project')
   .allowUnknownOption()
