@@ -3,13 +3,7 @@ const { Migrator, getMigratorPlugins } = require('@nodepack/app-migrator')
 const {
   resolvePluginId,
   log,
-  warn,
-  error,
   chalk,
-  loadGlobalOptions,
-  getPkgCommand,
-  installPackage,
-  getPackageTaggedVersion,
   writePkg,
 } = require('@nodepack/utils')
 const officialPluginShorthands = require('../util/officialPluginShorthands')
