@@ -11,6 +11,7 @@ module.exports = {
     ['link', { rel: 'icon', href: '/favicon.png' }],
   ],
   themeConfig: {
+    logo: '/favicon.png',
     repo: 'Akryum/nodepack',
     docsDir: 'docs',
     docsBranch: 'master',
