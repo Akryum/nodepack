@@ -35,6 +35,7 @@ module.exports = class PluginAddJob {
     const maintenance = new Maintenance({
       cwd,
       cliOptions,
+      skipCommit: true,
       skipPreInstall: true,
       before: async ({ pkg, plugins, shouldCommitState, isTestOrDebug }) => {
         // Plugins
@@ -53,7 +54,7 @@ module.exports = class PluginAddJob {
             plugins.push(packageName)
           }
         } else if ((!alreadyInPkg || cliOptions.forceInstall) && !cliOptions.noInstall) {
-          await shouldCommitState()
+          await shouldCommitState(`[nodepack] before add ${packageName}`)
           log()
           log(`📦  Installing ${chalk.cyan(packageName)}...`)
           log()
@@ -70,7 +71,8 @@ module.exports = class PluginAddJob {
           process.exit(1)
         }
       },
-      after: async maintenance => {
+      after: async ({ shouldCommitState }) => {
+        await shouldCommitState(`[nodepack] after add ${packageName}`)
         log(`🎉  Successfully added ${chalk.yellow(packageName)}.`)
       },
     })

@@ -61,6 +61,7 @@ module.exports = class PluginUpgradeJob {
     const maintenance = new Maintenance({
       cwd,
       cliOptions,
+      skipCommit: true,
       skipPreInstall: true,
       before: async ({ pkg, shouldCommitState, installDeps, isTestOrDebug }) => {
         logWithSpinner(`🔄`, `Checking for plugin updates...`)
@@ -115,17 +116,18 @@ module.exports = class PluginUpgradeJob {
             }))
           }
 
-          if (queuedUpdates.length) {
+          const count = queuedUpdates.length
+          if (count) {
             if (!cliOptions.yes) {
               const { confirm } = await inquirer.prompt([{
                 name: 'confirm',
                 type: 'confirm',
-                message: `Confirm ${queuedUpdates.length} plugin update${queuedUpdates.length > 1 ? 's' : ''}?`,
+                message: `Confirm ${count} plugin update${count > 1 ? 's' : ''}?`,
               }])
               if (!confirm) process.exit()
             }
 
-            await shouldCommitState()
+            await shouldCommitState(`[nodepack] before update ${count} plugin${count > 1 ? 's' : ''}`)
 
             for (const update of queuedUpdates) {
               pkg[update.info.dependencyType][update.info.id] = update.version
@@ -135,11 +137,15 @@ module.exports = class PluginUpgradeJob {
             if (!isTestOrDebug) {
               await installDeps(`📦  Updating packages...`)
             }
+          } else {
+            log(`${chalk.green('✔')}  No plugin updates applied.`)
+            process.exit()
           }
         }
       },
-      after: async maintenance => {
+      after: async ({ shouldCommitState }) => {
         const count = queuedUpdates.length
+        await shouldCommitState(`[nodepack] after update ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}`)
         log(`🎉  Successfully upgraded ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}.`)
       },
     })

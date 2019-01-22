@@ -100,7 +100,7 @@ class Maintenance {
     })
     const { migrations } = await migrator.prepare()
     if (migrations.length) {
-      await this.shouldCommitState()
+      await this.shouldCommitState(`[nodepack] before app migration`)
       log(`🚀  Migrating app code...`)
       const { migrationCount, allOptions } = await migrator.migrate(this.preset)
       log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
@@ -110,6 +110,7 @@ class Maintenance {
 
       // install additional deps (injected by migrations)
       await this.installDeps(`📦  Installing additional dependencies...`)
+      await this.shouldCommitState(`[nodepack] after app migration`)
     }
 
     // TODO Env Migrations
@@ -125,14 +126,15 @@ class Maintenance {
 
   /**
    * Should be called each time the project is about to be modified.
+   * @param {string} defaultMessage
    */
-  async shouldCommitState () {
+  async shouldCommitState (defaultMessage) {
     if (this.preCommitAttempted || this.skipCommit) return
     // Commit app code before installing a new plugin
     // in case it modify files
     const shouldCommitState = await shouldUseGit(this.cwd, this.cliOptions)
     if (shouldCommitState) {
-      const result = await commitOnGit(this.cliOptions, this.isTestOrDebug)
+      const result = await commitOnGit(this.cliOptions, this.isTestOrDebug, defaultMessage)
       if (!result) {
         // Commit failed confirmation
         const answers = await inquirer.prompt([

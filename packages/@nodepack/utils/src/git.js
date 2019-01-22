@@ -3,9 +3,10 @@ const { hasGit, hasProjectGit } = require('./env')
 /**
  * @param {any} cliOptions
  * @param {boolean} isTestOrDebug
+ * @param {string} defaultMessage
  * @returns {Promise.<boolean>} Git commit success
  */
-exports.commitOnGit = async function (cliOptions, isTestOrDebug) {
+exports.commitOnGit = async function (cliOptions, isTestOrDebug, defaultMessage) {
   const { run } = this
   let success = true
   await run('git add -A')
@@ -13,7 +14,7 @@ exports.commitOnGit = async function (cliOptions, isTestOrDebug) {
     await run('git', ['config', 'user.name', 'test'])
     await run('git', ['config', 'user.email', 'test@test.com'])
   }
-  const msg = typeof cliOptions.git === 'string' ? cliOptions.git : 'init'
+  const msg = typeof cliOptions.git === 'string' ? cliOptions.git : defaultMessage
   try {
     await run('git', ['commit', '-m', msg])
   } catch (e) {
