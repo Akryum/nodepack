@@ -2,7 +2,6 @@
 /** @typedef {import('./MigratorPlugin')} MigratorPlugin */
 
 const { resolveFile } = require('../util/files')
-const { hasPlugin } = require('../util/plugins')
 const semver = require('semver')
 
 module.exports = class MigrationWhenAPI {
@@ -33,15 +32,6 @@ module.exports = class MigrationWhenAPI {
    */
   resolve (filePath) {
     return resolveFile(this.cwd, filePath)
-  }
-
-  /**
-   * Check if the project has a plugin installed.
-   *
-   * @param {string} id Plugin id
-   */
-  hasPlugin (id) {
-    return hasPlugin(id, this.migrator.plugins, this.pkg)
   }
 
   /**

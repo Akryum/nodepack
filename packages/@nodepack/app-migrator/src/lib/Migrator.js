@@ -58,7 +58,8 @@ const {
   FILE_APP_MIGRATIONS_RECORDS,
 } = require('@nodepack/utils')
 const inquirer = require('inquirer')
-const { getVersion } = require('../util/plugins')
+const { getVersion, hasPlugin } = require('../util/plugins')
+const printNoRollbackWarn = require('../util/printNoRollbackWarn')
 
 const logTypes = {
   log,
@@ -81,7 +82,8 @@ module.exports = class Migrator {
     this.plugins = plugins
     this.completeCbs = completeCbs
 
-    this.prepared = false
+    this.migratePrepared = false
+    this.rollbackPrepared = false
 
     /** @type {Migration []} */
     this.migrations = []
@@ -95,15 +97,14 @@ module.exports = class Migrator {
     this.notices = []
   }
 
-  async prepare () {
-    if (!this.prepared) {
+  async prepareMigrate () {
+    if (!this.migratePrepared) {
       await this.setup()
-      await this.readPluginVersions()
 
       // Migrations that will be applied
       this.queuedMigrations = await this.resolveMigrations()
 
-      this.prepared = true
+      this.migratePrepared = true
     }
 
     return {
@@ -115,8 +116,8 @@ module.exports = class Migrator {
    * @param {Preset?} preset
    */
   async migrate (preset = null) {
-    if (!this.prepared) {
-      await this.prepare()
+    if (!this.migratePrepared) {
+      await this.prepareMigrate()
     }
 
     /** @type {MigrationAllOptions?} */
@@ -148,7 +149,7 @@ module.exports = class Migrator {
 
       logWithSpinner('✔️', `${chalk.grey(migration.plugin.id)} ${migration.options.title}`)
 
-      await operation.migrate({
+      await operation.run('migrate', {
         extractConfigFiles,
       })
 
@@ -179,8 +180,76 @@ module.exports = class Migrator {
     }
   }
 
-  async rollback () {
-    // TODO
+  /**
+   * @param {string []} removedPlugins
+   */
+  async prepareRollback (removedPlugins) {
+    if (!this.rollbackPrepared) {
+      await this.setup()
+
+      // Migrations that will be rollbacked
+      this.queuedMigrations = await this.resolveRollbacks(removedPlugins)
+
+      this.rollbackPrepared = true
+    }
+
+    return {
+      migrations: this.queuedMigrations,
+    }
+  }
+
+  /**
+   * @param {string []} removedPlugins
+   */
+  async rollback (removedPlugins) {
+    if (!this.rollbackPrepared) {
+      await this.prepareRollback(removedPlugins)
+    }
+
+    const rootOptions = {}
+    for (const record of this.migrationRecords) {
+      const options = rootOptions[record.pluginId] = rootOptions[record.pluginId] || {}
+      options[record.id] = record.options
+    }
+
+    let rollbackCount = 0
+    for (const migration of this.queuedMigrations) {
+      // Prompts results
+      const pluginOptions = rootOptions[migration.plugin.id]
+      const migrationOptions = (pluginOptions && pluginOptions[migration.options.id]) || {}
+
+      const operation = new MigrationOperation(this, migration, {
+        options: migrationOptions,
+        rootOptions,
+      })
+
+      logWithSpinner('✔️', `${chalk.grey(migration.plugin.id)} ${migration.options.title}`)
+
+      await operation.run('rollback', {
+        extractConfigFiles: false,
+      })
+
+      stopSpinner()
+
+      // Remove migration from records
+      const index = this.migrationRecords.findIndex(m => m.id === migration.options.id && m.pluginId === migration.plugin.id)
+      if (index !== -1) this.migrationRecords.splice(index, 1)
+
+      rollbackCount++
+    }
+
+    // Write config files
+    await this.writeMigrationRecords()
+    await this.writePluginVersions(removedPlugins)
+
+    await this.applyCompleteCbs()
+
+    await this.displayNotices()
+
+    return {
+      allOptions: rootOptions,
+      rollbackCount,
+    }
   }
 
   /**
@@ -198,6 +267,7 @@ module.exports = class Migrator {
     await this.applyPlugins()
 
     await this.readMigrationRecords()
+    await this.readPluginVersions()
   }
 
   /**
@@ -235,10 +305,19 @@ module.exports = class Migrator {
     /** @type {Migration []} */
     const list = []
     for (const migration of this.migrations) {
+      // Skip if migration already applied
       if (this.migratedIds.get(`${migration.plugin.id}${migration.options.id}`)) {
         continue
       }
 
+      // Migration requires plugins
+      if (migration.options.requirePlugins && !migration.options.requirePlugins.every(
+        id => hasPlugin(id, this.plugins, this.pkg)
+      )) {
+        continue
+      }
+
+      // Custom condition
       if (migration.options.when) {
         const whenApi = new MigrationWhenAPI(migration.plugin, this, {
           pkg: this.pkg,
@@ -249,6 +328,10 @@ module.exports = class Migrator {
         }
       }
 
+      if (!migration.options.rollback) {
+        printNoRollbackWarn(migration)
+      }
+
       list.push(migration)
     }
     return list
@@ -256,11 +339,37 @@ module.exports = class Migrator {
 
   /**
    * @private
-   * @param {string} pluginId
-   * @param {string?} migrationId
+   * @param {string []} removedPlugins
    */
-  async resolveRollbacks (pluginId, migrationId = null) {
-    // TODO
+  async resolveRollbacks (removedPlugins) {
+    /** @type {Migration []} */
+    const list = []
+    for (const migration of this.migrations) {
+      // Skip if the migration wasn't applied
+      if (!this.migratedIds.get(`${migration.plugin.id}${migration.options.id}`)) {
+        continue
+      }
+
+      // We rollback has soon has one of the required plugins is removed
+      if (migration.options.requirePlugins && migration.options.requirePlugins.some(
+        id => removedPlugins.includes(id)
+      )) {
+        list.push(migration)
+        continue
+      }
+
+      if (removedPlugins.includes(migration.plugin.id)) {
+        list.push(migration)
+      }
+    }
+    return list.filter(migration => {
+      // Skip if no rollback was defined
+      if (!migration.options.rollback) {
+        printNoRollbackWarn(migration)
+        return false
+      }
+      return true
+    })
   }
 
   /**
@@ -317,11 +426,14 @@ module.exports = class Migrator {
    * into the 'plugin-versions.json' config file.
    *
    * @private
+   * @param {string []} removedPlugins
    */
-  async writePluginVersions () {
+  async writePluginVersions (removedPlugins = []) {
     const result = {}
     for (const plugin of this.plugins) {
-      result[plugin.id] = plugin.currentVersion
+      if (!removedPlugins.includes(plugin.id)) {
+        result[plugin.id] = plugin.currentVersion
+      }
     }
 
     // Plugins without migrations
@@ -331,7 +443,7 @@ module.exports = class Migrator {
       ...this.pkg.devDependencies,
     }
     for (const id in deps) {
-      if (!result[id] && isPlugin(id)) {
+      if (!result[id] && isPlugin(id) && !removedPlugins.includes(id)) {
         result[id] = getVersion(id, this.cwd)
       }
     }

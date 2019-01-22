@@ -88,35 +88,36 @@ module.exports = class MigrationOperation {
   }
 
   /**
+   * @param {'migrate' | 'rollback'} type
    * @param {object} param
    * @param {boolean} param.extractConfigFiles
    */
-  async migrate ({
+  async run (type, {
     extractConfigFiles,
   }) {
-    // Read existing files
-    await this.readFiles()
+    const method = this.migration.options[type]
 
-    const previousFileNames = Object.keys(this.files)
+    if (method) {
+      // Read existing files
+      await this.readFiles()
 
-    await this.migration.options.migrate(new MigrationOperationAPI(this), this.options, this.rootOptions)
+      const previousFileNames = Object.keys(this.files)
 
-    // extract configs from package.json into dedicated files.
-    this.extractConfigFiles(extractConfigFiles, true)
+      await method(new MigrationOperationAPI(this), this.options, this.rootOptions)
 
-    // wait for file resolve
-    await this.resolveFiles()
+      // extract configs from package.json into dedicated files.
+      this.extractConfigFiles(extractConfigFiles, true)
 
-    // set package.json
-    this.pkg = sortPkg(this.pkg)
-    this.writeFile('package.json', JSON.stringify(this.pkg, null, 2))
+      // wait for file resolve
+      await this.resolveFiles()
 
-    // write/update file tree to disk
-    await writeFileTree(this.cwd, this.files, previousFileNames)
-  }
+      // set package.json
+      this.pkg = sortPkg(this.pkg)
+      this.writeFile('package.json', JSON.stringify(this.pkg, null, 2))
 
-  async rollback () {
-    // TODO
+      // write/update file tree to disk
+      await writeFileTree(this.cwd, this.files, previousFileNames)
+    }
   }
 
   /**

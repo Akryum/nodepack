@@ -110,7 +110,7 @@ class Maintenance {
     const migrator = new AppMigrator(cwd, {
       plugins: migratorPlugins,
     })
-    const { migrations } = await migrator.prepare()
+    const { migrations } = await migrator.prepareMigrate()
     if (migrations.length) {
       await this.shouldCommitState(`[nodepack] before app migration`)
       log(`🚀  Migrating app code...`)
