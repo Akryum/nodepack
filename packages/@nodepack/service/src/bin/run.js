@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { checkDebug } = require('@nodepack/utils')
-const { Maintenance } = require('@nodepack/maintenance')
+const { runMaintenance } = require('@nodepack/maintenance')
 const Service = require('../lib/Service')
 
 const cwd = process.env.NODEPACK_CONTEXT || process.cwd()
@@ -14,12 +14,11 @@ const command = args._[0]
 
 async function run () {
   if (command !== 'help') {
-    const maintenance = new Maintenance({
+    await runMaintenance({
       cwd,
       cliOptions: args,
       skipPreInstall: args.preInstall === false,
     })
-    await maintenance.run()
   }
 
   const service = new Service(cwd)

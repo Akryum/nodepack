@@ -19,7 +19,7 @@
  * @prop {UpdateInfo} info
  */
 
-const { Maintenance } = require('@nodepack/maintenance')
+const { runMaintenance } = require('@nodepack/maintenance')
 const {
   resolvePluginId,
   log,
@@ -58,7 +58,7 @@ module.exports = class PluginUpgradeJob {
     /** @type {QueuedUpdate []} */
     let queuedUpdates = []
 
-    const maintenance = new Maintenance({
+    await runMaintenance({
       cwd,
       cliOptions,
       skipCommit: true,
@@ -149,8 +149,6 @@ module.exports = class PluginUpgradeJob {
         log(`🎉  Successfully upgraded ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}.`)
       },
     })
-
-    await maintenance.run()
   }
 
   /**

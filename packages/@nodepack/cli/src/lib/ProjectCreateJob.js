@@ -8,7 +8,7 @@
 // API
 const CreateModuleAPI = require('./CreateModuleAPI')
 // Utils
-const { Maintenance } = require('@nodepack/maintenance')
+const { runMaintenance } = require('@nodepack/maintenance')
 const path = require('path')
 const inquirer = require('inquirer')
 const execa = require('execa')
@@ -99,7 +99,7 @@ module.exports = class ProjectCreateJob {
       await run('git init')
     }
 
-    const maintenance = new Maintenance({
+    await runMaintenance({
       cwd,
       cliOptions,
       preset: finalPreset,
@@ -155,8 +155,6 @@ module.exports = class ProjectCreateJob {
         }
       },
     })
-
-    await maintenance.run()
   }
 
   /**

@@ -14,7 +14,19 @@ const {
 } = require('@nodepack/utils')
 const inquirer = require('inquirer')
 
-/** @typedef {(maintenance: Maintenance) => Promise | void} MaintenanceHook */
+/**
+ * @typedef MaintenanceHookAPI
+ * @prop {string} cwd
+ * @prop {boolean} isTestOrDebug
+ * @prop {string} packageManager
+ * @prop {any} pkg
+ * @prop {string[]} plugins
+ * @prop {MaintenanceResults} results
+ * @prop {typeof Maintenance.prototype.shouldCommitState} shouldCommitState
+ * @prop {typeof Maintenance.prototype.installDeps} installDeps
+ */
+
+/** @typedef {(api: MaintenanceHookAPI) => Promise | void} MaintenanceHook */
 
 /**
  * @typedef MaintenanceOptions
@@ -57,8 +69,10 @@ class Maintenance {
     this.preset = preset
     this.skipCommit = skipCommit
     this.skipPreInstall = skipPreInstall
-    this.beforeHook = before
-    this.afterHook = after
+    this.hooks = {
+      before,
+      after,
+    }
 
     this.preCommitAttempted = false
 
@@ -82,9 +96,7 @@ class Maintenance {
   }
 
   async run () {
-    if (this.beforeHook) {
-      await this.beforeHook(this)
-    }
+    await this.callHook('before')
 
     const { cwd, plugins } = this
 
@@ -117,11 +129,30 @@ class Maintenance {
 
     log(`🔧  Maintenance complete!`)
 
-    if (this.afterHook) {
-      await this.afterHook(this)
-    }
+    await this.callHook('after')
 
     migrator.displayNotices()
+  }
+
+  /**
+   * @param {string} id
+   */
+  async callHook (id) {
+    /** @type {MaintenanceHook} */
+    const hook = this.hooks[id]
+    if (hook) {
+      // Hook API
+      await hook({
+        cwd: this.cwd,
+        isTestOrDebug: this.isTestOrDebug,
+        pkg: this.pkg,
+        plugins: this.plugins,
+        packageManager: this.packageManager,
+        results: this.results,
+        shouldCommitState: this.shouldCommitState.bind(this),
+        installDeps: this.installDeps.bind(this),
+      })
+    }
   }
 
   /**

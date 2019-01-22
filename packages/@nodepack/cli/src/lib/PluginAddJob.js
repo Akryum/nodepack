@@ -1,4 +1,4 @@
-const { Maintenance } = require('@nodepack/maintenance')
+const { runMaintenance } = require('@nodepack/maintenance')
 const {
   resolvePluginId,
   log,
@@ -32,7 +32,7 @@ module.exports = class PluginAddJob {
   async add (cliOptions) {
     const { packageName, cwd } = this
 
-    const maintenance = new Maintenance({
+    await runMaintenance({
       cwd,
       cliOptions,
       skipCommit: true,
@@ -76,7 +76,5 @@ module.exports = class PluginAddJob {
         log(`🎉  Successfully added ${chalk.yellow(packageName)}.`)
       },
     })
-
-    await maintenance.run()
   }
 }
