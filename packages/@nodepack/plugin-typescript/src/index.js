@@ -22,7 +22,6 @@ module.exports = (api, options) => {
 
     const tsRule = config.module.rule('ts').test(/\.ts$/)
 
-    // add a loader to both *.ts & vue<lang="ts">
     const addLoader = ({ loader, options = {}}) => {
       tsRule.use(loader).loader(loader).options(options)
     }
@@ -32,7 +31,6 @@ module.exports = (api, options) => {
       options: api.genCacheConfig('ts-loader', {
         'ts-loader': require('ts-loader/package.json').version,
         'typescript': require('typescript/package.json').version,
-        modern: !!process.env.VUE_CLI_MODERN_BUILD,
       }, 'tsconfig.json'),
     })
 
@@ -51,7 +49,6 @@ module.exports = (api, options) => {
       loader: 'ts-loader',
       options: {
         transpileOnly: true,
-        appendTsSuffixTo: ['\\.vue$'],
         // https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse
         happyPackMode: useThreads,
       },
@@ -59,7 +56,7 @@ module.exports = (api, options) => {
 
     if (!process.env.NODEPACK_TEST) {
       // this plugin does not play well with jest + cypress setup (tsPluginE2e.spec.js) somehow
-      // so temporarily disabled for vue-cli tests
+      // so temporarily disabled for nodepack tests
       config
         .plugin('fork-ts-checker')
           .use(require('fork-ts-checker-webpack-plugin'), [{
@@ -74,7 +71,7 @@ module.exports = (api, options) => {
   if (!api.hasPlugin('eslint')) {
     api.registerCommand('lint', {
       description: 'lint source files with TSLint',
-      usage: 'vue-cli-service lint [options] [...files]',
+      usage: 'nodepack-service lint [options] [...files]',
       options: {
         '--format [formatter]': 'specify formatter (default: codeFrame)',
         '--no-fix': 'do not fix errors',
