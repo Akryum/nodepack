@@ -11,7 +11,6 @@ const CreateModuleAPI = require('./CreateModuleAPI')
 const { runMaintenance } = require('@nodepack/maintenance')
 const path = require('path')
 const inquirer = require('inquirer')
-const execa = require('execa')
 const cloneDeep = require('lodash.clonedeep')
 const {
   loadGlobalOptions,
@@ -30,6 +29,7 @@ const {
   getPackageTaggedVersion,
   shouldUseGit,
   commitOnGit,
+  run,
 } = require('@nodepack/utils')
 const { MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
 const generateReadme = require('../util/generateReadme')
@@ -59,8 +59,6 @@ module.exports = class ProjectCreateJob {
 
     /** @type {function []} */
     this.promptCompleteCbs = []
-
-    this.run = this.run.bind(this)
   }
 
   /**
@@ -68,7 +66,7 @@ module.exports = class ProjectCreateJob {
    * @param {Preset?} preset
    */
   async create (cliOptions = {}, preset = null) {
-    const { run, projectName, cwd } = this
+    const { projectName, cwd } = this
 
     // Apply create modules
     const createModuleAPI = new CreateModuleAPI(this)
@@ -96,7 +94,7 @@ module.exports = class ProjectCreateJob {
     const shouldInitGit = await shouldUseGit(this.cwd, cliOptions)
     if (shouldInitGit) {
       logWithSpinner(`🗃`, `Initializing git repository...`)
-      await run('git init')
+      await run(cwd, 'git init')
     }
 
     await runMaintenance({
@@ -128,7 +126,7 @@ module.exports = class ProjectCreateJob {
         // initial commit
         let gitCommitSuccess = true
         if (shouldInitGit) {
-          gitCommitSuccess = await commitOnGit(cliOptions, isTestOrDebug, `[nodepack] create project`)
+          gitCommitSuccess = await commitOnGit(cwd, cliOptions, isTestOrDebug, `[nodepack] create project`)
         }
         stopSpinner()
 
@@ -430,11 +428,6 @@ module.exports = class ProjectCreateJob {
     }
     // write package.json
     await this.writeFileToDisk('package.json', JSON.stringify(pkg, null, 2))
-  }
-
-  run (command, args) {
-    if (!args) { [command, ...args] = command.split(/\s+/) }
-    return execa(command, args, { cwd: this.cwd })
   }
 
   async writeFileToDisk (filename, source) {

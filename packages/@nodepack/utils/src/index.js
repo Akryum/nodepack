@@ -15,6 +15,7 @@ module.exports = {
   ...require('./pkg'),
   ...require('./plugin'),
   ...require('./request'),
+  ...require('./run'),
   shouldUseTaobao: require('./shouldUseTaobao'),
   ...require('./spinner'),
   ...require('./validate'),
