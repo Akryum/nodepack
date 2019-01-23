@@ -28,19 +28,17 @@ module.exports = api => {
       api.move('src/**/*.ts', file => `${file.path}${file.name}.js`)
 
       if (options.tslint) {
-        api.modifyFile('package.json', content => {
-          // @ts-ignore
-          const data = JSON.parse(content)
-          const scripts = data.scripts
+        api.extendPackage(({ scripts }) => {
           if (scripts) {
+            scripts = { ...scripts }
             for (const key in scripts) {
               if (scripts[key].match(/nodepack-service lint/)) {
-                scripts[key] = undefined
+                delete scripts[key]
               }
             }
           }
-          return JSON.stringify(data, null, 2)
-        })
+          return { scripts }
+        }, false)
       }
     },
   })
