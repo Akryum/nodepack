@@ -10,6 +10,7 @@ exports.defaultOptions = function () {
     srcDir: 'src',
     productionSourceMap: false,
     externals: false,
+    minify: true,
     parallel: hasMultipleCores(),
     transpileDependencies: [],
     defaultPort: 4000,

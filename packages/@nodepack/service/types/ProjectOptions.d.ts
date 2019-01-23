@@ -15,6 +15,8 @@ export interface ProjectOptions {
   productionSourceMap?: boolean
   /** Webpack externals packages */
   externals?: any
+  /** Minify production builds */
+  minify?: boolean,
   /** Whitelist option for webpack-node-externals */
   nodeExternalsWhitelist?: any
   /** Modify webpack config with webpack-chain */
