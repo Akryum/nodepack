@@ -11,6 +11,7 @@ module.exports = api => {
         scripts: {
           'dev': 'nodepack-service dev',
           'build': 'nodepack-service build',
+          'start': 'node ./dist/app.js',
         },
       })
     },
