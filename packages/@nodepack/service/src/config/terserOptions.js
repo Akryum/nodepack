@@ -20,11 +20,10 @@ module.exports = options => ({
       typeofs: false,
 
       // a few flags with noticable gains/speed ratio
-      // numbers based on out of the box vendor bundle
-      booleans: true, // 0.7kb
-      if_return: true, // 0.4kb
-      sequences: true, // 0.7kb
-      unused: true, // 2.3kb
+      booleans: true,
+      if_return: true,
+      sequences: true,
+      unused: true,
 
       // required features to drop conditional branches
       conditionals: true,
@@ -33,6 +32,10 @@ module.exports = options => ({
     },
     mangle: {
       safari10: true,
+
+      // compatibility
+      keep_classnames: true,
+      keep_fnames: true,
     },
   },
   sourceMap: options.productionSourceMap,
