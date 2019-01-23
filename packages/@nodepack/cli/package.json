@@ -32,7 +32,7 @@
     "@nodepack/maintenance": "^0.0.1",
     "@nodepack/module": "^0.0.1",
     "@nodepack/utils": "^0.0.1",
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     "cmd-shim": "^2.0.2",
     "commander": "^2.19.0",
     "download-git-repo": "^1.1.0",
