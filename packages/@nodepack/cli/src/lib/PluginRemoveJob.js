@@ -4,6 +4,7 @@ const {
   resolvePluginId,
   log,
   chalk,
+  readPkg,
   writePkg,
 } = require('@nodepack/utils')
 const officialPluginShorthands = require('../util/officialPluginShorthands')
@@ -57,6 +58,8 @@ module.exports = class PluginRemoveJob {
           log(`🚀  Rollbacking app code...`)
           const { rollbackCount } = await migrator.rollback([packageName])
           log(`📝  ${rollbackCount} app rollback${rollbackCount > 1 ? 's' : ''} applied!`)
+          // In case package.json content changed
+          pkg = readPkg(cwd)
         }
 
         const index = plugins.indexOf(packageName)
