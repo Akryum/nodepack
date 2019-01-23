@@ -6,7 +6,6 @@ const { run } = require('./run')
  * @param {any} cliOptions
  * @param {boolean} isTestOrDebug
  * @param {string} defaultMessage
- * @returns {Promise.<boolean>} Git commit success
  */
 exports.commitOnGit = async function (cwd, cliOptions, isTestOrDebug, defaultMessage) {
   let success = true
@@ -15,13 +14,19 @@ exports.commitOnGit = async function (cwd, cliOptions, isTestOrDebug, defaultMes
     await run(cwd, 'git', ['config', 'user.name', 'test'])
     await run(cwd, 'git', ['config', 'user.email', 'test@test.com'])
   }
-  const msg = typeof cliOptions.git === 'string' ? cliOptions.git : defaultMessage
+  const message = typeof cliOptions.git === 'string' ? cliOptions.git : defaultMessage
+  let error = null
   try {
-    await run(cwd, 'git', ['commit', '-m', msg])
+    await run(cwd, 'git', ['commit', '-m', message])
   } catch (e) {
+    error = e
     success = false
   }
-  return success
+  return {
+    success,
+    message,
+    error,
+  }
 }
 
 /**
@@ -40,6 +45,14 @@ exports.shouldUseGit = async function (cwd, cliOptions) {
   if (cliOptions.git === false || cliOptions.git === 'false') {
     return false
   }
-  // default: true unless already in a git repo
-  return !hasProjectGit(cwd)
+  return hasProjectGit(cwd)
+}
+
+/**
+ * @param {string} cwd
+ * @param {boolean} cached
+ */
+exports.hasGitChanges = async function (cwd, cached) {
+  const { stdout } = await run(cwd, `git diff${cached ? ' --cached' : ''}`)
+  return !!stdout
 }

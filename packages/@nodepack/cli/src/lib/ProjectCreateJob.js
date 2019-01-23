@@ -126,7 +126,8 @@ module.exports = class ProjectCreateJob {
         // initial commit
         let gitCommitSuccess = true
         if (shouldInitGit) {
-          gitCommitSuccess = await commitOnGit(cwd, cliOptions, isTestOrDebug, `[nodepack] create project`)
+          const { success } = await commitOnGit(cwd, cliOptions, isTestOrDebug, `[nodepack] create project`)
+          gitCommitSuccess = success
         }
         stopSpinner()
 

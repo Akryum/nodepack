@@ -4,10 +4,13 @@
 const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = require('@nodepack/app-migrator')
 const {
   log,
+  error,
+  chalk,
   readPkg,
   getPlugins,
   commitOnGit,
   shouldUseGit,
+  hasGitChanges,
   installDeps,
   loadGlobalOptions,
   getPkgCommand,
@@ -162,10 +165,13 @@ class Maintenance {
     if (this.skipCommit && !force) return
     // Commit app code before installing a new plugin
     // in case it modify files
-    const shouldCommit = await shouldUseGit(this.cwd, this.cliOptions)
+    const shouldCommit = await shouldUseGit(this.cwd, this.cliOptions) && await hasGitChanges(this.cwd, false)
     if (shouldCommit) {
-      const result = await commitOnGit(this.cwd, this.cliOptions, this.isTestOrDebug, defaultMessage)
-      if (!result) {
+      const { success, message, error: e } = await commitOnGit(this.cwd, this.cliOptions, this.isTestOrDebug, defaultMessage)
+      if (success) {
+        log(chalk.grey(`commit ${message}`), 'git')
+      } else {
+        error(e.message)
         // Commit failed confirmation
         const answers = await inquirer.prompt([
           {
