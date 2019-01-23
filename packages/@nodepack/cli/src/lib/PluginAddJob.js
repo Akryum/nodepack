@@ -50,9 +50,6 @@ module.exports = class PluginAddJob {
           pkg.devDependencies = pkg.devDependencies || {}
           pkg.devDependencies[packageName] = await getPackageTaggedVersion(packageName).then(version => version && `^${version}`) || 'latest'
           writePkg(cwd, pkg)
-          if (!alreadyInPkg) {
-            plugins.push(packageName)
-          }
         } else if ((!alreadyInPkg || cliOptions.forceInstall) && !cliOptions.noInstall) {
           await shouldCommitState(`[nodepack] before add ${packageName}`, true)
           log()
@@ -64,6 +61,10 @@ module.exports = class PluginAddJob {
 
           log(`${chalk.green('✔')}  Successfully installed plugin: ${chalk.cyan(packageName)}`)
           log()
+        }
+
+        if (!alreadyInPkg) {
+          plugins.push(packageName)
         }
 
         if (!plugins.includes(packageName)) {
