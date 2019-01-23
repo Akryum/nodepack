@@ -31,8 +31,25 @@ module.exports = {
         },
         nav: [
           {
-            text: 'Guide',
-            link: '/guide/'
+            text: 'Learn',
+            items: [
+              {
+                text: 'Guide',
+                link: '/guide/'
+              },
+              {
+                text: 'Config Reference',
+                link: '/config/'
+              },
+              {
+                text: 'Plugin Dev Guide',
+                link: '/plugin-dev-guide/'
+              },
+            ]
+          },
+          {
+            text: 'Community',
+            link: 'https://spectrum.chat/nodepack'
           },
         ],
         sidebar: {
@@ -40,15 +57,33 @@ module.exports = {
             '/guide/',
             '/guide/installation',
             {
-              title: 'Basics',
+              title: 'Essentials',
               collapsable: false,
               children: [
                 '/guide/creating-a-project',
-                '/guide/plugin',
-                '/guide/preset'
+                '/guide/plugins',
+                '/guide/service',
               ]
             },
-          ]
+            {
+              title: 'Going further',
+              collapsable: false,
+              children: [
+                '/guide/env-mode',
+                '/guide/maintenance',
+                '/guide/app-migrations',
+                '/guide/env-migrations',
+                '/guide/preset',
+                '/guide/deployment',
+              ]
+            },
+          ],
+          '/config/': [
+            '/config/',
+          ],
+          '/plugin-dev-guide/': [
+            '/plugin-dev-guide/',
+          ],
         }
       },
     }

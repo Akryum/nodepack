@@ -1,3 +1,5 @@
+@import 'override'
+
 .gold-sponsor
   max-width 300px !important
 
@@ -6,3 +8,26 @@
 
 .bronze-sponsor
   max-width 150px !important
+
+.rui-icon
+  width 24px
+  height @width
+
+  &.hero-icon
+    width 42px
+    height @width
+    display block
+    margin 128px auto 32px
+    background rgba($accentColor, .3)
+    border-radius 50%
+    padding 20px
+    overflow visible
+
+  .primary
+    fill $accentColor
+
+  .secondary
+    fill darken($accentColor, 20%)
+
+.footer
+  margin-top 128px
