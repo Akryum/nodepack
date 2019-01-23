@@ -15,7 +15,7 @@ module.exports = (api, options) => {
 
   function logMainHelp () {
     console.log(
-      `\n  Usage: nodepack <command> [options]\n` +
+      `\n  Usage: nodepack-service <command> [options]\n` +
       `\n  Commands:\n`
     )
     const commands = api.service.commands
@@ -31,7 +31,7 @@ module.exports = (api, options) => {
       }
     }
     console.log(`\n  run ${
-      chalk.green(`nodepack help [command]`)
+      chalk.green(`nodepack-service help [command]`)
     } for usage of a specific command.\n`)
   }
 
