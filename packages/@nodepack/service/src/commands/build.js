@@ -12,7 +12,7 @@ module.exports = (api, options) => {
     options: {
       '--no-clean': 'do not delete the dist folder before building',
       '--externals': `do not bundle the dependencies into the final built files`,
-      '--no-minify': 'do not minify the built files',
+      '--minify': 'minify the built files',
       ...commonCommandOptions,
     },
   }, async (args) => {
@@ -39,8 +39,8 @@ module.exports = (api, options) => {
       options.externals = true
     }
 
-    if (args.minify === false) {
-      options.minify = false
+    if (args.minify) {
+      options.minify = true
     }
 
     const webpackConfig = await api.resolveWebpackConfig()
