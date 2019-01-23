@@ -74,6 +74,7 @@ module.exports = {
                 '/guide/app-migrations',
                 '/guide/env-migrations',
                 '/guide/preset',
+                '/guide/webpack',
                 '/guide/deployment',
               ]
             },
