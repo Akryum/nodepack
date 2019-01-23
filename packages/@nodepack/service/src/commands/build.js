@@ -11,7 +11,7 @@ module.exports = (api, options) => {
     usage: 'nodepack-service build [entry]',
     options: {
       '--no-clean': 'do not delete the dist folder before building',
-      '--function': 'apply default config for serverless function',
+      '--externals': `do not bundle the dependencies into the final built files`,
       ...commonCommandOptions,
     },
   }, async (args) => {
@@ -34,10 +34,8 @@ module.exports = (api, options) => {
     const fs = require('fs-extra')
     const formatStats = require('../util/formatStats')
 
-    // Sererless function
-    if (args.function) {
-      options.externals = false
-      options.productionSourceMap = false
+    if (args.externals) {
+      options.externals = true
     }
 
     const webpackConfig = await api.resolveWebpackConfig()

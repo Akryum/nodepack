@@ -9,7 +9,7 @@ exports.defaultOptions = function () {
     outputDir: 'dist',
     srcDir: 'src',
     productionSourceMap: false,
-    externals: true,
+    externals: false,
     parallel: hasMultipleCores(),
     transpileDependencies: [],
     defaultPort: 4000,
