@@ -164,7 +164,7 @@ class Maintenance {
     // in case it modify files
     const shouldCommit = await shouldUseGit(this.cwd, this.cliOptions)
     if (shouldCommit) {
-      const result = await commitOnGit(this.cliOptions, this.isTestOrDebug, defaultMessage)
+      const result = await commitOnGit(this.cwd, this.cliOptions, this.isTestOrDebug, defaultMessage)
       if (!result) {
         // Commit failed confirmation
         const answers = await inquirer.prompt([
