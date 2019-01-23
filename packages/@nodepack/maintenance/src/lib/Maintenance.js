@@ -74,8 +74,6 @@ class Maintenance {
       after,
     }
 
-    this.preCommitAttempted = false
-
     // Are one of those vars non-empty?
     this.isTestOrDebug = !!(process.env.NODEPACK_TEST || process.env.NODEPACK_DEBUG)
 
@@ -158,13 +156,14 @@ class Maintenance {
   /**
    * Should be called each time the project is about to be modified.
    * @param {string} defaultMessage
+   * @param {boolean} force
    */
-  async shouldCommitState (defaultMessage) {
-    if (this.preCommitAttempted || this.skipCommit) return
+  async shouldCommitState (defaultMessage, force = false) {
+    if (this.skipCommit && !force) return
     // Commit app code before installing a new plugin
     // in case it modify files
-    const shouldCommitState = await shouldUseGit(this.cwd, this.cliOptions)
-    if (shouldCommitState) {
+    const shouldCommit = await shouldUseGit(this.cwd, this.cliOptions)
+    if (shouldCommit) {
       const result = await commitOnGit(this.cliOptions, this.isTestOrDebug, defaultMessage)
       if (!result) {
         // Commit failed confirmation
@@ -172,7 +171,7 @@ class Maintenance {
           {
             name: 'continue',
             type: 'confirm',
-            message: `Git commit failed, the current app code wasn't saved. Continue anyway?`,
+            message: `Git commit "${defaultMessage}" failed, the current app code wasn't saved. Continue anyway?`,
             default: false,
           },
         ])
@@ -181,7 +180,6 @@ class Maintenance {
         }
       }
     }
-    this.preCommitAttempted = true
   }
 
   /**

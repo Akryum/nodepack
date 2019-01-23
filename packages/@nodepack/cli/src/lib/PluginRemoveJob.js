@@ -53,7 +53,7 @@ module.exports = class PluginRemoveJob {
         })
         const { migrations } = await migrator.prepareRollback([packageName])
         if (migrations.length) {
-          await shouldCommitState(`[nodepack] before remove ${packageName}`)
+          await shouldCommitState(`[nodepack] before remove ${packageName}`, true)
           log(`🚀  Rollbacking app code...`)
           const { rollbackCount } = await migrator.rollback([packageName])
           log(`📝  ${rollbackCount} app rollback${rollbackCount > 1 ? 's' : ''} applied!`)
@@ -70,7 +70,7 @@ module.exports = class PluginRemoveJob {
         }
       },
       after: async ({ shouldCommitState }) => {
-        await shouldCommitState(`[nodepack] after remove ${packageName}`)
+        await shouldCommitState(`[nodepack] after remove ${packageName}`, true)
         log(`🎉  Successfully removed ${chalk.yellow(packageName)}.`)
       },
     })

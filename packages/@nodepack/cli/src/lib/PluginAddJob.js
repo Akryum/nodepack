@@ -54,7 +54,7 @@ module.exports = class PluginAddJob {
             plugins.push(packageName)
           }
         } else if ((!alreadyInPkg || cliOptions.forceInstall) && !cliOptions.noInstall) {
-          await shouldCommitState(`[nodepack] before add ${packageName}`)
+          await shouldCommitState(`[nodepack] before add ${packageName}`, true)
           log()
           log(`📦  Installing ${chalk.cyan(packageName)}...`)
           log()
@@ -72,7 +72,7 @@ module.exports = class PluginAddJob {
         }
       },
       after: async ({ shouldCommitState }) => {
-        await shouldCommitState(`[nodepack] after add ${packageName}`)
+        await shouldCommitState(`[nodepack] after add ${packageName}`, true)
         log(`🎉  Successfully added ${chalk.yellow(packageName)}.`)
       },
     })
