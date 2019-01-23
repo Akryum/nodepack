@@ -16,7 +16,7 @@ const format = (label, msg) => {
   }).join('\n')
 }
 
-const chalkTag = msg => chalk.bgBlackBright.white.dim(` ${msg} `)
+const chalkTag = msg => chalk.bgBlackBright.white(` ${msg} `)
 
 /**
  * @param {any} msg
