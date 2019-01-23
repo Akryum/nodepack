@@ -17,6 +17,7 @@ program
   .option('-p, --preset <presetName>', 'Skip prompts and use saved or remote preset')
   .option('-d, --default', 'Skip prompts and use the default preset')
   .option('-i, --inlinePreset <json>', 'Skip prompts and use inline JSON string as preset')
+  .option('-c, --clone', 'Use git clone when fetching remote preset')
   // Install
   .option('-m, --packageManager <command>', 'Use specified npm client when installing dependencies')
   .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
