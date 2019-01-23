@@ -8,7 +8,7 @@ const defaultArgs = {
 module.exports = (api, options) => {
   api.registerCommand('build', {
     description: 'Build the app for production',
-    usage: 'nodepack build [entry]',
+    usage: 'nodepack-service build [entry]',
     options: {
       '--no-clean': 'do not delete the dist folder before building',
       '--function': 'apply default config for serverless function',

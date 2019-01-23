@@ -4,7 +4,7 @@ const commonCommandOptions = require('../util/commonCommandOptions')
 module.exports = (api, options) => {
   api.registerCommand('dev', {
     description: 'Build and live-reload the app',
-    usage: 'nodepack dev [entry]',
+    usage: 'nodepack-service dev [entry]',
     options: {
       '-p, --port [port]': 'Specify a default port for process.env.PORT (it may automatically change if not available)',
       ...commonCommandOptions,

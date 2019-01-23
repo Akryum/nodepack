@@ -2,7 +2,7 @@
 module.exports = (api, options) => {
   api.registerCommand('inspect', {
     description: 'inspect internal webpack config',
-    usage: 'nodepack inspect [entry] [options] [...paths]',
+    usage: 'nodepack-service inspect [entry] [options] [...paths]',
     options: {
       '--mode': 'specify env mode (default: development)',
       '--rule <ruleName>': 'inspect a specific module rule',
