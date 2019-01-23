@@ -12,6 +12,12 @@ A modern node app development platform
 
 Nodepack is a modern, integrated and smart development environement for node backend developers. The bundling is done with Webpack.
 
+<br>
+
+<h3 align="center"><a href="https://nodepack.netlify.com/">Documentation</a></h3>
+
+<br>
+
 <p align="center">
   <a href="https://www.patreon.com/akryum" target="_blank">
     <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
