@@ -1,1 +1,1 @@
-exports.DEV_PATH = 'node_modules/.temp/nodepack/output'
+exports.DEV_PATH = '.nodepack/temp/output'

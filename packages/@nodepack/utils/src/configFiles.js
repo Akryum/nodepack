@@ -14,7 +14,7 @@ exports.FILE_APP_MIGRATIONS_PLUGIN_VERSIONS = 'app-migration-plugin-versions.jso
 /**
  * Content generated in the config folder's git ignore file.
  */
-exports.FILE_CONTENT_GITIGNORE = `
+exports.FILE_CONTENT_GITIGNORE = `/temp
 `
 
 /**
