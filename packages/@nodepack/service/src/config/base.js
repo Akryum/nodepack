@@ -45,23 +45,25 @@ module.exports = (api, options) => {
       .set('exprContextCritical', options.externals)
 
     // External modules (default are modules in package.json deps)
-    if (options.externals) {
+    if (options.externals !== false) {
       if (options.externals === true) {
         const nodeExternals = require('webpack-node-externals')
         config.externals(nodeExternals({
-          whitelist: options.nodeExternalsWhitelist || [
+          whitelist: (options.nodeExternalsWhitelist || [
             /\.(eot|woff|woff2|ttf|otf)$/,
             /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
             /\.(mp4|mp3|ogg|swf|webp)$/,
             /\.(css|scss|sass|less|styl)$/,
-          ],
+          ]).concat(['@nodepack/module']),
           modulesFromFile: true,
         }))
       } else if (Array.isArray(options.externals)) {
-        config.externals(options.externals)
+        config.externals(options.externals.concat(['@nodepack/module']))
       } else {
-        config.externals([options.externals])
+        config.externals([options.externals, '@nodepack/module'])
       }
+    } else {
+      config.externals(['@nodepack/module'])
     }
 
     // Plugins
