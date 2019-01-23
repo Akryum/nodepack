@@ -123,7 +123,7 @@ module.exports = class MigrationOperationAPI {
    * Tool configuration fields may be extracted into standalone files before
    * files are written to disk.
    *
-   * @param {object | (() => object)} fields - Fields to merge.
+   * @param {object | ((pkg: any) => object)} fields - Fields to merge.
    * @param {boolean} merge - Deep-merge nested fields.
    */
   extendPackage (fields, merge = true) {
