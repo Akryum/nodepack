@@ -77,13 +77,13 @@ module.exports = class PluginUpgradeJob {
           ]
         }
 
-        logWithSpinner(`🔄`, `Checking for plugin updates...`)
+        logWithSpinner(`🔄`, `Checking for plugin upgrades...`)
         const { updateInfos, wantedUpgrades, latestUpgrades, totalUpgrades } = await this.resolveUpdates(pkg, selectedPlugins)
         stopSpinner()
 
         // No updates
         if (wantedUpgrades === 0 && latestUpgrades === 0) {
-          log(`${chalk.green('✔')}  No plugin updates available.`)
+          log(`${chalk.green('✔')}  No plugin upgrades available.`)
           process.exit()
         } else {
           this.printAvailableUpdates(updateInfos)
@@ -95,7 +95,7 @@ module.exports = class PluginUpgradeJob {
           if (wantedUpgrades) {
             mainChoices.push({
               name: chalk.green(`Update ${chalk.bold(wantedUpgrades.toString())} plugins to their wanted version`),
-              value: 'updateAllWanted',
+              value: 'upgradeAllWanted',
             })
           }
           mainChoices.push({
@@ -105,26 +105,26 @@ module.exports = class PluginUpgradeJob {
           if (latestUpgrades) {
             mainChoices.push({
               name: chalk.yellow(`Update ${chalk.bold(latestUpgrades.toString())} plugins to their latest version`),
-              value: 'updateAllLatest',
+              value: 'upgradeAllLatest',
             })
           }
           const { action } = await inquirer.prompt([
             {
               name: 'action',
               type: 'list',
-              message: `${chalk.bold(totalUpgrades.toString())} plugin updates available`,
+              message: `${chalk.bold(totalUpgrades.toString())} plugin upgrades available`,
               choices: mainChoices,
             },
           ])
 
           if (action === 'manual') {
             queuedUpdates = await this.selectUpdates(updateInfos)
-          } else if (action === 'updateAllWanted') {
+          } else if (action === 'upgradeAllWanted') {
             queuedUpdates = updateInfos.filter(i => i.canUpdateWanted).map(i => ({
               info: i,
               version: this.getUpdatedVersionRange(i, i.versionsInfo.wanted) || i.versionRange,
             }))
-          } else if (action === 'updateAllLatest') {
+          } else if (action === 'upgradeAllLatest') {
             queuedUpdates = updateInfos.filter(i => i.canUpdateLatest).map(i => ({
               info: i,
               version: this.getUpdatedVersionRange(i, i.versionsInfo.latest) || 'latest',
@@ -137,12 +137,12 @@ module.exports = class PluginUpgradeJob {
               const { confirm } = await inquirer.prompt([{
                 name: 'confirm',
                 type: 'confirm',
-                message: `Confirm ${count} plugin update${count > 1 ? 's' : ''}?`,
+                message: `Confirm ${count} plugin upgrade${count > 1 ? 's' : ''}?`,
               }])
               if (!confirm) process.exit()
             }
 
-            await shouldCommitState(`[nodepack] before update ${count} plugin${count > 1 ? 's' : ''}`, true)
+            await shouldCommitState(`[nodepack] before upgrade ${count} plugin${count > 1 ? 's' : ''}`, true)
 
             if (!isTestOrDebug) {
               log(`📦  Upgrading packages...`)
@@ -151,14 +151,14 @@ module.exports = class PluginUpgradeJob {
               ).join(' '))
             }
           } else {
-            log(`${chalk.green('✔')}  No plugin updates applied.`)
+            log(`${chalk.green('✔')}  No plugin upgrades applied.`)
             process.exit()
           }
         }
       },
       after: async ({ shouldCommitState }) => {
         const count = queuedUpdates.length
-        await shouldCommitState(`[nodepack] after update ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}`, true)
+        await shouldCommitState(`[nodepack] after upgrade ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}`, true)
         log(`🎉  Successfully upgraded ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}.`)
       },
     })
