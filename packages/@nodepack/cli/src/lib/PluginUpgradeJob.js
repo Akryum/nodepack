@@ -64,9 +64,17 @@ module.exports = class PluginUpgradeJob {
       skipCommit: true,
       skipPreInstall: true,
       before: async ({ pkg, plugins, shouldCommitState, installDeps, isTestOrDebug }) => {
-        let selectedPlugins = plugins
+        /** @type {string []} */
+        let selectedPlugins
         if (packageNames.length) {
+          // Selected from command arguments
           selectedPlugins = packageNames
+        } else {
+          // By default, select service + all plugins
+          selectedPlugins = [
+            '@nodepack/service',
+            ...plugins,
+          ]
         }
 
         logWithSpinner(`🔄`, `Checking for plugin updates...`)
