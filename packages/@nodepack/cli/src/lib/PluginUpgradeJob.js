@@ -238,7 +238,7 @@ module.exports = class PluginUpgradeJob {
           name: updateInfo.id,
           type: 'list',
           message: `${updateInfo.id} ${updateInfo.link ? `(${updateInfo.link}) ` : ''} ${chalk.grey(updateInfo.dependencyType)}`,
-          choices: [],
+          choices,
         })
       }
     }
