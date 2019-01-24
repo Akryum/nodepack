@@ -85,6 +85,8 @@ module.exports = class PluginUpgradeJob {
         if (wantedUpgrades === 0 && latestUpgrades === 0) {
           log(`${chalk.green('✔')}  No plugin updates available.`)
           process.exit()
+        } else {
+          this.printAvailableUpdates(updateInfos)
         }
 
         if (!cliOptions.wanted && !cliOptions.latest) {
@@ -270,5 +272,53 @@ module.exports = class PluginUpgradeJob {
       }
     }
     return versionRange
+  }
+
+  /**
+   * @param {UpdateInfo []} updateInfos
+   */
+  printAvailableUpdates (updateInfos) {
+    updateInfos = updateInfos.filter(i => i.canUpdateWanted || i.canUpdateLatest)
+      .sort((a, b) => {
+        if (a.canUpdateWanted && !b.canUpdateWanted) return -1
+        if (!a.canUpdateWanted && b.canUpdateWanted) return 1
+        return 0
+      })
+
+    const ui = require('cliui')({ width: 90 })
+
+    function makeRow (id, a, b, c) {
+      return `${id}\t    ${a}\t ${b}\t ${c}`
+    }
+
+    log(`Available updates:\n`)
+
+    ui.div(
+      makeRow(
+        chalk.cyan.bold(`Id`),
+        chalk.cyan.bold(`Current`),
+        chalk.cyan.bold(`Wanted`),
+        chalk.cyan.bold(`Latest`)
+      ) + `\n` +
+      updateInfos.map(infos => {
+        const { current, wanted, latest } = infos.versionsInfo
+
+        function formatVersion (version) {
+          if (version !== '?' && version !== current) {
+            return chalk.bold(version)
+          }
+          return version
+        }
+
+        return makeRow(
+          infos.id,
+          chalk.blue(`${current || '?'}`),
+          chalk.green(`${formatVersion(wanted || '?')}`),
+          chalk.yellow(`${formatVersion(latest || '?')}`)
+        )
+      }).join(`\n`)
+    )
+
+    log(`${ui.toString()}\n`)
   }
 }
