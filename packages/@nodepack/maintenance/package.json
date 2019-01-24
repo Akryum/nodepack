@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/maintenance",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Maintenance utils for Nodepack apps",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -21,8 +21,8 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-migrator": "^0.0.2",
-    "@nodepack/utils": "^0.0.2",
+    "@nodepack/app-migrator": "^0.0.3",
+    "@nodepack/utils": "^0.0.3",
     "@types/inquirer": "^0.0.43",
     "fs-extra": "^7.0.1",
     "inquirer": "^6.2.1"
