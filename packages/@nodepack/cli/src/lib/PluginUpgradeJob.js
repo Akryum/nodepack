@@ -177,7 +177,6 @@ module.exports = class PluginUpgradeJob {
     for (const id of plugins) {
       const versionRange = pkg.dependencies[id] || pkg.devDependencies[id]
       const versionsInfo = await getPackageVersionsInfo(this.cwd, id, versionRange)
-      console.log(id, versionsInfo)
       let canUpdateWanted = false
       let canUpdateLatest = false
       if (versionsInfo.current !== null) {
