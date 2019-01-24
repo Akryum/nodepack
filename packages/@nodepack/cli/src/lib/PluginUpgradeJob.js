@@ -183,7 +183,7 @@ module.exports = class PluginUpgradeJob {
       let link = null
       const medata = await getPackageMetadata(id)
       if (medata) {
-        link = medata.body.homepage
+        link = medata.homepage
       }
       updateInfos.push({
         id,

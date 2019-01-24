@@ -187,7 +187,7 @@ exports.getPackageMetadata = async function (id, range = '') {
     : `https://registry.npmjs.org`
   let result
   try {
-    result = await request.get(`${registry}/${encodeURIComponent(id).replace(/^%40/, '@')}/${range}`)
+    result = (await request.get(`${registry}/${encodeURIComponent(id).replace(/^%40/, '@')}/${range}`)).body
     if (result) metadataCache.set(cacheId, result)
   } catch (e) {
     warn(`Couldn't get medata for ${cacheId}: ${e.message}`)
@@ -204,7 +204,7 @@ exports.getPackageMetadata = async function (id, range = '') {
 exports.getPackageTaggedVersion = async function (id, tag = 'latest') {
   try {
     const res = await exports.getPackageMetadata(id)
-    if (res) res.body['dist-tags'][tag]
+    if (res) res['dist-tags'][tag]
   } catch (e) {
     error(e)
   }
@@ -234,8 +234,13 @@ exports.getPackageVersionsInfo = async function (cwd, id, versionRange) {
   if (metadata) {
     result.latest = metadata['dist-tags'].latest
 
-    const versions = Array.isArray(metadata.versions) ? metadata.versions : Object.keys(metadata.versions)
-    result.wanted = semver.maxSatisfying(versions, versionRange)
+    const wantedTagVersion = metadata['dist-tags'][versionRange]
+    if (wantedTagVersion) {
+      result.wanted = wantedTagVersion
+    } else {
+      const versions = Array.isArray(metadata.versions) ? metadata.versions : Object.keys(metadata.versions)
+      result.wanted = semver.maxSatisfying(versions, versionRange)
+    }
   }
 
   return result
