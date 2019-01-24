@@ -28,7 +28,7 @@ const {
   chalk,
   getPackageMetadata,
   getPackageVersionsInfo,
-  writePkg,
+  updatePackage,
 } = require('@nodepack/utils')
 const officialPluginShorthands = require('../util/officialPluginShorthands')
 const inquirer = require('inquirer')
@@ -63,7 +63,7 @@ module.exports = class PluginUpgradeJob {
       cliOptions,
       skipCommit: true,
       skipPreInstall: true,
-      before: async ({ pkg, plugins, shouldCommitState, installDeps, isTestOrDebug }) => {
+      before: async ({ pkg, plugins, shouldCommitState, packageManager, isTestOrDebug }) => {
         /** @type {string []} */
         let selectedPlugins
         if (packageNames.length) {
@@ -144,13 +144,11 @@ module.exports = class PluginUpgradeJob {
 
             await shouldCommitState(`[nodepack] before update ${count} plugin${count > 1 ? 's' : ''}`, true)
 
-            for (const update of queuedUpdates) {
-              pkg[update.info.dependencyType][update.info.id] = update.version
-            }
-            writePkg(cwd, pkg)
-
             if (!isTestOrDebug) {
-              await installDeps(`📦  Updating packages...`)
+              log(`📦  Upgrading packages...`)
+              await updatePackage(cwd, packageManager, cliOptions.registry, queuedUpdates.map(
+                u => `${u.info.id}@${u.version}`
+              ).join(' '))
             }
           } else {
             log(`${chalk.green('✔')}  No plugin updates applied.`)
