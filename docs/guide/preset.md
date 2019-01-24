@@ -98,7 +98,7 @@ If the repository is private, you need to pass `--clone`:
 nodepack create my-app --preset owner/name --clone
 ```
 
-By default, the `master` branch will be used, but you can specify another one with a URL frament:
+By default, the `master` branch will be used, but you can specify another one with a URL fragment:
 
 ```bash
 nodepack create my-app --preset owner/name#my-branch
