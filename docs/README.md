@@ -60,6 +60,36 @@ nodepack
 
 [Continue reading the Guide →](./guide/)
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="rui-icon hero-icon icon-mood-happy"><circle cx="12" cy="12" r="10" class="primary"/><path class="secondary" d="M6.8 14h10.4a1 1 0 0 1 .86 1.5 7 7 0 0 1-12.12 0A1 1 0 0 1 6.8 14zm1.7-3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+
+## Sponsors
+
+### Silver
+
+<p style="text-align: center;">
+  <a href="https://vueschool.io/" target="_blank">
+    <img src="https://vueschool.io/img/logo/vueschool_logo_multicolor.svg" alt="VueSchool logo" class="silver-sponsor">
+  </a>
+</p>
+
+### Bronze
+
+<p align="center">
+  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
+    <img src="https://cdn.discordapp.com/attachments/537832759985700914/537832771691872267/Horizontal_Logo_-_Dark.png" alt="Vuetify logo" class="bronze-sponsor">
+  </a>
+</p>
+
+## Become a sponsor
+
+Is your company using Nodepack to build awesome apps or libraries? Join the other patrons and become a sponsor to add your logo on this documentation! Supporting me on Patreon allows me to work more on Free Open Source Software such as Nodepack! Thank you!
+
+<p style="text-align: center;">
+  <a href="https://www.patreon.com/akryum" target="_blank">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+  </a>
+</p>
+
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="rui-icon hero-icon icon-chat-group"><path class="primary" d="M20.3 12.04l1.01 3a1 1 0 0 1-1.26 1.27l-3.01-1a7 7 0 1 1 3.27-3.27zM11 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path class="secondary" d="M15.88 17.8a7 7 0 0 1-8.92 2.5l-3 1.01a1 1 0 0 1-1.27-1.26l1-3.01A6.97 6.97 0 0 1 5 9.1a9 9 0 0 0 10.88 8.7z"/></svg>
 
 ## Join the community!
