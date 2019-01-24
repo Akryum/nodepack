@@ -39,7 +39,7 @@ nodepack --help
 
 ## Troubleshooting
 
-If your OS tells you `nodepack` is not foud, make sure to have the correct `PATH` environment variable setup on your computer.
+If your OS tells you `nodepack` is not found, make sure to have the correct `PATH` environment variable setup on your computer.
 It needs to contain the absolute path to Npm or Yarn bin folders where those tools put the runnable scripts from globally installed packages (like Nodepack CLI).
 
 Check what the folder is with the following commands:
