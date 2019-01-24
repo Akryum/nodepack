@@ -63,9 +63,14 @@ module.exports = class PluginUpgradeJob {
       cliOptions,
       skipCommit: true,
       skipPreInstall: true,
-      before: async ({ pkg, shouldCommitState, installDeps, isTestOrDebug }) => {
+      before: async ({ pkg, plugins, shouldCommitState, installDeps, isTestOrDebug }) => {
+        let selectedPlugins = plugins
+        if (packageNames.length) {
+          selectedPlugins = packageNames
+        }
+
         logWithSpinner(`🔄`, `Checking for plugin updates...`)
-        const { updateInfos, wantedUpgrades, latestUpgrades, totalUpgrades } = await this.resolveUpdates(pkg, packageNames)
+        const { updateInfos, wantedUpgrades, latestUpgrades, totalUpgrades } = await this.resolveUpdates(pkg, selectedPlugins)
         stopSpinner()
 
         // No updates
@@ -164,6 +169,7 @@ module.exports = class PluginUpgradeJob {
     for (const id of plugins) {
       const versionRange = pkg.dependencies[id] || pkg.devDependencies[id]
       const versionsInfo = await getPackageVersionsInfo(this.cwd, id, versionRange)
+      console.log(id, versionsInfo)
       let canUpdateWanted = false
       let canUpdateLatest = false
       if (versionsInfo.current !== null) {
