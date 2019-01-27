@@ -3,7 +3,7 @@ module.exports = {
     '/': {
       lang: 'en-US',
       title: 'Nodepack',
-      description: '📦 Modern node development'
+      description: '📦 Modern node development',
     },
   },
   serviceWorker: true,
@@ -25,9 +25,9 @@ module.exports = {
         editLinkText: 'Edit this page on GitHub',
         serviceWorker: {
           updatePopup: {
-            message: "New content is available.",
-            buttonText: "Refresh"
-          }
+            message: 'New content is available.',
+            buttonText: 'Refresh',
+          },
         },
         nav: [
           {
@@ -35,21 +35,21 @@ module.exports = {
             items: [
               {
                 text: 'Guide',
-                link: '/guide/'
+                link: '/guide/',
               },
               {
                 text: 'Config Reference',
-                link: '/config/'
+                link: '/config/',
               },
               {
                 text: 'Plugin Dev Guide',
-                link: '/plugin-dev-guide/'
+                link: '/plugin-dev-guide/',
               },
-            ]
+            ],
           },
           {
             text: 'Community',
-            link: 'https://spectrum.chat/nodepack'
+            link: 'https://spectrum.chat/nodepack',
           },
         ],
         sidebar: {
@@ -63,7 +63,7 @@ module.exports = {
                 '/guide/creating-a-project',
                 '/guide/plugins',
                 '/guide/service',
-              ]
+              ],
             },
             {
               title: 'Going further',
@@ -76,7 +76,7 @@ module.exports = {
                 '/guide/preset',
                 '/guide/webpack',
                 '/guide/deployment',
-              ]
+              ],
             },
           ],
           '/config/': [
@@ -85,8 +85,8 @@ module.exports = {
           '/plugin-dev-guide/': [
             '/plugin-dev-guide/',
           ],
-        }
+        },
       },
-    }
-  }
+    },
+  },
 }
