@@ -29,7 +29,7 @@ module.exports = function generateReadme (pkg, packageManager) {
     '```',
     printScripts(pkg, packageManager),
     '### Customize configuration',
-    'See [Configuration Reference](https://github.com/moonreach/nodepack).',
+    'See [Configuration Reference](https://github.com/Akryum/nodepack).',
     '',
   ].join('\n')
 }

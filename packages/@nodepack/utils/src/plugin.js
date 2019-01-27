@@ -63,7 +63,7 @@ exports.matchesPluginId = (input, full) => {
  */
 exports.getPluginLink = id => {
   if (officialRE.test(id)) {
-    return `https://github.com/moonreach/nodepack/tree/dev/packages/%40moonreach/nodepack-plugin-${
+    return `https://github.com/Akryum/nodepack/tree/dev/packages/%40moonreach/nodepack-plugin-${
       exports.toShortPluginId(id)
     }`
   }

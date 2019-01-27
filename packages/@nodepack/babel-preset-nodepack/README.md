@@ -1,6 +1,6 @@
 # babel-preset-backpack
 
-This package includes the [Babel](https://babeljs.io) preset used by [nodepack](https://github.com/moonreach/nodepack)
+This package includes the [Babel](https://babeljs.io) preset used by [nodepack](https://github.com/Akryum/nodepack)
 
 ## Usage in Nodepack Projects
 

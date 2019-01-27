@@ -32,7 +32,7 @@ module.exports = (api, options) => {
       id: 'auto-install-babel',
       title: `It seems you are using unsupported JS syntax.`,
       description: `Babel is a tool to support newer syntax and proposals.`,
-      link: 'https://github.com/moonreach/nodepack/blob/master/packages/%40moonreach/nodepack-plugin-babel',
+      link: 'https://github.com/Akryum/nodepack/blob/master/packages/%40moonreach/nodepack-plugin-babel',
       question: `Do you want to install Babel nodepack plugin?`,
     },
 

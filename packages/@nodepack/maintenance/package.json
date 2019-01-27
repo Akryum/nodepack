@@ -6,12 +6,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moonreach/nodepack.git"
+    "url": "git+https://github.com/Akryum/nodepack.git"
   },
   "bugs": {
-    "url": "https://github.com/moonreach/nodepack/issues"
+    "url": "https://github.com/Akryum/nodepack/issues"
   },
-  "homepage": "https://github.com/moonreach/nodepack#readme",
+  "homepage": "https://github.com/Akryum/nodepack#readme",
   "publishConfig": {
     "access": "public"
   },
