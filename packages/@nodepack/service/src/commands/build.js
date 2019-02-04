@@ -13,6 +13,7 @@ module.exports = (api, options) => {
       '--no-clean': 'do not delete the dist folder before building',
       '--externals': `do not bundle the dependencies into the final built files`,
       '--minify': 'minify the built files',
+      '--watch': 'watch source files and automatically re-build',
       ...commonCommandOptions,
     },
   }, async (args) => {
@@ -51,27 +52,34 @@ module.exports = (api, options) => {
     }
 
     return new Promise((resolve, reject) => {
-      const compiler = webpack(webpackConfig)
-      compiler.run(
-        (err, stats) => {
-          if (err) {
-            error(err)
-          } else {
-            if (stats.hasErrors()) {
-              return reject(`Build failed with errors.`)
-            }
-
-            const targetDirShort = path.relative(
-              api.service.cwd,
-              targetDir
-            )
-            log(formatStats(stats, targetDirShort, api))
-
-            done(chalk.green('Build complete! Your app is ready for production.'))
-            resolve()
+      const callback = (err, stats) => {
+        if (err) {
+          error(err)
+        } else {
+          if (stats.hasErrors()) {
+            return reject(`Build failed with errors.`)
           }
+
+          const targetDirShort = path.relative(
+            api.service.cwd,
+            targetDir
+          )
+          log(formatStats(stats, targetDirShort, api))
+
+          done(chalk.green('Build complete! Your app is ready for production.'))
+          if (args.watch) {
+            info(chalk.blue(`Watching for file changes...`))
+          }
+          resolve()
         }
-      )
+      }
+
+      const compiler = webpack(webpackConfig)
+      if (args.watch) {
+        compiler.watch(webpackConfig.watchOptions, callback)
+      } else {
+        compiler.run(callback)
+      }
     })
   })
 }
