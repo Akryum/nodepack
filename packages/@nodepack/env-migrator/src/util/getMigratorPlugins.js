@@ -13,7 +13,7 @@ module.exports = async function (cwd, rawIds) {
   const plugins = []
   for (const id of rawIds) {
     const pkg = readPkg(path.resolve(cwd, id))
-    const file = (pkg.nodepack && pkg.nodepack.entries && pkg.nodepack.entries.appMigrations) || `${id}/src/app-migrations`
+    const file = (pkg.nodepack && pkg.nodepack.entries && pkg.nodepack.entries.envMigrations) || `${id}/src/env-migrations`
     const apply = loadModule(file, cwd) || (() => {})
     plugins.push(new MigratorPlugin(id, apply))
   }

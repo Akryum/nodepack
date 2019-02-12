@@ -1,0 +1,28 @@
+{
+  "name": "@nodepack/env-migrator",
+  "version": "0.0.1",
+  "description": "Environment Migration system for Nodepack",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Akryum/nodepack/issues"
+  },
+  "homepage": "https://github.com/Akryum/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "@nodepack/module": "^0.0.2",
+    "@nodepack/utils": "^0.0.3"
+  }
+}
