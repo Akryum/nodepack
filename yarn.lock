@@ -2090,6 +2090,67 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@nodepack/app-migrator@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@nodepack/app-migrator/-/app-migrator-0.0.3.tgz#4f38507e40055f5b33f64d59de1f1cd96d282b5e"
+  integrity sha512-JcT/hsAGxB5BKYAk6aBdMtr1kiYyl3R/pqWDDTe06erq+dizAiLe3LNqLhS+AM/piVPwE6ixIrSriJO3shnpIQ==
+  dependencies:
+    "@nodepack/config-transformer" "^0.0.3"
+    "@nodepack/module" "^0.0.2"
+    "@nodepack/utils" "^0.0.3"
+    "@types/inquirer" "^0.0.43"
+    deepmerge "^3.1.0"
+    ejs "^2.6.1"
+    fs-extra "^7.0.1"
+    globby "^8.0.1"
+    inquirer "^6.2.1"
+    isbinaryfile "^3.0.3"
+    lodash.clonedeep "^4.5.0"
+    semver "^5.6.0"
+    slash "^2.0.0"
+    yaml-front-matter "^4.0.0"
+
+"@nodepack/config-transformer@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@nodepack/config-transformer/-/config-transformer-0.0.3.tgz#1eb9cdeee9079e011d7dc39f6a28188d939c3fdd"
+  integrity sha512-nrkOBtlUYcYBpG7Fhuk0tghgqMORKxnhVrQLjVATHwlKwBVMGEnS6vQ7wHpdo2jCz9RFucYTgeWLX6PrJ7IOVg==
+  dependencies:
+    "@nodepack/module" "^0.0.2"
+    "@nodepack/utils" "^0.0.3"
+    deepmerge "^3.1.0"
+    javascript-stringify "^1.6.0"
+    js-yaml "^3.12.1"
+    recast "^0.16.2"
+
+"@nodepack/env-check@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@nodepack/env-check/-/env-check-0.0.2.tgz#a072ee0a0f99557c8e9612a47cb39562963a0321"
+  integrity sha512-hHy8E9jxxA/5UKOzlIcADUw/v8fNNOxnEM7glvrbdz9KKnRixP0NEDhvcJee6T1YvE0qTdtHa/dfQweJarcROg==
+  dependencies:
+    chalk "^2.4.2"
+    execa "^1.0.0"
+    fs-extra "^7.0.1"
+    semver "^5.6.0"
+    systeminformation "^3.54.0"
+
+"@nodepack/maintenance@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@nodepack/maintenance/-/maintenance-0.0.3.tgz#5659d65849a9b24c867e6466f91d33097ac801e0"
+  integrity sha512-sAA9o2Y7w8yoz8v6s/ouiyGzI97OkgP/SG5R/coT4HPeeLNZsYPUYB/2pQ7+csnltyNlfIoWFsIFtvXAD8Th8g==
+  dependencies:
+    "@nodepack/app-migrator" "^0.0.3"
+    "@nodepack/utils" "^0.0.3"
+    "@types/inquirer" "^0.0.43"
+    fs-extra "^7.0.1"
+    inquirer "^6.2.1"
+
+"@nodepack/module@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@nodepack/module/-/module-0.0.2.tgz#08fa9475957512e076909627e20de0666dbe8715"
+  integrity sha512-VCXDGjaz4h0SrbWZW94Hrkt88uMMq6UdEGidz8hykR/VGMCZMIfNrvYh7GH/6jN6Huy0tHyYH9uq3zDDQ16n/g==
+  dependencies:
+    semver "^5.6.0"
+
 "@nodepack/service@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@nodepack/service/-/service-0.0.3.tgz#fc30523107fe805f1bff1ead94cc5bd1b23495e2"
@@ -2119,6 +2180,28 @@
     webpack "^4.29.0"
     webpack-chain "^5.1.0"
     webpack-node-externals "^1.7.2"
+
+"@nodepack/utils@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@nodepack/utils/-/utils-0.0.3.tgz#ff914ea8eb9bd740551a357d7899158a4567a78b"
+  integrity sha512-A90ShwaxMBtO4cCGPNE4AArdRAWT4KOzqaKmsTZEyj3XHWYtBjxujaADwgqvt9tSX14NTyx0ZkB9vpRtg3F74A==
+  dependencies:
+    "@nodepack/module" "^0.0.2"
+    chalk "^2.4.2"
+    execa "^1.0.0"
+    find-up "^3.0.0"
+    fs-extra "^7.0.1"
+    inquirer "^6.2.1"
+    joi "^14.3.1"
+    lodash.clonedeep "^4.5.0"
+    lru-cache "^5.1.1"
+    opn "^5.4.0"
+    ora "^3.0.0"
+    request "^2.88.0"
+    request-promise-native "^1.0.5"
+    semver "^5.6.0"
+    slash "^2.0.0"
+    string.prototype.padstart "^3.0.0"
 
 "@octokit/endpoint@^3.1.1":
   version "3.1.3"
@@ -2445,6 +2528,15 @@
     prettier "1.16.3"
     source-map "~0.6.1"
     vue-template-es2015-compiler "^1.9.0"
+
+"@vue/conventional-changelog@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@vue/conventional-changelog/-/conventional-changelog-0.1.1.tgz#48d2227ca65c354cba4be60754ea531afd0c3718"
+  integrity sha512-xLp1KXnOxn7leEguMmNOsbw1Ojr3yOoPz3/rQyWnoJINZsMWmNiVrMop91CCARQZNSr4iZhHWXz7NK7zF+8KkA==
+  dependencies:
+    compare-func "^1.3.2"
+    execa "^0.10.0"
+    q "^1.5.1"
 
 "@webassemblyjs/ast@1.8.3":
   version "1.8.3"
@@ -3891,7 +3983,7 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
-compare-func@^1.3.1:
+compare-func@^1.3.1, compare-func@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/compare-func/-/compare-func-1.3.2.tgz#99dd0ba457e1f9bc722b12c08ec33eeab31fa648"
   integrity sha1-md0LpFfh+bxyKxLAjsM+6rMfpkg=
@@ -3998,6 +4090,20 @@ conventional-changelog-angular@^5.0.3:
     compare-func "^1.3.1"
     q "^1.5.1"
 
+conventional-changelog-atom@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-atom/-/conventional-changelog-atom-2.0.1.tgz#dc88ce650ffa9ceace805cbe70f88bfd0cb2c13a"
+  integrity sha512-9BniJa4gLwL20Sm7HWSNXd0gd9c5qo49gCi8nylLFpqAHhkFTj7NQfROq3f1VpffRtzfTQp4VKU5nxbe2v+eZQ==
+  dependencies:
+    q "^1.5.1"
+
+conventional-changelog-codemirror@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-codemirror/-/conventional-changelog-codemirror-2.0.1.tgz#acc046bc0971460939a0cc2d390e5eafc5eb30da"
+  integrity sha512-23kT5IZWa+oNoUaDUzVXMYn60MCdOygTA2I+UjnOMiYVhZgmVwNd6ri/yDlmQGXHqbKhNR5NoXdBzSOSGxsgIQ==
+  dependencies:
+    q "^1.5.1"
+
 conventional-changelog-core@^3.1.6:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/conventional-changelog-core/-/conventional-changelog-core-3.1.6.tgz#ac1731a461c50d150d29c1ad4f33143293bcd32f"
@@ -4016,6 +4122,42 @@ conventional-changelog-core@^3.1.6:
     read-pkg "^3.0.0"
     read-pkg-up "^3.0.0"
     through2 "^2.0.0"
+
+conventional-changelog-ember@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-ember/-/conventional-changelog-ember-2.0.2.tgz#284ffdea8c83ea8c210b65c5b4eb3e5cc0f4f51a"
+  integrity sha512-qtZbA3XefO/n6DDmkYywDYi6wDKNNc98MMl2F9PKSaheJ25Trpi3336W8fDlBhq0X+EJRuseceAdKLEMmuX2tg==
+  dependencies:
+    q "^1.5.1"
+
+conventional-changelog-eslint@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-eslint/-/conventional-changelog-eslint-3.0.1.tgz#f65e0e7f63dc09c044244b8785313a602e628002"
+  integrity sha512-yH3+bYrtvgKxSFChUBQnKNh9/U9kN2JElYBm253VpYs5wXhPHVc9ENcuVGWijh24nnOkei7wEJmnmUzgZ4ok+A==
+  dependencies:
+    q "^1.5.1"
+
+conventional-changelog-express@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-express/-/conventional-changelog-express-2.0.1.tgz#fea2231d99a5381b4e6badb0c1c40a41fcacb755"
+  integrity sha512-G6uCuCaQhLxdb4eEfAIHpcfcJ2+ao3hJkbLrw/jSK/eROeNfnxCJasaWdDAfFkxsbpzvQT4W01iSynU3OoPLIw==
+  dependencies:
+    q "^1.5.1"
+
+conventional-changelog-jquery@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-jquery/-/conventional-changelog-jquery-3.0.4.tgz#7eb598467b83db96742178e1e8d68598bffcd7ae"
+  integrity sha512-IVJGI3MseYoY6eybknnTf9WzeQIKZv7aNTm2KQsiFVJH21bfP2q7XVjfoMibdCg95GmgeFlaygMdeoDDa+ZbEQ==
+  dependencies:
+    q "^1.5.1"
+
+conventional-changelog-jshint@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-jshint/-/conventional-changelog-jshint-2.0.1.tgz#11c0e8283abf156a4ff78e89be6fdedf9bd72202"
+  integrity sha512-kRFJsCOZzPFm2tzRHULWP4tauGMvccOlXYf3zGeuSW4U0mZhk5NsjnRZ7xFWrTFPlCLV+PNmHMuXp5atdoZmEg==
+  dependencies:
+    compare-func "^1.3.1"
+    q "^1.5.1"
 
 conventional-changelog-preset-loader@^2.0.2:
   version "2.0.2"
@@ -4037,6 +4179,22 @@ conventional-changelog-writer@^4.0.3:
     semver "^5.5.0"
     split "^1.0.0"
     through2 "^2.0.0"
+
+conventional-changelog@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/conventional-changelog/-/conventional-changelog-3.0.6.tgz#a0bd3b51a0549ec03eb6ef90af7f9fa8c358b15f"
+  integrity sha512-1b96x3G67lDKakRvMm+VvYGwgRk+C8aapHKL5iZ/TJzzD/RuyGA2diHNEsR+uPHmQ7/A4Ts7j6N+VNqUoOfksg==
+  dependencies:
+    conventional-changelog-angular "^5.0.3"
+    conventional-changelog-atom "^2.0.1"
+    conventional-changelog-codemirror "^2.0.1"
+    conventional-changelog-core "^3.1.6"
+    conventional-changelog-ember "^2.0.2"
+    conventional-changelog-eslint "^3.0.1"
+    conventional-changelog-express "^2.0.1"
+    conventional-changelog-jquery "^3.0.4"
+    conventional-changelog-jshint "^2.0.1"
+    conventional-changelog-preset-loader "^2.0.2"
 
 conventional-commits-filter@^2.0.1:
   version "2.0.1"
@@ -4512,7 +4670,7 @@ deep-is@~0.1.3:
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
 
-deepmerge@3.2.0, deepmerge@^3.2.0:
+deepmerge@3.2.0, deepmerge@^3.1.0, deepmerge@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.2.0.tgz#58ef463a57c08d376547f8869fdc5bcee957f44e"
   integrity sha512-6+LuZGU7QCNUnAJyX8cIrlzoEgggTM6B7mm+znKOX4t5ltluT9KLjN6g61ECMS0LTsLW7yDpNoxhix5FZcrIow==
@@ -8247,7 +8405,7 @@ optionator@^0.8.2:
     type-check "~0.3.2"
     wordwrap "~1.0.0"
 
-ora@^3.1.0:
+ora@^3.0.0, ora@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ora/-/ora-3.1.0.tgz#dbedd8c03b5d017fb67083e87ee52f5ec89823ed"
   integrity sha512-vRBPaNCclUi8pUxRF/G8+5qEQkc6EgzKK1G2ZNJUIGu088Un5qIxFXeDgymvPRM9nmrcUOGzQgS1Vmtz+NtlMw==
