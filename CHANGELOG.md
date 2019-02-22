@@ -1,3 +1,13 @@
+# [0.1.3](https://github.com/Akryum/nodepack/compare/v0.1.2...v0.1.3) (2019-02-22)
+
+## other
+
+#### Bug Fixes
+
+* **cli:** don't put console colors in after upgrade plugins git commit ([48dd312](https://github.com/Akryum/nodepack/commit/48dd312))
+
+
+
 # [0.1.2](https://github.com/Akryum/nodepack/compare/v0.1.1...v0.1.2) (2019-02-22)
 
 ## other
