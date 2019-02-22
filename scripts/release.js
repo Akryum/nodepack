@@ -96,10 +96,7 @@ const release = async () => {
 
     await require('./genChangelog')(version)
 
-    const tagName = `v${version}`
-
-    await execa('git', ['tag', tagName], { stdio: 'inherit' })
-    await execa('git', ['push', '--follow-tags'], { stdio: 'inherit' })
+    await execa('git', ['push'], { stdio: 'inherit' })
   }
 }
 
