@@ -19,13 +19,15 @@ module.exports = (api, options) => {
     const { getDefaultEntry } = require('../util/defaultEntry.js')
     options.entry = getDefaultEntry(api, options, args)
 
-    const moreEnv = {}
+    const moreEnv = {
+      ...process.env,
+    }
 
     // Default port
     if (!process.env.PORT || args.port) {
       const { getDefaultPort } = require('../util/defaultPort')
       const port = await getDefaultPort(api, options, args)
-      moreEnv.PORT = port
+      moreEnv.PORT = port.toString()
       if (api.service.env === 'development') {
         info(chalk.blue(`\`process.env.PORT\` has been set to ${port}`))
       }
@@ -55,6 +57,9 @@ module.exports = (api, options) => {
         } else {
           // Kill previous process
           await terminateApp()
+          if (child && moreEnv.PORT) {
+            await waitForFreePort(parseInt(moreEnv.PORT))
+          }
 
           if (stats.hasErrors()) {
             error(`Build failed with errors.`)
@@ -127,6 +132,52 @@ function injectPause (compiler) {
     if (compiler.$_pause) return
     return compile.call(compiler, ...args)
   }
+}
+
+/**
+ * @param {number} port
+ * @returns {Promise.<boolean>}
+ */
+function isPortTaken (port) {
+  return new Promise((resolve, reject) => {
+    const net = require('net')
+    const server = net.createServer()
+    server.once('error', (/** @type {any} */ error) => {
+      if (error.code !== 'EADDRINUSE') {
+        reject(error)
+      }
+      resolve(true)
+    })
+    server.once('listening', () => {
+      server.once('close', () => {
+        resolve(false)
+      })
+      server.close()
+    })
+    server.listen(port)
+  })
+}
+
+/**
+ * @param {number} port
+ * @returns {Promise.<boolean>}
+ */
+function waitForFreePort (port) {
+  let count = 0
+  return new Promise((resolve, reject) => {
+    const timer = setInterval(async () => {
+      try {
+        if (!await isPortTaken(port) || count > 10) {
+          clearInterval(timer)
+          resolve()
+        } else {
+          count++
+        }
+      } catch (e) {
+        reject(e)
+      }
+    }, 500)
+  })
 }
 
 // @ts-ignore
