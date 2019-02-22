@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf packages/test/*",
     "sync": "node scripts/syncDeps.js",
-    "release": "lerna publish",
+    "release": "yarn --pure-lockfile && yarn clean && node scripts/release.js",
     "test:types": "tsc",
     "test:lint": "eslint packages/@nodepack",
     "test:lerna-all": "lerna run test",
