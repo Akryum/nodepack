@@ -158,7 +158,7 @@ module.exports = class PluginUpgradeJob {
       },
       after: async ({ shouldCommitState }) => {
         const count = queuedUpdates.length
-        await shouldCommitState(`[nodepack] after upgrade ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}`, true)
+        await shouldCommitState(`[nodepack] after upgrade ${count} plugin${count > 1 ? 's' : ''}`, true)
         log(`🎉  Successfully upgraded ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}.`)
       },
     })
