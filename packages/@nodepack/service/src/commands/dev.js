@@ -54,17 +54,7 @@ module.exports = (api, options) => {
           error(err)
         } else {
           // Kill previous process
-          if (child && !terminated) {
-            try {
-              terminating = child
-              const result = await terminate(child, api.getCwd())
-              if (result.error) {
-                error(`Couldn't terminate process ${child.pid}: ${result.error}`)
-              }
-            } catch (e) {
-              console.error(e)
-            }
-          }
+          await terminateApp()
 
           if (stats.hasErrors()) {
             error(`Build failed with errors.`)
@@ -110,6 +100,23 @@ module.exports = (api, options) => {
         }
       }
     )
+
+    async function terminateApp (supressError = false) {
+      if (child && !terminated) {
+        try {
+          terminating = child
+          const result = await terminate(child, api.getCwd())
+          if (result.error && !supressError) {
+            error(`Couldn't terminate process ${child.pid}: ${result.error}`)
+          }
+        } catch (e) {
+          console.error(e)
+        }
+      }
+    }
+
+    process.on('SIGTERM', () => terminateApp(true))
+    process.on('SIGINT', () => terminateApp(true))
   })
 }
 
