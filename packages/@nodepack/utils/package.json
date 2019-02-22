@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/utils",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Common utilities for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/module": "^0.1.0",
+    "@nodepack/module": "^0.1.2",
     "chalk": "^2.4.2",
     "execa": "^1.0.0",
     "find-up": "^3.0.0",

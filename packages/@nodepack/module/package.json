@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/module",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Dynamic module resolution and loading",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
