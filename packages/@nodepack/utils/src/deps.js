@@ -204,7 +204,7 @@ exports.getPackageMetadata = async function (id, range = '') {
 exports.getPackageTaggedVersion = async function (id, tag = 'latest') {
   try {
     const res = await exports.getPackageMetadata(id)
-    if (res) res['dist-tags'][tag]
+    if (res) return res['dist-tags'][tag]
   } catch (e) {
     error(e)
   }
