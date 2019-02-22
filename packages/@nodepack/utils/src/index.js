@@ -18,5 +18,6 @@ module.exports = {
   ...require('./run'),
   shouldUseTaobao: require('./shouldUseTaobao'),
   ...require('./spinner'),
+  ...require('./terminate'),
   ...require('./validate'),
 }

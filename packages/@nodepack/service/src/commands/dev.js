@@ -11,7 +11,7 @@ module.exports = (api, options) => {
     },
   }, async (args) => {
     const path = require('path')
-    const { info, error, chalk } = require('@nodepack/utils')
+    const { info, error, chalk, terminate } = require('@nodepack/utils')
 
     info(chalk.blue('Preparing development pack...'))
 
@@ -36,7 +36,10 @@ module.exports = (api, options) => {
     const webpackConfig = await api.resolveWebpackConfig()
     const execa = require('execa')
 
+    /** @type {import('child_process').ChildProcess} */
     let child
+    let terminated = false
+    let terminating = null
 
     const compiler = webpack(webpackConfig)
 
@@ -46,13 +49,21 @@ module.exports = (api, options) => {
 
     compiler.watch(
       webpackConfig.watchOptions,
-      (err, stats) => {
+      async (err, stats) => {
         if (err) {
           error(err)
         } else {
           // Kill previous process
-          if (child) {
-            child.kill()
+          if (child && !terminated) {
+            try {
+              terminating = child
+              const result = await terminate(child, api.getCwd())
+              if (result.error) {
+                error(`Couldn't terminate process ${child.pid}: ${result.error}`)
+              }
+            } catch (e) {
+              console.error(e)
+            }
           }
 
           if (stats.hasErrors()) {
@@ -63,6 +74,8 @@ module.exports = (api, options) => {
             } else {
               info(chalk.blue('App starting...'))
             }
+
+            terminated = false
 
             // Built entry file
             const file = api.resolve(path.join(webpackConfig.output.path, 'app.js'))
@@ -80,6 +93,18 @@ module.exports = (api, options) => {
 
             child.on('error', err => {
               error(err)
+              terminated = true
+            })
+
+            child.on('exit', (code, signal) => {
+              if (terminating !== child) {
+                if (code !== 0) {
+                  info(chalk.red(`App exited with error code ${code} and signal '${signal}'.`))
+                } else {
+                  info(chalk.green('App exited, waiting for changes...'))
+                }
+              }
+              terminated = true
             })
           }
         }
