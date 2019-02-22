@@ -1,3 +1,15 @@
+# [0.1.2](https://github.com/Akryum/nodepack/compare/v0.1.1...v0.1.2) (2019-02-22)
+
+## other
+
+#### Bug Fixes
+
+* **cli:** don't use cleanup ([ad200c7](https://github.com/Akryum/nodepack/commit/ad200c7))
+* **cli:** kill child command and all children ([3c97c4d](https://github.com/Akryum/nodepack/commit/3c97c4d))
+* **service:** dev: improved reload process management ([d41b3c1](https://github.com/Akryum/nodepack/commit/d41b3c1))
+
+
+
 # [0.1.1](https://github.com/Akryum/nodepack/compare/v0.1.0...v0.1.1) (2019-02-22)
 
 ## other
