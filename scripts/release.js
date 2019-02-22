@@ -30,6 +30,8 @@ Note: eslint-config-* packages should be released separately & manually.
 
 */
 
+process.env.NODEPACK_RELEASE = true
+
 const execa = require('execa')
 const semver = require('semver')
 const inquirer = require('inquirer')
@@ -85,20 +87,20 @@ const release = async () => {
     } catch (e) {
       // if it's a patch release, there may be no local deps to sync
     }
+
+    const lernaArgs = [
+      'publish',
+      version,
+    ]
+    await execa(require.resolve('lerna/cli'), lernaArgs, { stdio: 'inherit' })
+
+    await require('./genChangelog')(version)
+
+    const tagName = `v${version}`
+
+    await execa('git', ['tag', tagName], { stdio: 'inherit' })
+    await execa('git', ['push', '--follow-tags'], { stdio: 'inherit' })
   }
-
-  const lernaArgs = [
-    'publish',
-    version,
-  ]
-  await execa(require.resolve('lerna/cli'), lernaArgs, { stdio: 'inherit' })
-
-  await require('./genChangelog')(version)
-
-  const tagName = `v${version}`
-
-  await execa('git', ['tag', tagName], { stdio: 'inherit' })
-  await execa('git', ['push', '--follow-tags'], { stdio: 'inherit' })
 }
 
 release().catch(err => {
