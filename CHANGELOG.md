@@ -1,3 +1,13 @@
+# [0.1.1](https://github.com/Akryum/nodepack/compare/v0.1.0...v0.1.1) (2019-02-22)
+
+## other
+
+#### Bug Fixes
+
+* **service:** dev: terminate app on sigkill ([d4d543e](https://github.com/Akryum/nodepack/commit/d4d543e))
+
+
+
 # 0.1.0 (2019-02-22)
 
 ## other
