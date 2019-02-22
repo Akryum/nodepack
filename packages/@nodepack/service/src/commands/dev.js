@@ -71,14 +71,14 @@ module.exports = (api, options) => {
             const file = api.resolve(path.join(webpackConfig.output.path, 'app.js'))
 
             // Spawn child process
-            child = execa('node', [
+            const currentChild = child = execa('node', [
               file,
             ], {
-              stdio: ['inherit', 'inherit', 'inherit'],
+              stdio: [process.stdin, process.stdout, process.stderr],
               cwd: api.getCwd(),
-              cleanup: true,
               shell: false,
               env: moreEnv,
+              detached: true,
             })
 
             child.on('error', err => {
@@ -87,7 +87,7 @@ module.exports = (api, options) => {
             })
 
             child.on('exit', (code, signal) => {
-              if (terminating !== child) {
+              if (terminating !== currentChild) {
                 if (code !== 0) {
                   info(chalk.red(`App exited with error code ${code} and signal '${signal}'.`))
                 } else {
@@ -101,12 +101,12 @@ module.exports = (api, options) => {
       }
     )
 
-    async function terminateApp (supressError = false) {
+    async function terminateApp () {
       if (child && !terminated) {
+        terminating = child
         try {
-          terminating = child
           const result = await terminate(child, api.getCwd())
-          if (result.error && !supressError) {
+          if (result.error) {
             error(`Couldn't terminate process ${child.pid}: ${result.error}`)
           }
         } catch (e) {
@@ -115,8 +115,8 @@ module.exports = (api, options) => {
       }
     }
 
-    process.on('SIGTERM', () => terminateApp(true))
-    process.on('SIGINT', () => terminateApp(true))
+    process.on('SIGTERM', terminateApp)
+    process.on('SIGINT', terminateApp)
   })
 }
 
