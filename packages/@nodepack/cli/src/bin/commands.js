@@ -1,8 +1,10 @@
 const program = require('commander')
-const { chalk, error, checkDebug } = require('@nodepack/utils')
+const { chalk, error, checkDebug, terminate } = require('@nodepack/utils')
 const isInProject = require('../util/isInProject')
 
 const cwd = process.cwd()
+
+let childProcess = null
 
 checkDebug(cwd)
 
@@ -253,20 +255,37 @@ function getPkgInfo () {
   }
 }
 
-function exec (command, args) {
-  const execa = require('execa')
-  execa(command, args, {
-    stdio: [process.stdin, process.stdout, process.stderr],
-    cwd: process.cwd(),
-    cleanup: true,
-    shell: false,
-    env: process.env,
-  })
-}
-
 function checkInProject () {
   if (!isInProject(cwd)) {
     error(`Can't run this command: it seems the current working directory is not a nodepack project.`)
     process.exit(1)
   }
 }
+
+function exec (command, args) {
+  const execa = require('execa')
+  childProcess = execa(command, args, {
+    stdio: [process.stdin, process.stdout, process.stderr],
+    cwd: process.cwd(),
+    cleanup: true,
+    shell: false,
+    env: process.env,
+    // We will manually kill all descendents of the process
+    // See: https://github.com/sindresorhus/execa/issues/96
+    detached: true,
+  })
+}
+
+async function terminateChild () {
+  if (childProcess) {
+    try {
+      await terminate(childProcess, cwd)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  childProcess = null
+}
+
+process.on('SIGTERM', terminateChild)
+process.on('SIGINT', terminateChild)
