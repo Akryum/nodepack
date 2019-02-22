@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-babel",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Nodepack plugin for Babel",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.2.0",
-    "@nodepack/babel-preset-nodepack": "^0.0.2",
+    "@nodepack/babel-preset-nodepack": "^0.1.0",
     "babel-loader": "^8.0.5"
   }
 }

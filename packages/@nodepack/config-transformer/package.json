@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/config-transformer",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Utilities to read and write to config files",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -21,8 +21,8 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/module": "^0.0.2",
-    "@nodepack/utils": "^0.0.3",
+    "@nodepack/module": "^0.1.0",
+    "@nodepack/utils": "^0.1.0",
     "deepmerge": "^3.2.0",
     "javascript-stringify": "^1.6.0",
     "js-yaml": "^3.12.1",
