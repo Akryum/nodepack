@@ -23,7 +23,7 @@
   "dependencies": {
     "@nodepack/module": "^0.0.2",
     "@nodepack/utils": "^0.0.3",
-    "deepmerge": "^3.1.0",
+    "deepmerge": "^3.2.0",
     "javascript-stringify": "^1.6.0",
     "js-yaml": "^3.12.1",
     "recast": "^0.16.2"
