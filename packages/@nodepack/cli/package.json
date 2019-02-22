@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/cli",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Nodepack CLI",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
