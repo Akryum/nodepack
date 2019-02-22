@@ -267,7 +267,6 @@ function exec (command, args) {
   childProcess = execa(command, args, {
     stdio: [process.stdin, process.stdout, process.stderr],
     cwd: process.cwd(),
-    cleanup: true,
     shell: false,
     env: process.env,
     // We will manually kill all descendents of the process
