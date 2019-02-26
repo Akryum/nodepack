@@ -1,3 +1,13 @@
+# [0.1.6](https://github.com/Akryum/nodepack/compare/v0.1.5...v0.1.6) (2019-02-26)
+
+## other
+
+#### Features
+
+* **service:** use asset-relocator-loader ([2473a78](https://github.com/Akryum/nodepack/commit/2473a78))
+
+
+
 # [0.1.5](https://github.com/Akryum/nodepack/compare/v0.1.4...v0.1.5) (2019-02-26)
 
 ## other
