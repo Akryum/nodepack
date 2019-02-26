@@ -1,3 +1,13 @@
+# [0.1.7](https://github.com/Akryum/nodepack/compare/v0.1.6...v0.1.7) (2019-02-26)
+
+## other
+
+#### Bug Fixes
+
+* **service:** tweak node polyfills ([1e28e43](https://github.com/Akryum/nodepack/commit/1e28e43))
+
+
+
 # [0.1.6](https://github.com/Akryum/nodepack/compare/v0.1.5...v0.1.6) (2019-02-26)
 
 ## other
