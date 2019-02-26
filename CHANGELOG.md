@@ -1,3 +1,17 @@
+# [0.1.5](https://github.com/Akryum/nodepack/compare/v0.1.4...v0.1.5) (2019-02-26)
+
+## other
+
+#### Bug Fixes
+
+* **service:** mjs error in node_modules ([d921c85](https://github.com/Akryum/nodepack/commit/d921c85))
+* **service:** typings ([0da9dbc](https://github.com/Akryum/nodepack/commit/0da9dbc))
+#### Features
+
+* **service:** projectOptions.defineEnv ([92762ee](https://github.com/Akryum/nodepack/commit/92762ee))
+
+
+
 # [0.1.4](https://github.com/Akryum/nodepack/compare/v0.1.3...v0.1.4) (2019-02-25)
 
 ## other
