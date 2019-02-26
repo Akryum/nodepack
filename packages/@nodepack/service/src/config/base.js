@@ -40,6 +40,18 @@ module.exports = (api, options) => {
         .add(api.resolve('node_modules'))
         .add(resolveLocal('node_modules'))
 
+    // Rules
+
+    // See https://github.com/graphql/graphql-js/issues/1272
+    config.module
+      .rule('mjs$')
+      .test(/\.mjs$/)
+      .include
+        .add(/node_modules/)
+        .end()
+      // @ts-ignore
+      .type('javascript/auto')
+
     // Module
     config.module
       .set('exprContextCritical', options.externals)
