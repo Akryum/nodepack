@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/config-transformer",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Utilities to read and write to config files",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
