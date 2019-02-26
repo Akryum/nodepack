@@ -24,7 +24,7 @@
     "fork-ts-checker-webpack-plugin": "^0.5.2",
     "globby": "^8.0.1",
     "ts-loader": "^5.3.3",
-    "tslint": "^5.12.1",
+    "tslint": "^5.13.0",
     "typescript": "^3.3.3333"
   },
   "devDependencies": {
