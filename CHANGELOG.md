@@ -1,3 +1,13 @@
+# [0.1.8](https://github.com/Akryum/nodepack/compare/v0.1.7...v0.1.8) (2019-02-26)
+
+## other
+
+#### Bug Fixes
+
+* **config-transformer:** revert recast ([c04f850](https://github.com/Akryum/nodepack/commit/c04f850))
+
+
+
 # [0.1.7](https://github.com/Akryum/nodepack/compare/v0.1.6...v0.1.7) (2019-02-26)
 
 ## other
