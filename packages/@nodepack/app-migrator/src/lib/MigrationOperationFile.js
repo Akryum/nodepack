@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const isBinary = require('isbinaryfile')
+const { isBinaryFileSync } = require('isbinaryfile')
 
 module.exports = class MigrationOperationFile {
   /**
@@ -23,7 +23,7 @@ module.exports = class MigrationOperationFile {
   get source () {
     if (!this._source) {
       const filePath = path.resolve(this.cwd, this.filename)
-      this._source = isBinary.sync(filePath)
+      this._source = isBinaryFileSync(filePath)
         ? fs.readFileSync(filePath)
         : fs.readFileSync(filePath, 'utf-8')
     }

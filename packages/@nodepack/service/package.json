@@ -33,7 +33,7 @@
     "@nodepack/module": "^0.1.2",
     "@nodepack/utils": "^0.1.2",
     "@zeit/webpack-asset-relocator-loader": "^0.1.12",
-    "cache-loader": "^1.2.5",
+    "cache-loader": "^2.0.1",
     "chalk": "^2.4.2",
     "cliui": "^4.1.0",
     "cosmiconfig": "^5.1.0",
@@ -48,7 +48,7 @@
     "portfinder": "^1.0.20",
     "string.prototype.padend": "^3.0.0",
     "terser-webpack-plugin": "^1.2.3",
-    "thread-loader": "^1.2.0",
+    "thread-loader": "^2.1.2",
     "webpack": "^4.29.5",
     "webpack-chain": "^5.2.0",
     "webpack-node-externals": "^1.7.2"
