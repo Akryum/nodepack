@@ -42,6 +42,22 @@ module.exports = (api, options) => {
 
     // Rules
 
+    config.module
+      .rule('js-assets')
+      .test(/\.(m?js|node)$/)
+      .parser({ amd: false })
+      .use('asset-relocator')
+        .loader('@zeit/webpack-asset-relocator-loader')
+        .options({
+          // optional, base folder for asset emission (eg assets/name.ext)
+          outputAssetBase: 'assets',
+          // optional, a list of asset names already emitted or
+          // defined that should not be emitted
+          existingAssetNames: [],
+          wrapperCompatibility: false, // optional, default
+          escapeNonAnalyzableRequires: false, // optional, default
+        })
+
     // See https://github.com/graphql/graphql-js/issues/1272
     config.module
       .rule('mjs$')
