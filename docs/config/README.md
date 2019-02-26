@@ -101,6 +101,12 @@ If a string or an array of strings, only those specific modules will be external
 
 If [externals](#externals) is `true`, [webpack-node-externals](https://github.com/liady/webpack-node-externals) is used to determinate which module should be marked as external. See [whitelist option](https://github.com/liady/webpack-node-externals#optionswhitelist-) for more details.
 
+### defineEnv
+
+- Type: `Array.<string>`
+
+List of environment variable names to replace during compilation. For example: `['DB_NAME', 'DB_USER', 'DB_PASSWORD']`.
+
 ### chainWebpack
 
 - Type: `function`

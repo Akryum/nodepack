@@ -32,6 +32,8 @@ export interface ProjectOptions {
   defaultPort?: number;
   /** Enable file linting as part of the build process */
   lintOnBuild?: boolean;
+  /** Environment variables replaced during compilation */
+  defineEnv?: string[];
   /** Options for 3rd-party plugins */
   pluginOptions?: any;
 }
