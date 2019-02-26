@@ -13,6 +13,16 @@ module.exports = (api, options) => {
       .end()
       .context(api.getCwd())
 
+    // Configure node polyfills
+    config.node
+      .set('console', false)
+      .set('process', false)
+      .set('global', false)
+      .set('__filename', true)
+      .set('__dirname', true)
+      .set('Buffer', false)
+      .set('setImmediate', false)
+
     // Output
     config.output
       .set('path', api.resolve(options.outputDir || 'dist'))
