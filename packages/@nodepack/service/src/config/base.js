@@ -1,6 +1,7 @@
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
   const resolveLocal = require('../util/resolveLocal')
+  const { SUPPORTED_EXTENSIONS } = require('../const')
 
   api.chainWebpack(config => {
     // Basics
@@ -31,8 +32,8 @@ module.exports = (api, options) => {
 
     // Resolve
     config.resolve
-      .extensions
-        .merge(['.mjs', '.js', '.json'])
+      .extensions.clear()
+        .merge(SUPPORTED_EXTENSIONS)
       .end()
       .modules
         .add('node_modules')
