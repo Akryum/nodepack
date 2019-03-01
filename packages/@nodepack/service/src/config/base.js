@@ -43,6 +43,11 @@ module.exports = (api, options) => {
       .alias
         .set('@', api.resolve(options.srcDir || 'src'))
       .end()
+      // webpack defaults to `module` and `main`, but that's
+      // not really what node.js supports, so we reset it
+      .mainFields.clear()
+        .add('main')
+      .end()
 
     // Loader resolve
     config.resolveLoader
