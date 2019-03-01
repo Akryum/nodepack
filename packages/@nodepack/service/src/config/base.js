@@ -18,8 +18,8 @@ module.exports = (api, options) => {
       .set('console', false)
       .set('process', false)
       .set('global', false)
-      .set('__filename', true)
-      .set('__dirname', true)
+      .set('__filename', false)
+      .set('__dirname', false)
       .set('Buffer', false)
       .set('setImmediate', false)
 
@@ -54,7 +54,7 @@ module.exports = (api, options) => {
 
     config.module
       .rule('js-assets')
-      .test(/\.(m?js|node)$/)
+      .test(/\.(js|mjs|tsx?|node)$/)
       .parser({ amd: false })
       .use('asset-relocator')
         .loader('@zeit/webpack-asset-relocator-loader')
@@ -64,8 +64,8 @@ module.exports = (api, options) => {
           // optional, a list of asset names already emitted or
           // defined that should not be emitted
           existingAssetNames: [],
-          wrapperCompatibility: false, // optional, default
-          escapeNonAnalyzableRequires: false, // optional, default
+          wrapperCompatibility: true, // optional, default
+          escapeNonAnalyzableRequires: true, // optional, default
         })
 
     // See https://github.com/graphql/graphql-js/issues/1272
@@ -122,5 +122,6 @@ module.exports = (api, options) => {
     // Others
     config.stats('minimal')
     config.performance.set('hints', false)
+    config.optimization.nodeEnv(false)
   })
 }
