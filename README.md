@@ -14,7 +14,7 @@ Nodepack is a modern, integrated and smart development environement for node bac
 
 <br>
 
-<h3 align="center"><a href="https://nodepack.netlify.com/">Documentation</a></h3>
+<h3 align="center"><a href="https://nodepackjs.com/">Documentation</a></h3>
 
 <br>
 
