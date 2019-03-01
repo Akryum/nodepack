@@ -89,25 +89,27 @@ module.exports = (api, options) => {
       .set('exprContextCritical', options.externals)
 
     // External modules (default are modules in package.json deps)
-    if (options.externals !== false) {
-      if (options.externals === true) {
-        const nodeExternals = require('webpack-node-externals')
-        config.externals(nodeExternals({
-          whitelist: (options.nodeExternalsWhitelist || [
-            /\.(eot|woff|woff2|ttf|otf)$/,
-            /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
-            /\.(mp4|mp3|ogg|swf|webp)$/,
-            /\.(css|scss|sass|less|styl)$/,
-          ]).concat(['@nodepack/module']),
-          modulesFromFile: true,
-        }))
-      } else if (Array.isArray(options.externals)) {
-        config.externals(options.externals.concat(['@nodepack/module']))
-      } else {
-        config.externals([options.externals, '@nodepack/module'])
-      }
+    if (options.externals === true) {
+      const nodeExternals = require('webpack-node-externals')
+      config.externals(nodeExternals({
+        whitelist: (options.nodeExternalsWhitelist || [
+          /\.(eot|woff|woff2|ttf|otf)$/,
+          /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
+          /\.(mp4|mp3|ogg|swf|webp)$/,
+          /\.(css|scss|sass|less|styl)$/,
+        ]).concat(['@nodepack/module']),
+        modulesFromFile: true,
+      }))
     } else {
-      config.externals(['@nodepack/module'])
+      let optionsExternals = options.externals || []
+      if (typeof optionsExternals === 'function') {
+        throw new Error('externals function is not supported')
+      }
+      if (!Array.isArray(optionsExternals)) {
+        optionsExternals = [optionsExternals]
+      }
+      const externals = require('../util/externals')(api, optionsExternals)
+      config.externals([externals.checkExternals])
     }
 
     // Plugins

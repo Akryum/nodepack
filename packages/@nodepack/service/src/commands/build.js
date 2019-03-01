@@ -25,6 +25,7 @@ module.exports = (api, options) => {
     }
 
     const { info, error, done, log, chalk } = require('@nodepack/utils')
+    const compilerInstance = require('../util/compilerInstance')
 
     info(chalk.blue('Preparing production pack...'))
 
@@ -83,6 +84,7 @@ module.exports = (api, options) => {
       }
 
       const compiler = webpack(webpackConfig)
+      compilerInstance.compiler = compiler
       if (args.watch) {
         compiler.watch(webpackConfig.watchOptions, callback)
       } else {

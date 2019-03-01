@@ -62,3 +62,5 @@ exports.sortPkg = pkg => {
   ])
   return pkg
 }
+
+exports.pkgNameRegEx = /^(@[^\\\/]+[\\\/])?[^\\\/]+/

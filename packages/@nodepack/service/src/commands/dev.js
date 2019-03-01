@@ -12,6 +12,7 @@ module.exports = (api, options) => {
   }, async (args) => {
     const path = require('path')
     const { info, error, chalk, terminate } = require('@nodepack/utils')
+    const compilerInstance = require('../util/compilerInstance')
 
     info(chalk.blue('Preparing development pack...'))
 
@@ -44,6 +45,7 @@ module.exports = (api, options) => {
     let terminating = null
 
     const compiler = webpack(webpackConfig)
+    compilerInstance.compiler = compiler
 
     // Implement pause to webpack compiler
     // For example, this is useful for error diagnostics
