@@ -37,6 +37,8 @@ function start () {
       // @ts-ignore
       process.env._RESTARTED = true
       start()
+    } else {
+      process.exitCode = code
     }
   })
 }

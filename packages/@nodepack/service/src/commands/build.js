@@ -52,12 +52,20 @@ module.exports = (api, options) => {
     }
 
     return new Promise((resolve, reject) => {
-      const callback = (err, stats) => {
-        if (err) {
+      const onError = (err) => {
+        if (args.watch) {
           error(err)
         } else {
+          reject(err)
+        }
+      }
+
+      const callback = (err, stats) => {
+        if (err) {
+          onError(err)
+        } else {
           if (stats.hasErrors()) {
-            return reject(`Build failed with errors.`)
+            return onError(`Build failed with errors.`)
           }
 
           const targetDirShort = path.relative(
