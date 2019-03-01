@@ -1,6 +1,6 @@
 # [0.1.9](https://github.com/Akryum/nodepack/compare/v0.1.8...v0.1.9) (2019-03-01)
 
-## other
+## service
 
 #### Bug Fixes
 
@@ -10,7 +10,7 @@
 
 # [0.1.8](https://github.com/Akryum/nodepack/compare/v0.1.7...v0.1.8) (2019-02-26)
 
-## other
+## config-transformer
 
 #### Bug Fixes
 
@@ -20,7 +20,7 @@
 
 # [0.1.7](https://github.com/Akryum/nodepack/compare/v0.1.6...v0.1.7) (2019-02-26)
 
-## other
+## service
 
 #### Bug Fixes
 
@@ -30,7 +30,7 @@
 
 # [0.1.6](https://github.com/Akryum/nodepack/compare/v0.1.5...v0.1.6) (2019-02-26)
 
-## other
+## service
 
 #### Features
 
@@ -40,7 +40,7 @@
 
 # [0.1.5](https://github.com/Akryum/nodepack/compare/v0.1.4...v0.1.5) (2019-02-26)
 
-## other
+## service
 
 #### Bug Fixes
 
@@ -54,7 +54,7 @@
 
 # [0.1.4](https://github.com/Akryum/nodepack/compare/v0.1.3...v0.1.4) (2019-02-25)
 
-## other
+## service
 
 #### Features
 
@@ -64,7 +64,7 @@
 
 # [0.1.3](https://github.com/Akryum/nodepack/compare/v0.1.2...v0.1.3) (2019-02-22)
 
-## other
+## cli
 
 #### Bug Fixes
 
@@ -74,19 +74,24 @@
 
 # [0.1.2](https://github.com/Akryum/nodepack/compare/v0.1.1...v0.1.2) (2019-02-22)
 
-## other
+## cli
 
 #### Bug Fixes
 
 * **cli:** don't use cleanup ([ad200c7](https://github.com/Akryum/nodepack/commit/ad200c7))
 * **cli:** kill child command and all children ([3c97c4d](https://github.com/Akryum/nodepack/commit/3c97c4d))
+
+## service
+
+#### Bug Fixes
+
 * **service:** dev: improved reload process management ([d41b3c1](https://github.com/Akryum/nodepack/commit/d41b3c1))
 
 
 
 # [0.1.1](https://github.com/Akryum/nodepack/compare/v0.1.0...v0.1.1) (2019-02-22)
 
-## other
+## service
 
 #### Bug Fixes
 
