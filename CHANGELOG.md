@@ -1,3 +1,13 @@
+# [0.1.9](https://github.com/Akryum/nodepack/compare/v0.1.8...v0.1.9) (2019-03-01)
+
+## other
+
+#### Bug Fixes
+
+* **build:** wrong process exit code on error ([82534b5](https://github.com/Akryum/nodepack/commit/82534b5))
+
+
+
 # [0.1.8](https://github.com/Akryum/nodepack/compare/v0.1.7...v0.1.8) (2019-02-26)
 
 ## other
