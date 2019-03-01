@@ -1,3 +1,17 @@
+# [0.1.10](https://github.com/Akryum/nodepack/compare/v0.1.9...v0.1.10) (2019-03-01)
+
+## service
+
+#### Bug Fixes
+
+* compatibility with binaries and assets ([8864331](https://github.com/Akryum/nodepack/commit/8864331))
+* **webpack:** override mainFields to ['main'] ([72bb880](https://github.com/Akryum/nodepack/commit/72bb880))
+#### Features
+
+* **webpack:** better external support ([f756182](https://github.com/Akryum/nodepack/commit/f756182))
+
+
+
 # [0.1.9](https://github.com/Akryum/nodepack/compare/v0.1.8...v0.1.9) (2019-03-01)
 
 ## service
