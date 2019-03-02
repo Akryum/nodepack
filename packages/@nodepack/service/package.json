@@ -47,6 +47,7 @@
     "lodash.defaultsdeep": "^4.6.0",
     "minimist": "^1.2.0",
     "portfinder": "^1.0.20",
+    "source-map-support": "^0.5.10",
     "string.prototype.padend": "^3.0.0",
     "terser-webpack-plugin": "^1.2.3",
     "thread-loader": "^2.1.2",

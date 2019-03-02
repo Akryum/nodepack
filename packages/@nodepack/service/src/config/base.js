@@ -1,3 +1,5 @@
+const path = require('path')
+
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
   const resolveLocal = require('../util/resolveLocal')
@@ -8,11 +10,14 @@ module.exports = (api, options) => {
     config
       // Target
       .target('node')
-      // Entry
-      .entry('app')
-        .add(api.resolve(options.entry || 'index.js'))
-      .end()
       .context(api.getCwd())
+
+    // Entry
+    const entry = config.entry('app')
+    if (options.productionSourceMap || process.env.NODE_ENV !== 'production') {
+      entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
+    }
+    entry.add(api.resolve(options.entry || 'index.js'))
 
     // Configure node polyfills
     config.node
