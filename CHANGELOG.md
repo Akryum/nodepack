@@ -1,3 +1,19 @@
+# [0.1.11](https://github.com/Akryum/nodepack/compare/v0.1.10...v0.1.11) (2019-03-02)
+
+## plugin-typescript
+
+#### Bug Fixes
+
+* **app migration:** tweak tsconfig & tslint ([ccf4bdf](https://github.com/Akryum/nodepack/commit/ccf4bdf))
+
+## service
+
+#### Bug Fixes
+
+* install [@typers](https://github.com/typers)/webpack-env ([c5f3d97](https://github.com/Akryum/nodepack/commit/c5f3d97))
+
+
+
 # [0.1.10](https://github.com/Akryum/nodepack/compare/v0.1.9...v0.1.10) (2019-03-01)
 
 ## service
