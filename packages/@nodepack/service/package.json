@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/service",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Local service powering Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
