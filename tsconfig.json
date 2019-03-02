@@ -8,11 +8,18 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
     "types": [
       "webpack-env"
     ],
-    "noEmit": true
+    "noEmit": true,
+    // Strict
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    // May break autocomplete
+    "strictNullChecks": false,
   },
   "include": [
     "packages/@nodepack/*/src/**/*", "packages/@nodepack/migrator/types/MigratorPlugin.d.ts",
