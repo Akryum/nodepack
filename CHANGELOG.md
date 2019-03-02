@@ -1,3 +1,13 @@
+# [0.1.12](https://github.com/Akryum/nodepack/compare/v0.1.11...v0.1.12) (2019-03-02)
+
+## service
+
+#### Features
+
+* **dev:** source map in stack traces ([786f3cb](https://github.com/Akryum/nodepack/commit/786f3cb))
+
+
+
 # [0.1.11](https://github.com/Akryum/nodepack/compare/v0.1.10...v0.1.11) (2019-03-02)
 
 ## plugin-typescript
