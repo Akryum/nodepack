@@ -111,21 +111,29 @@ module.exports = (api, options) => {
     )
 
     async function terminateApp () {
-      if (child && !terminated) {
+      if (child && !terminated && terminating !== child) {
         terminating = child
         try {
           const result = await terminate(child, api.getCwd())
           if (result.error) {
-            error(`Couldn't terminate process ${child.pid}: ${result.error}`)
+            throw result.error
           }
+          child.kill('SIGINT')
+          return true
         } catch (e) {
-          console.error(e)
+          console.error(`Couldn't terminate process ${child.pid}: ${e}`)
         }
       }
+      return false
     }
 
-    process.on('SIGTERM', terminateApp)
-    process.on('SIGINT', terminateApp)
+    const onExit = async () => {
+      if (await terminateApp()) {
+        process.exit(0)
+      }
+    }
+    process.on('SIGTERM', onExit)
+    process.on('SIGINT', onExit)
   })
 }
 
