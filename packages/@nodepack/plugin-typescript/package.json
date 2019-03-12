@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "fork-ts-checker-webpack-plugin": "^0.5.2",
-    "globby": "^9.0.0",
+    "globby": "^9.1.0",
     "ts-loader": "^5.3.3",
-    "tslint": "^5.13.0",
+    "tslint": "^5.13.1",
     "typescript": "^3.3.3333"
   },
   "devDependencies": {
