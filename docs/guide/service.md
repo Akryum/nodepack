@@ -45,13 +45,14 @@ Usage: nodepack-service dev [entry]
 Options:
 
   -p, --port [port] Specify a default port for process.env.PORT (it may automatically change if not available)
+  --dbg [port]      Run the app in remote debugging mode, so a Node inspector can be attached
   --git [message]   Force git commit with message before maintenance
   --no-git          Skip git commit before maintenance
   --no-preInstall   Skip dependencies install run at the begining
   --env <env>       specify env mode
 ```
 
-## Automatic Port
+### Automatic Port
 
 If no `PORT` env variable is defined when running the development build with the `dev` service command, Nodepack will automatically find an available port for you.
 
@@ -67,7 +68,7 @@ In you app, you can use it like this:
 server.listen(process.env.PORT || 4000)
 ```
 
-## Error diagnostics
+### Error diagnostics
 
 Nodepack service is able to handle some problems encountered by the compilation of your project (in development mode).
 
@@ -94,6 +95,20 @@ Any plugin can add more error diagnostics to help you fix compilation errors!
 
 ::: tip
 If you permatently apply or skip a suggested fix, you can reset this by changing the `suggestions` object in the `<your home>/.nodepackrc` file.
+:::
+
+### Debugging
+
+To run your app in debug mode, use the `dbg` argument with a debugging port:
+
+```bash
+nodepack-service dev --dbg=1234
+```
+
+You can then use a [Node.js inspector client](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients) to remotly debug your code.
+
+:::tip
+If you are using Visual Studio Code, you can just enable Auto Attach for your current project with the `Debug: Toggle Auto Attach` command and then run the app with the `dbg` argument. VS Code will automatically start a debugging session!
 :::
 
 ## Production build

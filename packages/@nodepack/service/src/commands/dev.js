@@ -7,6 +7,7 @@ module.exports = (api, options) => {
     usage: 'nodepack-service dev [entry]',
     options: {
       '-p, --port [port]': 'Specify a default port for process.env.PORT (it may automatically change if not available)',
+      '--dbg [port]': 'Run the app in remote debugging mode, so a Node inspector can be attached',
       ...commonCommandOptions,
     },
   }, async (args) => {
@@ -79,6 +80,7 @@ module.exports = (api, options) => {
 
             // Spawn child process
             const currentChild = child = execa('node', [
+              ...(args.dbg ? [`--inspect-brk=${args.dbg}`] : []),
               file,
             ], {
               stdio: [process.stdin, process.stdout, process.stderr],
