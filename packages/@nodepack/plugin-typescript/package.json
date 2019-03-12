@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-typescript",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "description": "Nodepack plugin for Typescript",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
