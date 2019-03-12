@@ -1,3 +1,19 @@
+# [0.1.13](https://github.com/Akryum/nodepack/compare/v0.1.12...v0.1.13) (2019-03-12)
+
+## docs
+
+#### Features
+
+* **dev:** dbg argument for easier node inspecting ([2898f41](https://github.com/Akryum/nodepack/commit/2898f41))
+
+## service
+
+#### Bug Fixes
+
+* **dev:** processes not killed correctly ([7fae7ed](https://github.com/Akryum/nodepack/commit/7fae7ed))
+
+
+
 # [0.1.12](https://github.com/Akryum/nodepack/compare/v0.1.11...v0.1.12) (2019-03-02)
 
 ## service
