@@ -1,3 +1,13 @@
+# [0.1.14](https://github.com/Akryum/nodepack/compare/v0.1.13...v0.1.14) (2019-03-12)
+
+## app-migrator
+
+#### Bug Fixes
+
+* types errors ([3f7b215](https://github.com/Akryum/nodepack/commit/3f7b215))
+
+
+
 # [0.1.13](https://github.com/Akryum/nodepack/compare/v0.1.12...v0.1.13) (2019-03-12)
 
 ## docs
