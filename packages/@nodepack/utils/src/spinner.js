@@ -1,4 +1,4 @@
-const ora = require('ora')
+const { default: ora } = require('ora')
 const { default: chalk } = require('chalk')
 
 const spinner = ora()

@@ -1,7 +1,7 @@
 module.exports = function lint (args = {}, api, silent) {
   const cwd = api.resolve('.')
   const fs = require('fs')
-  const globby = require('globby')
+  const { default: globby } = require('globby')
   const tslint = require('tslint')
 
   const options = {
