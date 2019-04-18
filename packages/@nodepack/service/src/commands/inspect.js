@@ -15,6 +15,7 @@ module.exports = (api, options) => {
     // Entry
     const { get } = require('@nodepack/utils')
     const { toString } = require('webpack-chain')
+    const { highlight } = require('cli-highlight')
 
     // Default entry
     const { getDefaultEntry } = require('../util/defaultEntry.js')
@@ -51,7 +52,7 @@ module.exports = (api, options) => {
 
     // @ts-ignore
     const output = toString(res, { verbose })
-    console.log(output)
+    console.log(highlight(output, { language: 'js' }))
   })
 }
 
