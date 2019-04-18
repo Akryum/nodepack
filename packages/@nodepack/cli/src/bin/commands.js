@@ -123,6 +123,20 @@ program
   })
 
 program
+  .command('inspect')
+  .description('inspect internal webpack config')
+  .allowUnknownOption()
+  .action(cmd => {
+    checkInProject()
+    const command = 'nodepack-service'
+    const args = ['inspect']
+    exec(command, [
+      ...args,
+      ...process.argv.slice(3),
+    ])
+  })
+
+program
   .command('service <command>')
   .description('run a command with `nodepack-service` installed in a project')
   .allowUnknownOption()
