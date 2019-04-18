@@ -41,7 +41,7 @@ const cosmiconfig = require('cosmiconfig')
 const defaultsDeep = require('lodash.defaultsdeep')
 const ServicePlugin = require('./ServicePlugin')
 const ServicePluginAPI = require('./ServicePluginAPI')
-const { warn, error, readPkg, getPlugins } = require('@nodepack/utils')
+const { info, warn, error, chalk, readPkg, getPlugins } = require('@nodepack/utils')
 const { loadModule } = require('@nodepack/module')
 const { defaultOptions } = require('./options')
 
@@ -142,6 +142,8 @@ module.exports = class Service {
     this.loadEnv()
 
     process.env.NODEPACK_ENV = env
+
+    info(`Env Mode is ${chalk.bold(chalk.blue(process.env.NODEPACK_ENV))}`)
 
     this.projectOptions = this.loadConfig()
 
