@@ -8,7 +8,7 @@ const prefixRE = /^NODE_APP_/
 module.exports = function resolveClientEnv (options, raw = false) {
   const env = {}
   Object.keys(process.env).forEach(key => {
-    if (prefixRE.test(key)) {
+    if (prefixRE.test(key) || key === 'NODE_ENV') {
       env[key] = process.env[key]
     }
   })
