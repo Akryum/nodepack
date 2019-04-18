@@ -1,3 +1,27 @@
+# [0.1.15](https://github.com/Akryum/nodepack/compare/v0.1.14...v0.1.15) (2019-04-18)
+
+## cli
+
+#### Features
+
+* **cli:** nodepack inspect shortcut ([9a684a8](https://github.com/Akryum/nodepack/commit/9a684a8))
+
+## service
+
+#### Bug Fixes
+
+* **build:** don't override output target with dev one if NODE_ENV isn't production ([b682556](https://github.com/Akryum/nodepack/commit/b682556))
+* **env:** define NODE_ENV ([9ba561e](https://github.com/Akryum/nodepack/commit/9ba561e))
+* **env:** duplicate entries without process.env ([41fdab4](https://github.com/Akryum/nodepack/commit/41fdab4))
+#### Features
+
+* **inspect:** syntax highlighting ([717f1c5](https://github.com/Akryum/nodepack/commit/717f1c5))
+* display env mode ([f5fb477](https://github.com/Akryum/nodepack/commit/f5fb477))
+* **build:** NODE_ENV not 'production' warning ([d427f7c](https://github.com/Akryum/nodepack/commit/d427f7c))
+* **env:** define NODEPACK_ENV ([ead7c46](https://github.com/Akryum/nodepack/commit/ead7c46))
+
+
+
 # [0.1.14](https://github.com/Akryum/nodepack/compare/v0.1.13...v0.1.14) (2019-03-12)
 
 ## app-migrator
