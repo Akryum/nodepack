@@ -77,6 +77,10 @@ module.exports = (api, options) => {
           onError(err)
         } else {
           if (stats.hasErrors()) {
+            const data = stats.toJson()
+            for (const error of data.errors) {
+              console.log('\n' + error)
+            }
             return onError(`Build failed with errors.`)
           }
 

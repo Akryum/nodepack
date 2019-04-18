@@ -8,6 +8,12 @@ module.exports = (api, options) => {
         const { DEV_PATH } = require('../const')
         config.output
           .path(api.resolve(DEV_PATH))
+
+        config
+          .plugin('friendly-errors')
+            .use(require('friendly-errors-webpack-plugin'), [{
+              clearConsole: true,
+            }])
       }
 
       config.devtool('source-map')

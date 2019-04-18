@@ -118,12 +118,6 @@ module.exports = (api, options) => {
     }
 
     // Plugins
-    config
-      .plugin('friendly-errors')
-        .use(require('friendly-errors-webpack-plugin'), [{
-          clearConsole: process.env.NODE_ENV === 'development',
-        }])
-
     const resolveClientEnv = require('../util/resolveClientEnv')
     config
       .plugin('define')
