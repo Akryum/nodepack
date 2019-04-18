@@ -1,3 +1,13 @@
+# [0.1.16](https://github.com/Akryum/nodepack/compare/v0.1.15...v0.1.16) (2019-04-18)
+
+## service
+
+#### Bug Fixes
+
+* **env:** remove duplicated JSON.stringify ([b9b509e](https://github.com/Akryum/nodepack/commit/b9b509e))
+
+
+
 # [0.1.15](https://github.com/Akryum/nodepack/compare/v0.1.14...v0.1.15) (2019-04-18)
 
 ## cli
