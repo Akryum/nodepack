@@ -4,9 +4,11 @@ module.exports = (api, options) => {
     if (process.env.NODE_ENV !== 'production') {
       config.set('mode', 'development')
 
-      const { DEV_PATH } = require('../const')
-      config.output
-        .path(api.resolve(DEV_PATH))
+      if (process.env.NODEPACK_IS_BUILD !== 'true') {
+        const { DEV_PATH } = require('../const')
+        config.output
+          .path(api.resolve(DEV_PATH))
+      }
 
       config.devtool('source-map')
 

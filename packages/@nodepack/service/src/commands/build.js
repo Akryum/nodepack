@@ -27,6 +27,8 @@ module.exports = (api, options) => {
     const { info, warn, error, done, log, chalk } = require('@nodepack/utils')
     const compilerInstance = require('../util/compilerInstance')
 
+    process.env.NODEPACK_IS_BUILD = 'true'
+
     if (process.env.NODE_ENV !== 'production') {
       if (!process.env.ORIGINAL_NODE_ENV) {
         warn(chalk.yellow(`NODE_ENV environment variable was not defined, automatically setting to 'production'`))
