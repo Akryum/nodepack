@@ -39,7 +39,7 @@ module.exports = function resolveClientEnv (options, raw = false) {
 function defineEnv (list) {
   const result = {}
   for (const key of list) {
-    result[key] = JSON.stringify(process.env[key])
+    result[key] = process.env[key]
   }
   return result
 }
