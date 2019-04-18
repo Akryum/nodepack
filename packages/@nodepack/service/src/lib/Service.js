@@ -135,6 +135,8 @@ module.exports = class Service {
     }
     this.loadEnv()
 
+    process.env.NODEPACK_ENV = env
+
     this.projectOptions = this.loadConfig()
 
     await this.applyPlugins()

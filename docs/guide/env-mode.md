@@ -105,6 +105,14 @@ module.exports = {
 ```
 :::
 
+The current env mode will be also hard coded with the `process.env.NODEPACK_ENV` value:
+
+```js
+if (process.env.NODEPACK_ENV === 'staging') {
+  console.log(`I'm on staging!`)
+}
+```
+
 ## Local Only Variables
 
 Sometimes you might have env variables that should not be committed into your version control, especially if your project is hosted in a public repository. You should then use an `.env.local` file instead. Local env files are ignored in `.gitignore` by default.

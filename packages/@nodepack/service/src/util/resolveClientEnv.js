@@ -1,6 +1,10 @@
 /** @typedef {import('../../').ProjectOptions} ProjectOptions */
 
 const prefixRE = /^NODE_APP_/
+const includedKeys = [
+  'NODE_ENV',
+  'NODEPACK_ENV',
+]
 
 /**
  * @param {ProjectOptions} options
@@ -8,7 +12,7 @@ const prefixRE = /^NODE_APP_/
 module.exports = function resolveClientEnv (options, raw = false) {
   const env = {}
   Object.keys(process.env).forEach(key => {
-    if (prefixRE.test(key) || key === 'NODE_ENV') {
+    if (prefixRE.test(key) || includedKeys.includes(key)) {
       env[key] = process.env[key]
     }
   })
