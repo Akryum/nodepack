@@ -25,6 +25,6 @@
     "@nodepack/utils": "^0.1.14",
     "@types/inquirer": "^0.0.43",
     "fs-extra": "^7.0.1",
-    "inquirer": "^6.2.2"
+    "inquirer": "^6.3.1"
   }
 }
