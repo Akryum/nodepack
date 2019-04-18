@@ -24,8 +24,17 @@ module.exports = (api, options) => {
       }
     }
 
-    const { info, error, done, log, chalk } = require('@nodepack/utils')
+    const { info, warn, error, done, log, chalk } = require('@nodepack/utils')
     const compilerInstance = require('../util/compilerInstance')
+
+    if (process.env.NODE_ENV !== 'production') {
+      if (!process.env.ORIGINAL_NODE_ENV) {
+        warn(chalk.yellow(`NODE_ENV environment variable was not defined, automatically setting to 'production'`))
+        process.env.NODE_ENV = 'production'
+      } else {
+        warn(chalk.yellow(`NODE_ENV environment variable is not set to 'production'`))
+      }
+    }
 
     info(chalk.blue('Preparing production pack...'))
 

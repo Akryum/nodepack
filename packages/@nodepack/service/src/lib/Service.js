@@ -130,6 +130,12 @@ module.exports = class Service {
 
     this.env = env
 
+    if (process.env.NODE_ENV) {
+      process.env.ORIGINAL_NODE_ENV = process.env.NODE_ENV
+    } else {
+      delete process.env.ORIGINAL_NODE_ENV
+    }
+
     if (env) {
       this.loadEnv(env)
     }
