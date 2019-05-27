@@ -1,3 +1,13 @@
+# [0.1.17](https://github.com/Akryum/nodepack/compare/v0.1.16...v0.1.17) (2019-05-27)
+
+## utils
+
+#### Bug Fixes
+
+* wrong env var name ([a68728f](https://github.com/Akryum/nodepack/commit/a68728f))
+
+
+
 # [0.1.16](https://github.com/Akryum/nodepack/compare/v0.1.15...v0.1.16) (2019-04-18)
 
 ## service
