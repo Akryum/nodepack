@@ -57,7 +57,7 @@ module.exports = async function shouldUseTaobao (command = 'npm') {
     return save(false)
   }
 
-  if (process.env.VUE_CLI_API_MODE) {
+  if (process.env.NODEPACK_API_MODE) {
     return save(true)
   }
 
