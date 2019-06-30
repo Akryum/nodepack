@@ -1,3 +1,13 @@
+# [0.1.18](https://github.com/Akryum/nodepack/compare/v0.1.17...v0.1.18) (2019-06-30)
+
+## utils
+
+#### Features
+
+* **utils:** improved globalOptions and rcPath ([cd7a456](https://github.com/Akryum/nodepack/commit/cd7a456))
+
+
+
 # [0.1.17](https://github.com/Akryum/nodepack/compare/v0.1.16...v0.1.17) (2019-05-27)
 
 ## utils
