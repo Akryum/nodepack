@@ -14,6 +14,7 @@ module.exports = {
   ...require('./openBrowser'),
   ...require('./pkg'),
   ...require('./plugin'),
+  ...require('./rcPath'),
   ...require('./request'),
   ...require('./run'),
   shouldUseTaobao: require('./shouldUseTaobao'),

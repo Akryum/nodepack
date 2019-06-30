@@ -28,7 +28,7 @@ const { createSchema, validate } = require('./validate')
 
 const rcPath = exports.rcPath = getRcPath('.nodepackrc')
 
-const schema = createSchema(joi => joi.object().keys({
+const defaultSchema = createSchema(joi => joi.object().keys({
   packageManager: joi.string().only(['yarn', 'npm']),
   useTaobaoRegistry: joi.boolean(),
   suggestions: joi.object(),
@@ -54,18 +54,18 @@ exports.defaultGlobalOptions = {
   },
 }
 
-let cachedOptions
+const cachedOptions = {}
 
 /**
  * @returns {GlobalOptions}
  */
-exports.loadGlobalOptions = function () {
-  if (cachedOptions) {
-    return cachedOptions
+exports.loadGlobalOptions = function (file = rcPath, schema = defaultSchema) {
+  if (cachedOptions[file]) {
+    return cachedOptions[file]
   }
-  if (fs.existsSync(rcPath)) {
+  if (fs.existsSync(file)) {
     try {
-      cachedOptions = fs.readJsonSync(rcPath)
+      cachedOptions[file] = fs.readJsonSync(file)
     } catch (e) {
       error(
         `Error loading saved preferences: ` +
@@ -75,13 +75,15 @@ exports.loadGlobalOptions = function () {
       )
       process.exit(1)
     }
-    validate(cachedOptions, schema, message => {
-      error(
-        `~/.nodepackrc may be outdated. ` +
-        `Please delete it and re-run nodepack in manual mode.\n` +
-        `(${message})`
-      )
-    })
+    if (schema) {
+      validate(cachedOptions, schema, message => {
+        error(
+          `~/.nodepackrc may be outdated. ` +
+          `Please delete it and re-run nodepack in manual mode.\n` +
+          `(${message})`
+        )
+      })
+    }
     return cachedOptions
   } else {
     return {}
@@ -91,7 +93,7 @@ exports.loadGlobalOptions = function () {
 /**
  * @param {GlobalOptions} toSave
  */
-exports.saveGlobalOptions = function (toSave) {
+exports.saveGlobalOptions = function (toSave, file = rcPath) {
   const options = Object.assign(
     // Current options
     cloneDeep(exports.loadGlobalOptions()),
@@ -103,15 +105,15 @@ exports.saveGlobalOptions = function (toSave) {
       delete options[key]
     }
   }
-  cachedOptions = options
+  cachedOptions[file] = options
   try {
-    fs.writeJsonSync(rcPath, options, {
+    fs.writeJsonSync(file, options, {
       spaces: 2,
     })
   } catch (e) {
     error(
       `Error saving preferences: ` +
-      `make sure you have write access to ${rcPath}.\n` +
+      `make sure you have write access to ${file}.\n` +
       `(${e.message})`
     )
   }
