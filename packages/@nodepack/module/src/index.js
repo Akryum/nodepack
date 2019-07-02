@@ -1,4 +1,5 @@
 const semver = require('semver')
+const nativeRequire = require('./native-require')
 
 function resolveFallback (request, options) {
   const Module = require('module')
@@ -34,7 +35,7 @@ function resolveFallback (request, options) {
 }
 
 const resolve = semver.satisfies(process.version, '>=10.0.0')
-  ? require.resolve
+  ? nativeRequire.resolve
   : resolveFallback
 
 /**
@@ -62,7 +63,7 @@ exports.loadModule = function (request, cwd, force = false) {
     if (force) {
       clearRequireCache(resolvedPath)
     }
-    return require(resolvedPath)
+    return nativeRequire(resolvedPath)
   }
 }
 
@@ -78,14 +79,14 @@ exports.clearModule = function (request, cwd) {
 }
 
 function clearRequireCache (id, map = new Map()) {
-  const module = require.cache[id]
+  const module = nativeRequire.cache[id]
   if (module) {
     map.set(id, true)
     // Clear children modules
     module.children.forEach(child => {
       if (!map.get(child.id)) clearRequireCache(child.id, map)
     })
-    delete require.cache[id]
+    delete nativeRequire.cache[id]
   }
 }
 
@@ -100,3 +101,5 @@ exports.isRelative = function (module) {
 exports.isAbsolute = function (module) {
   return module.startsWith('/') || module.match(/^\w:(\\|\/)/)
 }
+
+exports.nativeRequire = nativeRequire

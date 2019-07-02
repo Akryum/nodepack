@@ -92,6 +92,8 @@ module.exports = (api, options) => {
     // Module
     config.module
       .set('exprContextCritical', options.externals)
+      // Allow usage of native require (instead of webpack require)
+      .set('noParse', /\/native-require.js$/)
 
     // External modules (default are modules in package.json deps)
     if (options.externals === true) {
