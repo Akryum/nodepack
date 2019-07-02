@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/utils",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "Common utilities for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
