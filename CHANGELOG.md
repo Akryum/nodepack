@@ -1,3 +1,13 @@
+# [0.1.20](https://github.com/Akryum/nodepack/compare/v0.1.19...v0.1.20) (2019-07-02)
+
+## module
+
+#### Bug Fixes
+
+* support using native Node require ([c2a92a8](https://github.com/Akryum/nodepack/commit/c2a92a8))
+
+
+
 # [0.1.19](https://github.com/Akryum/nodepack/compare/v0.1.18...v0.1.19) (2019-07-02)
 
 ## utils
