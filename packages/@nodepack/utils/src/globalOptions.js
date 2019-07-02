@@ -69,22 +69,22 @@ exports.loadGlobalOptions = function (file = rcPath, schema = defaultSchema) {
     } catch (e) {
       error(
         `Error loading saved preferences: ` +
-        `~/.nodepackrc may be corrupted or have syntax errors. ` +
+        `${file} may be corrupted or have syntax errors. ` +
         `Please fix/delete it and re-run nodepack in manual mode.\n` +
         `(${e.message})`,
       )
       process.exit(1)
     }
     if (schema) {
-      validate(cachedOptions, schema, message => {
+      validate(cachedOptions[file], schema, message => {
         error(
-          `~/.nodepackrc may be outdated. ` +
+          `${file} may be outdated. ` +
           `Please delete it and re-run nodepack in manual mode.\n` +
           `(${message})`
         )
       })
     }
-    return cachedOptions
+    return cachedOptions[file]
   } else {
     return {}
   }
