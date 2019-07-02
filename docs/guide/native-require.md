@@ -8,9 +8,7 @@ To use native require and other native Node modules utilities, install `@nodepac
 yarn add @nodepack/module
 ```
 
-This package contains utilities related to Node's native `require` implementation.
-
-First, you can access the native Node `require` API:
+Then you can access the native Node `require` API:
 
 ```js
 import { nativeRequire } from '@nodepack/module'
