@@ -1,3 +1,13 @@
+# [0.1.19](https://github.com/Akryum/nodepack/compare/v0.1.18...v0.1.19) (2019-07-02)
+
+## utils
+
+#### Bug Fixes
+
+* **globalOptions:** load ([933615c](https://github.com/Akryum/nodepack/commit/933615c))
+
+
+
 # [0.1.18](https://github.com/Akryum/nodepack/compare/v0.1.17...v0.1.18) (2019-06-30)
 
 ## utils
