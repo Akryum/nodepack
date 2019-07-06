@@ -23,6 +23,8 @@ You can also run them with `nodepack service <command>`:
 nodepack service build
 ```
 
+By default, a [maintenance](./maintenance.md) will be executed before the command. You can skip this by setting the `NODEPACK_NO_MAINTENANCE` env variable to `true`.
+
 ## Development build
 
 To run the project in development mode use `nodepack` without argument:

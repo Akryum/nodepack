@@ -12,6 +12,6 @@ In case at least one app migration is applied during the maintenance, the code s
 
 Maintenances are automatically run when:
 
-- the project is created
-- a plugin is added, upgraded or removed
-- a [service](./service.md) command is executed
+- The project is created.
+- A plugin is added, upgraded or removed.
+- A [service](./service.md) command is executed (you can skip this by setting the `NODEPACK_NO_MAINTENANCE` env variable to `true`).

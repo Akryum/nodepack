@@ -13,7 +13,7 @@ const args = require('minimist')(rawArgv)
 const command = args._[0]
 
 async function run () {
-  if (command !== 'help') {
+  if (command !== 'help' && process.env.NODEPACK_NO_MAINTENANCE !== 'true') {
     await runMaintenance({
       cwd,
       cliOptions: args,
