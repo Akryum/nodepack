@@ -1,4 +1,4 @@
-const { hasGit, hasProjectGit } = require('./env')
+const { isGitInstalled, useGit } = require('./env')
 const { run } = require('./run')
 
 /**
@@ -34,7 +34,7 @@ exports.commitOnGit = async function (cwd, cliOptions, isTestOrDebug, defaultMes
  * @param {any} cliOptions
  */
 exports.shouldUseGit = async function (cwd, cliOptions) {
-  if (!hasGit()) {
+  if (!isGitInstalled()) {
     return false
   }
   // --git
@@ -45,7 +45,7 @@ exports.shouldUseGit = async function (cwd, cliOptions) {
   if (cliOptions.git === false || cliOptions.git === 'false') {
     return false
   }
-  return hasProjectGit(cwd)
+  return useGit(cwd)
 }
 
 /**
