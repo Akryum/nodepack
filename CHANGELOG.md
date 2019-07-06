@@ -1,3 +1,19 @@
+# [0.2.0](https://github.com/Akryum/nodepack/compare/v0.1.20...v0.2.0) (2019-07-06)
+
+## docs
+
+#### Features
+
+* new NODEPACK_NO_MAINTENANCE env var ([b1ba4ff](https://github.com/Akryum/nodepack/commit/b1ba4ff))
+
+## utils
+
+#### Features
+
+* new openInEditor util ([12bf219](https://github.com/Akryum/nodepack/commit/12bf219))
+
+
+
 # [0.1.20](https://github.com/Akryum/nodepack/compare/v0.1.19...v0.1.20) (2019-07-02)
 
 ## module
