@@ -102,7 +102,7 @@ function executeCommand (command, args, targetDir) {
 
     child.on('close', code => {
       if (code !== 0) {
-        reject(`command failed: ${command} ${args.join(' ')}`)
+        reject(new Error(`command failed: ${command} ${args.join(' ')}`))
         return
       }
       resolve()
