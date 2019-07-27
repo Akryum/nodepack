@@ -7,6 +7,8 @@ const { createProject } = require('./create-project')
 module.exports = globalApi => {
   globalApi.addProjectType('nodepack', 'Nodepack', (projectType) => {
     projectType.logo = '/_plugin/@nodepack%2Fguijs-plugin/nodepack.png'
+    projectType.description = `Node.js app/server`
+    projectType.link = 'https://nodepackjs.com/'
 
     // Detect nodepack projects
     projectType.filterProject = ({ pkg }) => ({ ...pkg.dependencies, ...pkg.devDependencies })['@nodepack/service']
