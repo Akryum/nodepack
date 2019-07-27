@@ -1,3 +1,19 @@
+# [0.3.0](https://github.com/Akryum/nodepack/compare/v0.2.0...v0.3.0) (2019-07-27)
+
+## service
+
+#### Features
+
+* guijs plugin & refactor to `defaultTemplate` ([655e265](https://github.com/Akryum/nodepack/commit/655e265))
+
+## utils
+
+#### Bug Fixes
+
+* **deps:** reject an error instead of a string ([400ebed](https://github.com/Akryum/nodepack/commit/400ebed))
+
+
+
 # [0.2.0](https://github.com/Akryum/nodepack/compare/v0.1.20...v0.2.0) (2019-07-06)
 
 ## docs
