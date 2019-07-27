@@ -38,6 +38,6 @@
     "yaml-front-matter": "^4.0.0"
   },
   "devDependencies": {
-    "@nodepack/service": "^0.0.3"
+    "@nodepack/service": "^0.3.0"
   }
 }
