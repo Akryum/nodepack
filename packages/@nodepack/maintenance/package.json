@@ -24,7 +24,7 @@
     "@nodepack/app-migrator": "^0.3.0",
     "@nodepack/utils": "^0.3.0",
     "@types/inquirer": "^0.0.43",
-    "fs-extra": "^7.0.1",
+    "fs-extra": "^8.1.0",
     "inquirer": "^6.3.1"
   }
 }

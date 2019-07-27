@@ -23,6 +23,6 @@
   "dependencies": {
     "@nodepack/utils": "^0.3.0",
     "execa": "^1.0.0",
-    "fs-extra": "^7.0.1"
+    "fs-extra": "^8.1.0"
   }
 }

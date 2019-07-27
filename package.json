@@ -19,7 +19,7 @@
     "@nodepack/conventional-changelog": "^0.1.0",
     "@types/ejs": "^2.6.0",
     "@types/events": "^1.2.0",
-    "@types/fs-extra": "^5.0.4",
+    "@types/fs-extra": "^8.0.0",
     "@types/globby": "^8.0.0",
     "@types/inquirer": "^0.0.43",
     "@types/lru-cache": "^4.1.1",
