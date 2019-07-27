@@ -1,7 +1,7 @@
 /** @type {import('@nodepack/service').MigrationPlugin} */
 module.exports = api => {
   api.register({
-    id: 'default-template@0.0.1',
+    id: 'defaultTemplate',
     title: 'Template: Render default template',
     // when: api => api.fromVersion('<0.0.1') || api.isFirstInstall,
     prompts: () => [
@@ -12,7 +12,7 @@ module.exports = api => {
       },
     ],
     migrate: (api, options) => {
-      api.render('./templates-0.0.1/default', options)
+      api.render('./templates/default', options)
       api.move('src/**/*.js', file => `${file.path}${file.name}.ts`)
 
       if (options.tslint) {
@@ -24,7 +24,7 @@ module.exports = api => {
       }
     },
     rollback: (api, options) => {
-      api.unrender('./templates-0.0.1/default')
+      api.unrender('./templates/default')
       api.move('src/**/*.ts', file => `${file.path}${file.name}.js`)
 
       if (options.tslint) {

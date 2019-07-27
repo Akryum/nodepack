@@ -1,0 +1,31 @@
+{
+  "name": "@nodepack/guijs-plugin",
+  "version": "0.2.0",
+  "description": "Nodepack plugin for guijs",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Akryum/nodepack/issues"
+  },
+  "homepage": "https://github.com/Akryum/nodepack#readme",
+  "main": "./src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.12"
+  },
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "@nodepack/cli": "^0.2.0",
+    "@nodepack/utils": "^0.2.0",
+    "execa": "^1.0.0"
+  }
+}

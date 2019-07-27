@@ -9,13 +9,11 @@
 const CreateModuleAPI = require('./CreateModuleAPI')
 // Utils
 const { runMaintenance } = require('@nodepack/maintenance')
-const path = require('path')
 const inquirer = require('inquirer')
 const cloneDeep = require('lodash.clonedeep')
 const {
   loadGlobalOptions,
   saveGlobalOptions,
-  defaultGlobalOptions,
   clearConsole,
   logWithSpinner,
   stopSpinner,
@@ -33,9 +31,9 @@ const {
 } = require('@nodepack/utils')
 const { MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
 const generateReadme = require('../util/generateReadme')
-const loadLocalPreset = require('../util/loadLocalPreset')
-const loadRemotePreset = require('../util/loadRemotePreset')
 const { formatFeatures } = require('../util/features')
+const { getPresets } = require('../util/getPresets')
+const { resolvePreset, getPresetFromAnswers } = require('../util/resolvePreset')
 
 const isManualMode = answers => answers.preset === '__manual__'
 
@@ -137,14 +135,16 @@ module.exports = class ProjectCreateJob {
         }
 
         // log instructions
-        log()
-        log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
-        log(
-          `👉  Get started with the following commands:\n\n` +
-          (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
-          chalk.cyan(` ${chalk.gray('$')} nodepack`)
-        )
-        log()
+        if (!cliOptions.skipGetStarted) {
+          log()
+          log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
+          log(
+            `👉  Get started with the following commands:\n\n` +
+            (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
+            chalk.cyan(` ${chalk.gray('$')} nodepack`)
+          )
+          log()
+        }
 
         if (!gitCommitSuccess) {
           warn(
@@ -164,7 +164,7 @@ module.exports = class ProjectCreateJob {
     let preset = null
     if (cliOptions.preset) {
       // nodepack create foo --preset bar
-      preset = await this.resolvePreset(cliOptions.preset, cliOptions.clone)
+      preset = await resolvePreset(cliOptions.preset, cliOptions.clone)
     } else if (cliOptions.default) {
       // nodepack create foo --default
       preset = defaultPreset
@@ -192,28 +192,7 @@ module.exports = class ProjectCreateJob {
       answers = await inquirer.prompt(this.resolveFinalPrompts())
     }
 
-    if (answers.packageManager) {
-      saveGlobalOptions({
-        packageManager: answers.packageManager,
-      })
-    }
-
-    /** @type {Preset?} */
-    let preset
-    if (answers.preset && answers.preset !== '__manual__') {
-      preset = await this.resolvePreset(answers.preset)
-    } else {
-      // manual
-      preset = {
-        useConfigFiles: answers.useConfigFiles === 'files',
-        plugins: {},
-      }
-      answers.features = answers.features || []
-      // run cb registered by prompt modules to finalize the preset
-      for (const cb of this.promptCompleteCbs) {
-        await cb(answers, preset)
-      }
-    }
+    const preset = await getPresetFromAnswers(answers, this.promptCompleteCbs)
 
     // validate
     // TODO
@@ -223,56 +202,8 @@ module.exports = class ProjectCreateJob {
     return preset
   }
 
-  /**
-   * @param {string} presetName
-   * @param {boolean} clone
-   */
-  async resolvePreset (presetName, clone = false) {
-    let preset = null
-    const savedPresets = loadGlobalOptions().presets || {}
-
-    if (presetName in savedPresets) {
-      preset = savedPresets[presetName]
-    } else if (presetName.endsWith('.json') || /^\./.test(presetName) || path.isAbsolute(presetName)) {
-      preset = await loadLocalPreset(path.resolve(presetName))
-    } else if (presetName.includes('/')) {
-      logWithSpinner(`Fetching remote preset ${chalk.cyan(presetName)}...`)
-      try {
-        preset = await loadRemotePreset(presetName, clone)
-        stopSpinner()
-      } catch (e) {
-        stopSpinner()
-        error(`Failed fetching remote preset ${chalk.cyan(presetName)}:`)
-        throw e
-      }
-    }
-
-    // use default preset if user has not overwritten it
-    if (presetName === 'default' && !preset) {
-      preset = defaultPreset
-    }
-    if (!preset) {
-      error(`preset "${presetName}" not found.`)
-      const presets = Object.keys(savedPresets)
-      if (presets.length) {
-        log()
-        log(`available presets:\n${presets.join(`\n`)}`)
-      } else {
-        log(`you don't seem to have any saved preset.`)
-        log(`run 'nodepack create' in manual mode to create a preset.`)
-      }
-      process.exit(1)
-    }
-    return preset
-  }
-
-  getPresets () {
-    const savedOptions = loadGlobalOptions()
-    return Object.assign({}, savedOptions.presets, defaultGlobalOptions.presets)
-  }
-
   resolveIntroPrompts () {
-    const presets = this.getPresets()
+    const presets = getPresets()
     const presetChoices = Object.keys(presets).map(name => {
       return {
         name: `${name} (${formatFeatures(presets[name])})`,

@@ -1,10 +1,10 @@
 /** @type {import('@nodepack/service').MigrationPlugin} */
 module.exports = api => {
   api.register({
-    id: 'default-template@0.0.1',
+    id: 'defaultTemplate',
     title: 'Template: Render default template',
     migrate: (api, options) => {
-      api.render('./templates-0.0.1/default')
+      api.render('./templates/default')
 
       // Add scripts
       api.extendPackage({
@@ -16,7 +16,7 @@ module.exports = api => {
       })
     },
     rollback: (api, options) => {
-      api.unrender('./templates-0.0.1/default')
+      api.unrender('./templates/default')
 
       // Remove scripts
       api.modifyFile('package.json', content => {

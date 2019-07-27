@@ -29,6 +29,8 @@ program
   .option('-n, --no-git', 'Skip git initialization')
   // Folder
   .option('-f, --force', 'Overwrite target directory if it exists')
+  // Misc
+  .option('--skipGetStarted', 'Skip displaying "Get started" instructions')
   .action((appName, cmd) => {
     const options = cleanArgs(cmd)
     // --no-git makes commander to default git to true

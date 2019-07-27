@@ -3,6 +3,9 @@ module.exports = api => {
   api.injectFeature({
     name: 'Babel',
     value: 'babel',
+    // @ts-ignore
+    description: 'Transpile modern JavaScript to older versions (for compatibility)',
+    link: 'https://babeljs.io/',
     checked: true,
   })
 
