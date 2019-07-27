@@ -1,4 +1,4 @@
-# Native require
+# Native require and dynamic modules
 
 Since Nodepack uses Webpack to compile your code, by default all `require` calls will use Webpack own internal `require` implementation. Most of the time this is fine but in some use cases you want to use Node's native `require` implementation. For example, your app has a plugin system that should be able to load modules dynamically in the user project.
 

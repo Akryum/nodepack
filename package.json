@@ -29,6 +29,7 @@
     "@types/systeminformation": "^3.23.1",
     "@types/webpack-chain": "^5.0.0",
     "@types/webpack-env": "^1.13.6",
+    "@vuepress/plugin-pwa": "^1.0.2",
     "chalk": "^2.4.1",
     "conventional-changelog": "^3.0.6",
     "eslint": "^5.9.0",
@@ -43,6 +44,6 @@
     "rimraf": "^2.6.2",
     "semver": "^6.3.0",
     "typescript": "^3.1.6",
-    "vuepress": "^0.14.8"
+    "vuepress": "^1.0.2"
   }
 }

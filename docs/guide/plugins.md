@@ -1,5 +1,7 @@
 # Plugins
 
+> At the core of any Nodepack project, plugins allow you to build your applications.
+
 Nodepack plugins are packages using the Nodepack APIs. They provide features and tools integrated with each other that you can easily plug into your project.
 
 Each plugin has different parts:
@@ -18,6 +20,10 @@ Then, when you run `nodepack` or `nodepack-service dev`, it will automatically:
 
 - Compile `.ts` files
 - Check for typing errors
+
+::: tip
+The [Nodepack Service](./service.md) is a special plugin installed in any Nodepack project.
+:::
 
 ## Plugin name
 
@@ -59,9 +65,7 @@ nodepack add typescript
 nodepack add @nodepack/plugin-typescript
 ```
 
-::: warning
 Adding a plugin may modify your project files. By default, a Git commit will save the state of your app before and after adding the plugin.
-:::
 
 ## Upgrading plugins
 
@@ -73,9 +77,7 @@ nodepack upgrade
 
 Nodepack will then check for plugin updates and propose you different upgrade options.
 
-::: warning
 Upgrading a plugin may modify your project files. By default, a Git commit will save the state of your app before and after the upgrade process.
-:::
 
 ## Removing a plugin
 
@@ -85,10 +87,6 @@ To remove a plugin, use the following command:
 nodepack remove typescript
 ```
 
-:::tip
 The same automatic name rules as `nodepack add` applies.
-:::
 
-::: warning
 Removing a plugin may modify your project files. By default, a Git commit will save the state of your app before and after removing the plugin.
-:::

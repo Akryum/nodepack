@@ -1,4 +1,4 @@
-# Service
+# Working with Nodepack Service
 
 A Nodepack project contains the `@nodepack/service` package which is responsible for compiling the project and other development-related tasks. Among others, it includes Webpack and sensible default configurations.
 
@@ -35,9 +35,7 @@ nodepack
 
 Your project is now compiled and run with hot-reloading, error diagnosis, auto-port, etc.
 
-::: tip
 This shortcut will automatically execute either `npm run dev`, `yarn run dev` or `nodepack-service dev`.
-:::
 
 The `dev` service command has the following usage:
 
@@ -121,9 +119,7 @@ To compile your project in production mode, use this command:
 nodepack build
 ```
 
-::: tip
 This shortcut will automatically execute either `npm run build`, `yarn run build` or `nodepack-service build`.
-:::
 
 The `build` service command has the following usage:
 

@@ -1,12 +1,14 @@
 module.exports = {
+  plugins: [
+    '@vuepress/pwa',
+  ],
   locales: {
     '/': {
       lang: 'en-US',
       title: 'Nodepack',
-      description: '📦 Modern node development',
+      description: 'A progressive Node.js framework',
     },
   },
-  serviceWorker: true,
   head: [
     ['link', { rel: 'icon', href: '/favicon.png' }],
   ],
@@ -54,8 +56,15 @@ module.exports = {
         ],
         sidebar: {
           '/guide/': [
-            '/guide/',
-            '/guide/installation',
+            {
+              title: 'Introduction',
+              collapsable: false,
+              children: [
+                '/guide/',
+                '/guide/installation',
+                '/guide/quick-start',
+              ],
+            },
             {
               title: 'Essentials',
               collapsable: false,
@@ -70,13 +79,22 @@ module.exports = {
               collapsable: false,
               children: [
                 '/guide/env-mode',
+                '/guide/config',
+                '/guide/context',
                 '/guide/maintenance',
+                '/guide/preset',
+                '/guide/deployment',
+              ],
+            },
+            {
+              title: 'Advanced',
+              collapsable: false,
+              children: [
                 '/guide/app-migrations',
                 '/guide/env-migrations',
-                '/guide/preset',
+                '/guide/db-migrations',
                 '/guide/webpack',
                 '/guide/native-require',
-                '/guide/deployment',
               ],
             },
           ],

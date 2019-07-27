@@ -5,7 +5,7 @@ sidebarDepth: 0
 # Overview
 
 :::warning
-Nodepack is currently in early stages of development, APIs and commands are subject to change.
+Nodepack is currently in early stages of development, APIs and commands are subject to change, documentation may be incomplete.
 :::
 
 Nodepack is a modern node.js development platform. It can be used to create servers, backends, applications and libraries. It provides:
