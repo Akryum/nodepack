@@ -8,6 +8,6 @@ export interface MigrationOptions {
   requirePlugins?: string[]
   when?: (api: MigrationWhenAPI) => boolean | Promise<boolean>
   prompts?: (rootOptions: any) => Question[] | Promise<Question[]>
-  migrate: (api: MigrationOperationAPI, options: any, rootOptions: any) => void
-  rollback?: (api: MigrationOperationAPI, options: any, rootOptions: any) => void
+  up: (api: MigrationOperationAPI, options: any, rootOptions: any) => void
+  down?: (api: MigrationOperationAPI, options: any, rootOptions: any) => void
 }

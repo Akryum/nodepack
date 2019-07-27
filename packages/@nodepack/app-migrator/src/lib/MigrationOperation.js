@@ -88,7 +88,7 @@ module.exports = class MigrationOperation {
   }
 
   /**
-   * @param {'migrate' | 'rollback'} type
+   * @param {'up' | 'down'} type
    * @param {object} param
    * @param {boolean} param.extractConfigFiles
    */

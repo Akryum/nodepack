@@ -115,7 +115,7 @@ class Maintenance {
     if (migrations.length) {
       await this.shouldCommitState(`[nodepack] before app migration`)
       log(`🚀  Migrating app code...`)
-      const { migrationCount, allOptions } = await migrator.migrate(this.preset)
+      const { migrationCount, allOptions } = await migrator.up(this.preset)
       log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
 
       this.results.appMigrationCount = migrationCount

@@ -1,6 +1,6 @@
 # App Migrations
 
-Any [plugin](./plugins.md) and the Nodepack [service](./service.md) can register one or more app migrations. An app migration should have both a `migrate` code and a `rollback` code. Those codes can modify project source code by adding, editing or deleting files, as well as installing new dependencies in your project `package.json`. By default the [maintenances](./maintenance.md) applying or rollbacking app migrations will commit your app code state with Git commit so that your work won't be accidentally altered or removed.
+Any [plugin](./plugins.md) and the Nodepack [service](./service.md) can register one or more app migrations. An app migration should have both a `up` code and a `down` code. Those codes can modify project source code by adding, editing or deleting files, as well as installing new dependencies in your project `package.json`. By default the [maintenances](./maintenance.md) applying or rollbacking app migrations will commit your app code state with Git commit so that your work won't be accidentally altered or removed.
 
 For example, adding the official Typescript plugin with `nodepack add typescript` in the project will execute an app migration that will:
 

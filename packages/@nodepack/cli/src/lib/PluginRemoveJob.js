@@ -56,7 +56,7 @@ module.exports = class PluginRemoveJob {
         if (migrations.length) {
           await shouldCommitState(`[nodepack] before remove ${packageName}`, true)
           log(`🚀  Rollbacking app code...`)
-          const { rollbackCount } = await migrator.rollback([packageName])
+          const { rollbackCount } = await migrator.down([packageName])
           log(`📝  ${rollbackCount} app rollback${rollbackCount > 1 ? 's' : ''} applied!`)
           // In case package.json content changed
           pkg = readPkg(cwd)

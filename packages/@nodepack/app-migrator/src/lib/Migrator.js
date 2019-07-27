@@ -115,7 +115,7 @@ module.exports = class Migrator {
   /**
    * @param {Preset?} preset
    */
-  async migrate (preset = null) {
+  async up (preset = null) {
     if (!this.migratePrepared) {
       await this.prepareMigrate()
     }
@@ -149,7 +149,7 @@ module.exports = class Migrator {
 
       logWithSpinner('✔️', `${chalk.grey(migration.plugin.id)} ${migration.options.title}`)
 
-      await operation.run('migrate', {
+      await operation.run('up', {
         extractConfigFiles,
       })
 
@@ -201,7 +201,7 @@ module.exports = class Migrator {
   /**
    * @param {string []} removedPlugins
    */
-  async rollback (removedPlugins) {
+  async down (removedPlugins) {
     if (!this.rollbackPrepared) {
       await this.prepareRollback(removedPlugins)
     }
@@ -225,7 +225,7 @@ module.exports = class Migrator {
 
       logWithSpinner('✔️', `${chalk.grey(migration.plugin.id)} ${migration.options.title}`)
 
-      await operation.run('rollback', {
+      await operation.run('down', {
         extractConfigFiles: false,
       })
 
@@ -328,7 +328,7 @@ module.exports = class Migrator {
         }
       }
 
-      if (!migration.options.rollback) {
+      if (!migration.options.down) {
         printNoRollbackWarn(migration)
       }
 
@@ -364,7 +364,7 @@ module.exports = class Migrator {
     }
     return list.filter(migration => {
       // Skip if no rollback was defined
-      if (!migration.options.rollback) {
+      if (!migration.options.down) {
         printNoRollbackWarn(migration)
         return false
       }

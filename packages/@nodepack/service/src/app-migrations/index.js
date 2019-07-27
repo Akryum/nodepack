@@ -3,7 +3,7 @@ module.exports = api => {
   api.register({
     id: 'defaultTemplate',
     title: 'Template: Render default template',
-    migrate: (api, options) => {
+    up: (api, options) => {
       api.render('./templates/default')
 
       // Add scripts
@@ -15,7 +15,7 @@ module.exports = api => {
         },
       })
     },
-    rollback: (api, options) => {
+    down: (api, options) => {
       api.unrender('./templates/default')
 
       // Remove scripts

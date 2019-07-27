@@ -11,7 +11,7 @@ module.exports = api => {
         type: 'confirm',
       },
     ],
-    migrate: (api, options) => {
+    up: (api, options) => {
       api.render('./templates/default', options)
       api.move('src/**/*.js', file => `${file.path}${file.name}.ts`)
 
@@ -23,7 +23,7 @@ module.exports = api => {
         })
       }
     },
-    rollback: (api, options) => {
+    down: (api, options) => {
       api.unrender('./templates/default')
       api.move('src/**/*.ts', file => `${file.path}${file.name}.js`)
 
@@ -46,10 +46,10 @@ module.exports = api => {
   // api.register({
   //   id: 'tsconfig-test-libs@0.0.1',
   //   title: 'tsconfig: Added test libs',
-  //   migrate: (api, options) => {
+  //   up: (api, options) => {
   //     // TODO
   //   },
-  //   rollback: (api, options) => {
+  //   down: (api, options) => {
   //     // TODO
   //   },
   // })
