@@ -16,7 +16,7 @@ Here is an example preset in a JSON file:
   },
   "appMigrations": {
     "@nodepack/plugin-typescript": {
-      "default-template@0.0.1": {
+      "defaultTemplate": {
         "tslint": true
       }
     }
@@ -40,7 +40,7 @@ App migrations can prompt the user for additional customization, but you can als
 {
 "appMigrations": {
     "@nodepack/plugin-typescript": {
-      "default-template@0.0.1": {
+      "defaultTemplate": {
         "tslint": true
       }
     }
@@ -50,7 +50,7 @@ App migrations can prompt the user for additional customization, but you can als
 
 The first keys in the `appMigrations` object are the names of the Nodepack [plugins](./plugins.md). Then, the child keys are the ids of the [app migrations](./app-migrations.md).
 
-Here we pre-define the `tslint` answer to the `default-template@0.0.1` app migration from the `@nodepack/plugin-typescript` plugin.
+Here we pre-define the `tslint` answer to the `defaultTemplate` app migration from the `@nodepack/plugin-typescript` plugin.
 
 :::tip
 One plugin can register many different app migrations.
