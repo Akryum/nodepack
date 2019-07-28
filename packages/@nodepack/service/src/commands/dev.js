@@ -121,15 +121,18 @@ module.exports = (api, options) => {
           child.kill('SIGINT')
           return true
         } catch (e) {
-          console.error(`Couldn't terminate process ${child.pid}: ${e}`)
+          error(`Couldn't terminate process ${child.pid}: ${e}`)
         }
       }
-      return false
+      return terminated
     }
 
     const onExit = async () => {
       if (await terminateApp()) {
         process.exit(0)
+      } else {
+        error(`Failed terminating app`)
+        process.exit(1)
       }
     }
     process.on('SIGTERM', onExit)
