@@ -1,5 +1,5 @@
 const globby = require('globby')
-const { loadModule, resolveModule } = require('@nodepack/module')
+const { loadModule } = require('@nodepack/module')
 const { warn } = require('@nodepack/utils')
 const fs = require('fs')
 const path = require('path')
