@@ -1,3 +1,25 @@
+# [0.3.1](https://github.com/Akryum/nodepack/compare/v0.3.0...v0.3.1) (2019-07-28)
+
+## env-migrator
+
+#### Features
+
+* env migrations ([b8cec2c](https://github.com/Akryum/nodepack/commit/b8cec2c))
+
+## guijs-plugin
+
+#### Features
+
+* **guijs:** project type description & link ([e9fb566](https://github.com/Akryum/nodepack/commit/e9fb566))
+
+## service
+
+#### Bug Fixes
+
+* **service:** zombie process if app terminates itself and user kills dev command ([bb5c281](https://github.com/Akryum/nodepack/commit/bb5c281))
+
+
+
 # [0.3.0](https://github.com/Akryum/nodepack/compare/v0.2.0...v0.3.0) (2019-07-27)
 
 ## service
