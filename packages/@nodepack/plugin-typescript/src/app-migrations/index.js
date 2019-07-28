@@ -42,15 +42,4 @@ module.exports = api => {
       }
     },
   })
-
-  // api.register({
-  //   id: 'tsconfig-test-libs@0.0.1',
-  //   title: 'tsconfig: Added test libs',
-  //   up: (api, options) => {
-  //     // TODO
-  //   },
-  //   down: (api, options) => {
-  //     // TODO
-  //   },
-  // })
 }
