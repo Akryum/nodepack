@@ -8,7 +8,13 @@ sidebarDepth: 0
 Nodepack is currently in early stages of development, APIs and commands are subject to change, documentation may be incomplete.
 :::
 
-Nodepack is a modern node.js development platform. It can be used to create servers, backends, applications and libraries. It provides:
+Nodepack is a modern progressive node.js development platform.
+
+It can be used to create servers, backends, applications, libraries and serverless functions. It can scale from tiny projects to huge enterprise-level applications.
+
+## Features
+
+Nodepack provides:
 
 - A CLI to quickly create and manage projects.
 - A service installed in your project which is:
