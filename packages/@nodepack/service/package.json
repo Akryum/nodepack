@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/service",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Local service powering Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -27,11 +27,11 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-migrator": "^0.3.0",
-    "@nodepack/env-check": "^0.3.0",
-    "@nodepack/maintenance": "^0.3.0",
-    "@nodepack/module": "^0.3.0",
-    "@nodepack/utils": "^0.3.0",
+    "@nodepack/app-migrator": "^0.3.1",
+    "@nodepack/env-check": "^0.3.1",
+    "@nodepack/maintenance": "^0.3.1",
+    "@nodepack/module": "^0.3.1",
+    "@nodepack/utils": "^0.3.1",
     "@types/webpack-env": "^1.13.8",
     "@zeit/webpack-asset-relocator-loader": "^0.1.12",
     "cache-loader": "^2.0.1",
