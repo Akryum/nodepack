@@ -2,6 +2,7 @@
 /** @typedef {import('@nodepack/app-migrator').MigrationAllOptions} AppMigrationAllOptions */
 
 const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = require('@nodepack/app-migrator')
+const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
 const {
   log,
   error,
@@ -46,6 +47,7 @@ const inquirer = require('inquirer')
  * @typedef MaintenanceResults
  * @prop {AppMigrationAllOptions?} appMigrationAllOptions
  * @prop {number} appMigrationCount
+ * @prop {number} envMigrationCount
  */
 
 /**
@@ -93,25 +95,37 @@ class Maintenance {
     this.results = {
       appMigrationAllOptions: null,
       appMigrationCount: 0,
+      envMigrationCount: 0,
     }
+    /** @type {function[]} */
+    this.completeCbs = []
   }
 
   async run () {
     await this.callHook('before')
-
-    const { cwd, plugins } = this
 
     // pre-run install to be sure everything is up-to-date
     if (!this.skipPreInstall) {
       await this.installDeps(`📦  Checking dependencies installation...`)
     }
 
-    // Run app migrations
+    // Migrations
+    await this.runAppMigrations()
+    await this.runEnvMigrations()
+
+    log(`🔧  Maintenance complete!`)
+
+    await this.callHook('after')
+    await this.callCompleteCbs()
+  }
+
+  async runAppMigrations () {
+    const { cwd, plugins } = this
     const migratorPlugins = await getAppMigratorPlugins(cwd, plugins)
     const migrator = new AppMigrator(cwd, {
       plugins: migratorPlugins,
     })
-    const { migrations } = await migrator.prepareMigrate()
+    const { migrations } = await migrator.prepareUp()
     if (migrations.length) {
       await this.shouldCommitState(`[nodepack] before app migration`)
       log(`🚀  Migrating app code...`)
@@ -125,14 +139,28 @@ class Maintenance {
       await this.installDeps(`📦  Installing additional dependencies...`)
       await this.shouldCommitState(`[nodepack] after app migration`)
     }
+    this.completeCbs.push(() => {
+      migrator.displayNotices()
+    })
+  }
 
-    // TODO Env Migrations
-
-    log(`🔧  Maintenance complete!`)
-
-    await this.callHook('after')
-
-    migrator.displayNotices()
+  async runEnvMigrations () {
+    const { cwd } = this
+    const migrationsFolder = 'migration/env'
+    const migrator = new EnvMigrator(cwd, {
+      migrationsFolder,
+    })
+    const { files } = await migrator.prepareUp()
+    if (files.length) {
+      await this.shouldCommitState(`[nodepack] before env migration`)
+      log(`🚀  Migrating env...`)
+      const { migrationCount } = await migrator.up()
+      log(`💻️  ${migrationCount} env migration${migrationCount > 1 ? 's' : ''} applied!`)
+      this.results.envMigrationCount = migrationCount
+      // install additional deps (injected by migrations)
+      await this.installDeps(`📦  Installing additional dependencies...`)
+      await this.shouldCommitState(`[nodepack] after env migration`)
+    }
   }
 
   /**
@@ -153,6 +181,12 @@ class Maintenance {
         shouldCommitState: this.shouldCommitState.bind(this),
         installDeps: this.installDeps.bind(this),
       })
+    }
+  }
+
+  async callCompleteCbs () {
+    for (const cb of this.completeCbs) {
+      await cb()
     }
   }
 

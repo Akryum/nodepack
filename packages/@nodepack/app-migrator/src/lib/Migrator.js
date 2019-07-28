@@ -17,6 +17,7 @@
  * @prop {string} pluginId
  * @prop {string} pluginVersion
  * @prop {ProjectOptions} options
+ * @prop {string} date
  */
 
 /**
@@ -82,8 +83,8 @@ module.exports = class Migrator {
     this.plugins = plugins
     this.completeCbs = completeCbs
 
-    this.migratePrepared = false
-    this.rollbackPrepared = false
+    this.upPrepared = false
+    this.downPrepared = false
 
     /** @type {Migration []} */
     this.migrations = []
@@ -97,14 +98,14 @@ module.exports = class Migrator {
     this.notices = []
   }
 
-  async prepareMigrate () {
-    if (!this.migratePrepared) {
+  async prepareUp () {
+    if (!this.upPrepared) {
       await this.setup()
 
       // Migrations that will be applied
       this.queuedMigrations = await this.resolveMigrations()
 
-      this.migratePrepared = true
+      this.upPrepared = true
     }
 
     return {
@@ -116,8 +117,8 @@ module.exports = class Migrator {
    * @param {Preset?} preset
    */
   async up (preset = null) {
-    if (!this.migratePrepared) {
-      await this.prepareMigrate()
+    if (!this.upPrepared) {
+      await this.prepareUp()
     }
 
     /** @type {MigrationAllOptions?} */
@@ -161,6 +162,7 @@ module.exports = class Migrator {
         pluginId: migration.plugin.id,
         pluginVersion: migration.plugin.currentVersion || '',
         options: operation.options,
+        date: new Date().toISOString(),
       })
 
       migrationCount++
@@ -184,13 +186,13 @@ module.exports = class Migrator {
    * @param {string []} removedPlugins
    */
   async prepareRollback (removedPlugins) {
-    if (!this.rollbackPrepared) {
+    if (!this.downPrepared) {
       await this.setup()
 
       // Migrations that will be rollbacked
       this.queuedMigrations = await this.resolveRollbacks(removedPlugins)
 
-      this.rollbackPrepared = true
+      this.downPrepared = true
     }
 
     return {
@@ -202,7 +204,7 @@ module.exports = class Migrator {
    * @param {string []} removedPlugins
    */
   async down (removedPlugins) {
-    if (!this.rollbackPrepared) {
+    if (!this.downPrepared) {
       await this.prepareRollback(removedPlugins)
     }
 

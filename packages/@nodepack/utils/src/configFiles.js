@@ -12,9 +12,15 @@ exports.FILE_APP_MIGRATIONS_RECORDS = 'app-migration-records.json'
 exports.FILE_APP_MIGRATIONS_PLUGIN_VERSIONS = 'app-migration-plugin-versions.json'
 
 /**
+ * Applied migrations are recorded in this file.
+ */
+exports.FILE_ENV_MIGRATIONS_RECORDS = 'env-migration-records.json'
+
+/**
  * Content generated in the config folder's git ignore file.
  */
 exports.FILE_CONTENT_GITIGNORE = `/temp
+/env-migration-records.json
 `
 
 /**

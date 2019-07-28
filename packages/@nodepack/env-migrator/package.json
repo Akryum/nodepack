@@ -1,7 +1,7 @@
 {
-  "name": "@nodepack/maintenance",
+  "name": "@nodepack/env-migrator",
   "version": "0.3.0",
-  "description": "Maintenance utils for Nodepack apps",
+  "description": "Env Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -16,16 +16,17 @@
     "access": "public"
   },
   "main": "src/index.js",
+  "typings": "types/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-migrator": "^0.3.0",
-    "@nodepack/env-migrator": "^0.3.0",
+    "@nodepack/module": "^0.3.0",
     "@nodepack/utils": "^0.3.0",
-    "@types/inquirer": "^0.0.43",
-    "fs-extra": "^8.1.0",
-    "inquirer": "^6.3.1"
+    "globby": "^10.0.1"
+  },
+  "devDependencies": {
+    "@nodepack/service": "^0.3.0"
   }
 }
