@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app-config",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Configurations of a Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "@nodepack/module": "^0.3.1",
-    "@nodepack/utils": "^0.3.1"
+    "@nodepack/utils": "^0.3.2"
   }
 }
