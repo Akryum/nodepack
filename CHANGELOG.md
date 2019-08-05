@@ -1,3 +1,19 @@
+# [0.3.2](https://github.com/Akryum/nodepack/compare/v0.3.1...v0.3.2) (2019-08-05)
+
+## app-config
+
+#### Features
+
+* config system ([5444c46](https://github.com/Akryum/nodepack/commit/5444c46))
+
+## app-migrator
+
+#### Bug Fixes
+
+* **app migration:** improve error handling ([49556d2](https://github.com/Akryum/nodepack/commit/49556d2))
+
+
+
 # [0.3.1](https://github.com/Akryum/nodepack/compare/v0.3.0...v0.3.1) (2019-07-28)
 
 ## env-migrator
