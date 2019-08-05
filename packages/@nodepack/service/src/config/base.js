@@ -13,11 +13,18 @@ module.exports = (api, options) => {
       .context(api.getCwd())
 
     // Entry
-    const entry = config.entry('app')
-    if (options.productionSourceMap || process.env.NODE_ENV !== 'production') {
-      entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
+    const entries = {
+      config: path.resolve(__dirname, '../runtime/config.js'),
+      app: api.resolve(options.entry || 'index.js'),
     }
-    entry.add(api.resolve(options.entry || 'index.js'))
+    for (const key in entries) {
+      const entry = config.entry(key)
+      if (options.productionSourceMap || process.env.NODE_ENV !== 'production') {
+        entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
+      }
+      entry.add(path.resolve(__dirname, '../runtime/paths.js'))
+      entry.add(entries[key])
+    }
 
     // Configure node polyfills
     config.node
@@ -46,6 +53,7 @@ module.exports = (api, options) => {
         .add(resolveLocal('node_modules'))
       .end()
       .alias
+        .set('@config', api.resolve('config'))
         .set('@', api.resolve(options.srcDir || 'src'))
       .end()
       // webpack defaults to `module` and `main`, but that's

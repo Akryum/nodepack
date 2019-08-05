@@ -1,7 +1,7 @@
 {
-  "name": "@nodepack/plugin-typescript",
+  "name": "@nodepack/app-config",
   "version": "0.3.1",
-  "description": "Nodepack plugin for Typescript",
+  "description": "Configurations of a Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -15,25 +15,17 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "src/index.js",
+  "engines": {
+    "node": ">=8.12"
+  },
+  "main": "./src/index.js",
+  "typings": "./types/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "comment-json": "^2.1.0",
-    "fork-ts-checker-webpack-plugin": "^0.5.2",
-    "globby": "^9.2.0",
-    "ts-loader": "^5.3.3",
-    "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
-  },
-  "devDependencies": {
-    "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
-    "@types/comment-json": "^1.1.1"
-  },
-  "peerDependencies": {
-    "@nodepack/service": "^0.0.1",
+    "@nodepack/module": "^0.3.1",
     "@nodepack/utils": "^0.3.1"
   }
 }

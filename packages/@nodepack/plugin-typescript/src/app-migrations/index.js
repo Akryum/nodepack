@@ -42,4 +42,46 @@ module.exports = api => {
       }
     },
   })
+
+  api.register({
+    id: 'configPath',
+    title: 'Add `@config` alias to paths',
+    up: (api, options) => {
+      api.modifyFile('tsconfig.json', (content) => {
+        if (typeof content === 'string') {
+          const { removeTrailingComma } = require('@nodepack/utils')
+          const { parse, stringify } = require('comment-json')
+          const config = parse(removeTrailingComma(content))
+          if (!config.compilerOptions) {
+            config.compilerOptions = {}
+          }
+          if (!config.compilerOptions.baseUrl) {
+            config.compilerOptions.baseUrl = '.'
+          }
+          if (!config.compilerOptions.paths) {
+            config.compilerOptions.paths = {}
+          }
+          config.compilerOptions.paths['@config/*'] = [
+            'config/*',
+          ]
+          return stringify(config, null, 2)
+        }
+        return content
+      })
+    },
+    down: (api, options) => {
+      api.modifyFile('tsconfig.json', (content) => {
+        if (typeof content === 'string') {
+          const { removeTrailingComma } = require('@nodepack/utils')
+          const { parse, stringify } = require('comment-json')
+          const config = parse(removeTrailingComma(content))
+          if (config.compilerOptions && config.compilerOptions.paths) {
+            delete config.compilerOptions.paths['@config/*']
+            return stringify(config, null, 2)
+          }
+        }
+        return content
+      })
+    },
+  })
 }
