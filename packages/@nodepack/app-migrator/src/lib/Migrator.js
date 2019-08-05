@@ -150,9 +150,16 @@ module.exports = class Migrator {
 
       logWithSpinner('✔️', `${chalk.grey(migration.plugin.id)} ${migration.options.title}`)
 
-      await operation.run('up', {
-        extractConfigFiles,
-      })
+      try {
+        await operation.run('up', {
+          extractConfigFiles,
+        })
+      } catch (e) {
+        error(`An error occured while performing app migration: ${chalk.grey(migration.plugin.id)} ${chalk.bold(migration.options.title)}`)
+        stopSpinner(false)
+        console.error(e)
+        process.exit(1)
+      }
 
       stopSpinner()
 
