@@ -50,3 +50,68 @@ if (db) {
   // ...
 }
 ```
+
+## Standard configurations
+
+Those configuration should be recognized by relevant plugins.
+
+- `db`: main database connection information
+
+It should return a connection info object. Example:
+
+```js
+// config/db.js
+export default {
+  type: 'pg',
+  host: 'localhost',
+  port: 5432,
+  user: 'admin',
+  password: '········',
+}
+```
+
+- `redis`: redis connection information
+
+Example:
+
+```js
+// config/redis.js
+export default {
+  host: 'localhost',
+  port: 4002,
+}
+```
+
+- `pubsub`: realtime events implementation
+
+It should return an object of the following [interface](https://github.com/apollographql/graphql-subscriptions/blob/master/src/pubsub-engine.ts):
+
+```ts
+class PubSubEngine {
+  public abstract publish(triggerName: string, payload: any): Promise<void>;
+  public abstract subscribe(triggerName: string,
+    onMessage: Function, options: Object): Promise<number>;
+  public abstract unsubscribe(subId: number);
+}
+```
+
+Example (in-memory):
+
+```js
+// config/pubsub.js
+import { PubSub } from 'graphql-subscriptions'
+
+export default new PusSub()
+```
+
+Example (redis):
+
+```js
+// config/pubsub.js
+import { RedisPubSub } from 'graphql-redis-subscriptions'
+import RedisConfig from './redis'
+
+export default new RedisPubSub({
+  connection: RedisConfig
+})
+```
