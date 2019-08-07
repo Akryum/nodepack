@@ -25,7 +25,6 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/module": "^0.3.1",
-    "@nodepack/utils": "^0.3.2"
+    "@nodepack/module": "^0.3.1"
   }
 }
