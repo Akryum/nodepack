@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs-extra')
 
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
@@ -11,6 +12,8 @@ module.exports = (api, options) => {
       // Target
       .target('node')
       .context(api.getCwd())
+
+    fs.ensureDirSync(api.resolve('config'))
 
     // Entry
     const entries = {
