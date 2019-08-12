@@ -172,4 +172,21 @@ module.exports = class ServicePluginAPI {
     process.send && process.send({ restart: { reason }})
     process.exit(75)
   }
+
+  /**
+   * Add a runtime module that will be included in the app code
+   */
+  addRuntimeModule (targetPath) {
+    const baseDir = extractCallDir()
+    this.service.runtimeModules.push(path.resolve(baseDir, targetPath))
+  }
+}
+
+function extractCallDir () {
+  // extract callsite file location using error stack
+  const obj = {}
+  Error.captureStackTrace(obj)
+  const callSite = obj.stack.split('\n')[3]
+  const fileName = callSite.match(/\s\((.*):\d+:\d+\)$/)[1]
+  return path.dirname(fileName)
 }

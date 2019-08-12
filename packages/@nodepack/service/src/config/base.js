@@ -18,6 +18,7 @@ module.exports = (api, options) => {
     // Entry
     const entries = {
       config: path.resolve(__dirname, '../runtime/config.js'),
+      runtime: null,
       app: api.resolve(options.entry || 'index.js'),
     }
     let includedEntries = null
@@ -31,11 +32,18 @@ module.exports = (api, options) => {
           entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
         }
         entry.add(path.resolve(__dirname, '../runtime/paths.js'))
-        if (key !== 'config') {
+        if (key === 'runtime') {
           entry.add(path.resolve(__dirname, '../runtime/context.js'))
+          for (const runtimeModule of api.service.runtimeModules) {
+            entry.add(runtimeModule)
         }
+        } else if (key !== 'config') {
+          entry.add(path.resolve(__dirname, '../runtime/runtime.js'))
+        }
+        if (entries[key]) {
         entry.add(entries[key])
       }
+    }
     }
 
     // Configure node polyfills

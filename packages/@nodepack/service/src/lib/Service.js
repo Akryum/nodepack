@@ -69,6 +69,9 @@ module.exports = class Service {
 
     /** @type {ErrorDiagnoser []} */
     this.errorDiagnosers = []
+
+    /** @type {string[]} */
+    this.runtimeModules = []
   }
 
   resolvePlugins () {
