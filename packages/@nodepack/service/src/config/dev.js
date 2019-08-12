@@ -11,7 +11,7 @@ module.exports = (api, options) => {
 
         config
           .plugin('friendly-errors')
-            .use(require('friendly-errors-webpack-plugin'), [{
+            .use(require('@nuxt/friendly-errors-webpack-plugin'), [{
               clearConsole: true,
             }])
       }
