@@ -91,14 +91,16 @@ function clearRequireCache (id, map = new Map()) {
 }
 
 exports.mayBeNodeModule = function (module) {
-  return !exports.isRelative(module) && !exports.isAbsolute(module) && !module.match(/^@\//)
+  return !exports.isRelative(module) && !exports.isAbsolute(module) && module && !module.match(/^@\//)
 }
 
 exports.isRelative = function (module) {
+  if (!module) return false
   return module.startsWith('./') || module.startsWith('../')
 }
 
 exports.isAbsolute = function (module) {
+  if (!module) return false
   return module.startsWith('/') || module.match(/^\w:(\\|\/)/)
 }
 
