@@ -119,15 +119,33 @@ module.exports = (api, options) => {
     // External modules (default are modules in package.json deps)
     if (options.externals === true) {
       const nodeExternals = require('webpack-node-externals')
-      config.externals(nodeExternals({
+      const findUp = require('find-up')
+      const externalsConfig = {
         whitelist: (options.nodeExternalsWhitelist || [
           /\.(eot|woff|woff2|ttf|otf)$/,
           /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
           /\.(mp4|mp3|ogg|swf|webp)$/,
           /\.(css|scss|sass|less|styl)$/,
         ]).concat(['@nodepack/module']),
-        modulesFromFile: true,
+      }
+      const externals = []
+      let cwd = api.getCwd()
+      let folder
+      // Find all node_modules folders (to support monorepos)
+      do {
+        folder = findUp.sync('node_modules', {
+          cwd,
+          type: 'directory',
+        })
+        if (folder) {
+          externals.push(nodeExternals({
+            ...externalsConfig,
+            modulesDir: folder,
       }))
+          cwd = path.resolve(folder, '../..')
+        }
+      } while (folder)
+      config.externals(externals)
     } else {
       let optionsExternals = options.externals || []
       if (typeof optionsExternals === 'function') {
