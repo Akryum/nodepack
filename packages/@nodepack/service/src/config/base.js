@@ -20,13 +20,22 @@ module.exports = (api, options) => {
       config: path.resolve(__dirname, '../runtime/config.js'),
       app: api.resolve(options.entry || 'index.js'),
     }
+    let includedEntries = null
+    if (process.env.NODEPACK_ENTRIES) {
+      includedEntries = process.env.NODEPACK_ENTRIES.replace(/\s/g, '').split(',')
+    }
     for (const key in entries) {
+      if (!includedEntries || includedEntries.includes(key)) {
       const entry = config.entry(key)
       if (options.productionSourceMap || process.env.NODE_ENV !== 'production') {
         entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
       }
       entry.add(path.resolve(__dirname, '../runtime/paths.js'))
+        if (key !== 'config') {
+          entry.add(path.resolve(__dirname, '../runtime/context.js'))
+        }
       entry.add(entries[key])
+    }
     }
 
     // Configure node polyfills
