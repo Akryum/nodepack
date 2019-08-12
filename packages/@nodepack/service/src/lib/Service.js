@@ -301,5 +301,6 @@ module.exports = class Service {
     info(`🔧️  Building ${entryName}...`)
     process.env.NODEPACK_ENTRIES = entryName
     await this.commands.build.fn(args, rawArgv)
+    delete process.env.NODEPACK_ENTRIES
   }
 }
