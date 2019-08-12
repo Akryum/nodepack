@@ -15,6 +15,6 @@ exports.checkDebug = function (targetDir) {
   ) {
     // @ts-ignore
     process.env.NODEPACK_DEBUG = true
-    info('Debug mode enabled')
+    info('🐛️  Debug mode enabled')
   }
 }
