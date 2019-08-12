@@ -41,7 +41,7 @@ const cosmiconfig = require('cosmiconfig')
 const defaultsDeep = require('lodash.defaultsdeep')
 const ServicePlugin = require('./ServicePlugin')
 const ServicePluginAPI = require('./ServicePluginAPI')
-const { info, warn, error, chalk, readPkg, getPlugins } = require('@nodepack/utils')
+const { log, info, warn, error, chalk, readPkg, getPlugins } = require('@nodepack/utils')
 const { loadModule } = require('@nodepack/module')
 const { defaultOptions } = require('./options')
 
@@ -143,7 +143,7 @@ module.exports = class Service {
 
     process.env.NODEPACK_ENV = env
 
-    info(`Env Mode is ${chalk.bold(chalk.blue(process.env.NODEPACK_ENV))}`)
+    info(`⚙️  Env mode is ${chalk.bold(chalk.blue(process.env.NODEPACK_ENV))}`)
 
     this.projectOptions = this.loadConfig()
 
@@ -262,6 +262,17 @@ module.exports = class Service {
       args._.shift() // remove command itself
       rawArgv.shift()
     }
+
+    if (!['dev', 'build', 'help'].includes(name)) {
+      await this.buildEntry('config', {
+        env,
+        silent: true,
+        autoNodeEnv: false,
+      }, rawArgv)
+    }
+
+    log()
+
     const { fn } = command
     return fn(args, rawArgv)
   }
@@ -284,5 +295,11 @@ module.exports = class Service {
     }
     // get raw config
     return chainableConfig.toConfig()
+  }
+
+  async buildEntry (entryName, args, rawArgv) {
+    info(`🔧️  Building ${entryName}...`)
+    process.env.NODEPACK_ENTRIES = entryName
+    await this.commands.build.fn(args, rawArgv)
   }
 }

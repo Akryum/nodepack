@@ -2,6 +2,7 @@ const commonCommandOptions = require('../util/commonCommandOptions')
 
 const defaultArgs = {
   clean: true,
+  autoNodeEnv: true,
 }
 
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
@@ -14,6 +15,8 @@ module.exports = (api, options) => {
       '--externals': `do not bundle the dependencies into the final built files`,
       '--minify': 'minify the built files',
       '--watch': 'watch source files and automatically re-build',
+      '--silent': 'suppress information messages',
+      '--no-autoNodeEnv': `do not automatically set NODE_ENV to 'production'`,
       ...commonCommandOptions,
     },
   }, async (args) => {
@@ -29,7 +32,7 @@ module.exports = (api, options) => {
 
     process.env.NODEPACK_IS_BUILD = 'true'
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (args.autoNodeEnv && process.env.NODE_ENV !== 'production') {
       if (!process.env.ORIGINAL_NODE_ENV) {
         warn(chalk.yellow(`NODE_ENV environment variable was not defined, automatically setting to 'production'`))
         process.env.NODE_ENV = 'production'
@@ -38,7 +41,9 @@ module.exports = (api, options) => {
       }
     }
 
-    info(chalk.blue('Preparing production pack...'))
+    if (!args.silent) {
+      info(chalk.blue('Preparing production pack...'))
+    }
 
     const { getDefaultEntry } = require('../util/defaultEntry.js')
     options.entry = getDefaultEntry(api, options, args)
@@ -94,12 +99,16 @@ module.exports = (api, options) => {
             api.service.cwd,
             targetDir
           )
-          log(formatStats(stats, targetDirShort, api))
 
-          done(chalk.green('Build complete! Your app is ready for production.'))
-          if (args.watch) {
-            info(chalk.blue(`Watching for file changes...`))
+          if (!args.silent) {
+            log(formatStats(stats, targetDirShort, api))
+
+            done(chalk.green('Build complete! Your app is ready for production.'))
+            if (args.watch) {
+              info(chalk.blue(`Watching for file changes...`))
+            }
           }
+
           resolve()
         }
       }
