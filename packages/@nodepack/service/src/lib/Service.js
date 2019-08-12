@@ -263,7 +263,7 @@ module.exports = class Service {
       rawArgv.shift()
     }
 
-    if (!['dev', 'build', 'help'].includes(name)) {
+    if (!['dev', 'build', 'inspect', 'help'].includes(name)) {
       await this.buildEntry('config', {
         env,
         silent: true,
