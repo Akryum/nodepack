@@ -267,7 +267,10 @@ module.exports = class Service {
     }
 
     if (!['dev', 'build', 'inspect', 'help'].includes(name)) {
-      await this.buildEntry('config', {
+      await this.buildEntries([
+        'config',
+        'runtime',
+      ], {
         env,
         silent: true,
         autoNodeEnv: false,
@@ -300,9 +303,9 @@ module.exports = class Service {
     return chainableConfig.toConfig()
   }
 
-  async buildEntry (entryName, args, rawArgv) {
-    info(`🔧️  Building ${entryName}...`)
-    process.env.NODEPACK_ENTRIES = entryName
+  async buildEntries (entryNames, args, rawArgv) {
+    info(`🔧️  Building ${entryNames.join(', ')}...`)
+    process.env.NODEPACK_ENTRIES = entryNames.join(',')
     await this.commands.build.fn(args, rawArgv)
     delete process.env.NODEPACK_ENTRIES
   }
