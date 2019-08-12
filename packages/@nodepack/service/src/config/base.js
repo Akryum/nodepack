@@ -26,16 +26,16 @@ module.exports = (api, options) => {
     }
     for (const key in entries) {
       if (!includedEntries || includedEntries.includes(key)) {
-      const entry = config.entry(key)
-      if (options.productionSourceMap || process.env.NODE_ENV !== 'production') {
-        entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
-      }
-      entry.add(path.resolve(__dirname, '../runtime/paths.js'))
+        const entry = config.entry(key)
+        if (options.productionSourceMap || process.env.NODE_ENV !== 'production') {
+          entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
+        }
+        entry.add(path.resolve(__dirname, '../runtime/paths.js'))
         if (key !== 'config') {
           entry.add(path.resolve(__dirname, '../runtime/context.js'))
         }
-      entry.add(entries[key])
-    }
+        entry.add(entries[key])
+      }
     }
 
     // Configure node polyfills
@@ -49,8 +49,9 @@ module.exports = (api, options) => {
       .set('setImmediate', false)
 
     // Output
+    const outputPath = process.env.NODEPACK_DIRNAME = api.resolve(options.outputDir || 'dist')
     config.output
-      .set('path', api.resolve(options.outputDir || 'dist'))
+      .set('path', outputPath)
       .set('filename', '[name].js')
       .set('libraryTarget', 'commonjs2')
 
