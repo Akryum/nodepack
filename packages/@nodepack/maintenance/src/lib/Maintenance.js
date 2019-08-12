@@ -5,6 +5,7 @@ const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = req
 const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
 const {
   log,
+  info,
   error,
   chalk,
   readPkg,
@@ -113,7 +114,7 @@ class Maintenance {
     await this.runAppMigrations()
     await this.runEnvMigrations()
 
-    log(`🔧  Maintenance complete!`)
+    info(`🔧  Maintenance complete!`)
 
     await this.callHook('after')
     await this.callCompleteCbs()
