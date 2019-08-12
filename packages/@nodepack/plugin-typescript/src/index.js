@@ -64,6 +64,11 @@ module.exports = (api, options) => {
             formatter: 'codeframe',
             // https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse
             checkSyntacticErrors: useThreads,
+            logger: {
+              info: () => {},
+              error: console.error,
+              warn: console.warn,
+            },
           }])
     }
   })
