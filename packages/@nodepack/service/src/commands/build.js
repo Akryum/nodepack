@@ -81,7 +81,13 @@ module.exports = (api, options) => {
             for (const error of data.errors) {
               console.log('\n' + error)
             }
-            return onError(`Build failed with errors.`)
+            onError(`Build failed with errors.`)
+            if (process.env.NODEPACK_RAW_STATS) {
+              console.log(stats.toString({
+                colors: true,
+              }))
+            }
+            return
           }
 
           const targetDirShort = path.relative(
