@@ -1,0 +1,30 @@
+{
+  "name": "@nodepack/app-context",
+  "version": "0.3.2",
+  "description": "Context management for Nodepack app",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Akryum/nodepack/issues"
+  },
+  "homepage": "https://github.com/Akryum/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.12"
+  },
+  "main": "./src/index.js",
+  "typings": "./types/index.d.ts",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "@nodepack/utils": "^0.3.2"
+  }
+}
