@@ -15,7 +15,7 @@ module.exports = (api, options) => {
     const { info, error, chalk, terminate } = require('@nodepack/utils')
     const compilerInstance = require('../util/compilerInstance')
 
-    info(chalk.blue('Preparing development pack...'))
+    info(chalk.blue('Building for development...'))
 
     // Entry
     const { getDefaultEntry } = require('../util/defaultEntry.js')
@@ -31,7 +31,7 @@ module.exports = (api, options) => {
       const port = await getDefaultPort(api, options, args)
       moreEnv.PORT = port.toString()
       if (api.service.env === 'development') {
-        info(chalk.blue(`\`process.env.PORT\` has been set to ${port}`))
+        info(`\`process.env.PORT\` has been set to ${port}`)
       }
     }
 

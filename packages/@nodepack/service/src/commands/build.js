@@ -42,7 +42,7 @@ module.exports = (api, options) => {
     }
 
     if (!args.silent) {
-      info(chalk.blue('Preparing production pack...'))
+      info(chalk.blue('Building project...'))
     }
 
     const { getDefaultEntry } = require('../util/defaultEntry.js')
@@ -103,7 +103,7 @@ module.exports = (api, options) => {
           if (!args.silent) {
             log(formatStats(stats, targetDirShort, api))
 
-            done(chalk.green('Build complete! Your app is ready for production.'))
+            done(chalk.green('Build complete!'))
             if (args.watch) {
               info(chalk.blue(`Watching for file changes...`))
             }
