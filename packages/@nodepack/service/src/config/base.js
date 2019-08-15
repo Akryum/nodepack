@@ -9,17 +9,32 @@ module.exports = (api, options) => {
   api.chainWebpack(config => {
     // Basics
     config
-      // Target
       .target('node')
       .context(api.getCwd())
 
     fs.ensureDirSync(api.resolve('config'))
 
+    // Fragments
+    const fragments = {
+      config: path.resolve(__dirname, '../runtime/fragments/config.js'),
+      context: path.resolve(__dirname, '../runtime/fragments/context.js'),
+      runtime: null,
+    }
+
+    // App entries
+    const appEntries = {}
+    if (options.entries) {
+      for (const key in options.entries) {
+        appEntries[key] = api.resolve(options.entries[key])
+      }
+    } else {
+      appEntries.app = api.resolve(options.entry || 'index.js')
+    }
+
     // Entry
     const entries = {
-      config: path.resolve(__dirname, '../runtime/config.js'),
-      runtime: null,
-      app: api.resolve(options.entry || 'index.js'),
+      ...fragments,
+      ...appEntries,
     }
     let includedEntries = null
     if (process.env.NODEPACK_ENTRIES) {
@@ -28,40 +43,42 @@ module.exports = (api, options) => {
     for (const key in entries) {
       if (!includedEntries || includedEntries.includes(key)) {
         const entry = config.entry(key)
+
+        // Augment entries
         if (options.productionSourceMap || process.env.NODE_ENV !== 'production') {
           entry.add(path.resolve(__dirname, '../runtime/sourcemap.js'))
         }
         entry.add(path.resolve(__dirname, '../runtime/paths.js'))
+
+        // Fragments handling
         if (key === 'runtime') {
           entry.add(path.resolve(__dirname, '../runtime/context.js'))
           for (const runtimeModule of api.service.runtimeModules) {
             entry.add(runtimeModule)
-        }
+          }
         } else if (key !== 'config') {
-          entry.add(path.resolve(__dirname, '../runtime/runtime.js'))
+          entry.add(path.resolve(__dirname, '../runtime/load-runtime.js'))
         }
+
+        // Entry
         if (entries[key]) {
-        entry.add(entries[key])
+          entry.add(entries[key])
+        }
       }
     }
-    }
 
-    // Configure node polyfills
-    config.node
-      .set('console', false)
-      .set('process', false)
-      .set('global', false)
-      .set('__filename', false)
-      .set('__dirname', false)
-      .set('Buffer', false)
-      .set('setImmediate', false)
+    // Disable node polyfills
+    config.set('node', false)
 
     // Output
-    const outputPath = process.env.NODEPACK_DIRNAME = api.resolve(options.outputDir || 'dist')
+    const outputPath = process.env.NODEPACK_DIRNAME = api.resolve(
+      process.env.NODEPACK_OUTPUT || options.outputDir || 'dist'
+    )
     config.output
       .set('path', outputPath)
       .set('filename', '[name].js')
       .set('libraryTarget', 'commonjs2')
+      .set('globalObject', 'this')
 
     // Resolve
     config.resolve
@@ -118,6 +135,18 @@ module.exports = (api, options) => {
       // @ts-ignore
       .type('javascript/auto')
 
+    // EJS templates
+    config.module
+      .rule('ejs')
+      .test(/\.ejs$/)
+      .use('ejs-loader')
+        .loader('ejs-webpack-loader')
+        .options({
+          data: options,
+        })
+        .end()
+      .type('javascript/auto')
+
     // Module
     config.module
       .set('exprContextCritical', options.externals)
@@ -129,14 +158,20 @@ module.exports = (api, options) => {
       const nodeExternals = require('webpack-node-externals')
       const findUp = require('find-up')
       const externalsConfig = {
-        whitelist: (options.nodeExternalsWhitelist || [
+        whitelist: options.nodeExternalsWhitelist || [
           /\.(eot|woff|woff2|ttf|otf)$/,
           /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
           /\.(mp4|mp3|ogg|swf|webp)$/,
           /\.(css|scss|sass|less|styl)$/,
-        ]).concat(['@nodepack/module']),
+        ],
       }
-      const externals = []
+      const externals = [
+        // Read from package.json
+        nodeExternals({
+          ...externalsConfig,
+          modulesFromFile: true,
+        }),
+      ]
       let cwd = api.getCwd()
       let folder
       // Find all node_modules folders (to support monorepos)
@@ -149,7 +184,7 @@ module.exports = (api, options) => {
           externals.push(nodeExternals({
             ...externalsConfig,
             modulesDir: folder,
-      }))
+          }))
           cwd = path.resolve(folder, '../..')
         }
       } while (folder)
@@ -179,5 +214,17 @@ module.exports = (api, options) => {
     config.stats('minimal')
     config.performance.set('hints', false)
     config.optimization.nodeEnv(false)
+    config.optimization.concatenateModules(false)
+    config.optimization.splitChunks({
+      chunks: 'all',
+      maxInitialRequests: 2,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    })
   })
 }

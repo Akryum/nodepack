@@ -5,7 +5,6 @@ const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = req
 const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
 const {
   log,
-  info,
   error,
   chalk,
   readPkg,
@@ -17,7 +16,15 @@ const {
   loadGlobalOptions,
   getPkgCommand,
 } = require('@nodepack/utils')
+const { Hookable } = require('@nodepack/hookable')
 const inquirer = require('inquirer')
+const execa = require('execa')
+
+const FRAGMENTS = [
+  'config',
+  'context',
+  'runtime',
+]
 
 /**
  * @typedef MaintenanceHookAPI
@@ -34,14 +41,22 @@ const inquirer = require('inquirer')
 /** @typedef {(api: MaintenanceHookAPI) => Promise | void} MaintenanceHook */
 
 /**
+ * @typedef MaintenanceHooks
+ * @prop {MaintenanceHook} [before]
+ * @prop {MaintenanceHook} [afterAppMigrations]
+ * @prop {MaintenanceHook} [afterEnvMigrations]
+ * @prop {MaintenanceHook} [after]
+ */
+
+/**
  * @typedef MaintenanceOptions
  * @prop {string} cwd Working directory
  * @prop {any} [cliOptions] CLI options if any
  * @prop {Preset?} [preset] Project preset (used for project creation)
  * @prop {boolean} [skipCommit] Don't try to commit with git
  * @prop {boolean} [skipPreInstall] Don't run install package at the begining of the maintenance
- * @prop {MaintenanceHook?} [before] Called before the common maintenance operations
- * @prop {MaintenanceHook?} [after] Called after the common maintenance operations
+ * @prop {boolean} [skipBuild] Don't build app fragments like config
+ * @prop {MaintenanceHooks?} [hooks] Hooks
  */
 
 /**
@@ -67,18 +82,17 @@ class Maintenance {
     preset = null,
     skipCommit = false,
     skipPreInstall = false,
-    before = null,
-    after = null,
+    skipBuild = false,
+    hooks = null,
   }) {
     this.cwd = cwd
     this.cliOptions = cliOptions
     this.preset = preset
     this.skipCommit = skipCommit
     this.skipPreInstall = skipPreInstall
-    this.hooks = {
-      before,
-      after,
-    }
+    this.skipBuild = skipBuild
+    this.hooks = new Hookable()
+    if (hooks) this.hooks.addHooks(hooks)
 
     // Are one of those vars non-empty?
     this.isTestOrDebug = !!(process.env.NODEPACK_TEST || process.env.NODEPACK_DEBUG)
@@ -102,19 +116,32 @@ class Maintenance {
     this.completeCbs = []
   }
 
+  async preInstall () {
+    await this.installDeps(`📦  Checking dependencies installation...`)
+  }
+
   async run () {
     await this.callHook('before')
 
     // pre-run install to be sure everything is up-to-date
     if (!this.skipPreInstall) {
-      await this.installDeps(`📦  Checking dependencies installation...`)
+      await this.preInstall()
     }
 
-    // Migrations
+    // App Migrations
     await this.runAppMigrations()
-    await this.runEnvMigrations()
+    await this.callHook('afterAppMigrations')
 
-    info(`🔧  Maintenance complete!`)
+    // Build fragments
+    if (!this.skipBuild) {
+      await this.buildFragments(FRAGMENTS)
+    }
+
+    // Env Migrations
+    await this.runEnvMigrations()
+    await this.callHook('afterEnvMigrations')
+
+    log(`🔧  Maintenance complete!`)
 
     await this.callHook('after')
     await this.callCompleteCbs()
@@ -168,21 +195,17 @@ class Maintenance {
    * @param {string} id
    */
   async callHook (id) {
-    /** @type {MaintenanceHook} */
-    const hook = this.hooks[id]
-    if (hook) {
-      // Hook API
-      await hook({
-        cwd: this.cwd,
-        isTestOrDebug: this.isTestOrDebug,
-        pkg: this.pkg,
-        plugins: this.plugins,
-        packageManager: this.packageManager,
-        results: this.results,
-        shouldCommitState: this.shouldCommitState.bind(this),
-        installDeps: this.installDeps.bind(this),
-      })
-    }
+    // Hook API
+    await this.hooks.callHook(id, {
+      cwd: this.cwd,
+      isTestOrDebug: this.isTestOrDebug,
+      pkg: this.pkg,
+      plugins: this.plugins,
+      packageManager: this.packageManager,
+      results: this.results,
+      shouldCommitState: this.shouldCommitState.bind(this),
+      installDeps: this.installDeps.bind(this),
+    })
   }
 
   async callCompleteCbs () {
@@ -231,6 +254,27 @@ class Maintenance {
       if (message) log(message)
       await installDeps(this.cwd, this.packageManager, this.cliOptions.registry)
     }
+  }
+
+  /**
+   * Build app fragments
+   * @param {string[]} entryNames
+   */
+  async buildFragments (entryNames) {
+    log(`🔨️  Building fragments ${chalk.blue(entryNames.join(', '))}...`)
+    await execa('nodepack-service', [
+      'build',
+      '--silent',
+      '--no-autoNodeEnv',
+    ], {
+      cwd: this.cwd,
+      env: {
+        NODEPACK_ENTRIES: entryNames.join(','),
+        NODEPACK_NO_MAINTENANCE: 'true',
+        NODEPACK_OUTPUT: '.nodepack/temp/fragments/',
+      },
+      stdio: ['inherit', 'inherit', 'inherit'],
+    })
   }
 }
 

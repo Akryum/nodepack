@@ -87,11 +87,11 @@ Enable Source Maps in production mode.
 
 Modules and packages marked as external are not bundled into the built files.
 
-If `false`, nothing is marked as external (except for `@nodepack/module` which must be external to work properly).
+If `false`, nothing is marked as external.
 
 In case you don't want the dependencies to be built into the final output, you should set this option to `true`, which will let Nodepack figureout which module should be external (for example modules in `node_modules` folder). You can further customize this with the [nodeExternalsWhitelist](#nodeexternalswhitelist) option.
 
-If a string or an array of strings, only those specific modules will be external (plus `@nodepack/module`).
+If a string or an array of strings, only those specific modules will be external.
 
 ### nodeExternalsWhitelist
 

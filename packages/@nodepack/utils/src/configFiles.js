@@ -21,6 +21,7 @@ exports.FILE_ENV_MIGRATIONS_RECORDS = 'env-migration-records.json'
  */
 exports.FILE_CONTENT_GITIGNORE = `/temp
 /env-migration-records.json
+/config.json
 `
 
 /**
@@ -28,7 +29,7 @@ exports.FILE_CONTENT_GITIGNORE = `/temp
  */
 exports.FILE_CONTENT_README = `# Nodepack internal config files
 
-Add this to version control. Modify at yourn own risk!
+Add this folder to version control. Modify at yourn own risk!
 `
 
 /**
@@ -48,6 +49,8 @@ exports.ensureConfigFolder = async cwd => {
   await exports.writeConfigFile(cwd, '.gitignore', exports.FILE_CONTENT_GITIGNORE)
   // Readme
   await exports.writeConfigFile(cwd, 'README.md', exports.FILE_CONTENT_README)
+  // Config
+  await exports.ensureConfigFile(cwd, 'config.json', '{}', false)
 }
 
 /**
@@ -57,9 +60,12 @@ exports.ensureConfigFolder = async cwd => {
  * @param {string} cwd Working directory.
  * @param {string} name File name.
  * @param {any} defaultContent
+ * @param {boolean} checkConfigFolder Check if the config folder exists and write its default content.
  */
-exports.ensureConfigFile = async (cwd, name, defaultContent) => {
-  await exports.ensureConfigFolder(cwd)
+exports.ensureConfigFile = async (cwd, name, defaultContent, checkConfigFolder = true) => {
+  if (checkConfigFolder) {
+    await exports.ensureConfigFolder(cwd)
+  }
   const base = exports.getConfigFolder(cwd)
   const file = path.join(base, name)
   if (!await fs.pathExists(file)) {

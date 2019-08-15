@@ -1,5 +1,7 @@
-const { sequence } = require('./fn')
-const { warn, error } = require('./logger')
+const { sequence, parallel } = require('./fn')
+
+exports.sequence = sequence
+exports.parallel = parallel
 
 /** @typedef {{ [key: string]: function[] }} HookMap */
 /** @typedef {{ [key: string]: (ConfigHooks | function) }} ConfigHooks */
@@ -26,7 +28,7 @@ exports.Hookable = class Hookable {
     }
 
     if (this._deprecatedHooks[name]) {
-      warn(`${name} hook has been deprecated, please use ${this._deprecatedHooks[name]}`)
+      console.warn(`${name} hook has been deprecated, please use ${this._deprecatedHooks[name]}`)
       name = this._deprecatedHooks[name]
     }
 
@@ -48,7 +50,8 @@ exports.Hookable = class Hookable {
       await sequence(this._hooks[name], fn => fn(...args))
     } catch (err) {
       name !== 'error' && await this.callHook('error', err)
-      error(err)
+      console.error(err)
+      throw err
     }
   }
 

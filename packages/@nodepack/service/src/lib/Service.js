@@ -41,8 +41,9 @@ const cosmiconfig = require('cosmiconfig')
 const defaultsDeep = require('lodash.defaultsdeep')
 const ServicePlugin = require('./ServicePlugin')
 const ServicePluginAPI = require('./ServicePluginAPI')
-const { log, info, warn, error, chalk, readPkg, getPlugins } = require('@nodepack/utils')
+const { info, warn, error, chalk, readPkg, getPlugins } = require('@nodepack/utils')
 const { loadModule } = require('@nodepack/module')
+const { runMaintenance } = require('@nodepack/maintenance')
 const { defaultOptions } = require('./options')
 
 module.exports = class Service {
@@ -266,18 +267,15 @@ module.exports = class Service {
       rawArgv.shift()
     }
 
-    if (!['dev', 'build', 'inspect', 'help'].includes(name)) {
-      await this.buildEntries([
-        'config',
-        'runtime',
-      ], {
-        env,
-        silent: true,
-        autoNodeEnv: false,
-      }, rawArgv)
+    const maintenanceEnabled = name !== 'help' && process.env.NODEPACK_NO_MAINTENANCE !== 'true'
+    if (maintenanceEnabled) {
+      await runMaintenance({
+        cwd: this.cwd,
+        cliOptions: args,
+        skipPreInstall: true,
+        skipBuild: ['dev', 'build', 'inspect', 'help'].includes(name),
+      })
     }
-
-    log()
 
     const { fn } = command
     return fn(args, rawArgv)
@@ -301,12 +299,5 @@ module.exports = class Service {
     }
     // get raw config
     return chainableConfig.toConfig()
-  }
-
-  async buildEntries (entryNames, args, rawArgv) {
-    info(`🔧️  Building ${entryNames.join(', ')}...`)
-    process.env.NODEPACK_ENTRIES = entryNames.join(',')
-    await this.commands.build.fn(args, rawArgv)
-    delete process.env.NODEPACK_ENTRIES
   }
 }

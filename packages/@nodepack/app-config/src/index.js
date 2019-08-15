@@ -1,8 +1,4 @@
-const { loadModule } = require('@nodepack/module')
-const path = require('path')
-
-const cwd = process.env.NODEPACK_DIRNAME || process.cwd()
-const moduleFile = path.join(cwd, 'config.js')
+const { loadFragment } = require('@nodepack/fragment')
 
 /** @type {import('@nodepack/app-config').Config} */
-module.exports = loadModule(moduleFile, cwd)
+module.exports = loadFragment('config.js')

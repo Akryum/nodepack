@@ -52,6 +52,7 @@ module.exports = (api, options) => {
     const path = require('path')
     const fs = require('fs-extra')
     const formatStats = require('../util/formatStats')
+    const { updateConfig } = require('../util/updateConfig')
 
     if (args.externals) {
       options.externals = true
@@ -67,6 +68,10 @@ module.exports = (api, options) => {
     if (args.clean) {
       await fs.remove(targetDir)
     }
+
+    await updateConfig(api.getCwd(), {
+      output: process.env.NODEPACK_DIRNAME,
+    })
 
     return new Promise((resolve, reject) => {
       const onError = (err) => {

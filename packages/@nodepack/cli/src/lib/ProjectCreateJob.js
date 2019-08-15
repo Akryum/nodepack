@@ -101,57 +101,60 @@ module.exports = class ProjectCreateJob {
       preset: finalPreset,
       skipCommit: true,
       skipPreInstall: true,
-      before: async ({ packageManager, isTestOrDebug }) => {
-        // install plugins
-        stopSpinner()
-        log(`⚙  Installing nodepack plugins. This might take a while...`)
-        if (isTestOrDebug) {
-          // in development, avoid installation process
-          await require('../util/setupDevProject')(cwd)
-        } else {
-          await installDeps(cwd, packageManager, cliOptions.registry)
-        }
-      },
-      after: async ({ results, pkg, packageManager, isTestOrDebug }) => {
-        // If migrations prompted the user, we need to get them in case we save the preset
-        finalPreset.appMigrations = results.appMigrationAllOptions
+      hooks: {
+        before: async ({ packageManager, isTestOrDebug }) => {
+          // install plugins
+          stopSpinner()
+          log(`⚙  Installing nodepack plugins. This might take a while...`)
+          if (isTestOrDebug) {
+            // in development, avoid installation process
+            const setupDevProject = require('../util/setupDevProject')
+            await setupDevProject(cwd)
+          } else {
+            await installDeps(cwd, packageManager, cliOptions.registry)
+          }
+        },
+        after: async ({ results, pkg, packageManager, isTestOrDebug }) => {
+          // If migrations prompted the user, we need to get them in case we save the preset
+          finalPreset.appMigrations = results.appMigrationAllOptions
 
-        // generate README.md
-        stopSpinner()
-        logWithSpinner('📄', 'Generating README.md...')
-        await this.writeFileToDisk('README.md', generateReadme(pkg, packageManager))
+          // generate README.md
+          stopSpinner()
+          logWithSpinner('📄', 'Generating README.md...')
+          await this.writeFileToDisk('README.md', generateReadme(pkg, packageManager))
 
-        // initial commit
-        let gitCommitSuccess = true
-        if (shouldInitGit) {
-          const { success } = await commitOnGit(cwd, cliOptions, isTestOrDebug, `[nodepack] create project`)
-          gitCommitSuccess = success
-        }
-        stopSpinner()
+          // initial commit
+          let gitCommitSuccess = true
+          if (shouldInitGit) {
+            const { success } = await commitOnGit(cwd, cliOptions, isTestOrDebug, `[nodepack] create project`)
+            gitCommitSuccess = success
+          }
+          stopSpinner()
 
-        // save preset
-        if (this.isPresetManual) {
-          await this.askSavePreset(finalPreset)
-        }
+          // save preset
+          if (this.isPresetManual) {
+            await this.askSavePreset(finalPreset)
+          }
 
-        // log instructions
-        if (!cliOptions.skipGetStarted) {
-          log()
-          log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
-          log(
-            `👉  Get started with the following commands:\n\n` +
-            (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
-            chalk.cyan(` ${chalk.gray('$')} nodepack`)
-          )
-          log()
-        }
+          // log instructions
+          if (!cliOptions.skipGetStarted) {
+            log()
+            log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
+            log(
+              `👉  Get started with the following commands:\n\n` +
+              (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
+              chalk.cyan(` ${chalk.gray('$')} nodepack`)
+            )
+            log()
+          }
 
-        if (!gitCommitSuccess) {
-          warn(
-            `Skipped git commit due to missing username and email in git config.\n` +
-            `You will need to perform the initial commit yourself.\n`
-          )
-        }
+          if (!gitCommitSuccess) {
+            warn(
+              `Skipped git commit due to missing username and email in git config.\n` +
+              `You will need to perform the initial commit yourself.\n`
+            )
+          }
+        },
       },
     })
   }

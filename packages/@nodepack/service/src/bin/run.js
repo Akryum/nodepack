@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { checkDebug } = require('@nodepack/utils')
-const { runMaintenance } = require('@nodepack/maintenance')
+const { preInstall } = require('@nodepack/maintenance')
 const Service = require('../lib/Service')
 
 const cwd = process.env.NODEPACK_CONTEXT || process.cwd()
@@ -13,11 +13,10 @@ const args = require('minimist')(rawArgv)
 const command = args._[0]
 
 async function run () {
-  if (command !== 'help' && process.env.NODEPACK_NO_MAINTENANCE !== 'true') {
-    await runMaintenance({
+  if (args.preInstall !== false) {
+    await preInstall({
       cwd,
       cliOptions: args,
-      skipPreInstall: args.preInstall === false,
     })
   }
 

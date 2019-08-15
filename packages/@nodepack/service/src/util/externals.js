@@ -15,7 +15,6 @@ module.exports = function (api, externals) {
 
   /** @type {Set<string>} */
   const externalSet = new Set(externals.filter(e => typeof e === 'string'))
-  externalSet.add('@nodepack/module')
   /** @type {RegExp[]} */
   const regExps = externals.filter(e => e instanceof RegExp)
 

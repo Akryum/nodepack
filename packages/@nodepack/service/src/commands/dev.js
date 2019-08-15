@@ -39,6 +39,7 @@ module.exports = (api, options) => {
     const webpack = require('webpack')
     const webpackConfig = await api.resolveWebpackConfig()
     const execa = require('execa')
+    const { updateConfig } = require('../util/updateConfig')
 
     /** @type {import('child_process').ChildProcess} */
     let child
@@ -51,6 +52,10 @@ module.exports = (api, options) => {
     // Implement pause to webpack compiler
     // For example, this is useful for error diagnostics
     injectPause(compiler)
+
+    await updateConfig(api.getCwd(), {
+      output: process.env.NODEPACK_DIRNAME,
+    })
 
     compiler.watch(
       webpackConfig.watchOptions,

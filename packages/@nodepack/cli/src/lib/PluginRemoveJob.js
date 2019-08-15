@@ -47,34 +47,36 @@ module.exports = class PluginRemoveJob {
       cliOptions,
       skipCommit: true,
       skipPreInstall: true,
-      before: async ({ pkg, plugins, shouldCommitState, installDeps }) => {
-        const migratorPlugins = await getMigratorPlugins(cwd, plugins)
-        const migrator = new Migrator(cwd, {
-          plugins: migratorPlugins,
-        })
-        const { migrations } = await migrator.prepareRollback([packageName])
-        if (migrations.length) {
-          await shouldCommitState(`[nodepack] before remove ${packageName}`, true)
-          log(`🚀  Rollbacking app code...`)
-          const { rollbackCount } = await migrator.down([packageName])
-          log(`📝  ${rollbackCount} app rollback${rollbackCount > 1 ? 's' : ''} applied!`)
-          // In case package.json content changed
-          pkg = readPkg(cwd)
-        }
+      hooks: {
+        before: async ({ pkg, plugins, shouldCommitState, installDeps }) => {
+          const migratorPlugins = await getMigratorPlugins(cwd, plugins)
+          const migrator = new Migrator(cwd, {
+            plugins: migratorPlugins,
+          })
+          const { migrations } = await migrator.prepareRollback([packageName])
+          if (migrations.length) {
+            await shouldCommitState(`[nodepack] before remove ${packageName}`, true)
+            log(`🚀  Rollbacking app code...`)
+            const { rollbackCount } = await migrator.down([packageName])
+            log(`📝  ${rollbackCount} app rollback${rollbackCount > 1 ? 's' : ''} applied!`)
+            // In case package.json content changed
+            pkg = readPkg(cwd)
+          }
 
-        const index = plugins.indexOf(packageName)
-        if (index !== -1) plugins.splice(index, 1)
+          const index = plugins.indexOf(packageName)
+          if (index !== -1) plugins.splice(index, 1)
 
-        if (!cliOptions.skipUninstall) {
-          delete pkg.dependencies[packageName]
-          delete pkg.devDependencies[packageName]
-          writePkg(cwd, pkg)
-          await installDeps(`📦  Uninstalling dependencies...`)
-        }
-      },
-      after: async ({ shouldCommitState }) => {
-        await shouldCommitState(`[nodepack] after remove ${packageName}`, true)
-        log(`🎉  Successfully removed ${chalk.yellow(packageName)}.`)
+          if (!cliOptions.skipUninstall) {
+            delete pkg.dependencies[packageName]
+            delete pkg.devDependencies[packageName]
+            writePkg(cwd, pkg)
+            await installDeps(`📦  Uninstalling dependencies...`)
+          }
+        },
+        after: async ({ shouldCommitState }) => {
+          await shouldCommitState(`[nodepack] after remove ${packageName}`, true)
+          log(`🎉  Successfully removed ${chalk.yellow(packageName)}.`)
+        },
       },
     })
   }

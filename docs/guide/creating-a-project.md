@@ -29,7 +29,7 @@ In the root directory of the project, the `nodepack.config.js` file allows you t
 
 ### .nodepack
 
-Nodepack projects contain a special `.nodepack` folder (which may be hidden in your file explorer). Files in this folder are required for Nodepack to work properly. **Edit the folder content at your own risk!**
+Nodepack projects contain a special `.nodepack` folder (which may be hidden in your file explorer). Files in this folder are required for Nodepack to work properly. **⚠️ Edit the folder content at your own risk!**
 
 Here are what those files do:
 
@@ -37,6 +37,8 @@ Here are what those files do:
 📄 .gitignore                          # Some files in .nodepack will be ignored by git
 📄 app-migration-plugin-versions.json  # Plugin versions of last app migrations
 📄 app-migration-records.json          # Applied app migrations are saved here
+📄 config.json                         # Configuration for internals
+📄 env-migration-records.json          # Applied env migrations are saved here
 📄 README.md                           # Explanation notice
 ```
 

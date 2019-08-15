@@ -1,7 +1,7 @@
 {
-  "name": "@nodepack/app-context",
+  "name": "@nodepack/hookable",
   "version": "0.3.2",
-  "description": "Context management for Nodepack app",
+  "description": "A hookable class to create plugin systems",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -15,16 +15,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "engines": {
-    "node": ">=8.12"
-  },
-  "main": "./src/index.js",
-  "typings": "./types/index.d.ts",
+  "main": "src/index.js",
+  "typings": "types/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/fragment": "^0.3.2"
+  },
+  "devDependencies": {
   }
 }

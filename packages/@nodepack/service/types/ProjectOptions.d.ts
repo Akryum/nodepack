@@ -11,6 +11,8 @@ export interface ProjectOptions {
   srcDir?: string;
   /** Entry file (relative to project root) */
   entry?: string;
+  /** Entry files (relative to project root) */
+  entries?: { [key: string]: string };
   /** Enable sourcemaps in production build (can slow down build) */
   productionSourceMap?: boolean;
   /** Webpack externals packages */

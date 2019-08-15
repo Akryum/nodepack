@@ -1,12 +1,3 @@
-const { Hookable } = require('@nodepack/utils')
+const { loadFragment } = require('@nodepack/fragment')
 
-const hooks = new Hookable()
-
-exports.createContext = async () => {
-  const ctx = {}
-  await hooks.callHook('create', ctx)
-  return ctx
-}
-
-exports.hook = hooks.hook
-exports.callHook = hooks.callHook
+module.exports = loadFragment('context.js')
