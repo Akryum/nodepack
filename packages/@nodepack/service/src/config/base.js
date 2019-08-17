@@ -52,7 +52,6 @@ module.exports = (api, options) => {
 
         // Fragments handling
         if (key === 'runtime') {
-          entry.add(path.resolve(__dirname, '../runtime/context.js'))
           for (const runtimeModule of api.service.runtimeModules) {
             entry.add(runtimeModule)
           }

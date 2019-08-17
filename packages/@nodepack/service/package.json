@@ -31,7 +31,6 @@
     "@nodepack/app-context": "^0.3.2",
     "@nodepack/env-check": "^0.3.1",
     "@nodepack/fragment": "^0.3.2",
-    "@nodepack/hookable": "^0.3.2",
     "@nodepack/maintenance": "^0.3.2",
     "@nodepack/module": "^0.3.1",
     "@nodepack/utils": "^0.3.2",

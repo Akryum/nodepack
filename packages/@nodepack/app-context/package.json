@@ -25,6 +25,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/fragment": "^0.3.2"
+    "@nodepack/app-config": "^0.3.2",
+    "@nodepack/hookable": "^0.3.2"
   }
 }
