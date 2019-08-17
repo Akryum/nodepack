@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/hookable",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A hookable class to create plugin systems",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -20,9 +20,5 @@
   "scripts": {
     "test": "yarn test:lint",
     "test:lint": "eslint src"
-  },
-  "dependencies": {
-  },
-  "devDependencies": {
   }
 }
