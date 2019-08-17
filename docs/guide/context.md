@@ -12,7 +12,7 @@ To create a context, use `createContext` from the `@nodepack/app-context` packag
 import { createContext } from '@nodepack/app-context'
 
 async function main () {
-  const context = createContext()
+  const context = await createContext()
   console.log(context)
 }
 ```
@@ -40,7 +40,7 @@ import { callHook } from '@nodepack/app-context'
 
 async function main () {
   // ...
-  callHook('loggedIn', context)
+  await callHook('loggedIn', context)
 }
 ```
 
