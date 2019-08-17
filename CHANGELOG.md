@@ -1,3 +1,13 @@
+# [0.4.1](https://github.com/Akryum/nodepack/compare/v0.4.0...v0.4.1) (2019-08-17)
+
+## plugin-typescript
+
+#### Bug Fixes
+
+* remove runtime module example ([1b57628](https://github.com/Akryum/nodepack/commit/1b57628))
+
+
+
 # [0.4.0](https://github.com/Akryum/nodepack/compare/v0.3.2...v0.4.0) (2019-08-17)
 
 ## app-config
