@@ -169,7 +169,7 @@ module.exports = class MigrationOperationAPI {
       source = path.resolve(baseDir, source)
       this._injectFileMiddleware(async (files) => {
         const data = this._resolveData(additionalData)
-        const { default: globby } = require('globby')
+        const globby = require('globby')
         const _files = await globby(['**/*'], { cwd: source })
         for (const rawPath of _files) {
           const targetPath = rawPath.split('/').map(filename => {
@@ -221,7 +221,7 @@ module.exports = class MigrationOperationAPI {
     if (isString(source)) {
       source = path.resolve(baseDir, source)
       this._injectFileMiddleware(async (files) => {
-        const { default: globby } = require('globby')
+        const globby = require('globby')
         const _files = await globby(['**/*'], { cwd: source })
         for (const rawPath of _files) {
           const targetPath = rawPath.split('/').map(filename => {

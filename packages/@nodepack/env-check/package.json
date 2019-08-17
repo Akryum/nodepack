@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "execa": "^1.0.0",
+    "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
     "semver": "^6.3.0",
-    "systeminformation": "^4.5.1"
+    "systeminformation": "^4.14.4"
   }
 }

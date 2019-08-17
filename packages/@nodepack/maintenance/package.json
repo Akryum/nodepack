@@ -25,9 +25,9 @@
     "@nodepack/env-migrator": "^0.3.2",
     "@nodepack/hookable": "^0.3.2",
     "@nodepack/utils": "^0.3.2",
-    "execa": "^2.0.3",
+    "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
-    "inquirer": "^6.3.1"
+    "inquirer": "^6.5.1"
   },
   "devDependencies": {
     "@types/inquirer": "^0.0.43"

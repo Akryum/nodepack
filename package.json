@@ -35,7 +35,7 @@
     "eslint": "^5.9.0",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-vue-libs": "^3.0.0",
-    "execa": "^1.0.0",
+    "execa": "^2.0.0",
     "globby": "^8.0.1",
     "inquirer": "^6.2.0",
     "lerna": "^3.4.3",
