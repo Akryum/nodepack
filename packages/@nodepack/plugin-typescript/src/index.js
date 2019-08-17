@@ -67,7 +67,4 @@ module.exports = (api, options) => {
       return require('./lib/tslint')(args, api)
     })
   }
-
-  api.addRuntimeModule('./runtime.ejs')
-  // api.addRuntimeModule('./runtime.js')
 }
