@@ -1,3 +1,3 @@
 # Testing
 
-*Available soon...*
+*This section of the guide is Work in progress...*

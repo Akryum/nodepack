@@ -78,11 +78,11 @@ module.exports = {
               title: 'Going further',
               collapsable: false,
               children: [
-                '/guide/env-mode',
                 '/guide/config',
                 '/guide/context',
                 '/guide/maintenance',
                 '/guide/testing',
+                '/guide/env-mode',
                 '/guide/deployment',
               ],
             },

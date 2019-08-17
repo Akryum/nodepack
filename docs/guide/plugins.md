@@ -8,7 +8,8 @@ Each plugin has different parts:
 
 - A [service](./service.md) plugin which is executed when `@nodepack/service` is run (for example, with the `nodepack-service` command).
 - [App migrations](./app-migrations.md) that can install dependencies and modify your project code when the plugin is installed, upgraded or removed.
-- [Environment migrations](./env-migrations.md)
+- [Environment migrations](./env-migrations.md).
+- [Database migrations](./db-migrations.md).
 
 For example, when you install the official Typescript plugin, it can:
 

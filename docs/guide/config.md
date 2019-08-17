@@ -30,8 +30,6 @@ Plugins will also take advantage of this system, so they can lookup for configur
 
 ## Usage in context
 
-*Available soon...*
-
 You can retrieve a configuration in the [context](./context.md) with `context.config.someConfig`. If for example we want our `db` config:
 
 ```js
@@ -49,6 +47,14 @@ import { db } from '@nodepack/app-config'
 if (db) {
   // ...
 }
+```
+
+## Usage outside of app
+
+You can directly load the `config` built fragment of the project:
+
+```js
+const { db } = require('my-project/dist/config')
 ```
 
 ## Standard configurations
