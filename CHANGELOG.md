@@ -1,3 +1,59 @@
+# [0.4.0](https://github.com/Akryum/nodepack/compare/v0.3.2...v0.4.0) (2019-08-17)
+
+## app-config
+
+#### Bug Fixes
+
+* remove unused dependency ([72b2e49](https://github.com/Akryum/nodepack/commit/72b2e49))
+
+## app-context
+
+#### Features
+
+* app-context ([38bc632](https://github.com/Akryum/nodepack/commit/38bc632))
+
+## maintenance
+
+#### Bug Fixes
+
+* use info ([31fd538](https://github.com/Akryum/nodepack/commit/31fd538))
+
+## module
+
+#### Bug Fixes
+
+* don't throw if module is null ([9a8d2fb](https://github.com/Akryum/nodepack/commit/9a8d2fb))
+
+## plugin-typescript
+
+#### Bug Fixes
+
+* suppress ts checker info messages ([18cc1aa](https://github.com/Akryum/nodepack/commit/18cc1aa))
+
+## service
+
+#### Bug Fixes
+
+* build runtime before service command ([b27b813](https://github.com/Akryum/nodepack/commit/b27b813))
+* delete NODEPACK_ENTRIES ([f1bbb0e](https://github.com/Akryum/nodepack/commit/f1bbb0e))
+* don't build config for inspect command ([6a3c2b7](https://github.com/Akryum/nodepack/commit/6a3c2b7))
+* ejs runtime modules ([b28f5aa](https://github.com/Akryum/nodepack/commit/b28f5aa))
+* ensure config folder exists ([2f147b8](https://github.com/Akryum/nodepack/commit/2f147b8))
+* improved messages ([afa0af6](https://github.com/Akryum/nodepack/commit/afa0af6))
+* node externals in monorepos ([2619773](https://github.com/Akryum/nodepack/commit/2619773))
+* set NODEPACK_DIRNAME in service too ([2cf5ecc](https://github.com/Akryum/nodepack/commit/2cf5ecc))
+* use [@nuxt](https://github.com/nuxt)/friendly-error-webpack-plugin ([fe95e0c](https://github.com/Akryum/nodepack/commit/fe95e0c))
+* use context outside of app ([5d5ccbd](https://github.com/Akryum/nodepack/commit/5d5ccbd))
+#### Features
+
+* addRuntimeModule ([c7dcbe1](https://github.com/Akryum/nodepack/commit/c7dcbe1))
+* build config before command ([aed3760](https://github.com/Akryum/nodepack/commit/aed3760))
+* NODEPACK_ENTRIES ([7b5abcb](https://github.com/Akryum/nodepack/commit/7b5abcb))
+* NODEPACK_RAW_STATS ([0631964](https://github.com/Akryum/nodepack/commit/0631964))
+* webpack 5+fragments+runtime plugins+context ([7cd3d0e](https://github.com/Akryum/nodepack/commit/7cd3d0e))
+
+
+
 # [0.3.2](https://github.com/Akryum/nodepack/compare/v0.3.1...v0.3.2) (2019-08-05)
 
 ## app-config
