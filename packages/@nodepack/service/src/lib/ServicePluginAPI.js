@@ -5,7 +5,12 @@
 /** @typedef {import('webpack-chain')} Config */
 
 const path = require('path')
-const { matchesPluginId, info, chalk } = require('@nodepack/utils')
+const {
+  matchesPluginId,
+  info,
+  chalk,
+  getConfigFolder,
+} = require('@nodepack/utils')
 
 module.exports = class ServicePluginAPI {
   /**
@@ -177,8 +182,18 @@ module.exports = class ServicePluginAPI {
    * Add a runtime module that will be included in the app code
    */
   addRuntimeModule (targetPath) {
+    const ejs = require('ejs')
+    const fs = require('fs-extra')
     const baseDir = extractCallDir()
-    this.service.runtimeModules.push(path.resolve(baseDir, targetPath))
+    const sourceFile = path.resolve(baseDir, targetPath)
+    const destFile = path.resolve(getConfigFolder(this.getCwd()), 'temp', 'runtime-render', `${targetPath}.js`)
+    const source = fs.readFileSync(sourceFile, { encoding: 'utf8' })
+    const result = ejs.render(source, {
+      projectOptions: this.service.projectOptions,
+    })
+    fs.ensureFileSync(destFile)
+    fs.writeFileSync(destFile, result, { encoding: 'utf8' })
+    this.service.runtimeModules.push(destFile)
   }
 }
 

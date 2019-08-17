@@ -134,18 +134,6 @@ module.exports = (api, options) => {
       // @ts-ignore
       .type('javascript/auto')
 
-    // EJS templates
-    config.module
-      .rule('ejs')
-      .test(/\.ejs$/)
-      .use('ejs-loader')
-        .loader('ejs-webpack-loader')
-        .options({
-          data: options,
-        })
-        .end()
-      .type('javascript/auto')
-
     // Module
     config.module
       .set('exprContextCritical', options.externals)
