@@ -26,8 +26,8 @@ exports.terminate = async function (childProcess, cwd) {
       const result = await execa(cmd, [childProcess.pid.toString()], {
         cwd,
       })
-      if (result.error) {
-        return { success: false, error: result.error }
+      if (result.failed) {
+        return { success: false, error: result.stderr }
       }
     } catch (err) {
       return { success: false, error: err }
