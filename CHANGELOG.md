@@ -1,3 +1,19 @@
+# [0.4.4](https://github.com/Akryum/nodepack/compare/v0.4.3...v0.4.4) (2019-08-19)
+
+## app
+
+#### Features
+
+* **app:** printReady method ([69e2e4b](https://github.com/Akryum/nodepack/commit/69e2e4b))
+
+## plugin-apollo
+
+#### Features
+
+* apollo server plugin ([1adc07a](https://github.com/Akryum/nodepack/commit/1adc07a))
+
+
+
 # [0.4.3](https://github.com/Akryum/nodepack/compare/v0.4.2...v0.4.3) (2019-08-19)
 
 ## app
