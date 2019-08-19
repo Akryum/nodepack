@@ -1,9 +1,11 @@
-const { callHook } = require('@nodepack/app-context')
+const { createContext, callHook } = require('@nodepack/app-context')
 
 /**
- * @param {function} callback
+ * @param {(ctx: any) => Promise<any>} callback
  */
 exports.bootstrap = async (callback) => {
-  await callHook('bootstrap')
-  await callback()
+  const ctx = await createContext()
+  await callHook('bootstrap', ctx)
+  await callback(ctx)
+  return ctx
 }
