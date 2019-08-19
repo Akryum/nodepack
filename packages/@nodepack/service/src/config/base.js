@@ -1,5 +1,4 @@
 const path = require('path')
-const fs = require('fs-extra')
 
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
@@ -11,8 +10,6 @@ module.exports = (api, options) => {
     config
       .target('node')
       .context(api.getCwd())
-
-    fs.ensureDirSync(api.resolve('config'))
 
     // Fragments
     const fragments = {
@@ -90,6 +87,7 @@ module.exports = (api, options) => {
         .add(resolveLocal('node_modules'))
       .end()
       .alias
+        .set('@root', api.resolve('.'))
         .set('@config', api.resolve('config'))
         .set('@', api.resolve(options.srcDir || 'src'))
       .end()
