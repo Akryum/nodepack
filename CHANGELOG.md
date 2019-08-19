@@ -1,3 +1,55 @@
+# [0.4.2](https://github.com/Akryum/nodepack/compare/v0.4.1...v0.4.2) (2019-08-19)
+
+## app
+
+#### Features
+
+* app bootstrap ([6eac992](https://github.com/Akryum/nodepack/commit/6eac992))
+* bootstrap now creates a context ([517eaa7](https://github.com/Akryum/nodepack/commit/517eaa7))
+
+## app-migrator
+
+#### Bug Fixes
+
+* hasPlugin ([9433614](https://github.com/Akryum/nodepack/commit/9433614))
+#### Features
+
+* add hasPlugin ([5a7680d](https://github.com/Akryum/nodepack/commit/5a7680d))
+
+## cli
+
+#### Features
+
+* **project create:** express feature ([d0a2e82](https://github.com/Akryum/nodepack/commit/d0a2e82))
+
+## fragment
+
+#### Bug Fixes
+
+* **types:** exported members ([ac3d944](https://github.com/Akryum/nodepack/commit/ac3d944))
+
+## plugin-express
+
+#### Features
+
+* express plugin ([ebb6127](https://github.com/Akryum/nodepack/commit/ebb6127))
+
+## service
+
+#### Bug Fixes
+
+* revert runtime module ejs support ([ed3df96](https://github.com/Akryum/nodepack/commit/ed3df96))
+* **config:** don't require config folder ([f10aa85](https://github.com/Akryum/nodepack/commit/f10aa85))
+* version ([3d2f9a0](https://github.com/Akryum/nodepack/commit/3d2f9a0))
+
+## utils
+
+#### Features
+
+* resolve short official plugins ([22ca74c](https://github.com/Akryum/nodepack/commit/22ca74c))
+
+
+
 # [0.4.1](https://github.com/Akryum/nodepack/compare/v0.4.0...v0.4.1) (2019-08-17)
 
 ## plugin-typescript
