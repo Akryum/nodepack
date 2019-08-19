@@ -182,18 +182,22 @@ module.exports = class ServicePluginAPI {
    * Add a runtime module that will be included in the app code
    */
   addRuntimeModule (targetPath) {
-    const ejs = require('ejs')
-    const fs = require('fs-extra')
+    // @TODO proper ejs support
+
+    // const ejs = require('ejs')
+    // const fs = require('fs-extra')
     const baseDir = extractCallDir()
     const sourceFile = path.resolve(baseDir, targetPath)
-    const destFile = path.resolve(getConfigFolder(this.getCwd()), 'temp', 'runtime-render', `${targetPath}.js`)
-    const source = fs.readFileSync(sourceFile, { encoding: 'utf8' })
-    const result = ejs.render(source, {
-      projectOptions: this.service.projectOptions,
-    })
-    fs.ensureFileSync(destFile)
-    fs.writeFileSync(destFile, result, { encoding: 'utf8' })
-    this.service.runtimeModules.push(destFile)
+    // const destFile = path.resolve(getConfigFolder(this.getCwd()), 'temp', 'runtime-render', `${targetPath}.js`)
+    // const source = fs.readFileSync(sourceFile, { encoding: 'utf8' })
+    // const result = ejs.render(source, {
+    //   projectOptions: this.service.projectOptions,
+    // })
+    // fs.ensureFileSync(destFile)
+    // fs.writeFileSync(destFile, result, { encoding: 'utf8' })
+    // this.service.runtimeModules.push(destFile)
+
+    this.service.runtimeModules.push(sourceFile)
   }
 }
 
