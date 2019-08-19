@@ -9,7 +9,6 @@ const {
   matchesPluginId,
   info,
   chalk,
-  getConfigFolder,
 } = require('@nodepack/utils')
 
 module.exports = class ServicePluginAPI {
