@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "Utils for Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -25,6 +25,6 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-context": "^0.4.0"
+    "@nodepack/app-context": "^0.4.2"
   }
 }
