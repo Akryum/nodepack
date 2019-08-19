@@ -1,3 +1,31 @@
+# [0.4.3](https://github.com/Akryum/nodepack/compare/v0.4.2...v0.4.3) (2019-08-19)
+
+## app
+
+#### Bug Fixes
+
+* **bootstrap:** improved types + optional callback ([7e38727](https://github.com/Akryum/nodepack/commit/7e38727))
+
+## config-transformer
+
+#### Bug Fixes
+
+* extendJSConfig errors ([d276d36](https://github.com/Akryum/nodepack/commit/d276d36))
+
+## test-utils
+
+#### Bug Fixes
+
+* type errors ([07f65de](https://github.com/Akryum/nodepack/commit/07f65de))
+
+## utils
+
+#### Bug Fixes
+
+* type errors ([666437d](https://github.com/Akryum/nodepack/commit/666437d))
+
+
+
 # [0.4.2](https://github.com/Akryum/nodepack/compare/v0.4.1...v0.4.2) (2019-08-19)
 
 ## app
