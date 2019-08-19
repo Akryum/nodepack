@@ -1,0 +1,44 @@
+{
+  "name": "@nodepack/plugin-apollo",
+  "version": "0.4.2",
+  "description": "Nodepack plugin for Apollo Server (GraphQL)",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Akryum/nodepack/issues"
+  },
+  "homepage": "https://github.com/Akryum/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.js",
+  "typings": "types/index.d.ts",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "@types/express": "^4.11.1",
+    "apollo-server-express": "2.8.1",
+    "graphql-playground-middleware-express": "^1.7.12",
+    "graphql-deduplicator": "^2.0.5",
+    "lodash": "^4.17.15",
+    "mock-express-response": "^0.2.2",
+    "subscriptions-transport-ws": "^0.9.16"
+  },
+  "devDependencies": {
+  },
+  "peerDependencies": {
+    "@nodepack/app-context": "^0.4.0",
+    "@nodepack/service": "^0.4.0",
+    "@nodepack/utils": "^0.4.0",
+    "graphql": "^14.4.2"
+  },
+  "optionalDependencies": {
+    "graphql-tag": "^2.10.1"
+  }
+}

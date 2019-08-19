@@ -3,5 +3,6 @@ exports.getPromptModules = () => {
     'babel',
     'typescript',
     'express',
+    'apollo',
   ].map(file => require(`./${file}`))
 }
