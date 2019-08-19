@@ -2,6 +2,12 @@ const pluginRE = /^(@nodepack\/|nodepack-|@[\w-]+\/nodepack-)plugin-/
 const scopeRE = /^@[\w-]+\//
 const officialRE = /^@nodepack\//
 
+const officialPlugins = [
+  'babel',
+  'express',
+  'typescript',
+]
+
 /**
  * @param {string} id
  */
@@ -26,6 +32,15 @@ exports.resolvePluginId = id => {
   if (pluginRE.test(id)) {
     return id
   }
+
+  if (id === '@nodepack/service') {
+    return id
+  }
+
+  if (officialPlugins.includes(id)) {
+    return `@nodepack/plugin-${id}`
+  }
+
   // scoped short
   // e.g. @nodepack/foo, @bar/foo
   if (id.charAt(0) === '@') {
