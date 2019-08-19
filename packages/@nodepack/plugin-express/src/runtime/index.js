@@ -57,6 +57,12 @@ hook('bootstrap', async (ctx) => {
     httpServer.close()
     process.exit()
   })
+  hook('print-ready', () => {
+    // Don't print duplcates if there is a sub-server like Apollo
+    if (!ctx.server) {
+      console.log(`🚀  Server ready at http://localhost:${port}/`)
+    }
+  })
   return new Promise((resolve) => {
     httpServer.listen(port, async () => {
       await callHook('express-listen', ctx)

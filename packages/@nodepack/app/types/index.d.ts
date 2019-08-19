@@ -1,1 +1,4 @@
-export { bootstrap } from '../src/index'
+export {
+  bootstrap,
+  printReady,
+} from '../src/index'
