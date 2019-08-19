@@ -72,12 +72,10 @@ exports.createTestProject = async (cwd, projectName, preset, initGit = false) =>
     initGit ? 'init' : 'false',
   ]
 
-  const options = {
+  await execa(cliBinPath, args, {
     cwd,
     stdio: 'inherit',
-  }
-
-  await execa(cliBinPath, args, options)
+  })
 
   return {
     dir: projectRoot,
