@@ -3,7 +3,7 @@ module.exports = api => {
   api.register({
     id: 'defaultTemplate',
     title: 'Template: Render default template',
-    up: (api, options) => {
+    up: async (api, options) => {
       api.render('./templates/default')
 
       // Add scripts
@@ -12,6 +12,9 @@ module.exports = api => {
           'dev': 'nodepack-service dev',
           'build': 'nodepack-service build',
           'start': 'node ./dist/app.js',
+        },
+        dependencies: {
+          '@nodepack/app': '^0.4.2',
         },
       })
     },
