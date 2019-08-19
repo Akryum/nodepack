@@ -1,1 +1,7 @@
-export * from '../src/index'
+export {
+  ConfigHooks,
+  HookMap,
+  Hookable,
+  parallel,
+  sequence
+} from '../src/index'

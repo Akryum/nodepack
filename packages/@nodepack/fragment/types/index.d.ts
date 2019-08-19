@@ -1,1 +1,1 @@
-export * from '../src/index'
+export { loadFragment } from '../src/index'
