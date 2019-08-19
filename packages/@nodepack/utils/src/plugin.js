@@ -3,6 +3,7 @@ const scopeRE = /^@[\w-]+\//
 const officialRE = /^@nodepack\//
 
 const officialPlugins = [
+  'apollo',
   'babel',
   'express',
   'typescript',
