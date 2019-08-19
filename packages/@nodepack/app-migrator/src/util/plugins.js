@@ -15,7 +15,7 @@ exports.hasPlugin = (id, plugins, pkg) => {
     ...plugins.map(p => p.id),
     ...Object.keys(pkg.devDependencies),
     ...Object.keys(pkg.dependencies),
-  ].some(name => matchesPluginId(name, id))
+  ].some(name => matchesPluginId(id, name))
 }
 
 /**
