@@ -2,6 +2,8 @@
 /** @typedef {import('./Migrator')} Migrator */
 /** @typedef {import('./MigratorPlugin')} MigratorPlugin */
 
+const { hasPlugin } = require('../util/plugins')
+
 module.exports = class MigrationAPI {
   /**
    * @param {MigratorPlugin} plugin
@@ -31,5 +33,13 @@ module.exports = class MigrationAPI {
    */
   onComplete (cb) {
     this.migrator.completeCbs.push(cb)
+  }
+
+  /**
+   * Check if the project has a plugin installed
+   * @param {string} id Plugin id
+   */
+  hasPlugin (id) {
+    return hasPlugin(id, this.migrator.plugins, this.migrator.pkg)
   }
 }
