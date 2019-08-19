@@ -11,7 +11,9 @@ module.exports = function extendJSConfig (value, source) {
       const { node } = path
       if (
         node.left.type === 'MemberExpression' &&
+        // @ts-ignore
         node.left.object.name === 'module' &&
+        // @ts-ignore
         node.left.property.name === 'exports'
       ) {
         if (node.right.type === 'ObjectExpression') {
@@ -30,6 +32,7 @@ module.exports = function extendJSConfig (value, source) {
     recast.types.visit(ast, {
       visitVariableDeclarator ({ node }) {
         if (
+          // @ts-ignore
           node.id.name === exportsIdentifier &&
           node.init.type === 'ObjectExpression'
         ) {
@@ -45,13 +48,21 @@ module.exports = function extendJSConfig (value, source) {
     const props = valueAST.program.body[0].expression.properties
     const existingProps = node.properties
     for (const prop of props) {
+      const isUndefinedProp =
+        prop.value.type === 'Identifier' && prop.value.name === 'undefined'
+
       const existing = existingProps.findIndex(p => {
         return !p.computed && p.key.name === prop.key.name
       })
       if (existing > -1) {
         // replace
         existingProps[existing].value = prop.value
-      } else {
+
+        // remove `undefined` props
+        if (isUndefinedProp) {
+          existingProps.splice(existing, 1)
+        }
+      } else if (!isUndefinedProp) {
         // append
         existingProps.push(prop)
       }
