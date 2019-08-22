@@ -1,16 +1,16 @@
 /**
  * @param {string} file
  */
-exports.loadFragment = (file) => {
+exports.loadFragment = (file, cwd = process.cwd()) => {
   const { loadModule } = require('@nodepack/module')
   const path = require('path')
-  const cwd = process.env.NODEPACK_DIRNAME || getOutputConfig() || process.cwd()
-  const moduleFile = path.join(cwd, file)
-  return loadModule(moduleFile, cwd)
+  const outputDir = process.env.NODEPACK_DIRNAME || getOutputConfig(cwd) || process.cwd()
+  const moduleFile = path.join(outputDir, file)
+  return loadModule(moduleFile, outputDir)
 }
 
-function getOutputConfig () {
+function getOutputConfig (cwd) {
   const { readConfigFileSync } = require('./configFiles')
-  const config = readConfigFileSync(process.cwd(), 'config.json')
+  const config = readConfigFileSync(cwd, 'config.json')
   return config.output
 }

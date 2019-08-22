@@ -14,15 +14,17 @@ To set up some env migrations in your project, create a `migration/env` folder a
 // migration/env/201907282100-create-user-table.js
 
 // Migration
-exports.up = async () => {
+exports.up = async (context) => {
   // ...
 }
 
 // Rollback
-exports.down = async () => {
+exports.down = async (context) => {
   // ...
 }
 ```
+
+The migration functions gets the [context](./context.md) as argument.
 
 The migrations will be executed depending on the file name in alphabetical order. Thus it is recommended to use a timestamp as the start of the file name. For example:
 

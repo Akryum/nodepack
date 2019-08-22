@@ -17,6 +17,7 @@ const {
   getPkgCommand,
 } = require('@nodepack/utils')
 const { Hookable } = require('@nodepack/hookable')
+const { loadFragment } = require('@nodepack/fragment')
 const inquirer = require('inquirer')
 const execa = require('execa')
 
@@ -25,6 +26,8 @@ const FRAGMENTS = [
   'context',
   'runtime',
 ]
+
+const ENV_MIGRATION_FOLDER = 'migration/env'
 
 /**
  * @typedef MaintenanceHookAPI
@@ -114,6 +117,9 @@ class Maintenance {
     }
     /** @type {function[]} */
     this.completeCbs = []
+
+    this.context = null
+    this.fragmentsBuilt = false
   }
 
   async preInstall () {
@@ -131,11 +137,6 @@ class Maintenance {
     // App Migrations
     await this.runAppMigrations()
     await this.callHook('afterAppMigrations')
-
-    // Build fragments
-    if (!this.skipBuild) {
-      await this.buildFragments(FRAGMENTS)
-    }
 
     // Env Migrations
     await this.runEnvMigrations()
@@ -174,15 +175,16 @@ class Maintenance {
 
   async runEnvMigrations () {
     const { cwd } = this
-    const migrationsFolder = 'migration/env'
     const migrator = new EnvMigrator(cwd, {
-      migrationsFolder,
+      migrationsFolder: ENV_MIGRATION_FOLDER,
     })
     const { files } = await migrator.prepareUp()
     if (files.length) {
+      await this.buildFragments(FRAGMENTS)
+      await this.createContext()
       await this.shouldCommitState(`[nodepack] before env migration`)
       log(`🚀  Migrating env...`)
-      const { migrationCount } = await migrator.up()
+      const { migrationCount } = await migrator.up(this.context)
       log(`💻️  ${migrationCount} env migration${migrationCount > 1 ? 's' : ''} applied!`)
       this.results.envMigrationCount = migrationCount
       // install additional deps (injected by migrations)
@@ -261,7 +263,11 @@ class Maintenance {
    * @param {string[]} entryNames
    */
   async buildFragments (entryNames) {
+    if (this.fragmentsBuilt || this.skipBuild) return
+
     log(`🔨️  Building fragments ${chalk.blue(entryNames.join(', '))}...`)
+
+    const io = process.env.NODEPACK_DEBUG === 'true' ? 'inherit' : 'ignore'
     await execa('nodepack-service', [
       'build',
       '--silent',
@@ -273,8 +279,15 @@ class Maintenance {
         NODEPACK_NO_MAINTENANCE: 'true',
         NODEPACK_OUTPUT: '.nodepack/temp/fragments/',
       },
-      stdio: ['inherit', 'inherit', 'inherit'],
+      stdio: [io, io, 'inherit'],
     })
+    this.fragmentsBuilt = true
+  }
+
+  async createContext () {
+    if (this.context != null) return
+    const { createContext } = loadFragment('context', this.cwd)
+    this.context = await createContext()
   }
 }
 

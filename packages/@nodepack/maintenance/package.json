@@ -23,6 +23,7 @@
   "dependencies": {
     "@nodepack/app-migrator": "^0.4.3",
     "@nodepack/env-migrator": "^0.4.3",
+    "@nodepack/fragment": "^0.4.2",
     "@nodepack/hookable": "^0.4.2",
     "@nodepack/utils": "^0.4.3",
     "execa": "^2.0.4",

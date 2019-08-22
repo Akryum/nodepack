@@ -46,7 +46,7 @@ module.exports = class Migrator {
     }
   }
 
-  async up () {
+  async up (context) {
     await this.prepareUp()
 
     // Files
@@ -55,7 +55,7 @@ module.exports = class Migrator {
       if (module.up) {
         try {
           logWithSpinner('✔️', chalk.grey(module.file))
-          await module.up()
+          await module.up(context)
           stopSpinner()
           this.fileMigrationRecords.push({
             file: module.file,

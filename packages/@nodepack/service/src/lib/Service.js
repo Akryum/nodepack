@@ -273,7 +273,6 @@ module.exports = class Service {
         cwd: this.cwd,
         cliOptions: args,
         skipPreInstall: true,
-        skipBuild: ['dev', 'build', 'inspect', 'help'].includes(name),
       })
     }
 
