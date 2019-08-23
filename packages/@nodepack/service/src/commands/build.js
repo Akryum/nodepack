@@ -83,6 +83,12 @@ module.exports = (api, options) => {
       }
 
       const callback = (err, stats) => {
+        if (process.env.NODEPACK_RAW_STATS) {
+          console.log(stats.toString({
+            colors: true,
+          }))
+        }
+
         if (err) {
           onError(err)
         } else {
@@ -92,11 +98,6 @@ module.exports = (api, options) => {
               console.log('\n' + error)
             }
             onError(`Build failed with errors.`)
-            if (process.env.NODEPACK_RAW_STATS) {
-              console.log(stats.toString({
-                colors: true,
-              }))
-            }
             return
           }
 
