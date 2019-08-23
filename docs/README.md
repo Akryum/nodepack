@@ -21,7 +21,7 @@ footer: 'MIT License | Copyright © 2018-present Guillaume Chau'
   </div>
   <div class="feature">
     <h2>Integrated</h2>
-    <p>Out-of-the-box support for Babel, TypeScript, ESLint, Express, Apollo, Unit Testing, End-to-end Testing...</p>
+    <p>Out-of-the-box support for Babel, TypeScript, ESLint, Database, Express, Apollo, Unit Testing, E2E Testing...</p>
   </div>
   <div class="feature">
     <h2>Extensible</h2>
