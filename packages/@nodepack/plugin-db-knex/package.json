@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-db-knex",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Database Nodepack plugin using Knex query builder",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -29,11 +29,11 @@
     "@nodepack/service": "^0.4.0"
   },
   "optionalDependencies": {
-    "sqlite3": "^4.1.0",
-    "pg": "^7.12.1",
+    "mssql": "^5.1.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
     "oracle": "^0.4.1",
-    "mssql": "^5.1.0"
+    "pg": "^7.12.1",
+    "sqlite3": "^4.1.0"
   }
 }
