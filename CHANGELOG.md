@@ -1,3 +1,51 @@
+# [0.4.6](https://github.com/Akryum/nodepack/compare/v0.4.5...v0.4.6) (2019-08-23)
+
+## cli
+
+#### Bug Fixes
+
+* **project create:** unselected features still being included ([2e36dd3](https://github.com/Akryum/nodepack/commit/2e36dd3))
+
+## maintenance
+
+#### Bug Fixes
+
+* **fragments build:** better output errors ([24428b7](https://github.com/Akryum/nodepack/commit/24428b7))
+
+## plugin-db-knex
+
+#### Bug Fixes
+
+* **template:** comment unused import to prevent error ([e89408d](https://github.com/Akryum/nodepack/commit/e89408d))
+#### Features
+
+* warning icon ([6cd4edd](https://github.com/Akryum/nodepack/commit/6cd4edd))
+
+## plugin-db-sequelize
+
+#### Features
+
+* **plugin:** db sequelize plugin ([ed8b0cf](https://github.com/Akryum/nodepack/commit/ed8b0cf))
+
+## service
+
+#### Bug Fixes
+
+* **build:** NODEPACK_RAW_STATS should output even if no errors ([92c16c6](https://github.com/Akryum/nodepack/commit/92c16c6))
+* **dev:** NODEPACK_RAW_STATS should also output stats if there are no errors ([f5c786b](https://github.com/Akryum/nodepack/commit/f5c786b))
+* **watch:** ignore .nodepack folder ([ad4ca48](https://github.com/Akryum/nodepack/commit/ad4ca48))
+#### Features
+
+* **config:** put non-default exports on the config object ([24e5284](https://github.com/Akryum/nodepack/commit/24e5284))
+
+## utils
+
+#### Bug Fixes
+
+* **terminated:** chmod terminate.sh before run ([5bbbee4](https://github.com/Akryum/nodepack/commit/5bbbee4))
+
+
+
 # [0.4.5](https://github.com/Akryum/nodepack/compare/v0.4.4...v0.4.5) (2019-08-23)
 
 ## db-migrator
