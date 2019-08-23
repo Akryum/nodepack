@@ -22,9 +22,11 @@ module.exports = class Migrator {
    */
   constructor (cwd, {
     migrationsFolder,
+    context,
   }) {
     this.cwd = cwd
     this.migrationsFolder = migrationsFolder
+    this.context = context
     /** @type {FileMigrationRecord[]} */
     this.fileMigrationRecords = []
     this.upPrepared = false
@@ -46,7 +48,7 @@ module.exports = class Migrator {
     }
   }
 
-  async up (context) {
+  async up () {
     await this.prepareUp()
 
     // Files
@@ -55,7 +57,7 @@ module.exports = class Migrator {
       if (module.up) {
         try {
           logWithSpinner('✔️', chalk.grey(module.file))
-          await module.up(context)
+          await module.up(this.context)
           stopSpinner()
           this.fileMigrationRecords.push({
             file: module.file,

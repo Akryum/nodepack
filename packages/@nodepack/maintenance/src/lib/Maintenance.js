@@ -3,6 +3,7 @@
 
 const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = require('@nodepack/app-migrator')
 const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
+const { Migrator: DbMigrator } = require('@nodepack/db-migrator')
 const {
   log,
   error,
@@ -28,6 +29,7 @@ const FRAGMENTS = [
 ]
 
 const ENV_MIGRATION_FOLDER = 'migration/env'
+const DB_MIGRATION_FOLDER = 'migration/db'
 
 /**
  * @typedef MaintenanceHookAPI
@@ -67,6 +69,7 @@ const ENV_MIGRATION_FOLDER = 'migration/env'
  * @prop {AppMigrationAllOptions?} appMigrationAllOptions
  * @prop {number} appMigrationCount
  * @prop {number} envMigrationCount
+ * @prop {number} dbMigrationCount
  */
 
 /**
@@ -114,6 +117,7 @@ class Maintenance {
       appMigrationAllOptions: null,
       appMigrationCount: 0,
       envMigrationCount: 0,
+      dbMigrationCount: 0,
     }
     /** @type {function[]} */
     this.completeCbs = []
@@ -138,9 +142,17 @@ class Maintenance {
     await this.runAppMigrations()
     await this.callHook('afterAppMigrations')
 
+    // Prepare context
+    await this.buildFragments(FRAGMENTS)
+    await this.createContext()
+
     // Env Migrations
     await this.runEnvMigrations()
     await this.callHook('afterEnvMigrations')
+
+    // Database Migrations
+    await this.runDbMigrations()
+    await this.callHook('afterDbMigrations')
 
     log(`🔧  Maintenance complete!`)
 
@@ -174,22 +186,39 @@ class Maintenance {
   }
 
   async runEnvMigrations () {
-    const { cwd } = this
+    const { cwd, context } = this
     const migrator = new EnvMigrator(cwd, {
       migrationsFolder: ENV_MIGRATION_FOLDER,
+      context,
     })
     const { files } = await migrator.prepareUp()
     if (files.length) {
-      await this.buildFragments(FRAGMENTS)
-      await this.createContext()
       await this.shouldCommitState(`[nodepack] before env migration`)
       log(`🚀  Migrating env...`)
-      const { migrationCount } = await migrator.up(this.context)
+      const { migrationCount } = await migrator.up()
       log(`💻️  ${migrationCount} env migration${migrationCount > 1 ? 's' : ''} applied!`)
       this.results.envMigrationCount = migrationCount
       // install additional deps (injected by migrations)
       await this.installDeps(`📦  Installing additional dependencies...`)
       await this.shouldCommitState(`[nodepack] after env migration`)
+    }
+  }
+
+  async runDbMigrations () {
+    const { cwd, context } = this
+    if (!context.readDbMigrationRecords) return
+    const migrator = new DbMigrator(cwd, {
+      migrationsFolder: DB_MIGRATION_FOLDER,
+      context,
+    })
+    const { files } = await migrator.prepareUp()
+    if (files.length) {
+      await this.shouldCommitState(`[nodepack] before db migration`)
+      log(`🚀  Migrating db...`)
+      const { migrationCount } = await migrator.up()
+      log(`🗄️  ${migrationCount} db migration${migrationCount > 1 ? 's' : ''} applied!`)
+      this.results.dbMigrationCount = migrationCount
+      await this.shouldCommitState(`[nodepack] after db migration`)
     }
   }
 

@@ -1,7 +1,7 @@
 {
-  "name": "@nodepack/maintenance",
-  "version": "0.4.3",
-  "description": "Maintenance utils for Nodepack apps",
+  "name": "@nodepack/db-migrator",
+  "version": "0.4.4",
+  "description": "Database Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -16,22 +16,15 @@
     "access": "public"
   },
   "main": "src/index.js",
+  "typings": "types/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-migrator": "^0.4.3",
-    "@nodepack/env-migrator": "^0.4.3",
-    "@nodepack/db-migrator": "^0.4.4",
-    "@nodepack/fragment": "^0.4.2",
-    "@nodepack/hookable": "^0.4.2",
-    "@nodepack/utils": "^0.4.3",
-    "execa": "^2.0.4",
-    "fs-extra": "^8.1.0",
-    "inquirer": "^6.5.1"
+    "@nodepack/env-migrator": "^0.4.4"
   },
   "devDependencies": {
-    "@types/inquirer": "^0.0.43"
+    "@nodepack/service": "^0.4.4"
   }
 }
