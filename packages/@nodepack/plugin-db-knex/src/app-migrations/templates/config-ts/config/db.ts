@@ -1,9 +1,9 @@
-import { Config } from 'knex'
+/* import { Config } from 'knex'
 
 // Knex configuration object
 // See https://knexjs.org/#Installation-client
 
-/* export default {
+export default {
   client: 'mysql',
   connection: {
     host: '127.0.0.1',
