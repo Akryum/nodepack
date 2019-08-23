@@ -192,7 +192,10 @@ module.exports = (api, options) => {
       .plugin('define')
         // @ts-ignore
         .use(require('webpack/lib/DefinePlugin'), [
-          resolveClientEnv(options),
+          {
+            ...resolveClientEnv(options),
+            'process.env.NODEPACK_ROOT': JSON.stringify(api.getCwd()),
+          },
         ])
 
     // Others
