@@ -1,1 +1,5 @@
-# nodepack-plugin-babel
+# Babel plugin for Nodepack
+
+```
+nodepack add babel
+```
