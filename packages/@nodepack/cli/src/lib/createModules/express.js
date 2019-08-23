@@ -9,7 +9,9 @@ module.exports = api => {
   })
 
   api.onPromptComplete((answers, preset) => {
-    // @ts-ignore
-    preset.plugins['@nodepack/plugin-express'] = ''
+    if (answers.features.includes('express')) {
+      // @ts-ignore
+      preset.plugins['@nodepack/plugin-express'] = ''
+    }
   })
 }

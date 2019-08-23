@@ -9,7 +9,9 @@ module.exports = api => {
   })
 
   api.onPromptComplete((answers, preset) => {
-    // @ts-ignore
-    preset.plugins['@nodepack/plugin-apollo'] = ''
+    if (answers.features.includes('apollo')) {
+      // @ts-ignore
+      preset.plugins['@nodepack/plugin-apollo'] = ''
+    }
   })
 }

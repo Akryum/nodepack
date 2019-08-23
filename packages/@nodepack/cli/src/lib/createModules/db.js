@@ -31,7 +31,9 @@ module.exports = api => {
   })
 
   api.onPromptComplete((answers, preset) => {
-    // @ts-ignore
-    preset.plugins[answers.dbPlugin] = ''
+    if (answers.features.includes('db')) {
+      // @ts-ignore
+      preset.plugins[answers.dbPlugin] = ''
+    }
   })
 }
