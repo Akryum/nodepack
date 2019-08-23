@@ -3,6 +3,10 @@ const DB_PLUGINS = [
     value: '@nodepack/plugin-db-knex',
     name: 'Knex (Query Builder)',
   },
+  {
+    value: '@nodepack/plugin-db-sequelize',
+    name: 'Sequelize (ORM)',
+  },
 ]
 
 /** @type {import('../ProjectCreateJob').CreateModule} */

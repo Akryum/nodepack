@@ -30,7 +30,7 @@ The migrations will be executed depending on the file name in alphabetical order
 
 Migrations will be applied automatically during any [Maintenance](./maintenance.md).
 
-See an [example migration with Knex](./database.md#database-migrations).
+See an [example migration with Knex](./database.md#knex-database-migrations).
 
 ## Rollbacks
 
