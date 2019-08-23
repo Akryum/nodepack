@@ -296,21 +296,34 @@ class Maintenance {
 
     log(`🔨️  Building fragments ${chalk.blue(entryNames.join(', '))}...`)
 
-    const io = process.env.NODEPACK_DEBUG === 'true' ? 'inherit' : 'ignore'
-    await execa('nodepack-service', [
-      'build',
-      '--silent',
-      '--no-autoNodeEnv',
-    ], {
-      cwd: this.cwd,
-      env: {
-        NODEPACK_ENTRIES: entryNames.join(','),
-        NODEPACK_NO_MAINTENANCE: 'true',
-        NODEPACK_OUTPUT: '.nodepack/temp/fragments/',
-      },
-      stdio: [io, io, 'inherit'],
-    })
-    this.fragmentsBuilt = true
+    try {
+      const io = process.env.NODEPACK_DEBUG === 'true' ? 'inherit' : 'ignore'
+      const result = await execa('nodepack-service', [
+        'build',
+        '--silent',
+        '--no-autoNodeEnv',
+      ], {
+        cwd: this.cwd,
+        env: {
+          NODEPACK_ENTRIES: entryNames.join(','),
+          NODEPACK_NO_MAINTENANCE: 'true',
+          NODEPACK_OUTPUT: '.nodepack/temp/fragments/',
+          NODEPACK_RAW_STATS: 'true',
+        },
+        stdio: [io, io, 'inherit'],
+        shell: false,
+      })
+      this.fragmentsBuilt = true
+      if (result.failed) {
+        console.log(result.all)
+        throw new Error(`Fragment build failed`)
+      }
+    } catch (e) {
+      if (e.failed) {
+        console.log(e.all)
+      }
+      throw e
+    }
   }
 
   async createContext () {
