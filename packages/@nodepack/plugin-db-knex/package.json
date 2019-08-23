@@ -1,0 +1,34 @@
+{
+  "name": "@nodepack/plugin-db-knex",
+  "version": "0.4.4",
+  "description": "Database Nodepack plugin using Knex query builder",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Akryum/nodepack/issues"
+  },
+  "homepage": "https://github.com/Akryum/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.js",
+  "typings": "types/index.d.ts",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "knex": "^0.19.2"
+  },
+  "peerDependencies": {
+    "@nodepack/app-context": "^0.4.0",
+    "@nodepack/service": "^0.4.0"
+  },
+  "optionalDependencies": {
+    "sqlite3": "^4.1.0"
+  }
+}
