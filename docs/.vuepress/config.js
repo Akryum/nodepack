@@ -81,6 +81,7 @@ module.exports = {
                 '/guide/config',
                 '/guide/context',
                 '/guide/maintenance',
+                '/guide/database',
                 '/guide/testing',
                 '/guide/env-mode',
                 '/guide/deployment',
