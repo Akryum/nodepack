@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-db-sequelize",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "Database Nodepack plugin using Sequelize ORM",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -22,16 +22,16 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "sequelize": "^5.13.1",
-    "case": "^1.6.2"
+    "case": "^1.6.2",
+    "sequelize": "^5.13.1"
   },
   "peerDependencies": {
     "@nodepack/app-context": "^0.4.0",
     "@nodepack/service": "^0.4.0"
   },
   "optionalDependencies": {
-    "mysql2": "^1.6.5",
     "mariadb": "^2.1.0",
+    "mysql2": "^1.6.5",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "sqlite3": "^4.1.0",
