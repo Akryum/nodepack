@@ -1,7 +1,7 @@
 import { hook, callHook } from '@nodepack/app-context'
 import { loadSchema } from './schema'
 import { makeExecutableSchema, ApolloServer } from 'apollo-server-express'
-import MockExpressResponse from 'mock-express-response'
+import MockExpressResponse from '@akryum/mock-express-response'
 import expressPlayground from 'graphql-playground-middleware-express'
 import { getApolloConfig, printReady } from './server'
 
