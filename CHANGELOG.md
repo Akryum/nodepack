@@ -1,3 +1,45 @@
+# [0.4.5](https://github.com/Akryum/nodepack/compare/v0.4.4...v0.4.5) (2019-08-23)
+
+## db-migrator
+
+#### Features
+
+* db migrations ([4b76719](https://github.com/Akryum/nodepack/commit/4b76719))
+
+## maintenance
+
+#### Features
+
+* **env migration:** context passed as argument ([9eefdc9](https://github.com/Akryum/nodepack/commit/9eefdc9))
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* use forked mock-express-response ([7a8cb93](https://github.com/Akryum/nodepack/commit/7a8cb93))
+
+## plugin-db-knex
+
+#### Features
+
+* add more db drivers in deps ([c16b3e1](https://github.com/Akryum/nodepack/commit/c16b3e1))
+* plugin db-knex ([9da77d0](https://github.com/Akryum/nodepack/commit/9da77d0))
+
+## service
+
+#### Features
+
+* **dev:** debounce app restart ([85be3f7](https://github.com/Akryum/nodepack/commit/85be3f7))
+* **env:** process.env.NODEPACK_ROOT which define the project root path ([0208c32](https://github.com/Akryum/nodepack/commit/0208c32))
+
+## utils
+
+#### Bug Fixes
+
+* add apollo as official plugin ([3d23c2e](https://github.com/Akryum/nodepack/commit/3d23c2e))
+
+
+
 # [0.4.4](https://github.com/Akryum/nodepack/compare/v0.4.3...v0.4.4) (2019-08-19)
 
 ## app
