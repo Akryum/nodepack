@@ -9,6 +9,6 @@ hook('create', async (ctx) => {
     ctx.readDbMigrationRecords = () => readMigrationRecords(ctx)
     ctx.writeDbMigrationRecords = (data) => writeMigrationRecords(ctx, data)
   } else {
-    console.warn('No `db` configuration found. Create a `config/db.js` file that exports default a knex configuration object.')
+    console.warn('⚠️ No `db` configuration found. Create a `config/db.js` file that exports default a knex configuration object.')
   }
 })
