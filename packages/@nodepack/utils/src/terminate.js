@@ -1,5 +1,6 @@
 const execa = require('execa')
 const path = require('path')
+const fs = require('fs-extra')
 const {
   isWindows,
   isLinux,
@@ -23,6 +24,7 @@ exports.terminate = async function (childProcess, cwd) {
   } else if (isLinux || isMacintosh) {
     try {
       const cmd = path.resolve(__dirname, './terminate.sh')
+      await fs.chmod(cmd, 0o777)
       const result = await execa(cmd, [childProcess.pid.toString()], {
         cwd,
       })
