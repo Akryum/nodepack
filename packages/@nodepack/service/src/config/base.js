@@ -214,5 +214,12 @@ module.exports = (api, options) => {
         },
       },
     })
+    config.watchOptions({
+      ignored: [
+        '**/.git',
+        '**/.nodepack',
+        '**/temp',
+      ],
+    })
   })
 }
