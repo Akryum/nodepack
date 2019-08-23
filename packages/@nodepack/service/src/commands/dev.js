@@ -14,6 +14,7 @@ module.exports = (api, options) => {
     const path = require('path')
     const { info, error, chalk, terminate } = require('@nodepack/utils')
     const compilerInstance = require('../util/compilerInstance')
+    const debounce = require('lodash/debounce')
 
     info(chalk.blue('Building for development...'))
 
@@ -59,7 +60,7 @@ module.exports = (api, options) => {
 
     compiler.watch(
       webpackConfig.watchOptions,
-      async (err, stats) => {
+      debounce(async (err, stats) => {
         if (err) {
           error(err)
         } else {
@@ -117,7 +118,7 @@ module.exports = (api, options) => {
             })
           }
         }
-      }
+      }, 500)
     )
 
     async function terminateApp () {
