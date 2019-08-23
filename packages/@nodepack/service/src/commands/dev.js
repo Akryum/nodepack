@@ -70,13 +70,14 @@ module.exports = (api, options) => {
             await waitForFreePort(parseInt(moreEnv.PORT))
           }
 
+          if (process.env.NODEPACK_RAW_STATS) {
+            console.log(stats.toString({
+              colors: true,
+            }))
+          }
+
           if (stats.hasErrors()) {
             error(`Build failed with errors.`)
-            if (process.env.NODEPACK_RAW_STATS) {
-              console.log(stats.toString({
-                colors: true,
-              }))
-            }
           } else {
             if (child) {
               info(chalk.blue('App restarting...'))
