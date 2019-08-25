@@ -27,7 +27,7 @@ export async function getApolloConfig ({
       reqCtx.res = context.res
       reqCtx.connection = context.connection
       reqCtx.pubsub = pubsub
-      await callHook('apollo-request', reqCtx)
+      await callHook('apolloRequest', reqCtx)
       return reqCtx
     },
     tracing: true,

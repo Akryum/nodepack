@@ -13,5 +13,5 @@ exports.bootstrap = async (callback = null) => {
 }
 
 exports.printReady = async () => {
-  await callHook('print-ready')
+  await callHook('printReady')
 }

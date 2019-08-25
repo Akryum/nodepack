@@ -5,14 +5,14 @@ import MockExpressResponse from '@akryum/mock-express-response'
 import expressPlayground from 'graphql-playground-middleware-express'
 import { getApolloConfig, printReady } from './server'
 
-hook('express-http', async (ctx) => {
+hook('expressHttp', async (ctx) => {
   const { config, express: app, httpServer } = ctx
   const apolloConfig = config.apollo || {}
 
   // Load schema
   const fullSchema = ctx.schema = await loadSchema(ctx)
 
-  await callHook('apollo-schema', ctx)
+  await callHook('apolloSchema', ctx)
 
   const localSchema = makeExecutableSchema({
     typeDefs: fullSchema.typeDefs,
@@ -59,11 +59,11 @@ hook('express-http', async (ctx) => {
   server.installSubscriptionHandlers(httpServer)
 
   // Listen hook
-  hook('express-listen', async (ctx) => {
-    await callHook('apollo-listen', ctx)
+  hook('expressListen', async (ctx) => {
+    await callHook('apolloListen', ctx)
   })
 
-  hook('print-ready', () => {
+  hook('printReady', () => {
     printReady(ctx)
   })
 })

@@ -19,7 +19,7 @@ hook('bootstrap', async (ctx) => {
   app.set('trust proxy', 'loopback')
 
   // Create hook
-  await callHook('express-create', ctx)
+  await callHook('expressCreate', ctx)
 
   // Basic HTTP password (useful for protected environments)
   await password(app, ctx)
@@ -27,14 +27,14 @@ hook('bootstrap', async (ctx) => {
   // CORS
   if ('cors' in ctx.config) {
     app.use(cors(ctx.config.cors))
-    await callHook('express-cors', ctx)
+    await callHook('expressCors', ctx)
   }
 
   // Cookies
   app.use(cookieParser())
 
   // Setup user auth hook
-  await callHook('express-auth', ctx)
+  await callHook('expressAuth', ctx)
 
   // Request context
   app.use(async (req, res, next) => {
@@ -42,7 +42,7 @@ hook('bootstrap', async (ctx) => {
     req.ctx = res.ctx = reqCtx
     reqCtx.req = req
     reqCtx.res = res
-    await callHook('express-request', reqCtx)
+    await callHook('expressRequest', reqCtx)
     next()
   })
 
@@ -51,13 +51,13 @@ hook('bootstrap', async (ctx) => {
 
   // HTTP
   const httpServer = ctx.httpServer = http.createServer(app)
-  await callHook('express-http', ctx)
+  await callHook('expressHttp', ctx)
   const port = ctx.port = process.env.PORT
   process.on('SIGINT', () => {
     httpServer.close()
     process.exit()
   })
-  hook('print-ready', () => {
+  hook('printReady', () => {
     // Don't print duplcates if there is a sub-server like Apollo
     if (!ctx.server) {
       console.log(`🚀  Server ready at http://localhost:${port}/`)
@@ -65,7 +65,7 @@ hook('bootstrap', async (ctx) => {
   })
   return new Promise((resolve) => {
     httpServer.listen(port, async () => {
-      await callHook('express-listen', ctx)
+      await callHook('expressListen', ctx)
       resolve()
     })
   })
