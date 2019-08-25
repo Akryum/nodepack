@@ -14,3 +14,9 @@ exports.createContext = async function () {
 
 exports.hook = hooks.hook
 exports.callHook = hooks.callHook
+
+exports.callHookWithPayload = async (hookName, ctx, payload, ...args) => {
+  ctx[hookName] = payload
+  await exports.callHook(hookName, ctx, payload, ...args)
+  return ctx[hookName]
+}
