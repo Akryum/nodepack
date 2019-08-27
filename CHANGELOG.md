@@ -1,3 +1,43 @@
+# [0.4.7](https://github.com/Akryum/nodepack/compare/v0.4.6...v0.4.7) (2019-08-27)
+
+## app-context
+
+#### Features
+
+* callHookWithPayload ([81a6a29](https://github.com/Akryum/nodepack/commit/81a6a29))
+
+## app-migrator
+
+#### Bug Fixes
+
+* don't render `.ejs` files in a migration operation ([1619ffd](https://github.com/Akryum/nodepack/commit/1619ffd))
+
+## cli
+
+#### Features
+
+* passport create module ([d573995](https://github.com/Akryum/nodepack/commit/d573995))
+
+## plugin-express
+
+#### Features
+
+* Express EJS templates/views ([c022866](https://github.com/Akryum/nodepack/commit/c022866))
+
+## plugin-passport
+
+#### Features
+
+* passport plugin ([d7a9cb9](https://github.com/Akryum/nodepack/commit/d7a9cb9))
+
+## utils
+
+#### Bug Fixes
+
+* update official plugins list ([14ce0ca](https://github.com/Akryum/nodepack/commit/14ce0ca))
+
+
+
 # [0.4.6](https://github.com/Akryum/nodepack/compare/v0.4.5...v0.4.6) (2019-08-23)
 
 ## cli
