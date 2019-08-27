@@ -184,7 +184,12 @@ module.exports = class MigrationOperationAPI {
             return filename
           }).join('/')
           const sourcePath = path.resolve(source, rawPath)
-          const content = renderFile(sourcePath, data, ejsOptions)
+          let content
+          if (path.extname(sourcePath) !== '.ejs') {
+            content = renderFile(sourcePath, data, ejsOptions)
+          } else {
+            content = fs.readFileSync(sourcePath, { encoding: 'utf8' })
+          }
           // only set file if it's not all whitespace, or is a Buffer (binary files)
           if (Buffer.isBuffer(content) || /[^\s]/.test(content)) {
             this.migrationOperation.writeFile(targetPath, content, files)
