@@ -5,7 +5,10 @@ const officialRE = /^@nodepack\//
 const officialPlugins = [
   'apollo',
   'babel',
+  'db-knex',
+  'db-sequelize',
   'express',
+  'passport',
   'typescript',
 ]
 
