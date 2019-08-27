@@ -5,5 +5,6 @@ exports.getPromptModules = () => {
     'express',
     'apollo',
     'db',
+    'passport',
   ].map(file => require(`./${file}`))
 }
