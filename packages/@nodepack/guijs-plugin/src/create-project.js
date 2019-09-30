@@ -62,6 +62,7 @@ exports.createProject = async function ({
   ], {
     cwd,
     stdio: ['inherit', 'pipe', 'inherit'],
+    preferLocal: true,
   })
 
   const onData = buffer => {

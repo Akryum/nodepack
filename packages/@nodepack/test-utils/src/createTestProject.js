@@ -57,7 +57,10 @@ exports.createTestProject = async (cwd, projectName, preset, initGit = false) =>
       // appveyor has problem with paths sometimes
       command = require.resolve('@nodepack/service/src/bin/nodepack-service')
     }
-    return execa(command, args, { cwd: projectRoot })
+    return execa(command, args, {
+      cwd: projectRoot,
+      preferLocal: true,
+    })
   }
 
   const cliBinPath = require.resolve('@nodepack/cli/src/bin/nodepack')
@@ -75,6 +78,7 @@ exports.createTestProject = async (cwd, projectName, preset, initGit = false) =>
   await execa(cliBinPath, args, {
     cwd,
     stdio: 'inherit',
+    preferLocal: true,
   })
 
   return {

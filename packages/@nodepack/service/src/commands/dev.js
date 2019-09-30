@@ -97,7 +97,6 @@ module.exports = (api, options) => {
             ], {
               stdio: [process.stdin, process.stdout, process.stderr],
               cwd: api.getCwd(),
-              shell: false,
               env: moreEnv,
               detached: true,
             })

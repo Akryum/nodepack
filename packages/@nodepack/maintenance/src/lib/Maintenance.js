@@ -311,7 +311,7 @@ class Maintenance {
           NODEPACK_RAW_STATS: 'true',
         },
         stdio: [io, io, 'inherit'],
-        shell: false,
+        preferLocal: true,
       })
       this.fragmentsBuilt = true
       if (result.failed) {

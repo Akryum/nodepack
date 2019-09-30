@@ -11,10 +11,6 @@ function start () {
     ...process.argv.slice(2),
   ], {
     stdio: [process.stdin, process.stdout, process.stderr, 'ipc'],
-    cwd: process.cwd(),
-    cleanup: true,
-    shell: false,
-    env: process.env,
   })
 
   child.on('message', message => {
