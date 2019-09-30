@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/maintenance",
-  "version": "0.4.9",
+  "version": "0.4.11",
   "description": "Maintenance utils for Nodepack apps",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -21,9 +21,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-migrator": "^0.4.9",
-    "@nodepack/db-migrator": "^0.4.9",
-    "@nodepack/env-migrator": "^0.4.9",
+    "@nodepack/app-migrator": "^0.4.11",
+    "@nodepack/db-migrator": "^0.4.11",
+    "@nodepack/env-migrator": "^0.4.11",
     "@nodepack/fragment": "^0.4.5",
     "@nodepack/hookable": "^0.4.2",
     "@nodepack/utils": "^0.4.9",
