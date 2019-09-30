@@ -1,3 +1,13 @@
+# [0.4.12](https://github.com/Akryum/nodepack/compare/v0.4.11...v0.4.12) (2019-09-30)
+
+## app
+
+#### Bug Fixes
+
+* catch errors in app bootstrap ([43d547a](https://github.com/Akryum/nodepack/commit/43d547a))
+
+
+
 # [0.4.11](https://github.com/Akryum/nodepack/compare/v0.4.10...v0.4.11) (2019-09-30)
 
 ## service
