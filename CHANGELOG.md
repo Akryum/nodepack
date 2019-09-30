@@ -1,3 +1,19 @@
+# [0.4.10](https://github.com/Akryum/nodepack/compare/v0.4.9...v0.4.10) (2019-09-30)
+
+## cli
+
+#### Bug Fixes
+
+* nodepack xxxx command not finding local bins ([f118592](https://github.com/Akryum/nodepack/commit/f118592))
+
+## service
+
+#### Bug Fixes
+
+* prevent reload loops by excluding additional folders from watch ([fcbb8d4](https://github.com/Akryum/nodepack/commit/fcbb8d4))
+
+
+
 # [0.4.9](https://github.com/Akryum/nodepack/compare/v0.4.8...v0.4.9) (2019-09-30)
 
 ## utils
