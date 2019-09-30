@@ -1,3 +1,13 @@
+# [0.4.8](https://github.com/Akryum/nodepack/compare/v0.4.7...v0.4.8) (2019-09-30)
+
+## utils
+
+#### Bug Fixes
+
+* shouldn't init git if already in git repository ([6680bea](https://github.com/Akryum/nodepack/commit/6680bea))
+
+
+
 # [0.4.7](https://github.com/Akryum/nodepack/compare/v0.4.6...v0.4.7) (2019-08-27)
 
 ## app-context
