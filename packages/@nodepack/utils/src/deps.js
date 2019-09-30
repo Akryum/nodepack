@@ -5,9 +5,7 @@
  * @prop {string?} latest Latest version from registry (with 'latest' tag)
  */
 
-const { default: chalk } = require('chalk')
 const execa = require('execa')
-const readline = require('readline')
 const registries = require('./registries')
 const shouldUseTaobao = require('./shouldUseTaobao')
 const { request } = require('./request')
@@ -24,26 +22,6 @@ const metadataCache = new LRU({
   max: 200,
   maxAge: 3 * 60 * 1000,
 })
-
-function toStartOfLine (stream) {
-  if (!chalk.supportsColor) {
-    stream.write('\r')
-    return
-  }
-  readline.cursorTo(stream, 0)
-}
-
-function renderProgressBar (curr, total) {
-  const ratio = Math.min(Math.max(curr / total, 0), 1)
-  const bar = ` ${curr}/${total}`
-  const availableSpace = Math.max(0, (process.stderr.columns || 100) - bar.length - 3)
-  const width = Math.min(total, availableSpace)
-  const completeLength = Math.round(width * ratio)
-  const complete = `#`.repeat(completeLength)
-  const incomplete = `-`.repeat(width - completeLength)
-  toStartOfLine(process.stderr)
-  process.stderr.write(`[${complete}${incomplete}]${bar}`)
-}
 
 async function addRegistryToArgs (command, args, cliRegistry) {
   const altRegistry = (
@@ -76,29 +54,8 @@ function executeCommand (command, args, targetDir) {
 
     const child = execa(command, args, {
       cwd: targetDir,
-      stdio: ['inherit', apiMode ? 'pipe' : 'inherit', !apiMode && command === 'yarn' ? 'pipe' : 'inherit'],
+      stdio: ['inherit', 'inherit', 'inherit'],
     })
-
-    // filter out unwanted yarn output
-    if (command === 'yarn') {
-      child.stderr.on('data', buf => {
-        const str = buf.toString()
-        if (/warning/.test(str)) {
-          return
-        }
-
-        // progress bar
-        const progressBarMatch = str.match(/\[.*\] (\d+)\/(\d+)/)
-        if (progressBarMatch) {
-          // since yarn is in a child process, it's unable to get the width of
-          // the terminal. reimplement the progress bar ourselves!
-          renderProgressBar(progressBarMatch[1], progressBarMatch[2])
-          return
-        }
-
-        process.stderr.write(buf)
-      })
-    }
 
     child.on('close', code => {
       if (code !== 0) {
