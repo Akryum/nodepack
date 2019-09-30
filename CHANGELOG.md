@@ -1,3 +1,13 @@
+# [0.4.11](https://github.com/Akryum/nodepack/compare/v0.4.10...v0.4.11) (2019-09-30)
+
+## service
+
+#### Bug Fixes
+
+* **execa:** use preferLocal ([8b74d92](https://github.com/Akryum/nodepack/commit/8b74d92))
+
+
+
 # [0.4.10](https://github.com/Akryum/nodepack/compare/v0.4.9...v0.4.10) (2019-09-30)
 
 ## cli
