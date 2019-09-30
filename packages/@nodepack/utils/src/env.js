@@ -79,7 +79,7 @@ exports.isGitInstalled = () => {
   }
 }
 
-exports.useGit = (cwd) => {
+exports.isFolderUsingGit = (cwd) => {
   if (_gitProjects.has(cwd)) {
     return _gitProjects.get(cwd)
   }

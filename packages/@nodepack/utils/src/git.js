@@ -1,4 +1,4 @@
-const { isGitInstalled, useGit } = require('./env')
+const { isGitInstalled, isFolderUsingGit } = require('./env')
 const { run } = require('./run')
 
 /**
@@ -45,7 +45,7 @@ exports.shouldUseGit = async function (cwd, cliOptions) {
   if (cliOptions.git === false || cliOptions.git === 'false') {
     return false
   }
-  return useGit(cwd)
+  return !isFolderUsingGit(cwd)
 }
 
 /**
