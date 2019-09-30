@@ -219,6 +219,10 @@ module.exports = (api, options) => {
         '**/.git',
         '**/.nodepack',
         '**/temp',
+        // Cache-loader
+        '**/node_modules/.cache',
+        // Prevent reload because of `chmod`
+        '**/node_modules/@nodepack',
       ],
     })
   })
