@@ -284,7 +284,7 @@ function exec (command, args) {
     stdio: [process.stdin, process.stdout, process.stderr],
     cwd: process.cwd(),
     shell: false,
-    env: process.env,
+    preferLocal: true,
     // We will manually kill all descendents of the process
     // See: https://github.com/sindresorhus/execa/issues/96
     detached: true,
