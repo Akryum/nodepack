@@ -1,3 +1,13 @@
+# [0.4.17](https://github.com/Akryum/nodepack/compare/v0.4.16...v0.4.17) (2019-10-01)
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* apollo config ([39d8f88](https://github.com/Akryum/nodepack/commit/39d8f88))
+
+
+
 # [0.4.16](https://github.com/Akryum/nodepack/compare/v0.4.15...v0.4.16) (2019-10-01)
 
 ## plugin-apollo
