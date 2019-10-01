@@ -115,27 +115,41 @@ module.exports = (api, options) => {
                 }
               }
               terminated = true
+              terminating = null
             })
           }
         }
       }, 500)
     )
 
+    /** @type {Promise} */
+    let terminatePromise
+
     async function terminateApp () {
       if (child && !terminated && terminating !== child) {
         terminating = child
-        try {
-          const result = await terminate(child, api.getCwd())
-          if (result.error) {
-            throw result.error
-          }
-          child.kill('SIGINT')
-          return true
-        } catch (e) {
-          error(`Couldn't terminate process ${child.pid}: ${e}`)
-        }
+        terminatePromise = new Promise(async (resolve) => {
+          resolve(await killChild())
+        })
+        return terminatePromise
+      } else if (terminating) {
+        return terminatePromise
+      } else {
+        return terminated
       }
-      return terminated
+    }
+
+    async function killChild () {
+      try {
+        const result = await terminate(child, api.getCwd())
+        if (result.error) {
+          throw result.error
+        }
+        child.kill('SIGINT')
+        return true
+      } catch (e) {
+        error(`Couldn't terminate process ${child.pid}: ${e}`)
+      }
     }
 
     const onExit = async () => {
