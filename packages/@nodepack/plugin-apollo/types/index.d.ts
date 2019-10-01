@@ -23,4 +23,5 @@ export interface ApolloContext {
 
 export interface ApolloConfig extends Config {
   path: string
+  subscriptionsPath: string
 }
