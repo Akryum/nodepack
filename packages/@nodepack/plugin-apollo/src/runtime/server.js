@@ -33,7 +33,7 @@ export async function getApolloConfig ({
     tracing: true,
     introspection: true,
     subscriptions: {
-      path: '/subscriptions',
+      path: apolloConfig.apolloServerOptions.subscriptionsPath || '/subscriptions',
       /**
        * @param {any} connection
        */

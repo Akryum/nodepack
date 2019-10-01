@@ -1,5 +1,5 @@
 import { DocumentNode } from 'graphql'
-import { IResolvers, PubSubEngine, ApolloServer } from 'apollo-server-express'
+import { IResolvers, PubSubEngine, ApolloServer, Config } from 'apollo-server-express'
 import { ExecutionParams } from 'subscriptions-transport-ws'
 import { Request, Response } from 'express'
 
@@ -19,4 +19,8 @@ export interface ApolloContext {
   pubsub: PubSubEngine
   user: any
   server: ApolloServer
+}
+
+export interface ApolloConfig extends Config {
+  path: string
 }
