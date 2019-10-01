@@ -1,3 +1,13 @@
+# [0.4.15](https://github.com/Akryum/nodepack/compare/v0.4.14...v0.4.15) (2019-10-01)
+
+## plugin-apollo
+
+#### Features
+
+* **apollo:** support defining paths ([11bb48f](https://github.com/Akryum/nodepack/commit/11bb48f))
+
+
+
 # [0.4.14](https://github.com/Akryum/nodepack/compare/v0.4.13...v0.4.14) (2019-10-01)
 
 ## maintenance
