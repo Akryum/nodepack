@@ -21,7 +21,9 @@ export interface ApolloContext {
   server: ApolloServer
 }
 
-export interface ApolloConfig extends Config {
+export interface ApolloConfig {
   path: string
   subscriptionsPath: string
+  playground: boolean | string
+  apolloServerOptions: Config
 }
