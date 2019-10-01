@@ -24,7 +24,7 @@
   "dependencies": {
     "@akryum/mock-express-response": "^0.2.3",
     "@types/express": "^4.11.1",
-    "apollo-server-express": "2.8.1",
+    "apollo-server-express": "2.9.4",
     "graphql-deduplicator": "^2.0.5",
     "graphql-playground-middleware-express": "^1.7.12",
     "lodash": "^4.17.15",
