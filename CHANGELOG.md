@@ -1,3 +1,13 @@
+# [0.4.13](https://github.com/Akryum/nodepack/compare/v0.4.12...v0.4.13) (2019-10-01)
+
+## service
+
+#### Bug Fixes
+
+* **dev command:** failed terminating app ([e49721a](https://github.com/Akryum/nodepack/commit/e49721a))
+
+
+
 # [0.4.12](https://github.com/Akryum/nodepack/compare/v0.4.11...v0.4.12) (2019-09-30)
 
 ## app
