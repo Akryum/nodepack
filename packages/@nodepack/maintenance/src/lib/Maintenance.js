@@ -302,6 +302,7 @@ class Maintenance {
         'build',
         '--silent',
         '--no-autoNodeEnv',
+        '--no-preInstall',
       ], {
         cwd: this.cwd,
         env: {
