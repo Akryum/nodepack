@@ -1,3 +1,13 @@
+# [0.4.16](https://github.com/Akryum/nodepack/compare/v0.4.15...v0.4.16) (2019-10-01)
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* **types:** missing subscriptionsPath on ApolloConfig ([77481f5](https://github.com/Akryum/nodepack/commit/77481f5))
+
+
+
 # [0.4.15](https://github.com/Akryum/nodepack/compare/v0.4.14...v0.4.15) (2019-10-01)
 
 ## plugin-apollo
