@@ -40,11 +40,12 @@ hook('expressHttp', async (ctx) => {
   }))
 
   // Express middleware
-  server.applyMiddleware({
-    app,
+  const graphqlPath = apolloConfig.path || '/graphql'
+  server.setGraphQLPath(graphqlPath)
+  app.use(server.getMiddleware({
+    path: graphqlPath,
     cors: config.cors,
-    path: apolloConfig.path || '/graphql',
-  })
+  }))
 
   // GraphQL Playground
   if (apolloConfig.playground !== false) {
