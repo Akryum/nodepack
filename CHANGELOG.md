@@ -1,3 +1,13 @@
+# [0.4.19](https://github.com/Akryum/nodepack/compare/v0.4.18...v0.4.19) (2019-10-02)
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* **cors:** don't apply cors multiple times ([e0f5727](https://github.com/Akryum/nodepack/commit/e0f5727))
+
+
+
 # [0.4.18](https://github.com/Akryum/nodepack/compare/v0.4.17...v0.4.18) (2019-10-02)
 
 
