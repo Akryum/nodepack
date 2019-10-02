@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-express",
-  "version": "0.4.7",
+  "version": "0.4.19",
   "description": "Nodepack plugin for Express",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
