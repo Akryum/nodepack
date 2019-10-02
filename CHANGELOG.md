@@ -1,3 +1,7 @@
+# [0.4.18](https://github.com/Akryum/nodepack/compare/v0.4.17...v0.4.18) (2019-10-02)
+
+
+
 # [0.4.17](https://github.com/Akryum/nodepack/compare/v0.4.16...v0.4.17) (2019-10-01)
 
 ## plugin-apollo
