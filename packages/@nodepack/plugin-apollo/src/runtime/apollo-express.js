@@ -47,6 +47,10 @@ hook('expressHttp', async (ctx) => {
     cors: config.cors,
   }))
 
+  hook('expressCors', ctx => {
+    ctx.corsApplied = true
+  })
+
   // GraphQL Playground
   if (apolloConfig.playground !== false) {
     const playgroundRoute = ctx.playgroundRoute =

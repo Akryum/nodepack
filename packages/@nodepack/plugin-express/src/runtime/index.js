@@ -26,8 +26,10 @@ hook('bootstrap', async (ctx) => {
 
   // CORS
   if ('cors' in ctx.config) {
-    app.use(cors(ctx.config.cors))
     await callHook('expressCors', ctx)
+    if (!ctx.corsApplied) {
+      app.use(cors(ctx.config.cors))
+    }
   }
 
   // Cookies
