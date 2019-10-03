@@ -1,3 +1,13 @@
+# [0.4.21](https://github.com/Akryum/nodepack/compare/v0.4.20...v0.4.21) (2019-10-03)
+
+## plugin-apollo
+
+#### Features
+
+* **apollo:** schema directives ([1cd8e42](https://github.com/Akryum/nodepack/commit/1cd8e42))
+
+
+
 # [0.4.20](https://github.com/Akryum/nodepack/compare/v0.4.19...v0.4.20) (2019-10-03)
 
 ## app-context
