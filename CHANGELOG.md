@@ -1,3 +1,19 @@
+# [0.4.20](https://github.com/Akryum/nodepack/compare/v0.4.19...v0.4.20) (2019-10-03)
+
+## app-context
+
+#### Bug Fixes
+
+* payload mutated ([581816e](https://github.com/Akryum/nodepack/commit/581816e))
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* revert cors applied ([943b2bf](https://github.com/Akryum/nodepack/commit/943b2bf))
+
+
+
 # [0.4.19](https://github.com/Akryum/nodepack/compare/v0.4.18...v0.4.19) (2019-10-02)
 
 ## plugin-apollo
