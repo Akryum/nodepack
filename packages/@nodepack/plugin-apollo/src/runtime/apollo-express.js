@@ -17,6 +17,7 @@ hook('expressHttp', async (ctx) => {
   const localSchema = makeExecutableSchema({
     typeDefs: fullSchema.typeDefs,
     resolvers: fullSchema.resolvers,
+    schemaDirectives: fullSchema.schemaDirectives,
   })
 
   // Apollo Server

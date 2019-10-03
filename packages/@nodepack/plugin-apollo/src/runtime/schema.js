@@ -17,6 +17,8 @@ export async function loadSchema (ctx) {
   const mergeTypeDefs = []
   /** @type {IResolvers} */
   const mergeResolvers = {}
+  /** @type {{ [key: string]: any }} */
+  const schemaDirectives = {}
 
   const files = require.context('@', true, /^.\/schema\/.*\.[jt]sx?$/)
   for (const key of files.keys()) {
@@ -42,6 +44,9 @@ export async function loadSchema (ctx) {
     if (module.mergeResolvers) {
       merge(mergeResolvers, module.mergeResolvers)
     }
+    if (module.schemaDirectives) {
+      merge(schemaDirectives, module.schemaDirectives)
+    }
   }
 
   return {
@@ -50,5 +55,6 @@ export async function loadSchema (ctx) {
     resolvers,
     mergeTypeDefs,
     mergeResolvers,
+    schemaDirectives,
   }
 }
