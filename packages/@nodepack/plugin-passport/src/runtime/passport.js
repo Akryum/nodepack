@@ -25,7 +25,7 @@ export async function setupPassport (ctx) {
           serialized,
         })
       if (!user) {
-        done(null, false)
+        return done(null, false)
       }
       done(null, user)
     } catch (e) {

@@ -39,17 +39,8 @@ hook('expressHttp', async (ctx) => {
     },
   }))
 
-  // Express middleware
   const graphqlPath = apolloConfig.path || '/graphql'
   server.setGraphQLPath(graphqlPath)
-  app.use(server.getMiddleware({
-    path: graphqlPath,
-    cors: config.cors,
-  }))
-
-  hook('expressCors', ctx => {
-    ctx.corsApplied = true
-  })
 
   // GraphQL Playground
   if (apolloConfig.playground !== false) {
@@ -60,6 +51,12 @@ hook('expressHttp', async (ctx) => {
       subscriptionEndpoint: server.subscriptionsPath,
     }))
   }
+
+  // Express middleware
+  app.use(server.getMiddleware({
+    path: graphqlPath,
+    cors: config.cors,
+  }))
 
   // Subscriptions
   server.installSubscriptionHandlers(httpServer)
