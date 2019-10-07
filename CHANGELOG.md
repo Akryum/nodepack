@@ -1,3 +1,16 @@
+# [0.4.22](https://github.com/Akryum/nodepack/compare/v0.4.21...v0.4.22) (2019-10-07)
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* assign parent context properties ([1fd45ac](https://github.com/Akryum/nodepack/commit/1fd45ac))
+#### Features
+
+* apollo utils ([761b494](https://github.com/Akryum/nodepack/commit/761b494))
+
+
+
 # [0.4.21](https://github.com/Akryum/nodepack/compare/v0.4.20...v0.4.21) (2019-10-03)
 
 ## plugin-apollo
