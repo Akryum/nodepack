@@ -27,3 +27,30 @@ export interface ApolloConfig {
   playground: boolean | string
   apolloServerOptions: Config
 }
+
+export interface RequestedField {
+  name: string
+  type: 'simple' | 'computed'
+}
+
+export function getRequestedFields (
+  ctx: ApolloContext,
+  info: GraphQLResolveInfo,
+  excludedFields: string[] = [],
+  // selectNestedFields: string[] = [],
+): RequestedField[]
+
+export function shouldQueryData (
+  ctx: ApolloContext,
+  info: GraphQLResolveInfo,
+): boolean
+
+export interface CustomField {
+  id: string
+  value: any
+}
+
+export function getCustomField (
+  fields: CustomField[],
+  id: string
+): CustomField

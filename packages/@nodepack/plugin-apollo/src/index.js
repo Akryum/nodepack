@@ -6,3 +6,5 @@ module.exports = (api, options) => {
     throw new Error(`You need @nodepack/plugin-express with Apollo. Other options not yet supported.`)
   }
 }
+
+Object.assign(module.exports, require('./utils'))
