@@ -64,9 +64,13 @@ hook('bootstrap', async (ctx) => {
     }
   })
   return new Promise((resolve) => {
-    httpServer.listen(port, async () => {
-      await callHook('expressListen', ctx)
+    if (process.env.EXPRESS_NO_LISTEN !== 'true') {
+      httpServer.listen(port, async () => {
+        await callHook('expressListen', ctx)
+        resolve()
+      })
+    } else {
       resolve()
-    })
+    }
   })
 })
