@@ -21,11 +21,10 @@ export async function getApolloConfig ({
         user = context.connection.context.user
       }
       const reqCtx = await createContext()
+      Object.assign(reqCtx, ctx)
+      Object.assign(reqCtx, context)
       reqCtx.user = user
       reqCtx.rawContext = context
-      reqCtx.req = context.req
-      reqCtx.res = context.res
-      reqCtx.connection = context.connection
       reqCtx.pubsub = pubsub
       await callHook('apolloRequest', reqCtx)
       return reqCtx
