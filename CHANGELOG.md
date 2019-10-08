@@ -1,3 +1,13 @@
+# [0.4.24](https://github.com/Akryum/nodepack/compare/v0.4.23...v0.4.24) (2019-10-08)
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* **types:** Schema.schemaDirectives ([2dd614c](https://github.com/Akryum/nodepack/commit/2dd614c))
+
+
+
 # [0.4.23](https://github.com/Akryum/nodepack/compare/v0.4.22...v0.4.23) (2019-10-07)
 
 ## plugin-express
