@@ -9,6 +9,7 @@ export interface Schema {
   internalTypeDefs: DocumentNode
   mergeTypeDefs: DocumentNode
   mergeResolvers: IResolvers
+  schemaDirectives: { [key: string]: any }
 }
 
 export interface ApolloContext {
