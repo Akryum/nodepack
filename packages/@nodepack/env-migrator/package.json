@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/env-migrator",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Env Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -27,6 +27,6 @@
     "globby": "^10.0.1"
   },
   "devDependencies": {
-    "@nodepack/service": "^0.5.0"
+    "@nodepack/service": "^0.5.1"
   }
 }

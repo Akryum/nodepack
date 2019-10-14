@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/cli",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Nodepack CLI",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -27,9 +27,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-migrator": "^0.5.0",
+    "@nodepack/app-migrator": "^0.5.1",
     "@nodepack/env-check": "^0.5.0",
-    "@nodepack/maintenance": "^0.5.0",
+    "@nodepack/maintenance": "^0.5.1",
     "@nodepack/module": "^0.5.0",
     "@nodepack/utils": "^0.5.0",
     "chalk": "^2.4.2",
