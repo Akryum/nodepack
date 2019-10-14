@@ -1,3 +1,13 @@
+# [0.5.0](https://github.com/Akryum/nodepack/compare/v0.4.24...v0.5.0) (2019-10-14)
+
+## service
+
+#### Features
+
+* enable persistent caching ([6bca37e](https://github.com/Akryum/nodepack/commit/6bca37e))
+
+
+
 # [0.4.24](https://github.com/Akryum/nodepack/compare/v0.4.23...v0.4.24) (2019-10-08)
 
 ## plugin-apollo
