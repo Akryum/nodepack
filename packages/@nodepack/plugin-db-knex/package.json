@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-db-knex",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "description": "Database Nodepack plugin using Knex query builder",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",

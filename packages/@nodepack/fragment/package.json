@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/fragment",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "description": "Fragment utils",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/module": "^0.4.0",
+    "@nodepack/module": "^0.5.0",
     "fs-extra": "^8.1.0"
   }
 }
