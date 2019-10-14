@@ -188,14 +188,15 @@ module.exports = (api, options) => {
 
     // Plugins
     const resolveClientEnv = require('../util/resolveClientEnv')
+    const envVars = {
+      ...resolveClientEnv(options),
+      'process.env.NODEPACK_ROOT': JSON.stringify(api.getCwd()),
+    }
     config
       .plugin('define')
         // @ts-ignore
         .use(require('webpack/lib/DefinePlugin'), [
-          {
-            ...resolveClientEnv(options),
-            'process.env.NODEPACK_ROOT': JSON.stringify(api.getCwd()),
-          },
+          envVars,
         ])
 
     // Others
@@ -224,6 +225,18 @@ module.exports = (api, options) => {
         // Prevent reload because of `chmod`
         '**/node_modules/@nodepack',
       ],
+    })
+
+    // Persistant cache
+    const hash = require('hash-sum')
+    config.cache({
+      type: 'filesystem',
+      name: `env-${api.service.env}-${process.env.NODE_ENV}`,
+      version: hash(envVars),
+      buildDependencies: {
+        defaultConfig: [api.service.configPath],
+        nodepack: [path.resolve(__dirname, '../../') + '/'],
+      },
     })
   })
 }

@@ -73,6 +73,9 @@ module.exports = class Service {
 
     /** @type {string[]} */
     this.runtimeModules = []
+
+    /** @type {string} */
+    this.configPath = null
   }
 
   resolvePlugins () {
@@ -229,6 +232,7 @@ module.exports = class Service {
     let options
     const explorer = cosmiconfig('nodepack')
     const result = explorer.searchSync(this.cwd)
+    this.configPath = result.filepath
     if (!result || result.isEmpty) {
       options = defaultOptions()
     } else {
