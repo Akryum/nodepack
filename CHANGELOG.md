@@ -1,3 +1,13 @@
+# [0.5.1](https://github.com/Akryum/nodepack/compare/v0.5.0...v0.5.1) (2019-10-14)
+
+## maintenance
+
+#### Bug Fixes
+
+* **maintenance:** skip minimize for maintenance fragments ([65f5410](https://github.com/Akryum/nodepack/commit/65f5410))
+
+
+
 # [0.5.0](https://github.com/Akryum/nodepack/compare/v0.4.24...v0.5.0) (2019-10-14)
 
 ## service
