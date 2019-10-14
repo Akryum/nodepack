@@ -22,7 +22,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "knex": "^0.19.2"
+    "knex": "^0.19.5"
   },
   "peerDependencies": {
     "@nodepack/app-context": "^0.4.0",

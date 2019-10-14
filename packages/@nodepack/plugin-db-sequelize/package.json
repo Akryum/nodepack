@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "case": "^1.6.2",
-    "sequelize": "^5.13.1"
+    "sequelize": "^5.19.6"
   },
   "peerDependencies": {
     "@nodepack/app-context": "^0.4.0",
