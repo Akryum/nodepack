@@ -6,7 +6,7 @@ module.exports = (api, options) => {
         .devtool(options.productionSourceMap ? 'source-map' : false)
 
       // disable optimization during tests to speed things up
-      if (options.minify === false || process.env.NODEPACK_TEST) {
+      if (options.minify === false || process.env.NODEPACK_TEST || process.env.NODEPACK_MAINTENANCE_FRAGMENTS) {
         config.optimization.minimize(false)
       } else {
         const TerserPlugin = require('terser-webpack-plugin')

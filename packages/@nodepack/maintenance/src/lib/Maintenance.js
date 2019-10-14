@@ -310,6 +310,7 @@ class Maintenance {
           NODEPACK_NO_MAINTENANCE: 'true',
           NODEPACK_OUTPUT: '.nodepack/temp/fragments/',
           NODEPACK_RAW_STATS: 'true',
+          NODEPACK_MAINTENANCE_FRAGMENTS: 'true',
         },
         stdio: [io, io, 'inherit'],
         preferLocal: true,
