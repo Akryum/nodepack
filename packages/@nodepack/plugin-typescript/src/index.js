@@ -1,6 +1,7 @@
 /** @type {import('@nodepack/service').ServicePlugin} */
 module.exports = (api, options) => {
   const path = require('path')
+  const fs = require('fs')
   const useThreads = process.env.NODE_ENV === 'production' && options.parallel
 
   // Default entry
@@ -47,10 +48,25 @@ module.exports = (api, options) => {
     addLoader({
       loader: 'ts-loader',
       options: {
+        transpileOnly: true,
         // https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse
         happyPackMode: useThreads,
       },
     })
+
+    if (!process.env.NODEPACK_TEST && !process.env.NODEPACK_MAINTENANCE_FRAGMENTS) {
+      // this plugin does not play well with jest + cypress setup (tsPluginE2e.spec.js) somehow
+      // so temporarily disabled for vue-cli tests
+      config
+        .plugin('fork-ts-checker')
+          .use(require('fork-ts-checker-webpack-plugin'), [{
+            vue: true,
+            tslint: fs.existsSync(api.resolve('tslint.json')),
+            formatter: 'codeframe',
+            // https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse
+            checkSyntacticErrors: useThreads,
+          }])
+    }
   })
 
   if (!api.hasPlugin('eslint')) {
