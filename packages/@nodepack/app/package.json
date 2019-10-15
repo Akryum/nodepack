@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "description": "Utils for Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
