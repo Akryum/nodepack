@@ -1,3 +1,19 @@
+# [0.5.2](https://github.com/Akryum/nodepack/compare/v0.5.1...v0.5.2) (2019-10-15)
+
+## app
+
+#### Bug Fixes
+
+* **types:** typings errors ([a26ed7d](https://github.com/Akryum/nodepack/commit/a26ed7d))
+
+## plugin-typescript
+
+#### Features
+
+* **ts:** use fork-ts-checker-webpack-plugin ([fead76c](https://github.com/Akryum/nodepack/commit/fead76c))
+
+
+
 # [0.5.1](https://github.com/Akryum/nodepack/compare/v0.5.0...v0.5.1) (2019-10-14)
 
 ## maintenance
