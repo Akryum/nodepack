@@ -1,4 +1,4 @@
-import { DocumentNode } from 'graphql'
+import { DocumentNode, GraphQLResolveInfo } from 'graphql'
 import { IResolvers, PubSubEngine, ApolloServer, Config } from 'apollo-server-express'
 import { ExecutionParams } from 'subscriptions-transport-ws'
 import { Request, Response } from 'express'
@@ -37,8 +37,8 @@ export interface RequestedField {
 export function getRequestedFields (
   ctx: ApolloContext,
   info: GraphQLResolveInfo,
-  excludedFields: string[] = [],
-  // selectNestedFields: string[] = [],
+  excludedFields: string[],
+  // selectNestedFields: string[],
 ): RequestedField[]
 
 export function shouldQueryData (
