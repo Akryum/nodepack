@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app-context",
-  "version": "0.5.0",
+  "version": "0.5.3",
   "description": "Context management for Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -25,7 +25,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-config": "^0.5.0",
+    "@nodepack/app-config": "^0.5.3",
     "@nodepack/hookable": "^0.5.0"
   }
 }

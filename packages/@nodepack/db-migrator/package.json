@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/db-migrator",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "description": "Database Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -22,9 +22,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/env-migrator": "^0.5.1"
+    "@nodepack/env-migrator": "^0.5.3"
   },
   "devDependencies": {
-    "@nodepack/service": "^0.5.1"
+    "@nodepack/service": "^0.5.3"
   }
 }
