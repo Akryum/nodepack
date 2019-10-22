@@ -1,3 +1,7 @@
+# [0.5.3](https://github.com/Akryum/nodepack/compare/v0.5.2...v0.5.3) (2019-10-22)
+
+
+
 # [0.5.2](https://github.com/Akryum/nodepack/compare/v0.5.1...v0.5.2) (2019-10-15)
 
 ## app
