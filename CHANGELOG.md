@@ -1,3 +1,13 @@
+# [0.5.4](https://github.com/Akryum/nodepack/compare/v0.5.3...v0.5.4) (2019-10-23)
+
+## plugin-typescript
+
+#### Bug Fixes
+
+* **ts plugin:** noImplicitAny to false by default ([594d7d6](https://github.com/Akryum/nodepack/commit/594d7d6))
+
+
+
 # [0.5.3](https://github.com/Akryum/nodepack/compare/v0.5.2...v0.5.3) (2019-10-22)
 
 
