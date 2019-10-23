@@ -20,7 +20,7 @@
     "sourceMap": true,
     "noUnusedLocals": true,
     // Strict
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitThis": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
