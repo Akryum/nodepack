@@ -1,30 +1,31 @@
 module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: [
+      './tsconfig.json',
+      './packages/**/tsconfig.json',
+    ],
+  },
   extends: [
-    'plugin:vue-libs/recommended',
+    'standard',
+    'plugin:@typescript-eslint/recommended',
   ],
   plugins: [
-    'node',
+    '@typescript-eslint',
   ],
   env: {
     'jest': true,
   },
-  rules: {
-    'indent': ['error', 2, {
-      'MemberExpression': 'off',
-    }],
-    'node/no-extraneous-require': ['error', {
-      'allowModules': [
-        '@nodepack/test-utils',
-      ],
-    }],
+  // add your custom rules here
+  'rules': {
+    // allow paren-less arrow functions
+    'arrow-parens': 0,
+    // allow async-await
+    'generator-star-spacing': 0,
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    // trailing comma
     'comma-dangle': ['error', 'always-multiline'],
   },
-  overrides: [
-    {
-      files: ['**/__tests__/**/*.js', '**/test-utils/**/*.js'],
-      rules: {
-        'node/no-extraneous-require': 'off',
-      },
-    },
-  ],
 }
