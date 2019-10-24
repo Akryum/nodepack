@@ -4,6 +4,15 @@
   "description": "Utils for Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src",
+    "build": "tsc --outDir dist -d",
+    "dev": "yarn build -w",
+    "prepublishOnly": "yarn build"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Akryum/nodepack.git"
@@ -17,12 +26,6 @@
   },
   "engines": {
     "node": ">=8.12"
-  },
-  "main": "./src/index.js",
-  "typings": "./types/index.d.ts",
-  "scripts": {
-    "test": "yarn test:lint",
-    "test:lint": "eslint src"
   },
   "dependencies": {
     "@nodepack/app-context": "^0.5.3"
