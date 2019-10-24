@@ -18,6 +18,10 @@ hook('create', async (ctx) => {
       }
       await sequelize.sync(options)
     }
+
+    hook('destroy', () => {
+      sequelize.close()
+    })
   } else {
     console.warn('⚠️ No `db` configuration found. Create a `config/db.js` file that exports default a sequelize configuration object.')
   }

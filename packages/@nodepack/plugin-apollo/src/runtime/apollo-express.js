@@ -70,4 +70,8 @@ hook('expressHttp', async (ctx) => {
   hook('printReady', () => {
     printReady(ctx)
   })
+
+  hook('destroy', async () => {
+    await server.stop()
+  })
 })
