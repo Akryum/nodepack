@@ -1,3 +1,31 @@
+# [0.5.5](https://github.com/Akryum/nodepack/compare/v0.5.4...v0.5.5) (2019-10-27)
+
+## app-config
+
+#### Bug Fixes
+
+* **ts:** es module interop ([cd4967b](https://github.com/Akryum/nodepack/commit/cd4967b))
+
+## plugin-apollo
+
+#### Features
+
+* add destroyed hook to builtin plugins ([da00a06](https://github.com/Akryum/nodepack/commit/da00a06))
+
+## plugin-typescript
+
+#### Bug Fixes
+
+* **ts:** remove unnecessary argument to fork-ts-checker ([fd0f376](https://github.com/Akryum/nodepack/commit/fd0f376))
+
+## service
+
+#### Bug Fixes
+
+* **build:** error display ([7c56fe7](https://github.com/Akryum/nodepack/commit/7c56fe7))
+
+
+
 # [0.5.4](https://github.com/Akryum/nodepack/compare/v0.5.3...v0.5.4) (2019-10-23)
 
 ## plugin-typescript
