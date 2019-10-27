@@ -50,6 +50,10 @@ module.exports = {
             ],
           },
           {
+            text: 'Browse plugins',
+            link: 'https://awesomejs.dev/for/nodepack/',
+          },
+          {
             text: 'Community',
             link: 'https://spectrum.chat/nodepack',
           },
