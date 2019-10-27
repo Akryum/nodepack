@@ -54,6 +54,10 @@ module.exports = {
             link: 'https://awesomejs.dev/for/nodepack/',
           },
           {
+            text: 'Changelog',
+            link: 'https://github.com/Akryum/nodepack/blob/master/CHANGELOG.md',
+          },
+          {
             text: 'Community',
             link: 'https://spectrum.chat/nodepack',
           },
