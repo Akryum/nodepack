@@ -11,9 +11,9 @@ module.exports = (api, options) => {
 
         config
           .plugin('friendly-errors')
-            .use(require('@nuxt/friendly-errors-webpack-plugin'), [{
-              clearConsole: true,
-            }])
+          .use(require('@nuxt/friendly-errors-webpack-plugin'), [{
+            clearConsole: true,
+          }])
       }
 
       config.devtool('source-map')

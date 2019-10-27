@@ -166,10 +166,10 @@ module.exports = (api, options) => {
 }
 
 function injectPause (compiler) {
-  compiler.$_pause = false
+  compiler._nodepackPause = false
   const compile = compiler.compile
   compiler.compile = (...args) => {
-    if (compiler.$_pause) return
+    if (compiler._nodepackPause) return
     return compile.call(compiler, ...args)
   }
 }

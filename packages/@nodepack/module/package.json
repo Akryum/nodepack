@@ -15,11 +15,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "src/index.js",
-  "types": "types/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
-    "test:lint": "eslint src"
+    "test:lint": "eslint src",
+    "build": "tsc --outDir dist -d",
+    "dev": "yarn build -w",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "semver": "^6.3.0"

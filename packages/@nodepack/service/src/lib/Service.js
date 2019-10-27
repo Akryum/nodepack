@@ -123,7 +123,7 @@ module.exports = class Service {
     return this.plugins.reduce((
       envs,
       // @ts-ignore
-      { apply: { defaultEnvs }}
+      { apply: { defaultEnvs } }
     ) => {
       return Object.assign(envs, defaultEnvs)
     }, {})
@@ -187,7 +187,7 @@ module.exports = class Service {
       if (fs.existsSync(filePath)) {
         try {
           const vars = dotenv.parse(fs.readFileSync(filePath, { encoding: 'utf8' }))
-          for (var k in vars) {
+          for (const k in vars) {
             if (process.env.OVERRIDE_ENV || typeof process.env[k] === 'undefined') {
               process.env[k] = vars[k]
             }

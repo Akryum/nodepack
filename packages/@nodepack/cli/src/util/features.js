@@ -9,12 +9,9 @@ const {
  * @param {Preset} preset
  */
 exports.getFeatures = (preset) => {
-  const features = []
-  const plugins = Object.keys(preset.plugins || []).filter(dep => {
+  return Object.keys(preset.plugins || []).filter(dep => {
     return dep !== '@nodepack/service'
   })
-  features.push.apply(features, plugins)
-  return features
 }
 
 /**

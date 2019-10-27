@@ -41,7 +41,7 @@ module.exports = function (api, externals) {
       return callback(null, `commonjs ${request}`)
     }
 
-    if (request[0] === '.' && (request[1] === '/' || request[1] === '.' && request[2] === '/')) {
+    if (request[0] === '.' && (request[1] === '/' || (request[1] === '.' && request[2] === '/'))) {
       if (request.startsWith('./node_modules/')) {
         request = request.substr(15)
       } else if (request.startsWith('../node_modules/')) {

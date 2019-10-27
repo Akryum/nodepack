@@ -29,47 +29,47 @@ module.exports = (api, options) => {
 
     const jsRule = webpackConfig.module
       .rule('js')
-        .test(/\.jsx?$/)
-        .exclude
-          .add(filepath => {
-            // exclude dynamic entries from nodepack
-            if (nodepackPath && filepath.startsWith(nodepackPath)) {
-              return true
-            }
-            // check if this is something the user explicitly wants to transpile
-            if (options.transpileDependencies && options.transpileDependencies.some(dep => {
-              if (typeof dep === 'string') {
-                return filepath.includes(path.normalize(dep))
-              } else {
-                return !!filepath.match(dep)
-              }
-            })) {
-              return false
-            }
-            // Don't transpile node_modules
-            return /node_modules/.test(filepath)
-          })
-          .end()
-        .use('cache-loader')
-          .loader('cache-loader')
-          .options(api.genCacheConfig('babel-loader', {
-            '@babel/core': require('@babel/core/package.json').version,
-            '@nodepack/babel-preset-nodepack': require('@nodepack/babel-preset-nodepack/package.json').version,
-            'babel-loader': require('babel-loader/package.json').version,
-          }, [
-            'babel.config.js',
-          ]))
-          .end()
+      .test(/\.jsx?$/)
+      .exclude
+      .add(filepath => {
+        // exclude dynamic entries from nodepack
+        if (nodepackPath && filepath.startsWith(nodepackPath)) {
+          return true
+        }
+        // check if this is something the user explicitly wants to transpile
+        if (options.transpileDependencies && options.transpileDependencies.some(dep => {
+          if (typeof dep === 'string') {
+            return filepath.includes(path.normalize(dep))
+          } else {
+            return !!filepath.match(dep)
+          }
+        })) {
+          return false
+        }
+        // Don't transpile node_modules
+        return /node_modules/.test(filepath)
+      })
+      .end()
+      .use('cache-loader')
+      .loader('cache-loader')
+      .options(api.genCacheConfig('babel-loader', {
+        '@babel/core': require('@babel/core/package.json').version,
+        '@nodepack/babel-preset-nodepack': require('@nodepack/babel-preset-nodepack/package.json').version,
+        'babel-loader': require('babel-loader/package.json').version,
+      }, [
+        'babel.config.js',
+      ]))
+      .end()
 
     if (useThreads) {
       jsRule
         .use('thread-loader')
-          .loader('thread-loader')
+        .loader('thread-loader')
     }
 
     jsRule
       .use('babel-loader')
-        .loader('babel-loader')
-        .options(babelOptions)
+      .loader('babel-loader')
+      .options(babelOptions)
   })
 }

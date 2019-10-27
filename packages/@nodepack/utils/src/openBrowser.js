@@ -54,7 +54,6 @@ function executeNodeScript (scriptPath, url) {
       )
       console.log(chalk.cyan(scriptPath) + ' exited with code ' + code + '.')
       console.log()
-      return
     }
   })
   return true
@@ -95,7 +94,7 @@ function startBrowserProcess (browser, url) {
   // Fallback to opn
   // (It will always open new tab)
   try {
-    var options = { app: browser }
+    const options = { app: browser }
     opn(url, options).catch(() => {}) // Prevent `unhandledRejection` error.
     return true
   } catch (err) {
@@ -110,14 +109,14 @@ function startBrowserProcess (browser, url) {
 exports.openBrowser = function (url) {
   const { action, value } = getBrowserEnv()
   switch (action) {
-  case Actions.NONE:
+    case Actions.NONE:
     // Special case: BROWSER="none" will prevent opening completely.
-    return false
-  case Actions.SCRIPT:
-    return executeNodeScript(value, url)
-  case Actions.BROWSER:
-    return startBrowserProcess(value, url)
-  default:
-    throw new Error('Not implemented.')
+      return false
+    case Actions.SCRIPT:
+      return executeNodeScript(value, url)
+    case Actions.BROWSER:
+      return startBrowserProcess(value, url)
+    default:
+      throw new Error('Not implemented.')
   }
 }

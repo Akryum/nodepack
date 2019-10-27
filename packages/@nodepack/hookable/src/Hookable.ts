@@ -1,16 +1,14 @@
-const { sequence, parallel } = require('./fn')
+import { sequence } from './fn'
 
-exports.sequence = sequence
-exports.parallel = parallel
+export type HookMap = { [key: string]: Function[] }
+export type ConfigHooks = { [key: string]: (ConfigHooks | Function) }
 
-/** @typedef {{ [key: string]: function[] }} HookMap */
-/** @typedef {{ [key: string]: (ConfigHooks | function) }} ConfigHooks */
+export class Hookable {
+  _hooks: HookMap
+  _deprecatedHooks: {[key: string]: string}
 
-exports.Hookable = class Hookable {
   constructor () {
-    /** @type {HookMap} */
     this._hooks = {}
-    /** @type {{[key: string]: string}} */
     this._deprecatedHooks = {}
 
     this.hook = this.hook.bind(this)
@@ -19,10 +17,8 @@ exports.Hookable = class Hookable {
 
   /**
    * Register a callback to a specific hook.
-   * @param {string} name
-   * @param {function} fn
    */
-  hook (name, fn) {
+  hook (name: string, fn: Function) {
     if (!name || typeof fn !== 'function') {
       return
     }
@@ -38,10 +34,8 @@ exports.Hookable = class Hookable {
 
   /**
    * Call all callbacks for a hook. They are called sequentially with async support.
-   * @param {string} name
-   * @param {any[]} args
    */
-  async callHook (name, ...args) {
+  async callHook (name: string, ...args: any[]) {
     if (!this._hooks[name]) {
       return
     }
@@ -57,9 +51,8 @@ exports.Hookable = class Hookable {
 
   /**
    * Remove all callbacks for a specific hook.
-   * @param {string} name
    */
-  clearHook (name) {
+  clearHook (name: string) {
     if (name) {
       delete this._hooks[name]
     }
@@ -76,9 +69,8 @@ exports.Hookable = class Hookable {
    * Add hook callbacks from a hook object. Example:
    * `{ foo: { bar: () => console.log('foo:bar') } }`
    * This will register the `foo:bar` hook callback.
-   * @param {ConfigHooks} configHooks
    */
-  addHooks (configHooks) {
+  addHooks (configHooks: ConfigHooks) {
     const hooks = this._flattenHooks(configHooks)
     Object.keys(hooks).forEach((key) => {
       this.hook(key, hooks[key])
@@ -87,10 +79,8 @@ exports.Hookable = class Hookable {
 
   /**
    * Mark a hook as deprecated.
-   * @param {string} oldName
-   * @param {string} newName
    */
-  deprecateHook (oldName, newName) {
+  deprecateHook (oldName: string, newName: string) {
     this._deprecatedHooks[oldName] = newName
   }
 
@@ -99,12 +89,13 @@ exports.Hookable = class Hookable {
    * Flatten an hook object. Example:
    * `{ foo: { bar: () => console.log('foo:bar') } }`
    * This will register the `foo:bar` hook callback.
-   * @param {ConfigHooks} configHooks
-   * @param {string} [separator]
-   * @param {{[key: string]: function}} [hooks]
-   * @param {string} [parentName]
    */
-  _flattenHooks (configHooks, separator = ':', hooks = {}, parentName) {
+  _flattenHooks (
+    configHooks: ConfigHooks,
+    separator: string = ':',
+    hooks: { [key: string]: Function } = {},
+    parentName: string = null,
+  ) {
     Object.keys(configHooks).forEach((key) => {
       const subHook = configHooks[key]
       const name = parentName ? `${parentName}${separator}${key}` : key

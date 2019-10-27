@@ -8,7 +8,7 @@ import { createContext, callHook } from '@nodepack/app-context'
  */
 export async function bootstrap (
   callback: ((ctx?: any) => Promise<void> | void) = null
-) {
+): Promise<void> {
   try {
     const ctx = await createContext()
     await callHook('bootstrap', ctx)
@@ -24,13 +24,13 @@ export async function bootstrap (
 /**
  * Print useful information after the application is bootstrapped, like the listening port.
  */
-export async function printReady () {
+export async function printReady (): Promise<void> {
   await callHook('printReady')
 }
 
 /**
  * Closes handles such as open connections and servers.
  */
-export async function destroy () {
+export async function destroy (): Promise<void> {
   await callHook('destroy')
 }

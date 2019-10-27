@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 module.exports = options => ({
   terserOptions: {
     compress: {

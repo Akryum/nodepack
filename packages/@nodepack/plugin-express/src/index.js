@@ -7,9 +7,9 @@ module.exports = (api, options) => {
       .rule('ejs')
       .test(/\.ejs$/)
       .use('ejs-loader')
-        .loader('ejs-webpack-loader')
-        .options({
-          htmlmin: true,
-        })
+      .loader('ejs-webpack-loader')
+      .options({
+        htmlmin: true,
+      })
   })
 }

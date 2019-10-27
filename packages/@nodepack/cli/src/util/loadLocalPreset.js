@@ -10,9 +10,9 @@ const loadPresetFromDir = require('./loadPresetFromDir')
 module.exports = async (file) => {
   const stats = fs.statSync(file)
   if (stats.isFile()) {
-    return await fs.readJson(file)
+    return fs.readJson(file)
   } else if (stats.isDirectory()) {
-    return await loadPresetFromDir(file)
+    return loadPresetFromDir(file)
   } else {
     throw new Error(`Invalid local preset path: ${file} is not an existing file or folder.`)
   }

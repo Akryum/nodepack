@@ -12,5 +12,5 @@ module.exports = async (dir) => {
   if (!fs.existsSync(presetPath)) {
     throw new Error('remote / local preset does not contain preset.json!')
   }
-  return await fs.readJson(presetPath)
+  return fs.readJson(presetPath)
 }

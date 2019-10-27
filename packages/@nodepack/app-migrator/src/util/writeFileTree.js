@@ -45,4 +45,3 @@ module.exports = async function (cwd, files, previousFileNames) {
     }
   }
 }
-

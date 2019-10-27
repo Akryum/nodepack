@@ -4,10 +4,10 @@
 // It should run one old versions on node
 
 // @ts-ignore
-var pkg = require('../../package.json')
+const pkg = require('../../package.json')
 
 if (process.argv.indexOf('--version') === -1) {
-  var chalk = require('chalk').default
+  const chalk = require('chalk').default
   console.log(chalk.bold(pkg.name) + ' ' + chalk.blue(pkg.version))
 }
 

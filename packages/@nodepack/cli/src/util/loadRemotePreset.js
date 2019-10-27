@@ -27,5 +27,5 @@ module.exports = async (presetName, clone) => {
     })
   })
 
-  return await loadPresetFromDir(tmpdir)
+  return loadPresetFromDir(tmpdir)
 }

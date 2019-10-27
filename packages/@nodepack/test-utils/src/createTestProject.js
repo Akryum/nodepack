@@ -38,7 +38,7 @@ exports.createTestProject = async (cwd, projectName, preset, initGit = false) =>
   }
 
   if (has(projectRoot)) {
-    console.warn(chalk.yellow(`An existing test project already exists for ${name}. May get unexpected test results due to project re-use`))
+    console.warn(chalk.yellow(`An existing test project already exists for ${projectName}. May get unexpected test results due to project re-use`))
   }
 
   const write = (file, content) => {

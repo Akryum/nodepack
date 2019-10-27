@@ -27,5 +27,10 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // trailing comma
     'comma-dangle': ['error', 'always-multiline'],
+    // ts-ignore
+    '@typescript-eslint/ban-ts-ignore': 1,
+    // @TODO fix the warnings below
+    '@typescript-eslint/no-var-requires': 1,
+    '@typescript-eslint/no-use-before-define': 1,
   },
 }

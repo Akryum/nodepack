@@ -79,30 +79,30 @@ module.exports = (api, options) => {
     // Resolve
     config.resolve
       .extensions.clear()
-        .merge(SUPPORTED_EXTENSIONS)
+      .merge(SUPPORTED_EXTENSIONS)
       .end()
       .modules
-        .add('node_modules')
-        .add(api.resolve('node_modules'))
-        .add(resolveLocal('node_modules'))
+      .add('node_modules')
+      .add(api.resolve('node_modules'))
+      .add(resolveLocal('node_modules'))
       .end()
       .alias
-        .set('@root', api.resolve('.'))
-        .set('@config', api.resolve('config'))
-        .set('@', api.resolve(options.srcDir || 'src'))
+      .set('@root', api.resolve('.'))
+      .set('@config', api.resolve('config'))
+      .set('@', api.resolve(options.srcDir || 'src'))
       .end()
       // webpack defaults to `module` and `main`, but that's
       // not really what node.js supports, so we reset it
       .mainFields.clear()
-        .add('main')
+      .add('main')
       .end()
 
     // Loader resolve
     config.resolveLoader
       .modules
-        .add('node_modules')
-        .add(api.resolve('node_modules'))
-        .add(resolveLocal('node_modules'))
+      .add('node_modules')
+      .add(api.resolve('node_modules'))
+      .add(resolveLocal('node_modules'))
 
     // Rules
 
@@ -111,24 +111,24 @@ module.exports = (api, options) => {
       .test(/\.(js|mjs|tsx?|node)$/)
       .parser({ amd: false })
       .use('asset-relocator')
-        .loader('@zeit/webpack-asset-relocator-loader')
-        .options({
-          // optional, base folder for asset emission (eg assets/name.ext)
-          outputAssetBase: 'assets',
-          // optional, a list of asset names already emitted or
-          // defined that should not be emitted
-          existingAssetNames: [],
-          wrapperCompatibility: true, // optional, default
-          escapeNonAnalyzableRequires: true, // optional, default
-        })
+      .loader('@zeit/webpack-asset-relocator-loader')
+      .options({
+        // optional, base folder for asset emission (eg assets/name.ext)
+        outputAssetBase: 'assets',
+        // optional, a list of asset names already emitted or
+        // defined that should not be emitted
+        existingAssetNames: [],
+        wrapperCompatibility: true, // optional, default
+        escapeNonAnalyzableRequires: true, // optional, default
+      })
 
     // See https://github.com/graphql/graphql-js/issues/1272
     config.module
       .rule('mjs$')
       .test(/\.mjs$/)
       .include
-        .add(/node_modules/)
-        .end()
+      .add(/node_modules/)
+      .end()
       // @ts-ignore
       .type('javascript/auto')
 
@@ -194,10 +194,10 @@ module.exports = (api, options) => {
     }
     config
       .plugin('define')
-        // @ts-ignore
-        .use(require('webpack/lib/DefinePlugin'), [
-          envVars,
-        ])
+    // @ts-ignore
+      .use(require('webpack/lib/DefinePlugin'), [
+        envVars,
+      ])
 
     // Others
     config.stats('minimal')

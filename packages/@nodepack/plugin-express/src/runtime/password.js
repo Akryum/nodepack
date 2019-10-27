@@ -9,7 +9,7 @@ export function password (app, ctx) {
         try {
           // parse login and password from headers
           const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
-          const strauth = new Buffer(b64auth, 'base64').toString()
+          const strauth = Buffer.from(b64auth, 'base64').toString()
           const [, login, password] = strauth.match(/(.*?):(.*)/) || [undefined, '', '']
 
           if (!login || !password || login !== config.login || password !== config.password) {
@@ -27,7 +27,7 @@ export function password (app, ctx) {
 }
 
 async function isPathWhitelisted (req, whitelist) {
-  if (typeof whitelist) {
+  if (typeof whitelist === 'function') {
     return whitelist(req)
   } else if (Array.isArray(whitelist)) {
     return whitelist.includes

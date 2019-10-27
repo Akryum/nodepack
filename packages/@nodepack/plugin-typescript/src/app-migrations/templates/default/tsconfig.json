@@ -9,6 +9,7 @@
       "esnext",
     ],
     "types": [
+      "node",
       "webpack-env"
     ],
     "target": "es5",

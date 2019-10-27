@@ -20,16 +20,16 @@ module.exports = class DiagnoseErrorPlugin {
     compiler.hooks.done.tap(ID, async (stats) => {
       if (stats.hasErrors()) {
         // @ts-ignore
-        compiler.$_pause = true
+        compiler._nodepackPause = true
         // Process webpack errors
         for (const e of stats.compilation.errors) {
           await this.processError(e, compiler, stats)
         }
         // @ts-ignore
-        compiler.$_pause = false
+        compiler._nodepackPause = false
       } else {
         // Reset restart
-        process.send && process.send({ restart: { reason: null }})
+        process.send && process.send({ restart: { reason: null } })
         delete process.env._RESTART_REASON
       }
     })

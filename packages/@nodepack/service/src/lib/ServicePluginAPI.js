@@ -174,7 +174,7 @@ module.exports = class ServicePluginAPI {
       return
     }
     info(chalk.blue(`Service restart...`))
-    process.send && process.send({ restart: { reason }})
+    process.send && process.send({ restart: { reason } })
     process.exit(75)
   }
 

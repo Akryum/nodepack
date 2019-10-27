@@ -18,11 +18,11 @@ module.exports = (api, options) => {
 
     config.resolve
       .extensions
-        .merge(['.ts'])
+      .merge(['.ts'])
 
     const tsRule = config.module.rule('ts').test(/\.ts$/)
 
-    const addLoader = ({ loader, options = {}}) => {
+    const addLoader = ({ loader, options = {} }) => {
       tsRule.use(loader).loader(loader).options(options)
     }
 
@@ -59,12 +59,12 @@ module.exports = (api, options) => {
       // so temporarily disabled for vue-cli tests
       config
         .plugin('fork-ts-checker')
-          .use(require('fork-ts-checker-webpack-plugin'), [{
-            tslint: fs.existsSync(api.resolve('tslint.json')),
-            formatter: 'codeframe',
-            // https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse
-            checkSyntacticErrors: useThreads,
-          }])
+        .use(require('fork-ts-checker-webpack-plugin'), [{
+          tslint: fs.existsSync(api.resolve('tslint.json')),
+          formatter: 'codeframe',
+          // https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse
+          checkSyntacticErrors: useThreads,
+        }])
     }
   })
 
