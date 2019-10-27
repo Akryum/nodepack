@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/guijs-plugin",
-  "version": "0.5.3",
+  "version": "0.5.5",
   "description": "Nodepack plugin for guijs",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -24,8 +24,8 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/cli": "^0.5.3",
-    "@nodepack/utils": "^0.5.3",
+    "@nodepack/cli": "^0.5.5",
+    "@nodepack/utils": "^0.5.5",
     "execa": "^2.0.4"
   }
 }
