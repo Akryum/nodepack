@@ -1,7 +1,15 @@
 module.exports = {
-  plugins: [
-    '@vuepress/pwa',
-  ],
+  plugins: {
+    '@vuepress/pwa': {
+      serviceWorker: true,
+      updatePopup: {
+        '/': {
+          message: "New content is available.",
+          buttonText: "Refresh"
+        },
+      },
+    },
+  },
   locales: {
     '/': {
       lang: 'en-US',
@@ -25,12 +33,6 @@ module.exports = {
         selectText: 'Languages',
         lastUpdated: 'Last Updated',
         editLinkText: 'Edit this page on GitHub',
-        serviceWorker: {
-          updatePopup: {
-            message: 'New content is available.',
-            buttonText: 'Refresh',
-          },
-        },
         nav: [
           {
             text: 'Learn',
