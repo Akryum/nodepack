@@ -1,5 +1,6 @@
-/** @type {import('@nodepack/service').MigrationPlugin} */
-module.exports = api => {
+import { MigratorAPI } from '@nodepack/service'
+
+module.exports = (api: MigratorAPI) => {
   const configTemplate = `./templates/config-${api.hasPlugin('typescript') ? 'ts' : 'js'}`
 
   api.register({
