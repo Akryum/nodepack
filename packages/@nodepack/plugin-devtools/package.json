@@ -1,0 +1,35 @@
+{
+  "name": "@nodepack/plugin-devtools",
+  "version": "0.5.5",
+  "description": "Nodepack plugin development tools",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Akryum/nodepack/issues"
+  },
+  "homepage": "https://github.com/Akryum/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "plugin-build-ts": "./src/bin/plugin-build-ts.js",
+    "plugin-build-watch": "./src/bin/plugin-build-watch.js"
+  },
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "copyfiles": "^2.1.1",
+    "execa": "^3.2.0",
+    "nodemon": "^1.19.4"
+  },
+  "devDependencies": {
+    "@nodepack/plugin-devtools": "^0.5.0"
+  }
+}
