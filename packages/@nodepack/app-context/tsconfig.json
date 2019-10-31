@@ -11,6 +11,7 @@
       "webpack-env"
     ],
     "sourceMap": true,
+    "preserveWatchOutput": true,
     // Strict
     "noImplicitAny": false,
     "noImplicitThis": true,
