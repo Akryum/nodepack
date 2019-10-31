@@ -5,8 +5,8 @@
     "packages/test/*"
   ],
   "scripts": {
-    "dev": "lerna run dev --stream",
-    "build": "lerna run build",
+    "dev": "lerna run dev --stream --scope '@nodepack/*'",
+    "build": "lerna run build --scope '@nodepack/*'",
     "clean": "rimraf packages/test/*",
     "sync": "node scripts/syncDeps.js",
     "release": "yarn clean && yarn --pure-lockfile && yarn test && node scripts/release.js",
