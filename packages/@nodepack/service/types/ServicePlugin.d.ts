@@ -6,3 +6,5 @@ type ServicePluginApplyBase = (api: PackPluginApi, options: ProjectOptions) => v
 export interface ServicePlugin extends ServicePluginApplyBase {
   defaultEnvs?: Object<string, string>
 }
+
+export type ServicePluginAPI = PackPluginApi
