@@ -11,6 +11,7 @@ exports.generateContext = (api, options) => {
     const files = [
       `${id}/context.d.ts`,
       `${id}/dist/context.d.ts`,
+      `${id}/types/context.d.ts`,
       `${id}/src/context.d.ts`,
     ]
     for (const file of files) {
