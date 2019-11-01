@@ -20,7 +20,7 @@ exports.buildTs = async (folder) => {
   await execa('copyfiles', [
     '-a',
     '-u', '1',
-    'src/{app-migrations/templates,runtime}/**',
+    'src/{{app-migrations/templates,runtime}/**,context.d.ts}',
     'dist',
   ], {
     cwd: folder,
