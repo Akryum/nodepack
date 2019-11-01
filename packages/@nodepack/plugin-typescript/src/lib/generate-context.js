@@ -21,6 +21,7 @@ exports.generateContext = (api, options) => {
       const identifier = Case.pascal(plugin.id)
       imports.push(`import ${identifier} from '${file.substr(0, file.length - '.d.ts'.length)}'`)
       types.push(identifier)
+      break
     }
   }
 
