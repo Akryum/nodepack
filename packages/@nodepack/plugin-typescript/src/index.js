@@ -2,6 +2,9 @@
 module.exports = (api, options) => {
   const path = require('path')
   const fs = require('fs')
+  const { generateContext } = require('./lib/generate-context')
+  generateContext(api, options)
+
   const useThreads = process.env.NODE_ENV === 'production' && options.parallel
 
   // Default entry
