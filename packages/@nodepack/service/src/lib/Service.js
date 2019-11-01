@@ -79,9 +79,11 @@ module.exports = class Service {
   }
 
   resolvePlugins () {
+    const pickDefault = mod => mod.default || mod
+
     const idToPlugin = (id, builtin = false) => (new ServicePlugin(
       id.replace(/^..\//, 'built-in:'),
-      builtin ? require(id) : loadModule(id, this.cwd)
+      pickDefault(builtin ? require(id) : loadModule(id, this.cwd))
     ))
 
     const builtInPlugins = [
@@ -103,7 +105,7 @@ module.exports = class Service {
         ) {
           let apply = () => {}
           try {
-            apply = loadModule(id, this.cwd)
+            apply = pickDefault(loadModule(id, this.cwd))
           } catch (e) {
             warn(`Optional dependency ${id} is not installed.`)
           }
