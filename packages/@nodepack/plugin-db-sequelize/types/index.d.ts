@@ -1,10 +1,3 @@
-import { Sequelize, Model, ModelCtor } from 'sequelize'
+export { default as SequelizeContext } from './context'
 
 export * from 'sequelize'
-
-export interface SequelizeContext {
-  sequelize: Sequelize
-  models: {
-    [key: string]: ModelCtor<Model>
-  }
-}

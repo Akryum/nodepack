@@ -1,15 +1,6 @@
 import { Strategy } from 'passport'
-
-export interface PassportUser {
-  id: string
-}
-
-export interface PassportContext<U = PassportUser> {
-  user: U
-  account: U
-  login: (user: U) => Promise<void>
-  logout: () => Promise<void>
-}
+import PassportContext, { PassportUser } from './context'
+export { default as PassportContext, PassportUser } from './context'
 
 // Helpers
 
