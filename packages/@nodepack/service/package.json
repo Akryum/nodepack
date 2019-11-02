@@ -42,6 +42,7 @@
     "cli-highlight": "^2.1.1",
     "cliui": "^5.0.0",
     "cosmiconfig": "^5.2.1",
+    "deasync": "^0.1.15",
     "dotenv": "^8.1.0",
     "execa": "^2.0.4",
     "find-up": "^4.1.0",

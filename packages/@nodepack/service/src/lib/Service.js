@@ -76,6 +76,9 @@ module.exports = class Service {
 
     /** @type {string} */
     this.configPath = null
+
+    // @ts-ignore
+    process.NODEPACK_SERVICE = this
   }
 
   resolvePlugins () {
