@@ -4,7 +4,7 @@ import config from '@nodepack/app-config'
 // @ts-ignore
 const hooks: Hookable = global._contextHooks = global._contextHooks || new Hookable()
 
-export async function createContext () : Promise<any> {
+export async function createContext (): Promise<any> {
   const ctx = {
     config,
   }

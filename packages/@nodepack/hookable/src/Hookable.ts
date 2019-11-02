@@ -92,7 +92,7 @@ export class Hookable {
    */
   _flattenHooks (
     configHooks: ConfigHooks,
-    separator: string = ':',
+    separator = ':',
     hooks: { [key: string]: Function } = {},
     parentName: string = null,
   ) {

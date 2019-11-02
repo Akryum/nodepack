@@ -29,8 +29,14 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     // ts-ignore
     '@typescript-eslint/ban-ts-ignore': 1,
+    // semis
+    '@typescript-eslint/member-delimiter-style': [2, {
+      multiline: { delimiter: 'none' },
+      singleline: { delimiter: 'comma' },
+    }],
     // @TODO fix the warnings below
-    '@typescript-eslint/no-var-requires': 1,
+    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-use-before-define': 1,
   },
 }

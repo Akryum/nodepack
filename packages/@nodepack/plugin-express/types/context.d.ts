@@ -6,5 +6,5 @@ export default interface ExpressContext {
   httpServer: Server
   req: Request
   res: Response
-  port: Number
+  port: number
 }

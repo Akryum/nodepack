@@ -23,7 +23,10 @@
     "strictNullChecks": false,
   },
   "include": [
-    "packages/@nodepack/*/src/**/*", "packages/@nodepack/migrator/types/MigratorPlugin.d.ts",
+    "packages/@nodepack/*/src/**/*",
+    "packages/@nodepack/*/types/**/*",
+    "packages/@nodepack/service/weback.config.js",
+    "packages/@nodepack/migrator/types/MigratorPlugin.d.ts",
   ],
   "exclude": [
     "node_modules"
