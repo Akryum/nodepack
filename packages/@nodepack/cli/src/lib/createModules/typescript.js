@@ -22,18 +22,6 @@ module.exports = api => {
     group: featureName,
   })
 
-  api.injectPrompt({
-    name: 'useTsLint',
-    when: answers => answers.features.includes('ts'),
-    type: 'confirm',
-    message: 'Use TS Lint',
-    // @ts-ignore
-    description: 'Checks for code quality and style.',
-    default: true,
-    // @ts-ignore
-    group: featureName,
-  })
-
   api.onPromptComplete((answers, preset) => {
     if (answers.features.includes('ts')) {
       // @ts-ignore
