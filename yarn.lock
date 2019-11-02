@@ -1616,28 +1616,6 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@nodepack/app-config@^0.4.5":
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/@nodepack/app-config/-/app-config-0.4.5.tgz#fa91b11d0a8d77778a293ca2cc9a4ed492f3bf06"
-  integrity sha512-Em2S5IW0Q/EEFrq9GVsPl8SP4fu3cEezxOkCaFVnHCiFi0F9HLvcWUSzh2plGt+IZevqs5AMrHHv+j49olVZAQ==
-  dependencies:
-    "@nodepack/fragment" "^0.4.5"
-
-"@nodepack/app-context@^0.4.20":
-  version "0.4.20"
-  resolved "https://registry.yarnpkg.com/@nodepack/app-context/-/app-context-0.4.20.tgz#864901ba8c9385c66581701bcea256e5b501acb5"
-  integrity sha512-H7nF/GMxO7cXOgQkapx5qwwAnVWN5kzg1eQvktfeOfbvG77VNSRNBBDbCTN9Iq9vlEYu4L5GELnyTXQy4xUmqQ==
-  dependencies:
-    "@nodepack/app-config" "^0.4.5"
-    "@nodepack/hookable" "^0.4.2"
-
-"@nodepack/app@^0.4.0":
-  version "0.4.20"
-  resolved "https://registry.yarnpkg.com/@nodepack/app/-/app-0.4.20.tgz#c856b12f8995fa149822846c1d4fcba4a081538d"
-  integrity sha512-jgq6WACNW2ELV2klVh0QU45+iwURLhrArFjbQM+GnwM7T1NLVU0DMu8COQrM49IbJKxG2iRFC0Tauw13eeybSg==
-  dependencies:
-    "@nodepack/app-context" "^0.4.20"
-
 "@nodepack/conventional-changelog@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@nodepack/conventional-changelog/-/conventional-changelog-0.1.0.tgz#1cc7df099c19fee8e06909f965d8b7f103d98644"
@@ -1646,26 +1624,6 @@
     compare-func "^1.3.2"
     execa "^0.10.0"
     q "^1.5.1"
-
-"@nodepack/fragment@^0.4.5":
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/@nodepack/fragment/-/fragment-0.4.5.tgz#df45fe5d75848bffb9a213eca8e2da7651cda706"
-  integrity sha512-jRrrrnmJuD8W8hwqQF1MBRDkXS0wRfQvz9B2svc+8EaXNp1qycn1XEOnGvB8Dtf6B7v3YQO391yNYoqrFdH5wA==
-  dependencies:
-    "@nodepack/module" "^0.4.0"
-    fs-extra "^8.1.0"
-
-"@nodepack/hookable@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@nodepack/hookable/-/hookable-0.4.2.tgz#84a0bec1232d3b25ace90d0779b01f23b94ea7cc"
-  integrity sha512-LHBX+sxgbhehvE5PM3xKLxTg//hfEdHw39JoYX2kiTB7rCxi9f+2tmYjSa+rBeLo/h8m0G51I+AGxjpeL56h8g==
-
-"@nodepack/module@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@nodepack/module/-/module-0.4.0.tgz#5a969ae3f85a24f4a8dd024e0400f422b68dcbc8"
-  integrity sha512-OJ476O2+o9GjLfpJJRx3EPFi109omBkN0XoqPG4MI3ZBo8kbQfHP5iW09N5PtfmycreM3zLajdFYitfBaL0oag==
-  dependencies:
-    semver "^6.3.0"
 
 "@nuxt/friendly-errors-webpack-plugin@^2.5.0":
   version "2.5.0"
