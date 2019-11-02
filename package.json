@@ -12,7 +12,7 @@
     "sync": "node scripts/syncDeps.js",
     "release": "yarn clean && yarn --pure-lockfile && yarn test && node scripts/release.js",
     "test": "yarn run test:types && yarn run test:lint",
-    "test:types": "tsc",
+    "test:types": "tsc --noEmit",
     "test:lint": "eslint packages/@nodepack --ext .js,.jsx,.ts,.tsx",
     "test:lerna-all": "lerna run test",
     "changelog": "node scripts/genChangelog.js run",

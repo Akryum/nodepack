@@ -6,6 +6,7 @@ const deasync = require('deasync')
 async function resolve (cb) {
   try {
     /** @type {import('./src/lib/Service')} */
+    // @ts-ignore
     let service = process.NODEPACK_SERVICE
 
     if (!service || process.env.NODEPACK_API_MODE) {
