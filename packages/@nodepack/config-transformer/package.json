@@ -24,7 +24,7 @@
     "@nodepack/module": "^0.5.5",
     "@nodepack/utils": "^0.5.5",
     "deepmerge": "^4.1.1",
-    "javascript-stringify": "^2.0.0",
+    "javascript-stringify": "^1.6.0",
     "js-yaml": "^3.13.1",
     "recast": "^0.18.3"
   }
