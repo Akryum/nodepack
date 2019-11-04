@@ -74,7 +74,10 @@ class ConfigTransform {
     let source = null
     let existing
     if (checkExisting) {
-      source = files[filename].source
+      const file = files[filename]
+      if (file) {
+        source = file.source
+      }
       if (source) {
         existing = transform.read({
           source,
