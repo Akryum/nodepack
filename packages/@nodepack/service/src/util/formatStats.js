@@ -53,15 +53,15 @@ module.exports = function formatStats (stats, dir, api) {
     makeRow(
       chalk.cyan.bold(`File`),
       chalk.cyan.bold(`Size`),
-      chalk.cyan.bold(`Gzipped`)
+      chalk.cyan.bold(`Gzipped`),
     ) + `\n\n` +
     assets.map(asset => makeRow(
       /js$/.test(asset.name)
         ? chalk.green(path.join(dir, asset.name))
         : chalk.blue(path.join(dir, asset.name)),
       formatSize(asset.size),
-      getGzippedSize(asset)
-    )).join(`\n`)
+      getGzippedSize(asset),
+    )).join(`\n`),
   )
 
   return `${ui.toString()}\n`

@@ -143,7 +143,7 @@ module.exports = class ProjectCreateJob {
             log(
               `👉  Get started with the following commands:\n\n` +
               (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
-              chalk.cyan(` ${chalk.gray('$')} nodepack`)
+              chalk.cyan(` ${chalk.gray('$')} nodepack`),
             )
             log()
           }
@@ -151,7 +151,7 @@ module.exports = class ProjectCreateJob {
           if (!gitCommitSuccess) {
             warn(
               `Skipped git commit due to missing username and email in git config.\n` +
-              `You will need to perform the initial commit yourself.\n`
+              `You will need to perform the initial commit yourself.\n`,
             )
           }
         },

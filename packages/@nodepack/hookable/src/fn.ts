@@ -1,7 +1,7 @@
 export function sequence (tasks: Function[], mapper: (task: Function) => any) {
   return tasks.reduce(
     (promise, task) => promise.then(() => mapper(task)),
-    Promise.resolve()
+    Promise.resolve(),
   )
 }
 

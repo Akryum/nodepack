@@ -68,7 +68,7 @@ module.exports = (api, options) => {
 
     // Output
     const outputPath = process.env.NODEPACK_DIRNAME = api.resolve(
-      process.env.NODEPACK_OUTPUT || options.outputDir || 'dist'
+      process.env.NODEPACK_OUTPUT || options.outputDir || 'dist',
     )
     config.output
       .set('path', outputPath)

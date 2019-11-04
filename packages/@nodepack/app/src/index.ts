@@ -7,7 +7,7 @@ import { createContext, callHook } from '@nodepack/app-context'
  * @param callback Called when the application bootstrap is complete.
  */
 export async function bootstrap (
-  callback: ((ctx?: any) => Promise<void> | void) = null
+  callback: ((ctx?: any) => Promise<void> | void) = null,
 ): Promise<void> {
   try {
     const ctx = await createContext()

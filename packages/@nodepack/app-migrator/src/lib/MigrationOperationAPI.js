@@ -90,7 +90,7 @@ module.exports = class MigrationOperationAPI {
   hasPlugin (id) {
     return hasPlugin(
       id,
-      this.migrationOperation.migrator.plugins, this.migrationOperation.pkg
+      this.migrationOperation.migrator.plugins, this.migrationOperation.pkg,
     )
   }
 
@@ -138,7 +138,7 @@ module.exports = class MigrationOperationAPI {
           this.pluginId,
           existing || {},
           value,
-          this.migrationOperation.depSources
+          this.migrationOperation.depSources,
         )
       } else if (!(key in pkg)) {
         pkg[key] = value

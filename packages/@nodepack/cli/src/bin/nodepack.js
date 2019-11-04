@@ -14,7 +14,7 @@ if (process.argv.indexOf('--version') === -1) {
 // Env Check
 if (require('@nodepack/env-check').checkNode(
   'nodepack',
-  pkg.engines.node
+  pkg.engines.node,
 )) {
   require('./commands')
 }

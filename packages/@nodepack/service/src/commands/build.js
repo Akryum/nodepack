@@ -103,7 +103,7 @@ module.exports = (api, options) => {
 
           const targetDirShort = path.relative(
             api.service.cwd,
-            targetDir
+            targetDir,
           )
 
           if (!args.silent) {

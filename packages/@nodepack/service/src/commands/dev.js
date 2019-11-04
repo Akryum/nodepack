@@ -119,7 +119,7 @@ module.exports = (api, options) => {
             })
           }
         }
-      }, 500)
+      }, 500),
     )
 
     /** @type {Promise} */

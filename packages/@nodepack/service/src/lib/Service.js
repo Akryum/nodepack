@@ -86,7 +86,7 @@ module.exports = class Service {
 
     const idToPlugin = (id, builtin = false) => (new ServicePlugin(
       id.replace(/^..\//, 'built-in:'),
-      pickDefault(builtin ? require(id) : loadModule(id, this.cwd))
+      pickDefault(builtin ? require(id) : loadModule(id, this.cwd)),
     ))
 
     const builtInPlugins = [
@@ -128,7 +128,7 @@ module.exports = class Service {
     return this.plugins.reduce((
       envs,
       // @ts-ignore
-      { apply: { defaultEnvs } }
+      { apply: { defaultEnvs } },
     ) => {
       return Object.assign(envs, defaultEnvs)
     }, {})

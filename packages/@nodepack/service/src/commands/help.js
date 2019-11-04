@@ -16,7 +16,7 @@ module.exports = (api, options) => {
   function logMainHelp () {
     console.log(
       `\n  Usage: nodepack-service <command> [options]\n` +
-      `\n  Commands:\n`
+      `\n  Commands:\n`,
     )
     const commands = api.service.commands
     const padLength = getPadLength(commands)

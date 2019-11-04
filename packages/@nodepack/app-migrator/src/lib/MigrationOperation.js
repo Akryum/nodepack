@@ -161,7 +161,7 @@ module.exports = class MigrationOperation {
     const configTransforms = Object.assign({},
       defaultConfigTransforms,
       this.configTransforms,
-      reservedConfigTransforms
+      reservedConfigTransforms,
     )
     const extract = key => {
       if (

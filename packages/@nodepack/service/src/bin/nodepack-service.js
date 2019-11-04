@@ -12,7 +12,7 @@ console.log(chalk.bold(pkg.name) + ' ' + chalk.blue(pkg.version))
 // Env Check
 if (require('@nodepack/env-check').checkNode(
   'nodepack',
-  pkg.engines.node
+  pkg.engines.node,
 )) {
   require('./process')
 }

@@ -321,7 +321,7 @@ module.exports = class Migrator {
 
       // Migration requires plugins
       if (migration.options.requirePlugins && !migration.options.requirePlugins.every(
-        id => hasPlugin(id, this.plugins, this.pkg)
+        id => hasPlugin(id, this.plugins, this.pkg),
       )) {
         continue
       }
@@ -361,7 +361,7 @@ module.exports = class Migrator {
 
       // We rollback has soon has one of the required plugins is removed
       if (migration.options.requirePlugins && migration.options.requirePlugins.some(
-        id => removedPlugins.includes(id)
+        id => removedPlugins.includes(id),
       )) {
         list.push(migration)
         continue

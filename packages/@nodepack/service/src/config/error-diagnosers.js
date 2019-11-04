@@ -16,7 +16,7 @@ module.exports = (api, options) => {
       getPkgCommand(cwd),
       null,
       id,
-      dev
+      dev,
     )
     done(`Installed ${id} into the project.`)
   }

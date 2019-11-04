@@ -141,7 +141,7 @@ async function onCreate ({ wizard }) {
         description: data.description,
         link: data.link,
         default: !!data.checked,
-      })
+      }),
     ),
   }, isManualPreset)
 

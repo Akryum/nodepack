@@ -9,7 +9,7 @@ exports.checkNode = function (id, wanted, exit = true) {
   if (!semver.satisfies(process.version, wanted)) {
     console.log(chalk.red(
       'You are using Node ' + process.version + ', but this version of ' + id +
-      ' requires Node ' + wanted + '.\nPlease upgrade your Node version.'
+      ' requires Node ' + wanted + '.\nPlease upgrade your Node version.',
     ))
     if (exit) process.exit(1)
     return false

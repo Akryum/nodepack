@@ -37,6 +37,7 @@ module.exports = class MigrationOperationFile {
 
   move (newName) {
     // Copy original source
+    // eslint-disable-next-line no-self-assign
     this.source = this.source
     this.filename = newName
   }

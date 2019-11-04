@@ -16,7 +16,7 @@ module.exports = function resolveDeps (id, to, from, sources) {
     if (!isValidGitHub && !isValidURI && !semver.validRange(r2)) {
       warn(
         `invalid version range for dependency "${name}":\n\n` +
-        `- ${r2} injected by migration "${id}"`
+        `- ${r2} injected by migration "${id}"`,
       )
       continue
     }
@@ -42,7 +42,7 @@ module.exports = function resolveDeps (id, to, from, sources) {
           `conflicting versions for project dependency "${name}":\n\n` +
           `- ${r1} injected by migration "${sourceMigrationId}"\n` +
           `- ${r2} injected by migration "${id}"\n\n` +
-          `Using ${didGetNewer ? `newer ` : ``}version (${res[name]}), but this may cause build errors.`
+          `Using ${didGetNewer ? `newer ` : ``}version (${res[name]}), but this may cause build errors.`,
         )
       }
     }

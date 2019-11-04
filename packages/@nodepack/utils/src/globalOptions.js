@@ -80,7 +80,7 @@ exports.loadGlobalOptions = function (file = rcPath, schema = defaultSchema) {
         error(
           `${file} may be outdated. ` +
           `Please delete it and re-run nodepack in manual mode.\n` +
-          `(${message})`
+          `(${message})`,
         )
       })
     }
@@ -97,7 +97,7 @@ exports.saveGlobalOptions = function (toSave, file = rcPath) {
   const options = Object.assign(
     // Current options
     cloneDeep(exports.loadGlobalOptions()),
-    toSave
+    toSave,
   )
   // Remove invalid keys
   for (const key in options) {
@@ -114,7 +114,7 @@ exports.saveGlobalOptions = function (toSave, file = rcPath) {
     error(
       `Error saving preferences: ` +
       `make sure you have write access to ${file}.\n` +
-      `(${e.message})`
+      `(${e.message})`,
     )
   }
 }

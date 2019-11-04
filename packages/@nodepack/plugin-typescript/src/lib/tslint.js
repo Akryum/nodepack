@@ -25,7 +25,7 @@ module.exports = function lint (args = {}, api, silent) {
       // append .ts so that tslint apply TS rules
       filePath,
       '',
-      config
+      config,
     )
   }
 

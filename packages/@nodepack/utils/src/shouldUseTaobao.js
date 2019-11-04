@@ -68,7 +68,7 @@ module.exports = async function shouldUseTaobao (command = 'npm') {
       type: 'confirm',
       message: chalk.yellow(
         ` Your connection to the default ${command} registry seems to be slow.\n` +
-          `   Use ${chalk.cyan(registries.taobao)} for faster installation?`
+          `   Use ${chalk.cyan(registries.taobao)} for faster installation?`,
       ),
     },
   ])

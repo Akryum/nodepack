@@ -148,7 +148,7 @@ module.exports = class PluginUpgradeJob {
               if (!isTestOrDebug) {
                 log(`📦  Upgrading packages...`)
                 await updatePackage(cwd, packageManager, cliOptions.registry, queuedUpdates.map(
-                  u => `${u.info.id}@${u.version}`
+                  u => `${u.info.id}@${u.version}`,
                 ).join(' '))
               }
             } else {
@@ -298,7 +298,7 @@ module.exports = class PluginUpgradeJob {
         chalk.cyan.bold(`Id`),
         chalk.cyan.bold(`Current`),
         chalk.cyan.bold(`Wanted`),
-        chalk.cyan.bold(`Latest`)
+        chalk.cyan.bold(`Latest`),
       ) + `\n` +
       updateInfos.map(infos => {
         const { current, wanted, latest } = infos.versionsInfo
@@ -314,9 +314,9 @@ module.exports = class PluginUpgradeJob {
           infos.id,
           chalk.blue(`${current || '?'}`),
           chalk.green(`${formatVersion(wanted || '?')}`),
-          chalk.yellow(`${formatVersion(latest || '?')}`)
+          chalk.yellow(`${formatVersion(latest || '?')}`),
         )
-      }).join(`\n`)
+      }).join(`\n`),
     )
 
     log(`${ui.toString()}\n`)
