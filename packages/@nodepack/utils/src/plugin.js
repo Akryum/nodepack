@@ -8,6 +8,7 @@ const officialPlugins = [
   'db-knex',
   'db-sequelize',
   'express',
+  'eslint',
   'passport',
   'typescript',
 ]
