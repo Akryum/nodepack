@@ -18,7 +18,10 @@ module.exports = async function (cwd, rawIds) {
     ]
     for (const file of files) {
       try {
-        const apply = loadModule(file, cwd)
+        let apply = loadModule(file, cwd)
+        if (apply.default) {
+          apply = apply.default
+        }
         if (!apply) continue
         plugins.push(new MigratorPlugin(id, apply))
         break
