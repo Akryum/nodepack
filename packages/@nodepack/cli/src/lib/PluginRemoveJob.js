@@ -3,6 +3,7 @@ const { Migrator, getMigratorPlugins } = require('@nodepack/app-migrator')
 const {
   resolvePluginId,
   log,
+  error,
   chalk,
   readPkg,
   writePkg,
@@ -28,6 +29,12 @@ module.exports = class PluginRemoveJob {
    */
   async remove (cliOptions) {
     const { packageName, cwd } = this
+
+    const pkg = readPkg(cwd)
+    if (!pkg.devDependencies[packageName] && !pkg.dependencies[packageName]) {
+      error(`Plugin ${chalk.bold(packageName)} doesn't appear to be installed`)
+      process.exit(1)
+    }
 
     if (!cliOptions.yes) {
       const { confirm } = await inquirer.prompt([
