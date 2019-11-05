@@ -21,7 +21,7 @@ jobs:
             - nodepack-{{ .Branch }}-{{ checksum "yarn.lock" }}
             - nodepack-{{ .Branch }}-
             - nodepack
-      - run: yarn --network-timeout 600000
+      - run: yarn --network-timeout 600000 --pure-lockfile
       - save_cache:
           key: nodepack-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
