@@ -1,3 +1,25 @@
+# [0.7.2](https://github.com/Akryum/nodepack/compare/v0.7.1...v0.7.2) (2019-11-05)
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* incorrect peer dependencies versions ([cd9d242](https://github.com/Akryum/nodepack/commit/cd9d242))
+
+## service
+
+#### Bug Fixes
+
+* remove external warning ([b859096](https://github.com/Akryum/nodepack/commit/b859096))
+
+## utils
+
+#### Bug Fixes
+
+* use open instead of opn ([6b0393a](https://github.com/Akryum/nodepack/commit/6b0393a))
+
+
+
 # [0.7.1](https://github.com/Akryum/nodepack/compare/v0.7.0...v0.7.1) (2019-11-05)
 
 ## plugin-eslint
