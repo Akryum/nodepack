@@ -27,6 +27,10 @@ module.exports = (api, options) => {
       }
     }
 
+    if (args.watch) {
+      api.service.isWatching = true
+    }
+
     const { info, warn, error, done, log, chalk } = require('@nodepack/utils')
     const compilerInstance = require('../util/compilerInstance')
 

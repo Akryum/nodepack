@@ -77,6 +77,8 @@ module.exports = class Service {
     /** @type {string} */
     this.configPath = null
 
+    this.isWatching = false
+
     // @ts-ignore
     process.NODEPACK_SERVICE = this
   }
@@ -254,6 +256,9 @@ module.exports = class Service {
     return options
   }
 
+  /**
+   * @param {string} name
+   */
   async run (name, args = {}, rawArgv = []) {
     // resolve env
     // prioritize inline --env
@@ -275,6 +280,9 @@ module.exports = class Service {
       args._.shift() // remove command itself
       rawArgv.shift()
     }
+
+    this.commandName = name
+    this.command = command
 
     const maintenanceEnabled = name !== 'help' && process.env.NODEPACK_NO_MAINTENANCE !== 'true'
     if (maintenanceEnabled) {

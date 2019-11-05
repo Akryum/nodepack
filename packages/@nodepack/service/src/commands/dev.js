@@ -11,6 +11,8 @@ module.exports = (api, options) => {
       ...commonCommandOptions,
     },
   }, async (args) => {
+    api.service.isWatching = true
+
     const path = require('path')
     const { info, error, chalk, terminate } = require('@nodepack/utils')
     const compilerInstance = require('../util/compilerInstance')
