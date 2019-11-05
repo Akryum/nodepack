@@ -2,8 +2,6 @@
 module.exports = (api, options) => {
   const path = require('path')
   const fs = require('fs')
-  const { generateContext } = require('./lib/generate-context')
-  generateContext(api, options)
 
   const useThreads = process.env.NODE_ENV === 'production' && options.parallel
 
@@ -69,6 +67,9 @@ module.exports = (api, options) => {
           checkSyntacticErrors: useThreads,
         }])
     }
+
+    config.plugin('ts-codegen')
+      .use(require('./lib/GenerateWebpackPlugin'), [api, options])
   })
 
   if (!api.hasPlugin('eslint')) {
