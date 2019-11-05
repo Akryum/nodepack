@@ -15,6 +15,10 @@ export async function createContext (): Promise<any> {
 export const hook = hooks.hook
 export const callHook = hooks.callHook
 
+export function onCreate (cb: Function) {
+  hook('create', cb)
+}
+
 export async function callHookWithPayload<T> (
   hookName: string,
   ctx: any,
