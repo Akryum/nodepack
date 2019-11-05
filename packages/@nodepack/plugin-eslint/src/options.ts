@@ -23,9 +23,9 @@ export function createDefaultConfig (api: MigratorOperationAPI) {
     settings: {},
     rules: {
       // @ts-ignore
-      'no-console': makeJSOnlyValue(`process.env.NODE_ENV === 'production' ? 'error' : 'off'`),
+      'no-console': makeJSOnlyValue(`process.env.NODE_ENV === 'production' ? 'warn' : 'off'`),
       // @ts-ignore
-      'no-debugger': makeJSOnlyValue(`process.env.NODE_ENV === 'production' ? 'error' : 'off'`),
+      'no-debugger': makeJSOnlyValue(`process.env.NODE_ENV === 'production' ? 'warn' : 'off'`),
     },
   }
   if (api.hasPlugin('typescript')) {
