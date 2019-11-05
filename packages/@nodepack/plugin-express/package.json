@@ -33,8 +33,8 @@
     "@types/cors": "^2.8.6"
   },
   "peerDependencies": {
-    "@nodepack/app-context": "^0.5.0",
-    "@nodepack/service": "^0.5.0",
-    "@nodepack/utils": "^0.5.0"
+    "@nodepack/app-context": "^0.7.0",
+    "@nodepack/service": "^0.7.0",
+    "@nodepack/utils": "^0.7.0"
   }
 }

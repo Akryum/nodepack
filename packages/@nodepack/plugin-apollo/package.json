@@ -31,9 +31,9 @@
     "subscriptions-transport-ws": "^0.9.16"
   },
   "peerDependencies": {
-    "@nodepack/app-context": "^0.5.0",
-    "@nodepack/service": "^0.5.0",
-    "@nodepack/utils": "^0.5.0",
+    "@nodepack/app-context": "^0.7.0",
+    "@nodepack/service": "^0.7.0",
+    "@nodepack/utils": "^0.7.0",
     "graphql": "^14.4.2"
   },
   "optionalDependencies": {

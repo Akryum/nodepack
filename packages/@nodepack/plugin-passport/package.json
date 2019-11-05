@@ -27,7 +27,7 @@
     "passport": "^0.4.0"
   },
   "peerDependencies": {
-    "@nodepack/app-context": "^0.5.0",
-    "@nodepack/service": "^0.5.0"
+    "@nodepack/app-context": "^0.7.0",
+    "@nodepack/service": "^0.7.0"
   }
 }

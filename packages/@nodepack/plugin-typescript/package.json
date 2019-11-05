@@ -36,7 +36,7 @@
     "@types/webpack": "^4.39.8"
   },
   "peerDependencies": {
-    "@nodepack/service": "^0.0.1",
-    "@nodepack/utils": "^0.3.1"
+    "@nodepack/service": "^0.7.0",
+    "@nodepack/utils": "^0.7.0"
   }
 }
