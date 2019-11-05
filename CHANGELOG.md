@@ -1,3 +1,22 @@
+# [0.7.1](https://github.com/Akryum/nodepack/compare/v0.7.0...v0.7.1) (2019-11-05)
+
+## plugin-eslint
+
+#### Bug Fixes
+
+* **eslint app mig:** console to warn ([f4f1ad1](https://github.com/Akryum/nodepack/commit/f4f1ad1))
+
+## service
+
+#### Bug Fixes
+
+* **runtime fragment:** crash if no src/context folder ([8e3a8c7](https://github.com/Akryum/nodepack/commit/8e3a8c7))
+#### Features
+
+* --no-maintenance arg ([3310c8d](https://github.com/Akryum/nodepack/commit/3310c8d))
+
+
+
 # [0.7.0](https://github.com/Akryum/nodepack/compare/v0.6.0...v0.7.0) (2019-11-05)
 
 ## app-context
