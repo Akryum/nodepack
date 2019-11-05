@@ -1,6 +1,6 @@
-const files = require.context('@root', true, /^.\/config\/.*\.[jt]sx?$/)
-for (const key of files.keys()) {
-  const configModule = files(key)
+const configFiles = require.context('@root', true, /^.\/config\/.*\.[jt]sx?$/)
+for (const key of configFiles.keys()) {
+  const configModule = configFiles(key)
 
   // Default export
   const [, exportName] = /(\w+)\.[jt]sx?$/.exec(key)
