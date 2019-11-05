@@ -96,4 +96,38 @@ module.exports = api => {
       })
     },
   })
+
+  api.register({
+    id: 'skipLibCheck',
+    title: 'Add `skipLibCheck: true` to tsconfig',
+    up: (api, options) => {
+      api.modifyFile('tsconfig.json', (content) => {
+        if (typeof content === 'string') {
+          const { removeTrailingComma } = require('@nodepack/utils')
+          const { parse, stringify } = require('comment-json')
+          const config = parse(removeTrailingComma(content))
+          if (!config.compilerOptions) {
+            config.compilerOptions = {}
+          }
+          config.compilerOptions.skipLibCheck = true
+          return stringify(config, null, 2)
+        }
+        return content
+      })
+    },
+    down: (api, options) => {
+      api.modifyFile('tsconfig.json', (content) => {
+        if (typeof content === 'string') {
+          const { removeTrailingComma } = require('@nodepack/utils')
+          const { parse, stringify } = require('comment-json')
+          const config = parse(removeTrailingComma(content))
+          if (config.compilerOptions) {
+            delete config.compilerOptions.skipLibCheck
+            return stringify(config, null, 2)
+          }
+        }
+        return content
+      })
+    },
+  })
 }
