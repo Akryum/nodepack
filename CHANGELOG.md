@@ -1,3 +1,13 @@
+# [0.7.3](https://github.com/Akryum/nodepack/compare/v0.7.2...v0.7.3) (2019-11-05)
+
+## service
+
+#### Bug Fixes
+
+* crash with no-maintenance if no .nodepack/config.json file ([f7703b3](https://github.com/Akryum/nodepack/commit/f7703b3))
+
+
+
 # [0.7.2](https://github.com/Akryum/nodepack/compare/v0.7.1...v0.7.2) (2019-11-05)
 
 ## plugin-apollo
