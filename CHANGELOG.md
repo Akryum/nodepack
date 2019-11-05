@@ -1,3 +1,30 @@
+# [0.7.0](https://github.com/Akryum/nodepack/compare/v0.6.0...v0.7.0) (2019-11-05)
+
+## app-context
+
+#### Features
+
+* onCreate() ([8f7a82a](https://github.com/Akryum/nodepack/commit/8f7a82a))
+
+## plugin-typescript
+
+#### Features
+
+* **app migration:** tsconfig: skipLibCheck to true ([3964b6d](https://github.com/Akryum/nodepack/commit/3964b6d))
+* **ts:** auto config type gen ([912c410](https://github.com/Akryum/nodepack/commit/912c410))
+
+## service
+
+#### Bug Fixes
+
+* **project create:** add app-context dep ([03f8761](https://github.com/Akryum/nodepack/commit/03f8761))
+#### Features
+
+* **context:** src/context folder ([0a2befd](https://github.com/Akryum/nodepack/commit/0a2befd))
+* **Service:** isWatching, commandName, command ([7da7dee](https://github.com/Akryum/nodepack/commit/7da7dee))
+
+
+
 # [0.6.0](https://github.com/Akryum/nodepack/compare/v0.5.5...v0.6.0) (2019-11-05)
 
 ## app-migrator
