@@ -31,7 +31,7 @@
     "launch-editor": "^2.2.1",
     "lodash.clonedeep": "^4.5.0",
     "lru-cache": "^5.1.1",
-    "opn": "^6.0.0",
+    "open": "^7.0.0",
     "ora": "^3.4.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",

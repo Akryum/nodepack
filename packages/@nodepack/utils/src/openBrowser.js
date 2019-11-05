@@ -6,7 +6,7 @@
  * https://github.com/facebookincubator/create-react-app/blob/master/LICENSE
  */
 
-const opn = require('opn')
+const open = require('open')
 const execa = require('execa')
 const { default: chalk } = require('chalk')
 const execSync = require('child_process').execSync
@@ -95,7 +95,7 @@ function startBrowserProcess (browser, url) {
   // (It will always open new tab)
   try {
     const options = { app: browser }
-    opn(url, options).catch(() => {}) // Prevent `unhandledRejection` error.
+    open(url, options).catch(() => {}) // Prevent `unhandledRejection` error.
     return true
   } catch (err) {
     return false
