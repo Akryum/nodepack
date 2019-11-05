@@ -1,3 +1,73 @@
+# [0.6.0](https://github.com/Akryum/nodepack/compare/v0.5.5...v0.6.0) (2019-11-05)
+
+## app-migrator
+
+#### Bug Fixes
+
+* **app migrations:** default export ([065390f](https://github.com/Akryum/nodepack/commit/065390f))
+* **ts:** export MigratorAPI ([76c21f9](https://github.com/Akryum/nodepack/commit/76c21f9))
+
+## cli
+
+#### Bug Fixes
+
+* **plugin remove:** check if plugin is installed ([5d76598](https://github.com/Akryum/nodepack/commit/5d76598))
+* **project create:** remove tslint prompt ([3bb7a3b](https://github.com/Akryum/nodepack/commit/3bb7a3b))
+
+## config-transformer
+
+#### Bug Fixes
+
+* **config transform:** crash if file doesn't exist ([91d9159](https://github.com/Akryum/nodepack/commit/91d9159))
+* **config transform:** downgrade javascript-stringify ([daef224](https://github.com/Akryum/nodepack/commit/daef224))
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* peerDeps ([857bf0c](https://github.com/Akryum/nodepack/commit/857bf0c))
+#### Features
+
+* context type support for remaining plugins ([2e198e4](https://github.com/Akryum/nodepack/commit/2e198e4))
+
+## plugin-devtools
+
+#### Bug Fixes
+
+* **build-ts:** copy context.d.ts to dist ([eede98c](https://github.com/Akryum/nodepack/commit/eede98c))
+#### Features
+
+* new [@nodepack](https://github.com/nodepack)/plugin-devtools package ([3a4197d](https://github.com/Akryum/nodepack/commit/3a4197d))
+
+## plugin-eslint
+
+#### Features
+
+* eslint plugin ([4a43e70](https://github.com/Akryum/nodepack/commit/4a43e70))
+
+## plugin-typescript
+
+#### Bug Fixes
+
+* **generate context:** duplicated imports ([15d5367](https://github.com/Akryum/nodepack/commit/15d5367))
+* **ts:** remove tslint from app migration ([0d24985](https://github.com/Akryum/nodepack/commit/0d24985))
+#### Features
+
+* **generate context:** add /types/context.d.ts possible path ([5849e6d](https://github.com/Akryum/nodepack/commit/5849e6d))
+* **ts:** automatically generate context type from plugins ([79b165f](https://github.com/Akryum/nodepack/commit/79b165f))
+
+## service
+
+#### Bug Fixes
+
+* **plugins:** try to pick `module.default` ([f2dd33f](https://github.com/Akryum/nodepack/commit/f2dd33f))
+* **ts:** export ServicePluginAPI ([aed4bdd](https://github.com/Akryum/nodepack/commit/aed4bdd))
+#### Features
+
+* **service:** synchronous webpack.config.js ([f8b1d46](https://github.com/Akryum/nodepack/commit/f8b1d46))
+
+
+
 # [0.5.5](https://github.com/Akryum/nodepack/compare/v0.5.4...v0.5.5) (2019-10-27)
 
 ## app-config
