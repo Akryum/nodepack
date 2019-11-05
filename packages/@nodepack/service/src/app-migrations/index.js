@@ -14,7 +14,8 @@ module.exports = api => {
           'start': 'node ./dist/app.js',
         },
         dependencies: {
-          '@nodepack/app': '^0.4.0',
+          '@nodepack/app': '^0.6.0',
+          '@nodepack/app-context': '^0.6.0',
         },
       })
     },
