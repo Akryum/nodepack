@@ -284,7 +284,9 @@ module.exports = class Service {
     this.commandName = name
     this.command = command
 
-    const maintenanceEnabled = name !== 'help' && process.env.NODEPACK_NO_MAINTENANCE !== 'true'
+    const maintenanceEnabled = name !== 'help' &&
+      process.env.NODEPACK_NO_MAINTENANCE !== 'true' &&
+      args.maintenance !== false
     if (maintenanceEnabled) {
       await runMaintenance({
         cwd: this.cwd,
