@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/hookable",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A hookable class to create plugin systems",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",

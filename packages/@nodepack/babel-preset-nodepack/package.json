@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/babel-preset-nodepack",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Babel preset for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
