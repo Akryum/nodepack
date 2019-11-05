@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-eslint",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Code quality & style checking with ESLint for Nodepack projects",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
