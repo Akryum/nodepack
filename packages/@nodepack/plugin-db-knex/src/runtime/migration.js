@@ -1,6 +1,6 @@
 const DEFAULT_MIGRATION_TABLE = 'nodepack_migration_records'
 
-/** @typedef {import('../..').KnexContext} KnexContext */
+/** @typedef {import('../index').KnexContext} KnexContext */
 
 /**
  * @param {KnexContext} ctx
