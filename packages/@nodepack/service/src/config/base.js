@@ -15,7 +15,7 @@ module.exports = (api, options) => {
     const fragments = {
       config: path.resolve(__dirname, '../runtime/fragments/config.js'),
       context: path.resolve(__dirname, '../runtime/fragments/context.js'),
-      runtime: null,
+      runtime: path.resolve(__dirname, '../runtime/fragments/runtime.js'),
     }
 
     // App entries

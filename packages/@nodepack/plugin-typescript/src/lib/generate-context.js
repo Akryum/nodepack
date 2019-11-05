@@ -1,11 +1,16 @@
 const Case = require('case')
 const { resolveModule } = require('@nodepack/module')
+const path = require('path')
 const fs = require('fs-extra')
+const globby = require('globby')
 
 /** @type {import('@nodepack/service').ServicePlugin} */
 exports.generateContext = async (api, options) => {
+  const cwd = api.getCwd()
   const imports = []
   const types = []
+
+  // Plugins
   for (const plugin of api.service.plugins) {
     const { id } = plugin
     const files = [
@@ -15,7 +20,7 @@ exports.generateContext = async (api, options) => {
       `${id}/src/context.d.ts`,
     ]
     for (const file of files) {
-      const resolvedFile = resolveModule(file, api.getCwd())
+      const resolvedFile = resolveModule(file, cwd)
       if (!resolvedFile) {
         continue
       }
@@ -23,6 +28,30 @@ exports.generateContext = async (api, options) => {
       imports.push(`import ${identifier} from '${file.substr(0, file.length - '.d.ts'.length)}'`)
       types.push(identifier)
       break
+    }
+  }
+
+  // Context files
+  const files = await globby(`${options.srcDir || 'src'}/context/**/*.{js,ts}`, {
+    cwd,
+    absolute: false,
+    onlyFiles: true,
+  })
+  let firstFile = true
+  for (const file of files) {
+    const absoluteFile = path.resolve(cwd, file)
+    const content = await fs.readFile(absoluteFile, { encoding: 'utf8' })
+    if (content.includes('export default')) {
+      const [, key] = /(\w+)\.[jt]sx?$/.exec(file)
+      const dir = path.dirname(file).split('/').slice(2)
+      const importPath = dir.length ? `${dir.join('/')}/${key}` : key
+      const type = Case.pascal(importPath)
+      if (firstFile) {
+        imports.push(`// Project context files`)
+        firstFile = false
+      }
+      imports.push(`import ${type} from '@/context/${importPath}'`)
+      types.push(type)
     }
   }
 
@@ -34,6 +63,7 @@ exports.generateContext = async (api, options) => {
 /* eslint-disable */
 /* tslint:disable */
 
+// Config
 import ProjectConfigBase from './config'
 // Plugins
 ${imports.join('\n')}

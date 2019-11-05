@@ -92,6 +92,71 @@ onCreate(async (context) => {
 - `printReady`: dispatched when the `printReady()` method from `@nodepack/app` is called. Use to display usefull information when the app is started, such as listening network URLs.
 - `destroy`: dispatched when the `destroy()` method from `@nodepack/app` is called. Use to teardown active handlers such as file watchers or network connnections (for example a DB driver).
 
+### Context files
+
+In your project, you can create files in the `src/context` folder. They will be automatically loaded into your app, so it's a good place to hook into the context. For example, let's add an instance of Octokit to consume the GitHub API:
+
+```js
+// src/context/github.js
+
+import { onCreate } from '@nodepack/app-context'
+import Octokit from '@octokit/rest'
+
+onCreate (context => {
+  context.github = new Octokit(context.config.github)
+})
+```
+
+Don't forget to create the related configuration too!
+
+```js
+// config/github.js
+
+/** @type {import('@octokit/rest').Options} */
+export default{
+  auth: process.env.GITHUB_AUTH,
+}
+```
+
+Then you can use `context.github` in any Context scope:
+
+```js
+// src/index.js
+
+import { bootstrap } from '@nodepack/app'
+
+bootstrap(async (context) => {
+  const { data } = await ctx.github.repos.getReadme({
+    owner: 'Akryum',
+    repo: 'nodepack',
+    headers: {
+      accept: 'application/vnd.github.3.html',
+    },
+  })
+  console.log('Readme:', data)
+})
+```
+
+If you are using Typescript, you can also export by defaut an interface describing the properties you are adding to the context:
+
+```ts
+// src/context/github.ts
+
+import { onCreate } from '@nodepack/app-context'
+import Octokit from '@octokit/rest'
+import Context from '@context'
+
+onCreate ((context: Context) => {
+  context.github = new Octokit(context.config.github)
+})
+
+export default interface GitHubContext {
+  github: Octokit
+}
+```
+
+That way, Nodepack will automatically add the `GitHubContext` interface to the `Context` type, just like for plugins (see [Context type](#context-type)).
+
 ### Call a hook
 
 Use the `callHook` method to manually call a hook:
@@ -109,7 +174,7 @@ All async hook callbacks will be automatically awaited sequentially by order of 
 
 ## Context type
 
-If you have `@nodepack/plugin-typescript` installed in your project, types for your context objects will be automatically generated in the `src/generated` folder of your project.
+If you have `@nodepack/plugin-typescript` installed in your project, types for your context objects will be automatically generated in the `src/generated` folder of your project. This affects [configurations](./config.md), Nodepack plugins and [context files](#context-files).
 
 You can use the `@context` path alias to directly use this type anywhere in your source files:
 
