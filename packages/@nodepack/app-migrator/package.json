@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app-migrator",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "App Code Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -22,9 +22,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/config-transformer": "^0.7.0",
+    "@nodepack/config-transformer": "^0.7.2",
     "@nodepack/module": "^0.7.0",
-    "@nodepack/utils": "^0.7.0",
+    "@nodepack/utils": "^0.7.2",
     "@types/inquirer": "^0.0.43",
     "deepmerge": "^4.2.2",
     "ejs": "^2.7.1",
@@ -38,6 +38,6 @@
     "yaml-front-matter": "^4.0.0"
   },
   "devDependencies": {
-    "@nodepack/service": "^0.7.1"
+    "@nodepack/service": "^0.7.2"
   }
 }
