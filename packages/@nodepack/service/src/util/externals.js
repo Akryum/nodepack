@@ -75,7 +75,6 @@ module.exports = function (api, externals) {
       })) { return callback() }
     } while (pkgPath.length > (pkgPath = pkgPath.substr(0, pkgPath.lastIndexOf(sep, pkgPath.length - 15 - request.length)) + sep + 'node_modules' + sep + request).length)
 
-    warn(`Module directory "${context}" attempted to require "${request}" but could not be resolved, assuming external.`)
     return callback(null, `commonjs ${request}`)
   }
 
