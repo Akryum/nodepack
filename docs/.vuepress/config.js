@@ -88,8 +88,8 @@ module.exports = {
               title: 'Going further',
               collapsable: false,
               children: [
-                '/guide/config',
                 '/guide/context',
+                '/guide/config',
                 '/guide/maintenance',
                 '/guide/database',
                 '/guide/testing',
