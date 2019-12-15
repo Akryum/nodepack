@@ -18,6 +18,8 @@ hook('expressHttp', async (ctx) => {
     typeDefs: fullSchema.typeDefs,
     resolvers: fullSchema.resolvers,
     schemaDirectives: fullSchema.schemaDirectives,
+    inheritResolversFromInterfaces: true,
+    ...apolloConfig.schemaOptions || {},
   })
 
   // Apollo Server
