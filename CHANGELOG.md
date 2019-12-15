@@ -1,3 +1,13 @@
+# [0.7.4](https://github.com/Akryum/nodepack/compare/v0.7.3...v0.7.4) (2019-12-15)
+
+## plugin-apollo
+
+#### Features
+
+* **apollo:** inheritResolversFromInterfaces defaults to true + apolloConfig.schemaOptions ([d073ce9](https://github.com/Akryum/nodepack/commit/d073ce9))
+
+
+
 # [0.7.3](https://github.com/Akryum/nodepack/compare/v0.7.2...v0.7.3) (2019-11-05)
 
 ## service
