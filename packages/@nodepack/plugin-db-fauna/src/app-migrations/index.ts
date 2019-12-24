@@ -13,4 +13,16 @@ module.exports = (api: MigratorAPI) => {
       api.unrender(configTemplate)
     },
   })
+
+  api.register({
+    id: 'configRename',
+    title: 'Rename config file',
+    when: api => api.fromVersion('<0.8.0'),
+    up: (api, options) => {
+      api.move('config/db.{js,ts}', file => `${file.path}fauna.${file.ext}`)
+    },
+    down: (api, options) => {
+      api.move('config/fauna.{js,ts}', file => `${file.path}db.${file.ext}`)
+    },
+  })
 }

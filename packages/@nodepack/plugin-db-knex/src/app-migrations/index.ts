@@ -13,4 +13,16 @@ module.exports = (api: MigratorAPI) => {
       api.unrender(configTemplate)
     },
   })
+
+  api.register({
+    id: 'configRename',
+    title: 'Rename config file',
+    when: api => api.fromVersion('<0.8.0'),
+    up: (api, options) => {
+      api.move('config/db.{js,ts}', file => `${file.path}knex.${file.ext}`)
+    },
+    down: (api, options) => {
+      api.move('config/knex.{js,ts}', file => `${file.path}db.${file.ext}`)
+    },
+  })
 }
