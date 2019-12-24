@@ -48,8 +48,8 @@ async function ensureTable (ctx) {
  */
 function getTableName (ctx) {
   let table = ctx.config.dbMigrationTable
-  if (ctx.config.db) {
-    table = ctx.config.db.migrationTable
+  if (ctx.config.knex) {
+    table = ctx.config.knex.migrationTable
   }
   return table || DEFAULT_MIGRATION_TABLE
 }

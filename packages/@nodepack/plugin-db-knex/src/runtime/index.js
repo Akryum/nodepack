@@ -3,8 +3,8 @@ import knex from 'knex'
 import { readMigrationRecords, writeMigrationRecords } from './migration'
 
 hook('create', async (ctx) => {
-  if (ctx.config.db) {
-    ctx.knex = knex(ctx.config.db)
+  if (ctx.config.knex) {
+    ctx.knex = knex(ctx.config.knex)
     // DB migrations
     ctx.readDbMigrationRecords = () => readMigrationRecords(ctx)
     ctx.writeDbMigrationRecords = (data) => writeMigrationRecords(ctx, data)
@@ -13,6 +13,6 @@ hook('create', async (ctx) => {
       ctx.destroy()
     })
   } else {
-    console.warn('⚠️ No `db` configuration found. Create a `config/db.js` file that exports default a knex configuration object.')
+    console.warn('⚠️ No `knex` configuration found. Create a `config/knex.js` file that exports default a knex configuration object.')
   }
 })

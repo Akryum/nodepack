@@ -14,12 +14,12 @@ nodepack add db-knex
 
 ### Knex Configuration
 
-Create a `config/db.js` or a `config/db.ts` file in your Nodepack project.
+Create a `config/knex.js` or a `config/knex.ts` file in your Nodepack project.
 
 Javascript Example:
 
 ```js
-// config/db.js
+// config/knex.js
 
 // Knex configuration object
 // See https://knexjs.org/#Installation-client
@@ -38,7 +38,7 @@ export default {
 Typescript Example:
 
 ```ts
-// config/db.ts
+// config/knex.ts
 
 import { Config } from 'knex'
 
@@ -142,12 +142,12 @@ nodepack add db-sequelize
 
 ### Sequelize Configuration
 
-Create a `config/db.js` or a `config/db.ts` file in your Nodepack project.
+Create a `config/sequelize.js` or a `config/sequelize.ts` file in your Nodepack project.
 
 Javascript Example:
 
 ```js
-// config/db.js
+// config/sequelize.js
 
 // Sequelize options object
 // See https://sequelize.org/master/class/lib/sequelize.js~Sequelize.html#instance-constructor-constructor
@@ -167,7 +167,7 @@ export const syncModels = process.env.NODE_ENV !== 'production'
 Typescript Example:
 
 ```ts
-// config/db.ts
+// config/sequelize.ts
 
 import { Options } from '@nodepack/plugin-db-sequelize'
 
@@ -317,12 +317,12 @@ nodepack add db-fauna
 
 ### Fauna Configuration
 
-Create a `config/db.js` or a `config/db.ts` file in your Nodepack project.
+Create a `config/fauna.js` or a `config/fauna.ts` file in your Nodepack project.
 
 Javascript Example:
 
 ```js
-// config/db.js
+// config/fauna.js
 
 // Fauna configuration object
 // See https://fauna.github.io/faunadb-js/Client.html
@@ -336,7 +336,7 @@ export default {
 Typescript Example:
 
 ```ts
-// config/db.ts
+// config/fauna.ts
 
 // Fauna configuration object
 // See https://fauna.github.io/faunadb-js/Client.html

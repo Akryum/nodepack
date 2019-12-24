@@ -5,8 +5,8 @@ import { loadModels } from './models'
 let synced = false
 
 hook('create', async (ctx) => {
-  if (ctx.config.db) {
-    const sequelize = ctx.sequelize = new Sequelize(ctx.config.db)
+  if (ctx.config.sequelize) {
+    const sequelize = ctx.sequelize = new Sequelize(ctx.config.sequelize)
     loadModels(ctx)
 
     // Sync models for development
@@ -23,6 +23,6 @@ hook('create', async (ctx) => {
       sequelize.close()
     })
   } else {
-    console.warn('⚠️ No `db` configuration found. Create a `config/db.js` file that exports default a sequelize configuration object.')
+    console.warn('⚠️ No `sequelize` configuration found. Create a `config/sequelize.js` file that exports default a sequelize configuration object.')
   }
 })

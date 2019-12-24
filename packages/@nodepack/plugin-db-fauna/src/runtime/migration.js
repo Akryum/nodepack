@@ -60,9 +60,9 @@ async function ensureTable (ctx) {
  * @param {any} ctx
  */
 function getTableName (ctx) {
-  let table = ctx.config.dbMigrationTable
-  if (ctx.config.db) {
-    table = ctx.config.db.migrationTable
+  let table = ctx.config.dbMigrationTable || ctx.config.migrationCollection
+  if (ctx.config.fauna) {
+    table = ctx.config.fauna.migrationTable || ctx.config.fauna.migrationCollection
   }
   return table || DEFAULT_MIGRATION_TABLE
 }
