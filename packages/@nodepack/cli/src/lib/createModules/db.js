@@ -7,6 +7,10 @@ const DB_PLUGINS = [
     value: '@nodepack/plugin-db-sequelize',
     name: 'Sequelize (ORM)',
   },
+  {
+    value: '@nodepack/plugin-db-fauna',
+    name: 'FaunaDB',
+  },
 ]
 
 /** @type {import('../ProjectCreateJob').CreateModule} */

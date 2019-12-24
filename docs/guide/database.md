@@ -304,3 +304,124 @@ bootstrap(async (ctx: KnexContext) => {
     .first())
 })
 ```
+
+## Fauna
+
+[FaunaDB](https://fauna.com) is Cloud database suited for serverless and JAM Stack.
+
+You can add it to your project if you don't have it already:
+
+```
+nodepack add db-fauna
+```
+
+### Fauna Configuration
+
+Create a `config/db.js` or a `config/db.ts` file in your Nodepack project.
+
+Javascript Example:
+
+```js
+// config/db.js
+
+// Fauna configuration object
+// See https://fauna.github.io/faunadb-js/Client.html
+
+export default {
+  // See https://docs.fauna.com/fauna/current/security/index.html
+  secret: process.env.DB_SECRET,
+}
+```
+
+Typescript Example:
+
+```ts
+// config/db.ts
+
+// Fauna configuration object
+// See https://fauna.github.io/faunadb-js/Client.html
+
+import { ClientConfig } from 'faunadb'
+
+export default {
+  // See https://docs.fauna.com/fauna/current/security/index.html
+  secret: process.env.DB_SECRET,
+} as ClientConfig
+```
+
+### Fauna Usage in app
+
+In the [Context](./context.md), you have access to the `fauna` object.
+
+Javascript Example:
+
+```js
+// src/index.js
+
+import { bootstrap, printReady } from '@nodepack/app'
+import { query as q } from 'faunadb'
+
+/** @typedef {import('@nodepack/plugin-db-fauna').FaunaContext} FaunaContext */
+
+/**
+ * @param {FaunaContext} ctx
+ */
+bootstrap(async (ctx) => {
+  printReady()
+
+  console.log(await ctx.fauna.query(
+    q.Get(q.Collection('posts'))
+  ))
+})
+```
+
+Typescript Example:
+
+```ts
+// src/index.ts
+
+import { bootstrap, printReady } from '@nodepack/app'
+import { FaunaContext } from '@nodepack/plugin-db-fauna'
+
+bootstrap(async (ctx: FaunaContext) => {
+  printReady()
+
+  console.log(await ctx.fauna.query(
+    q.Get(q.Collection('posts'))
+  ))
+})
+```
+
+### Fauna Database Migrations
+
+Create your [Database migrations](./db-migrations.md) in the `migration/db` folder in your Nodepack project.
+
+Example migration:
+
+```js
+// migration/db/201908230224-posts.js
+
+import { query as q } from 'faunadb'
+
+/** @typedef {import('@nodepack/plugin-db-fauna').FaunaContext} FaunaContext */
+
+/**
+ * @param {FaunaContext} ctx
+ */
+exports.up = async (ctx) => {
+  await ctx.fauna.query(
+    q.CreateCollection({
+      name: 'posts'
+    })
+  )
+}
+
+/**
+ * @param {FaunaContext} ctx
+ */
+exports.down = async (ctx) => {
+  await ctx.fauna.query(
+    q.Delete(q.Collection('posts'))
+  )
+}
+```

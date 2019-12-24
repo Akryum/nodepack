@@ -7,6 +7,7 @@ const officialPlugins = [
   'babel',
   'db-knex',
   'db-sequelize',
+  'db-fauna',
   'express',
   'eslint',
   'passport',
