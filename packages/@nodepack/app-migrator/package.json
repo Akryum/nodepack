@@ -24,6 +24,7 @@
   "dependencies": {
     "@nodepack/config-transformer": "^0.7.5",
     "@nodepack/module": "^0.7.0",
+    "@nodepack/plugins-resolution": "^0.7.0",
     "@nodepack/utils": "^0.7.5",
     "@types/inquirer": "^0.0.43",
     "deepmerge": "^4.2.2",

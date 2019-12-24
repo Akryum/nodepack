@@ -5,8 +5,8 @@
 /** @typedef {import('webpack-chain')} Config */
 
 const path = require('path')
+const { matchesPluginId } = require('@nodepack/plugins-resolution')
 const {
-  matchesPluginId,
   info,
   chalk,
 } = require('@nodepack/utils')

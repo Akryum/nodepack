@@ -14,7 +14,6 @@ module.exports = {
   ...require('./object'),
   ...require('./openBrowser'),
   ...require('./pkg'),
-  ...require('./plugin'),
   ...require('./rcPath'),
   ...require('./request'),
   ...require('./run'),

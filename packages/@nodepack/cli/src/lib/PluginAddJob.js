@@ -1,6 +1,6 @@
 const { runMaintenance } = require('@nodepack/maintenance')
+const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
-  resolvePluginId,
   log,
   warn,
   error,

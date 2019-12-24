@@ -4,12 +4,12 @@
 const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = require('@nodepack/app-migrator')
 const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
 const { Migrator: DbMigrator } = require('@nodepack/db-migrator')
+const { getPlugins } = require('@nodepack/plugins-resolution')
 const {
   log,
   error,
   chalk,
   readPkg,
-  getPlugins,
   commitOnGit,
   shouldUseGit,
   hasGitChanges,

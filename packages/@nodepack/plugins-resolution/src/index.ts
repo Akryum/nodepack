@@ -14,25 +14,19 @@ const officialPlugins = [
   'typescript',
 ]
 
-/**
- * @param {string} id
- */
-exports.isPlugin = id => pluginRE.test(id)
+export function isPlugin (id: string) {
+  return pluginRE.test(id)
+}
 
-/**
- * @param {string} id
- */
-exports.isOfficialPlugin = id => exports.isPlugin(id) && officialRE.test(id)
+export function isOfficialPlugin (id: string) {
+  return isPlugin(id) && officialRE.test(id)
+}
 
-/**
- * @param {string} id
- */
-exports.toShortPluginId = id => id.replace(pluginRE, '')
+export function toShortPluginId (id: string) {
+  return id.replace(pluginRE, '')
+}
 
-/**
- * @param {string} id
- */
-exports.resolvePluginId = id => {
+export function resolvePluginId (id: string) {
   // already full id
   // e.g. nodepack-plugin-foo, @nodepack/plugin-foo, @bar/nodepack-plugin-foo
   if (pluginRE.test(id)) {
@@ -62,11 +56,7 @@ exports.resolvePluginId = id => {
   return `nodepack-plugin-${id}`
 }
 
-/**
- * @param {string} input
- * @param {string} full
- */
-exports.matchesPluginId = (input, full) => {
+export function matchesPluginId (input: string, full: string) {
   const short = full.replace(pluginRE, '')
   return (
     // input is full
@@ -78,17 +68,13 @@ exports.matchesPluginId = (input, full) => {
   )
 }
 
-/**
- * @param {string} id
- * @returns {string}
- */
-exports.getPluginLink = id => {
+export function getPluginLink (id: string): string {
   if (officialRE.test(id)) {
     return `https://github.com/Akryum/nodepack/tree/dev/packages/%40moonreach/nodepack-plugin-${
       exports.toShortPluginId(id)
     }`
   }
-  let pkg = {}
+  let pkg: any = {}
   try {
     pkg = require(`${id}/package.json`)
   } catch (e) {}
@@ -99,7 +85,7 @@ exports.getPluginLink = id => {
   )
 }
 
-exports.getPlugins = function (pkg) {
+export function getPlugins (pkg: any) {
   return Object.keys(pkg.devDependencies || {})
     .concat(Object.keys(pkg.dependencies || {}))
     .filter(exports.isPlugin)

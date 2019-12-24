@@ -33,6 +33,7 @@
     "@nodepack/fragment": "^0.7.0",
     "@nodepack/maintenance": "^0.7.5",
     "@nodepack/module": "^0.7.0",
+    "@nodepack/plugins-resolution": "^0.7.0",
     "@nodepack/utils": "^0.7.5",
     "@nuxt/friendly-errors-webpack-plugin": "^2.5.0",
     "@types/webpack-env": "^1.13.8",

@@ -1,0 +1,27 @@
+{
+  "name": "@nodepack/plugins-resolution",
+  "version": "0.7.5",
+  "description": "Plugin resolution utilities for Nodepack",
+  "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akryum/nodepack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Akryum/nodepack/issues"
+  },
+  "homepage": "https://github.com/Akryum/nodepack#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "yarn test:lint",
+    "test:lint": "eslint src",
+    "build": "plugin-build-ts",
+    "dev": "plugin-build-watch",
+    "prepublishOnly": "yarn build"
+  }
+}

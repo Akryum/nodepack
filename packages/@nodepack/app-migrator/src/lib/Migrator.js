@@ -43,6 +43,8 @@ const MigrationOperation = require('./MigrationOperation')
 const {
   toShortPluginId,
   isPlugin,
+} = require('@nodepack/plugins-resolution')
+const {
   log,
   info,
   done,

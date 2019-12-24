@@ -1,6 +1,6 @@
 /** @typedef {import('../lib/MigratorPlugin')} MigratorPlugin */
 
-const { matchesPluginId } = require('@nodepack/utils')
+const { matchesPluginId } = require('@nodepack/plugins-resolution')
 const { resolveModule } = require('@nodepack/module')
 const path = require('path')
 const fs = require('fs-extra')

@@ -31,6 +31,7 @@
     "@nodepack/env-check": "^0.7.2",
     "@nodepack/maintenance": "^0.7.5",
     "@nodepack/module": "^0.7.0",
+    "@nodepack/plugins-resolution": "^0.7.0",
     "@nodepack/utils": "^0.7.5",
     "chalk": "^2.4.2",
     "cliui": "^5.0.0",

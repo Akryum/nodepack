@@ -1,7 +1,7 @@
 const { runMaintenance } = require('@nodepack/maintenance')
 const { Migrator, getMigratorPlugins } = require('@nodepack/app-migrator')
+const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
-  resolvePluginId,
   log,
   error,
   chalk,
