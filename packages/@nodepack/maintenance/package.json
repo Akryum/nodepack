@@ -29,7 +29,7 @@
     "@nodepack/utils": "^0.7.5",
     "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
-    "inquirer": "^6.5.1"
+    "inquirer": "^7.0.1"
   },
   "devDependencies": {
     "@types/inquirer": "^0.0.43"

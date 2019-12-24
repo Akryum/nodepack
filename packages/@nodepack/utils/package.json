@@ -23,20 +23,20 @@
   "dependencies": {
     "@hapi/joi": "^15.1.0",
     "@nodepack/module": "^0.7.0",
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "execa": "^2.0.4",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
-    "inquirer": "^6.5.1",
+    "inquirer": "^7.0.1",
     "launch-editor": "^2.2.1",
     "lodash.clonedeep": "^4.5.0",
     "lru-cache": "^5.1.1",
     "open": "^7.0.0",
-    "ora": "^3.4.0",
+    "ora": "^4.0.3",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
-    "semver": "^6.3.0",
+    "semver": "^7.1.1",
     "slash": "^3.0.0",
-    "string.prototype.padstart": "^3.0.0"
+    "string.prototype.padstart": "^3.1.0"
   }
 }

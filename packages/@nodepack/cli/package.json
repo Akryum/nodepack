@@ -33,16 +33,16 @@
     "@nodepack/module": "^0.7.0",
     "@nodepack/plugins-resolution": "^0.7.0",
     "@nodepack/utils": "^0.7.5",
-    "chalk": "^2.4.2",
-    "cliui": "^5.0.0",
+    "chalk": "^3.0.0",
+    "cliui": "^6.0.0",
     "cmd-shim": "^3.0.3",
-    "commander": "^3.0.2",
-    "download-git-repo": "^2.0.0",
+    "commander": "^4.0.1",
+    "download-git-repo": "^3.0.2",
     "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
-    "inquirer": "^6.5.1",
+    "inquirer": "^7.0.1",
     "lodash.clonedeep": "^4.5.0",
-    "semver": "^6.3.0",
+    "semver": "^7.1.1",
     "validate-npm-package-name": "^3.0.0"
   }
 }

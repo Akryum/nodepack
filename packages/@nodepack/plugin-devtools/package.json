@@ -24,10 +24,10 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "copyfiles": "^2.1.1",
     "execa": "^3.2.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^2.0.2"
   },
   "devDependencies": {
     "@nodepack/plugin-devtools": "^0.7.0"

@@ -21,10 +21,10 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
-    "semver": "^6.3.0",
-    "systeminformation": "^4.14.17"
+    "semver": "^7.1.1",
+    "systeminformation": "^4.16.0"
   }
 }
