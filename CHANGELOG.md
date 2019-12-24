@@ -1,3 +1,13 @@
+# [0.7.5](https://github.com/Akryum/nodepack/compare/v0.7.4...v0.7.5) (2019-12-24)
+
+## plugin-db-fauna
+
+#### Features
+
+* fauna plugin ([3873da5](https://github.com/Akryum/nodepack/commit/3873da5))
+
+
+
 # [0.7.4](https://github.com/Akryum/nodepack/compare/v0.7.3...v0.7.4) (2019-12-15)
 
 ## plugin-apollo
