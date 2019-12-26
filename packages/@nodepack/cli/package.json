@@ -16,7 +16,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=8.12"
+    "node": ">=10"
   },
   "bin": {
     "nodepack": "src/bin/nodepack.js"
