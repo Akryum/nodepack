@@ -6,8 +6,6 @@ const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
 const { Migrator: DbMigrator } = require('@nodepack/db-migrator')
 const { getPlugins } = require('@nodepack/plugins-resolution')
 const {
-  log,
-  error,
   readPkg,
   commitOnGit,
   shouldUseGit,
@@ -21,6 +19,7 @@ const { loadFragment } = require('@nodepack/fragment')
 const inquirer = require('inquirer')
 const execa = require('execa')
 const chalk = require('chalk')
+const consola = require('consola')
 
 const FRAGMENTS = [
   'config',
@@ -154,7 +153,7 @@ class Maintenance {
     await this.runDbMigrations()
     await this.callHook('afterDbMigrations')
 
-    log(`🔧  Maintenance complete!`)
+    consola.log(`🔧  Maintenance complete!`)
 
     await this.callHook('after')
     await this.callCompleteCbs()
@@ -169,9 +168,9 @@ class Maintenance {
     const { migrations } = await migrator.prepareUp()
     if (migrations.length) {
       await this.shouldCommitState(`[nodepack] before app migration`)
-      log(`🚀  Migrating app code...`)
+      consola.log(`🚀  Migrating app code...`)
       const { migrationCount, allOptions } = await migrator.up(this.preset)
-      log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
+      consola.log(`📝  ${migrationCount} app migration${migrationCount > 1 ? 's' : ''} applied!`)
 
       this.results.appMigrationCount = migrationCount
       this.results.appMigrationAllOptions = allOptions
@@ -194,9 +193,9 @@ class Maintenance {
     const { files } = await migrator.prepareUp()
     if (files.length) {
       await this.shouldCommitState(`[nodepack] before env migration`)
-      log(`🚀  Migrating env...`)
+      consola.log(`🚀  Migrating env...`)
       const { migrationCount } = await migrator.up()
-      log(`💻️  ${migrationCount} env migration${migrationCount > 1 ? 's' : ''} applied!`)
+      consola.log(`💻️  ${migrationCount} env migration${migrationCount > 1 ? 's' : ''} applied!`)
       this.results.envMigrationCount = migrationCount
       // install additional deps (injected by migrations)
       await this.installDeps(`📦  Installing additional dependencies...`)
@@ -214,9 +213,9 @@ class Maintenance {
     const { files } = await migrator.prepareUp()
     if (files.length) {
       await this.shouldCommitState(`[nodepack] before db migration`)
-      log(`🚀  Migrating db...`)
+      consola.log(`🚀  Migrating db...`)
       const { migrationCount } = await migrator.up()
-      log(`🗄️  ${migrationCount} db migration${migrationCount > 1 ? 's' : ''} applied!`)
+      consola.log(`🗄️  ${migrationCount} db migration${migrationCount > 1 ? 's' : ''} applied!`)
       this.results.dbMigrationCount = migrationCount
       await this.shouldCommitState(`[nodepack] after db migration`)
     }
@@ -258,9 +257,9 @@ class Maintenance {
     if (shouldCommit) {
       const { success, message, error: e } = await commitOnGit(this.cwd, this.cliOptions, this.isTestOrDebug, defaultMessage)
       if (success) {
-        log(chalk.grey(`commit ${message}`), 'git')
+        consola.log(chalk.grey(`commit ${message}`), 'git')
       } else {
-        error(e.message)
+        consola.error(e.message)
         // Commit failed confirmation
         const answers = await inquirer.prompt([
           {
@@ -282,7 +281,7 @@ class Maintenance {
    */
   async installDeps (message = null) {
     if (!this.isTestOrDebug) {
-      if (message) log(message)
+      if (message) consola.log(message)
       await installDeps(this.cwd, this.packageManager, this.cliOptions.registry)
     }
   }
@@ -294,7 +293,7 @@ class Maintenance {
   async buildFragments (entryNames) {
     if (this.fragmentsBuilt || this.skipBuild) return
 
-    log(`🔨️  Building fragments ${chalk.blue(entryNames.join(', '))}...`)
+    consola.log(`🔨️  Building fragments ${chalk.blue(entryNames.join(', '))}...`)
 
     try {
       const io = process.env.NODEPACK_DEBUG === 'true' ? 'inherit' : 'ignore'

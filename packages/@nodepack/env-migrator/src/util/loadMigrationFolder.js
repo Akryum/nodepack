@@ -1,8 +1,8 @@
 const globby = require('globby')
 const { loadModule } = require('@nodepack/module')
-const { warn } = require('@nodepack/utils')
 const fs = require('fs')
 const path = require('path')
+const consola = require('consola')
 
 /**
  * @typedef Module
@@ -39,7 +39,7 @@ exports.loadMigrations = async function (cwd, files) {
       const code = loadModule(path.join(cwd, file), cwd, true)
       const { up = null, down = null } = code || {}
       if (!up && !down) {
-        warn(`No up or down functions exported in ${file}`)
+        consola.warn(`No up or down functions exported in ${file}`)
       } else {
         modules.push({
           file,
@@ -48,7 +48,7 @@ exports.loadMigrations = async function (cwd, files) {
         })
       }
     } catch (e) {
-      warn(`Error while loading migration ${file}: ${e.message}`)
+      consola.warn(`Error while loading migration ${file}: ${e.message}`)
     }
   })
   return modules

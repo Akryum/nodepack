@@ -1,6 +1,6 @@
 import { ServicePluginAPI } from '@nodepack/service'
 import { loadModule } from '@nodepack/module'
-import { log, done } from '@nodepack/utils'
+import consola from 'consola'
 import { getExtensions } from './options'
 import fs from 'fs'
 import path from 'path'
@@ -85,28 +85,27 @@ export function lint (args: any, api: ServicePluginAPI) {
     if (!args.silent) {
       const hasFixed = report.results.some(f => f.output)
       if (hasFixed) {
-        log(`The following files have been auto-fixed:`)
-        log()
+        consola.log(`The following files have been auto-fixed:\n`)
         report.results.forEach(f => {
           if (f.output) {
-            log(`  ${chalk.blue(path.relative(cwd, f.filePath))}`)
+            consola.log(`  ${chalk.blue(path.relative(cwd, f.filePath))}`)
           }
         })
-        log()
+        consola.log('')
       }
       if (report.warningCount || report.errorCount) {
         console.log(formatter(report.results))
       } else {
-        done(hasFixed ? `All lint errors auto-fixed.` : `No lint errors found!`)
+        consola.success(hasFixed ? `All lint errors auto-fixed.` : `No lint errors found!`)
       }
     }
   } else {
     console.log(formatter(report.results))
     if (isErrorsExceeded && typeof argsConfig.maxErrors === 'number') {
-      log(`Eslint found too many errors (maximum: ${argsConfig.maxErrors}).`)
+      consola.log(`Eslint found too many errors (maximum: ${argsConfig.maxErrors}).`)
     }
     if (isWarningsExceeded) {
-      log(`Eslint found too many warnings (maximum: ${argsConfig.maxWarnings}).`)
+      consola.log(`Eslint found too many warnings (maximum: ${argsConfig.maxWarnings}).`)
     }
     process.exit(1)
   }

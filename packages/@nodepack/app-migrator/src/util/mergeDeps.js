@@ -1,5 +1,5 @@
 const semver = require('semver')
-const { warn } = require('@nodepack/utils')
+const consola = require('consola')
 
 module.exports = function resolveDeps (id, to, from, sources) {
   const res = Object.assign({}, to)
@@ -14,7 +14,7 @@ module.exports = function resolveDeps (id, to, from, sources) {
     if (r1 === r2) continue
 
     if (!isValidGitHub && !isValidURI && !semver.validRange(r2)) {
-      warn(
+      consola.warn(
         `invalid version range for dependency "${name}":\n\n` +
         `- ${r2} injected by migration "${id}"`,
       )
@@ -38,7 +38,7 @@ module.exports = function resolveDeps (id, to, from, sources) {
       }
       // warn incompatible version requirements
       if (!semver.validRange(r1semver) || !semver.validRange(r2semver) || !semver.intersects(r1semver, r2semver)) {
-        warn(
+        consola.warn(
           `conflicting versions for project dependency "${name}":\n\n` +
           `- ${r1} injected by migration "${sourceMigrationId}"\n` +
           `- ${r2} injected by migration "${id}"\n\n` +

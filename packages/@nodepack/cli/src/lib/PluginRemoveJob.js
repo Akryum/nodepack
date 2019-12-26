@@ -3,13 +3,12 @@ const { runMaintenance } = require('@nodepack/maintenance')
 const { Migrator, getMigratorPlugins } = require('@nodepack/app-migrator')
 const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
-  log,
-  error,
   readPkg,
   writePkg,
 } = require('@nodepack/utils')
 const officialPluginShorthands = require('../util/officialPluginShorthands')
 const inquirer = require('inquirer')
+const consola = require('consola')
 
 module.exports = class PluginRemoveJob {
   /**
@@ -32,7 +31,7 @@ module.exports = class PluginRemoveJob {
 
     const pkg = readPkg(cwd)
     if (!pkg.devDependencies[packageName] && !pkg.dependencies[packageName]) {
-      error(`Plugin ${chalk.bold(packageName)} doesn't appear to be installed`)
+      consola.error(`Plugin ${chalk.bold(packageName)} doesn't appear to be installed`)
       process.exit(1)
     }
 
@@ -63,9 +62,9 @@ module.exports = class PluginRemoveJob {
           const { migrations } = await migrator.prepareRollback([packageName])
           if (migrations.length) {
             await shouldCommitState(`[nodepack] before remove ${packageName}`, true)
-            log(`🚀  Rollbacking app code...`)
+            consola.log(`🚀  Rollbacking app code...`)
             const { rollbackCount } = await migrator.down([packageName])
-            log(`📝  ${rollbackCount} app rollback${rollbackCount > 1 ? 's' : ''} applied!`)
+            consola.log(`📝  ${rollbackCount} app rollback${rollbackCount > 1 ? 's' : ''} applied!`)
             // In case package.json content changed
             pkg = readPkg(cwd)
           }
@@ -82,7 +81,7 @@ module.exports = class PluginRemoveJob {
         },
         after: async ({ shouldCommitState }) => {
           await shouldCommitState(`[nodepack] after remove ${packageName}`, true)
-          log(`🎉  Successfully removed ${chalk.yellow(packageName)}.`)
+          consola.success(`🎉  Successfully removed ${chalk.bold(packageName)}.`)
         },
       },
     })

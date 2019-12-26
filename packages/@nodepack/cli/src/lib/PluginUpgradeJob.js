@@ -23,7 +23,6 @@ const chalk = require('chalk')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
-  log,
   logWithSpinner,
   stopSpinner,
   getPackageMetadata,
@@ -33,6 +32,7 @@ const {
 const officialPluginShorthands = require('../util/officialPluginShorthands')
 const inquirer = require('inquirer')
 const semver = require('semver')
+const consola = require('consola')
 
 module.exports = class PluginUpgradeJob {
   /**
@@ -84,7 +84,7 @@ module.exports = class PluginUpgradeJob {
 
           // No updates
           if (wantedUpgrades === 0 && latestUpgrades === 0) {
-            log(`${chalk.green('✔')}  No plugin upgrades available.`)
+            consola.log(`${chalk.green('✔')}  No plugin upgrades available.`)
             process.exit()
           } else {
             this.printAvailableUpdates(updateInfos)
@@ -146,13 +146,13 @@ module.exports = class PluginUpgradeJob {
               await shouldCommitState(`[nodepack] before upgrade ${count} plugin${count > 1 ? 's' : ''}`, true)
 
               if (!isTestOrDebug) {
-                log(`📦  Upgrading packages...`)
+                consola.log(`📦  Upgrading packages...`)
                 await updatePackage(cwd, packageManager, cliOptions.registry, queuedUpdates.map(
                   u => `${u.info.id}@${u.version}`,
                 ).join(' '))
               }
             } else {
-              log(`${chalk.green('✔')}  No plugin upgrades applied.`)
+              consola.log(`${chalk.green('✔')}  No plugin upgrades applied.`)
               process.exit()
             }
           }
@@ -160,7 +160,7 @@ module.exports = class PluginUpgradeJob {
         after: async ({ shouldCommitState }) => {
           const count = queuedUpdates.length
           await shouldCommitState(`[nodepack] after upgrade ${count} plugin${count > 1 ? 's' : ''}`, true)
-          log(`🎉  Successfully upgraded ${chalk.yellow(`${count} plugin${count > 1 ? 's' : ''}`)}.`)
+          consola.success(`🎉  Successfully upgraded ${chalk.bold(`${count} plugin${count > 1 ? 's' : ''}`)}.`)
         },
       },
     })
@@ -291,7 +291,7 @@ module.exports = class PluginUpgradeJob {
       return `${id}\t    ${a}\t ${b}\t ${c}`
     }
 
-    log(`Available updates:\n`)
+    consola.log(`Available updates:\n`)
 
     ui.div(
       makeRow(
@@ -319,6 +319,6 @@ module.exports = class PluginUpgradeJob {
       }).join(`\n`),
     )
 
-    log(`${ui.toString()}\n`)
+    consola.log(`${ui.toString()}\n`)
   }
 }

@@ -12,15 +12,12 @@ const { runMaintenance } = require('@nodepack/maintenance')
 const inquirer = require('inquirer')
 const cloneDeep = require('lodash.clonedeep')
 const chalk = require('chalk')
+const consola = require('consola')
 const {
   loadGlobalOptions,
   saveGlobalOptions,
-  clearConsole,
   logWithSpinner,
   stopSpinner,
-  log,
-  warn,
-  error,
   getPkgCommand,
   installDeps,
   defaultPreset,
@@ -81,7 +78,7 @@ module.exports = class ProjectCreateJob {
     /** @type {Preset} */
     const finalPreset = cloneDeep(preset)
 
-    await clearConsole()
+    consola.clear()
     logWithSpinner(`✨`, `Creating project in ${chalk.yellow(cwd)}.`)
 
     // generate package.json with plugin dependencies
@@ -105,7 +102,7 @@ module.exports = class ProjectCreateJob {
         before: async ({ packageManager, isTestOrDebug }) => {
           // install plugins
           stopSpinner()
-          log(`⚙  Installing nodepack plugins. This might take a while...`)
+          consola.log(`⚙  Installing nodepack plugins. This might take a while...`)
           if (isTestOrDebug) {
             // in development, avoid installation process
             const setupDevProject = require('../util/setupDevProject')
@@ -138,18 +135,18 @@ module.exports = class ProjectCreateJob {
 
           // log instructions
           if (!cliOptions.skipGetStarted) {
-            log()
-            log(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
-            log(
+            consola.log('')
+            consola.success(`🎉  Successfully created project ${chalk.yellow(projectName)}.`)
+            consola.log(
               `👉  Get started with the following commands:\n\n` +
               (cwd === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${projectName}\n`)) +
               chalk.cyan(` ${chalk.gray('$')} nodepack`),
             )
-            log()
+            consola.log('')
           }
 
           if (!gitCommitSuccess) {
-            warn(
+            consola.warn(
               `Skipped git commit due to missing username and email in git config.\n` +
               `You will need to perform the initial commit yourself.\n`,
             )
@@ -176,7 +173,7 @@ module.exports = class ProjectCreateJob {
       try {
         preset = JSON.parse(cliOptions.inlinePreset)
       } catch (e) {
-        error(`CLI inline preset is not valid JSON: ${cliOptions.inlinePreset}`)
+        consola.error(`CLI inline preset is not valid JSON: ${cliOptions.inlinePreset}`)
         process.exit(1)
       }
     } else {
@@ -191,7 +188,7 @@ module.exports = class ProjectCreateJob {
   async promptAndResolvePreset (answers = null) {
     // prompt
     if (!answers) {
-      await clearConsole()
+      consola.clear()
       answers = await inquirer.prompt(this.resolveFinalPrompts())
     }
 

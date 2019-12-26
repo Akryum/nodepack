@@ -1,4 +1,5 @@
-const { error, stopSpinner } = require('@nodepack/utils')
+const { stopSpinner } = require('@nodepack/utils')
+const consola = require('consola')
 const PluginUpgradeJob = require('../lib/PluginUpgradeJob')
 
 async function upgrade (plugins, options) {
@@ -16,7 +17,7 @@ module.exports = (...args) => {
   // @ts-ignore
   return upgrade(...args).catch(err => {
     stopSpinner(false) // do not persist
-    error(err)
+    consola.error(err)
     if (!process.env.NODEPACK_TEST) {
       process.exit(1)
     }

@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra')
 const path = require('path')
-const { error } = require('@nodepack/utils')
+const consola = require('consola')
 
 /**
  * @param {string} cwd
@@ -40,7 +40,7 @@ module.exports = async function (cwd, files, previousFileNames) {
       await fs.ensureDir(path.dirname(filePath))
       await fs.writeFile(filePath, file.source)
     } catch (e) {
-      error(`Error while writing ${filename}`)
+      consola.error(`Error while writing ${filename}`)
       throw e
     }
   }

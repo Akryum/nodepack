@@ -18,7 +18,7 @@ const { isBinaryFileSync } = require('isbinaryfile')
 const ejs = require('ejs')
 const { resolveFile, resolveFiles } = require('../util/files')
 const { hasPlugin } = require('../util/plugins')
-const { warn } = require('@nodepack/utils')
+const consola = require('consola')
 const { ConfigTransform, stringifyJS } = require('@nodepack/config-transformer')
 const mergeDeps = require('../util/mergeDeps')
 const { resolveModule } = require('@nodepack/module')
@@ -108,7 +108,7 @@ module.exports = class MigrationOperationAPI {
       !options.file
     ) {
       if (hasReserved) {
-        warn(`Reserved config transform '${key}'`)
+        consola.warn(`Reserved config transform '${key}'`)
       }
       return
     }

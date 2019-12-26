@@ -42,8 +42,9 @@ const defaultsDeep = require('lodash/defaultsDeep')
 const ServicePlugin = require('./ServicePlugin')
 const ServicePluginAPI = require('./ServicePluginAPI')
 const { getPlugins } = require('@nodepack/plugins-resolution')
-const { info, warn, error, readPkg } = require('@nodepack/utils')
+const { readPkg } = require('@nodepack/utils')
 const chalk = require('chalk')
+const consola = require('consola')
 const { loadModule } = require('@nodepack/module')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { defaultOptions } = require('./options')
@@ -110,11 +111,12 @@ module.exports = class Service {
           this.pkg.optionalDependencies &&
           id in this.pkg.optionalDependencies
         ) {
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           let apply = () => {}
           try {
             apply = pickDefault(loadModule(id, this.cwd))
           } catch (e) {
-            warn(`Optional dependency ${id} is not installed.`)
+            consola.warn(`Optional dependency ${id} is not installed.`)
           }
 
           return new ServicePlugin(id, apply)
@@ -159,7 +161,7 @@ module.exports = class Service {
 
     process.env.NODEPACK_ENV = env
 
-    info(`⚙️  Env mode is ${chalk.bold(chalk.blue(process.env.NODEPACK_ENV))}`)
+    consola.info(`⚙️  Env mode is ${chalk.bold(chalk.blue(process.env.NODEPACK_ENV))}`)
 
     this.projectOptions = this.loadConfig()
 
@@ -202,7 +204,7 @@ module.exports = class Service {
             }
           }
         } catch (e) {
-          error(e)
+          consola.error(e)
         }
       }
     }
@@ -273,7 +275,7 @@ module.exports = class Service {
     args._ = args._ || []
     let command = this.commands[name]
     if (!command && name) {
-      error(`command "${name}" does not exist.`)
+      consola.error(`command "${name}" does not exist.`)
       process.exit(1)
     }
     if (!command || args.help) {

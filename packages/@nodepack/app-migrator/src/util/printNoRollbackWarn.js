@@ -1,10 +1,10 @@
 /** @typedef {import('../lib/Migrator').Migration} Migration */
 
-const { warn } = require('@nodepack/utils')
+const consola = require('consola')
 
 /**
  * @param {Migration} migration
  */
 module.exports = function (migration) {
-  warn(`Migration ${migration.options.id} of plugin ${migration.plugin.id} doesn't define a down operation.`)
+  consola.warn(`Migration ${migration.options.id} of plugin ${migration.plugin.id} doesn't define a down operation.`)
 }

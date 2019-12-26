@@ -94,11 +94,12 @@ module.exports = class DiagnoseErrorPlugin {
    * @returns {Promise.<boolean>}
    */
   async suggestFix (suggestion) {
-    const { info, loadGlobalOptions, saveGlobalOptions } = require('@nodepack/utils')
+    const { loadGlobalOptions, saveGlobalOptions } = require('@nodepack/utils')
+    const consola = require('consola')
     const chalk = require('chalk')
     const inquirer = require('inquirer')
 
-    info(chalk.blue(`Error diagnostic: ${chalk.bold(suggestion.title)}`))
+    consola.info(chalk.blue(`Error diagnostic: ${chalk.bold(suggestion.title)}`))
 
     // Saved user answer to apply or skip automatically
     let { suggestions } = loadGlobalOptions()

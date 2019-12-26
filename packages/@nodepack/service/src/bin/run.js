@@ -23,8 +23,8 @@ async function run () {
   const service = new Service(cwd)
 
   service.run(command, args, rawArgv).catch(err => {
-    const { error } = require('@nodepack/utils')
-    error(err)
+    const consola = require('consola')
+    consola.error(err)
     process.exit(1)
   })
 }

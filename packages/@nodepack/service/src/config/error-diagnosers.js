@@ -1,15 +1,14 @@
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
   const {
-    info,
-    done,
     getPkgCommand,
     installPackage,
   } = require('@nodepack/utils')
   const { mayBeNodeModule } = require('@nodepack/module')
+  const consola = require('consola')
 
   const installModule = async (id, dev = false) => {
-    info(`Installing ${id}...`)
+    consola.info(`Installing ${id}...`)
     const cwd = api.getCwd()
     await installPackage(
       cwd,
@@ -18,7 +17,7 @@ module.exports = (api, options) => {
       id,
       dev,
     )
-    done(`Installed ${id} into the project.`)
+    consola.success(`Installed ${id} into the project.`)
   }
 
   // Auto install babel

@@ -14,12 +14,13 @@ module.exports = (api, options) => {
     api.service.isWatching = true
 
     const path = require('path')
-    const { info, error, terminate } = require('@nodepack/utils')
+    const { terminate } = require('@nodepack/utils')
+    const consola = require('consola')
     const chalk = require('chalk')
     const compilerInstance = require('../util/compilerInstance')
     const debounce = require('lodash/debounce')
 
-    info(chalk.blue('Building for development...'))
+    consola.info(chalk.blue('Building for development...'))
 
     // Entry
     const { getDefaultEntry } = require('../util/defaultEntry.js')
@@ -35,7 +36,7 @@ module.exports = (api, options) => {
       const port = await getDefaultPort(api, options, args)
       moreEnv.PORT = port.toString()
       if (api.service.env === 'development') {
-        info(`\`process.env.PORT\` has been set to ${port}`)
+        consola.info(`\`process.env.PORT\` has been set to ${port}`)
       }
     }
 
@@ -65,7 +66,7 @@ module.exports = (api, options) => {
       webpackConfig.watchOptions,
       debounce(async (err, stats) => {
         if (err) {
-          error(err)
+          consola.error(err)
         } else {
           // Kill previous process
           await terminateApp()
@@ -80,12 +81,12 @@ module.exports = (api, options) => {
           }
 
           if (stats.hasErrors()) {
-            error(`Build failed with errors.`)
+            consola.error(`Build failed with errors.`)
           } else {
             if (child) {
-              info(chalk.blue('App restarting...'))
+              consola.info(chalk.blue('App restarting...'))
             } else {
-              info(chalk.blue('App starting...'))
+              consola.info(chalk.blue('App starting...'))
             }
 
             terminated = false
@@ -105,16 +106,16 @@ module.exports = (api, options) => {
             })
 
             child.on('error', err => {
-              error(err)
+              consola.error(err)
               terminated = true
             })
 
             child.on('exit', (code, signal) => {
               if (terminating !== currentChild) {
                 if (code !== 0) {
-                  info(chalk.red(`App exited with error code ${code} and signal '${signal}'.`))
+                  consola.info(chalk.red(`App exited with error code ${code} and signal '${signal}'.`))
                 } else {
-                  info(chalk.green('App exited, waiting for changes...'))
+                  consola.info(chalk.green('App exited, waiting for changes...'))
                 }
               }
               terminated = true
@@ -151,7 +152,7 @@ module.exports = (api, options) => {
         child.kill('SIGINT')
         return true
       } catch (e) {
-        error(`Couldn't terminate process ${child.pid}: ${e}`)
+        consola.error(`Couldn't terminate process ${child.pid}: ${e}`)
       }
     }
 
@@ -159,7 +160,7 @@ module.exports = (api, options) => {
       if (await terminateApp()) {
         process.exit(0)
       } else {
-        error(`Failed terminating app`)
+        consola.error(`Failed terminating app`)
         process.exit(1)
       }
     }

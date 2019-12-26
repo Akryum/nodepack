@@ -7,9 +7,7 @@
 const path = require('path')
 const chalk = require('chalk')
 const { matchesPluginId } = require('@nodepack/plugins-resolution')
-const {
-  info,
-} = require('@nodepack/utils')
+const consola = require('consola')
 
 module.exports = class ServicePluginAPI {
   /**
@@ -173,7 +171,7 @@ module.exports = class ServicePluginAPI {
       console.log(chalk.dim(`Service restart aborted to avoid infinite loop (reason: ${reason})`))
       return
     }
-    info(chalk.blue(`Service restart...`))
+    consola.info(chalk.blue(`Service restart...`))
     process.send && process.send({ restart: { reason } })
     process.exit(75)
   }

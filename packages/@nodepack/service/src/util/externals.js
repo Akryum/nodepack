@@ -7,7 +7,7 @@
 module.exports = function (api, externals) {
   const compilerInstance = require('./compilerInstance')
   const { NODE_BUILTINS } = require('../const')
-  const { warn, pkgNameRegEx } = require('@nodepack/utils')
+  const { pkgNameRegEx } = require('@nodepack/utils')
   const { sep } = require('path')
 
   /** @type {import('webpack').Configuration?} */

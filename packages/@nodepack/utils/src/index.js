@@ -9,7 +9,6 @@ module.exports = {
   ...require('./git'),
   ...require('./globalOptions'),
   ...require('./json'),
-  ...require('./logger'),
   ...require('./object'),
   ...require('./openBrowser'),
   ...require('./pkg'),

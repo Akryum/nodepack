@@ -2,9 +2,6 @@ const chalk = require('chalk')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
-  log,
-  warn,
-  error,
   loadGlobalOptions,
   getPkgCommand,
   installPackage,
@@ -12,6 +9,7 @@ const {
   writePkg,
 } = require('@nodepack/utils')
 const officialPluginShorthands = require('../util/officialPluginShorthands')
+const consola = require('consola')
 
 module.exports = class PluginAddJob {
   /**
@@ -43,7 +41,7 @@ module.exports = class PluginAddJob {
           const alreadyInPkg = plugins.includes(packageName)
 
           if (alreadyInPkg) {
-            warn(`${packageName} already installed, migrations may not run!`)
+            consola.warn(`${packageName} already installed, migrations may not run!`)
           }
 
           // Installation
@@ -53,15 +51,15 @@ module.exports = class PluginAddJob {
             writePkg(cwd, pkg)
           } else if ((!alreadyInPkg || cliOptions.forceInstall) && !cliOptions.noInstall) {
             await shouldCommitState(`[nodepack] before add ${packageName}`, true)
-            log()
-            log(`📦  Installing ${chalk.cyan(packageName)}...`)
-            log()
+            consola.log('')
+            consola.log(`📦  Installing ${chalk.cyan(packageName)}...`)
+            consola.log('')
 
             const packageManager = loadGlobalOptions().packageManager || getPkgCommand(cwd)
             await installPackage(cwd, packageManager, cliOptions.registry, packageName)
 
-            log(`${chalk.green('✔')}  Successfully installed plugin: ${chalk.cyan(packageName)}`)
-            log()
+            consola.log(`${chalk.green('✔')}  Successfully installed plugin: ${chalk.cyan(packageName)}`)
+            consola.log('')
           }
 
           if (!alreadyInPkg) {
@@ -69,13 +67,13 @@ module.exports = class PluginAddJob {
           }
 
           if (!plugins.includes(packageName)) {
-            error(`${packageName} is not installed, can't continue the installation`)
+            consola.error(`${packageName} is not installed, can't continue the installation`)
             process.exit(1)
           }
         },
         after: async ({ shouldCommitState }) => {
           await shouldCommitState(`[nodepack] after add ${packageName}`, true)
-          log(`🎉  Successfully added ${chalk.yellow(packageName)}.`)
+          consola.success(`🎉  Successfully added ${chalk.bold(packageName)}.`)
         },
       },
     })

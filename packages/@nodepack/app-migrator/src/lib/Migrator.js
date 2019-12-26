@@ -46,11 +46,6 @@ const {
   isPlugin,
 } = require('@nodepack/plugins-resolution')
 const {
-  log,
-  info,
-  done,
-  warn,
-  error,
   logWithSpinner,
   stopSpinner,
   ensureConfigFile,
@@ -60,16 +55,18 @@ const {
   FILE_APP_MIGRATIONS_PLUGIN_VERSIONS,
   FILE_APP_MIGRATIONS_RECORDS,
 } = require('@nodepack/utils')
+const consola = require('consola')
 const inquirer = require('inquirer')
 const { getVersion, hasPlugin } = require('../util/plugins')
 const printNoRollbackWarn = require('../util/printNoRollbackWarn')
 
 const logTypes = {
-  log,
-  info,
-  done,
-  warn,
-  error,
+  log: consola.log,
+  info: consola.info,
+  done: consola.success,
+  success: consola.success,
+  warn: consola.warn,
+  error: consola.error,
 }
 
 module.exports = class Migrator {
@@ -157,7 +154,7 @@ module.exports = class Migrator {
           extractConfigFiles,
         })
       } catch (e) {
-        error(`An error occured while performing app migration: ${chalk.grey(migration.plugin.id)} ${chalk.bold(migration.options.title)}`)
+        consola.error(`An error occured while performing app migration: ${chalk.grey(migration.plugin.id)} ${chalk.bold(migration.options.title)}`)
         stopSpinner(false)
         console.error(e)
         process.exit(1)
@@ -401,7 +398,7 @@ module.exports = class Migrator {
         if (!options) {
           options = rootOptions[migration.plugin.id] = {}
         }
-        log(chalk.grey(`${migration.plugin.id} is prompting:`))
+        consola.log(chalk.grey(`${migration.plugin.id} is prompting:`))
         let answers = await inquirer.prompt(prompts)
         // Check if answers are seriazable
         try {
@@ -411,7 +408,7 @@ module.exports = class Migrator {
             throw new Error(`Missing answers`)
           }
         } catch (e) {
-          error(`Answers are not serializable into JSON for plugin ${migration.plugin.id} migration ${migration.options.id}`)
+          consola.error(`Answers are not serializable into JSON for plugin ${migration.plugin.id} migration ${migration.options.id}`)
         }
         options[migration.options.id] = answers
       }
@@ -480,13 +477,13 @@ module.exports = class Migrator {
         const shortId = toShortPluginId(pluginId)
         const logFn = logTypes[type]
         if (!logFn) {
-          error(`Invalid api.addNotice type '${type}'.`, shortId)
+          consola.error(`Invalid api.addNotice type '${type}'.`, shortId)
         } else {
           const tag = message ? shortId : null
           logFn(message, tag)
         }
       })
-      log()
+      consola.log('')
     }
   }
 }

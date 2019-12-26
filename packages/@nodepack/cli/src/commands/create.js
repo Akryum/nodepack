@@ -1,7 +1,8 @@
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const { clearConsole, error, stopSpinner } = require('@nodepack/utils')
+const { stopSpinner } = require('@nodepack/utils')
+const consola = require('consola')
 const validateProjectName = require('validate-npm-package-name')
 const inquirer = require('inquirer')
 const ProjectCreateJob = require('../lib/ProjectCreateJob')
@@ -36,7 +37,7 @@ async function create (projectName, options) {
     if (options.force) {
       await fs.remove(targetDir)
     } else {
-      await clearConsole()
+      consola.clear()
       if (inCurrent) {
         const { ok } = await inquirer.prompt([
           {
@@ -79,7 +80,7 @@ module.exports = (...args) => {
   // @ts-ignore
   return create(...args).catch(err => {
     stopSpinner(false) // do not persist
-    error(err)
+    consola.error(err)
     if (!process.env.NODEPACK_TEST) {
       process.exit(1)
     }

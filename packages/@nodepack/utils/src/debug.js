@@ -5,7 +5,7 @@ exports.checkDebug = function (targetDir) {
   const fs = require('fs')
   const path = require('path')
   const slash = require('slash')
-  const { info } = require('./logger')
+  const consola = require('consola')
   // enter debug mode when creating test repo
   if (
     slash(targetDir).indexOf('/packages/test') > 0 && (
@@ -15,6 +15,6 @@ exports.checkDebug = function (targetDir) {
   ) {
     // @ts-ignore
     process.env.NODEPACK_DEBUG = true
-    info('🐛️  Debug mode enabled')
+    consola.info('🐛️  Debug mode enabled')
   }
 }

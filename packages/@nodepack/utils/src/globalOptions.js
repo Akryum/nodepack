@@ -23,7 +23,7 @@
 const fs = require('fs-extra')
 const cloneDeep = require('lodash.clonedeep')
 const { getRcPath } = require('./rcPath')
-const { error } = require('./logger')
+const consola = require('consola')
 const { createSchema, validate } = require('./validate')
 
 const rcPath = exports.rcPath = getRcPath('.nodepackrc')
@@ -67,7 +67,7 @@ exports.loadGlobalOptions = function (file = rcPath, schema = defaultSchema) {
     try {
       cachedOptions[file] = fs.readJsonSync(file)
     } catch (e) {
-      error(
+      consola.error(
         `Error loading saved preferences: ` +
         `${file} may be corrupted or have syntax errors. ` +
         `Please fix/delete it and re-run nodepack in manual mode.\n` +
@@ -77,7 +77,7 @@ exports.loadGlobalOptions = function (file = rcPath, schema = defaultSchema) {
     }
     if (schema) {
       validate(cachedOptions[file], schema, message => {
-        error(
+        consola.error(
           `${file} may be outdated. ` +
           `Please delete it and re-run nodepack in manual mode.\n` +
           `(${message})`,
@@ -111,7 +111,7 @@ exports.saveGlobalOptions = function (toSave, file = rcPath) {
       spaces: 2,
     })
   } catch (e) {
-    error(
+    consola.error(
       `Error saving preferences: ` +
       `make sure you have write access to ${file}.\n` +
       `(${e.message})`,

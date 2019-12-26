@@ -27,6 +27,7 @@
   "dependencies": {
     "@nodepack/module": "^0.7.0",
     "@nodepack/utils": "^0.7.5",
+    "consola": "^2.11.1",
     "eslint-loader": "^3.0.3",
     "globby": "^10.0.1",
     "yorkie": "^2.0.0"

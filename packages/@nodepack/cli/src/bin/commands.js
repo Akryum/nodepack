@@ -1,6 +1,7 @@
 const program = require('commander')
 const chalk = require('chalk')
-const { error, checkDebug, terminate } = require('@nodepack/utils')
+const { checkDebug, terminate } = require('@nodepack/utils')
+const consola = require('consola')
 const isInProject = require('../util/isInProject')
 
 const cwd = process.cwd()
@@ -274,7 +275,7 @@ function getPkgInfo () {
 
 function checkInProject () {
   if (!isInProject(cwd)) {
-    error(`Can't run this command: it seems the current working directory is not a nodepack project.`)
+    consola.error(`Can't run this command: it seems the current working directory is not a nodepack project.`)
     process.exit(1)
   }
 }

@@ -7,7 +7,6 @@
 const chalk = require('chalk')
 const { findMigrations, loadMigrations } = require('../util/loadMigrationFolder')
 const {
-  error,
   logWithSpinner,
   stopSpinner,
   ensureConfigFile,
@@ -15,6 +14,7 @@ const {
   writeConfigFile,
   FILE_ENV_MIGRATIONS_RECORDS,
 } = require('@nodepack/utils')
+const consola = require('consola')
 
 module.exports = class Migrator {
   /**
@@ -65,7 +65,7 @@ module.exports = class Migrator {
           })
           count++
         } catch (e) {
-          error(`Migration failed for ${module.file}\n${e.stack || e.message}`)
+          consola.error(`Migration failed for ${module.file}\n${e.stack || e.message}`)
           await this.writeMigrationRecords()
           process.exit(1)
         }

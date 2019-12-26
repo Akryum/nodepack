@@ -13,7 +13,7 @@ const { resolveModule } = require('@nodepack/module')
 const semver = require('semver')
 const path = require('path')
 const fs = require('fs-extra')
-const { warn, error } = require('./logger')
+const consola = require('consola')
 const LRU = require('lru-cache')
 
 const TAOBAO_DIST_URL = 'https://npm.taobao.org/dist'
@@ -147,7 +147,7 @@ exports.getPackageMetadata = async function (id, range = '') {
     result = (await request.get(`${registry}/${encodeURIComponent(id).replace(/^%40/, '@')}/${range}`)).body
     if (result) metadataCache.set(cacheId, result)
   } catch (e) {
-    warn(`Couldn't get medata for ${cacheId}: ${e.message}`)
+    consola.warn(`Couldn't get medata for ${cacheId}: ${e.message}`)
     return null
   }
   return result
@@ -163,7 +163,7 @@ exports.getPackageTaggedVersion = async function (id, tag = 'latest') {
     const res = await exports.getPackageMetadata(id)
     if (res) return res['dist-tags'][tag]
   } catch (e) {
-    error(e)
+    consola.error(e)
   }
   return null
 }

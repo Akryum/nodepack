@@ -23,6 +23,7 @@
     "strictNullChecks": false,
   },
   "include": [
+    "globals.d.ts",
     "packages/@nodepack/*/src/**/*",
     "packages/@nodepack/*/types/**/*",
     "packages/@nodepack/service/weback.config.js",

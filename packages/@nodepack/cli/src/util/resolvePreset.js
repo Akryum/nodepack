@@ -9,10 +9,9 @@ const {
   saveGlobalOptions,
   logWithSpinner,
   stopSpinner,
-  log,
-  error,
   defaultPreset,
 } = require('@nodepack/utils')
+const consola = require('consola')
 
 /**
 * @param {string} presetName
@@ -33,7 +32,7 @@ exports.resolvePreset = async function (presetName, clone = false) {
       stopSpinner()
     } catch (e) {
       stopSpinner()
-      error(`Failed fetching remote preset ${chalk.cyan(presetName)}:`)
+      consola.error(`Failed fetching remote preset ${chalk.cyan(presetName)}:`)
       throw e
     }
   }
@@ -43,14 +42,14 @@ exports.resolvePreset = async function (presetName, clone = false) {
     preset = defaultPreset
   }
   if (!preset) {
-    error(`preset "${presetName}" not found.`)
+    consola.error(`preset "${presetName}" not found.`)
     const presets = Object.keys(savedPresets)
     if (presets.length) {
-      log()
-      log(`available presets:\n${presets.join(`\n`)}`)
+      consola.log('')
+      consola.log(`available presets:\n${presets.join(`\n`)}`)
     } else {
-      log(`you don't seem to have any saved preset.`)
-      log(`run 'nodepack create' in manual mode to create a preset.`)
+      consola.log(`you don't seem to have any saved preset.`)
+      consola.log(`run 'nodepack create' in manual mode to create a preset.`)
     }
     process.exit(1)
   }

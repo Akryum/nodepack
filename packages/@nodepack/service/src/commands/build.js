@@ -31,23 +31,23 @@ module.exports = (api, options) => {
       api.service.isWatching = true
     }
 
-    const { info, warn, error, done, log } = require('@nodepack/utils')
     const chalk = require('chalk')
+    const consola = require('consola')
     const compilerInstance = require('../util/compilerInstance')
 
     process.env.NODEPACK_IS_BUILD = 'true'
 
     if (args.autoNodeEnv && process.env.NODE_ENV !== 'production') {
       if (!process.env.ORIGINAL_NODE_ENV) {
-        warn(chalk.yellow(`NODE_ENV environment variable was not defined, automatically setting to 'production'`))
+        consola.warn(chalk.yellow(`NODE_ENV environment variable was not defined, automatically setting to 'production'`))
         process.env.NODE_ENV = 'production'
       } else {
-        warn(chalk.yellow(`NODE_ENV environment variable is not set to 'production'`))
+        consola.warn(chalk.yellow(`NODE_ENV environment variable is not set to 'production'`))
       }
     }
 
     if (!args.silent) {
-      info(chalk.blue('Building project...'))
+      consola.info(chalk.blue('Building project...'))
     }
 
     const { getDefaultEntry } = require('../util/defaultEntry.js')
@@ -81,7 +81,7 @@ module.exports = (api, options) => {
     return new Promise((resolve, reject) => {
       const onError = (err) => {
         if (args.watch) {
-          error(err)
+          consola.error(err)
         } else {
           reject(err)
         }
@@ -112,11 +112,11 @@ module.exports = (api, options) => {
           )
 
           if (!args.silent) {
-            log(formatStats(stats, targetDirShort, api))
+            consola.log(formatStats(stats, targetDirShort, api))
 
-            done(chalk.green('Build complete!'))
+            consola.success(chalk.green('Build complete!'))
             if (args.watch) {
-              info(chalk.blue(`Watching for file changes...`))
+              consola.info(chalk.blue(`Watching for file changes...`))
             }
           }
 
