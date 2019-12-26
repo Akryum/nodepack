@@ -1,21 +1,16 @@
-const globby = require('globby')
-const { loadModule } = require('@nodepack/module')
-const fs = require('fs')
-const path = require('path')
-const consola = require('consola')
+import globby from 'globby'
+import { loadModule } from '@nodepack/module'
+import fs from 'fs'
+import path from 'path'
+import consola from 'consola'
 
-/**
- * @typedef Module
- * @prop {string} file
- * @prop {function} up
- * @prop {function} down
- */
+export interface Module {
+  file: string
+  up: Function
+  down: Function
+}
 
-/**
- * @param {string} cwd
- * @param {string} folder
- */
-exports.findMigrations = async function (cwd, folder) {
+export async function findMigrations (cwd: string, folder: string) {
   const folderPath = path.join(cwd, folder)
   if (!fs.existsSync(folderPath)) {
     return []
@@ -27,13 +22,8 @@ exports.findMigrations = async function (cwd, folder) {
   return files
 }
 
-/**
- * @param {string} cwd
- * @param {string[]} files
- */
-exports.loadMigrations = async function (cwd, files) {
-  /** @type {Module[]} */
-  const modules = []
+export async function loadMigrations (cwd: string, files: string[]) {
+  const modules: Module[] = []
   files.forEach(file => {
     try {
       const code = loadModule(path.join(cwd, file), cwd, true)

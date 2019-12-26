@@ -1,35 +1,40 @@
-/**
- * @typedef FileMigrationRecord
- * @prop {string} file
- * @prop {string} date
- */
-
-const chalk = require('chalk')
-const { findMigrations, loadMigrations } = require('../util/loadMigrationFolder')
-const {
+import chalk from 'chalk'
+import { findMigrations, loadMigrations, Module } from '../util/loadMigrationFolder'
+import {
   logWithSpinner,
   stopSpinner,
   ensureConfigFile,
   readConfigFile,
   writeConfigFile,
   FILE_ENV_MIGRATIONS_RECORDS,
-} = require('@nodepack/utils')
-const consola = require('consola')
+} from '@nodepack/utils'
+import consola from 'consola'
 
-module.exports = class Migrator {
-  /**
-   * @param {string} cwd
-   */
-  constructor (cwd, {
+export interface FileMigrationRecord {
+  file: string
+  date: string
+}
+
+export interface MigratorOptions {
+  migrationsFolder: string
+  context: any
+}
+
+export class Migrator {
+  cwd: string
+  migrationsFolder: string
+  context: any
+  fileMigrationRecords: FileMigrationRecord[] = []
+  upPrepared = false
+  modules: Module[]
+
+  constructor (cwd: string, {
     migrationsFolder,
     context,
-  }) {
+  }: MigratorOptions) {
     this.cwd = cwd
     this.migrationsFolder = migrationsFolder
     this.context = context
-    /** @type {FileMigrationRecord[]} */
-    this.fileMigrationRecords = []
-    this.upPrepared = false
   }
 
   async prepareUp () {
