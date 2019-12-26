@@ -3,7 +3,7 @@
  * @param {string} wanted
  */
 exports.checkNode = function (id, wanted, exit = true) {
-  const { default: chalk } = require('chalk')
+  const chalk = require('chalk')
   const semver = require('semver')
 
   if (!semver.satisfies(process.version, wanted)) {

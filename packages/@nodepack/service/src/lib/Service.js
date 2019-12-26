@@ -37,12 +37,13 @@
 const path = require('path')
 const fs = require('fs-extra')
 const Config = require('webpack-chain')
-const cosmiconfig = require('cosmiconfig')
+const { cosmiconfigSync } = require('cosmiconfig')
 const defaultsDeep = require('lodash/defaultsDeep')
 const ServicePlugin = require('./ServicePlugin')
 const ServicePluginAPI = require('./ServicePluginAPI')
 const { getPlugins } = require('@nodepack/plugins-resolution')
-const { info, warn, error, chalk, readPkg } = require('@nodepack/utils')
+const { info, warn, error, readPkg } = require('@nodepack/utils')
+const chalk = require('chalk')
 const { loadModule } = require('@nodepack/module')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { defaultOptions } = require('./options')
@@ -238,8 +239,8 @@ module.exports = class Service {
   loadConfig () {
     /** @type {ProjectOptions} */
     let options
-    const explorer = cosmiconfig('nodepack')
-    const result = explorer.searchSync(this.cwd)
+    const explorer = cosmiconfigSync('nodepack')
+    const result = explorer.search(this.cwd)
     this.configPath = result.filepath
     if (!result || result.isEmpty) {
       options = defaultOptions()

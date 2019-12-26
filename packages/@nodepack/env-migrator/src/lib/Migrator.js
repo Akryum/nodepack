@@ -4,10 +4,10 @@
  * @prop {string} date
  */
 
+const chalk = require('chalk')
 const { findMigrations, loadMigrations } = require('../util/loadMigrationFolder')
 const {
   error,
-  chalk,
   logWithSpinner,
   stopSpinner,
   ensureConfigFile,

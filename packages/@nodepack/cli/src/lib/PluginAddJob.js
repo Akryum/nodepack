@@ -1,10 +1,10 @@
+const chalk = require('chalk')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
   log,
   warn,
   error,
-  chalk,
   loadGlobalOptions,
   getPkgCommand,
   installPackage,

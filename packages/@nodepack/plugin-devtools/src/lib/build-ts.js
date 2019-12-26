@@ -1,5 +1,5 @@
 const execa = require('execa')
-const { default: chalk } = require('chalk')
+const chalk = require('chalk')
 
 /**
  * @param {string} folder

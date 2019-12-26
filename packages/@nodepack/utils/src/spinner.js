@@ -1,5 +1,5 @@
-const { default: ora } = require('ora')
-const { default: chalk } = require('chalk')
+const ora = require('ora')
+const chalk = require('chalk')
 
 const spinner = ora()
 let lastMsg = null

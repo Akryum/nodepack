@@ -1,9 +1,7 @@
 /** @typedef {import('@nodepack/utils').Preset} Preset */
 
 const { toShortPluginId } = require('@nodepack/plugins-resolution')
-const {
-  chalk,
-} = require('@nodepack/utils')
+const chalk = require('chalk')
 
 /**
  * @param {Preset} preset

@@ -27,6 +27,7 @@
     "@nodepack/fragment": "^0.7.0",
     "@nodepack/hookable": "^0.7.0",
     "@nodepack/utils": "^0.7.5",
+    "chalk": "^3.0.0",
     "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.1"

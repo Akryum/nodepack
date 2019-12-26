@@ -2,7 +2,7 @@ module.exports = function formatStats (stats, dir, api) {
   const fs = require('fs')
   const path = require('path')
   const zlib = require('zlib')
-  const { chalk } = require('@nodepack/utils')
+  const chalk = require('chalk')
   const ui = require('cliui')({ width: 80 })
 
   const json = stats.toJson({

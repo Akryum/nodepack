@@ -1,6 +1,6 @@
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
-  const { chalk } = require('@nodepack/utils')
+  const chalk = require('chalk')
   const padEnd = require('string.prototype.padend')
   const { getPadLength } = require('../util/string')
 

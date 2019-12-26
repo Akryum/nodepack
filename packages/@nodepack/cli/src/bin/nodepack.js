@@ -7,7 +7,7 @@
 const pkg = require('../../package.json')
 
 if (process.argv.indexOf('--version') === -1) {
-  const chalk = require('chalk').default
+  const chalk = require('chalk')
   console.log(chalk.bold(pkg.name) + ' ' + chalk.blue(pkg.version))
 }
 

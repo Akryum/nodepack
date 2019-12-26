@@ -1,6 +1,6 @@
 import { ServicePluginAPI } from '@nodepack/service'
 import { loadModule } from '@nodepack/module'
-import { chalk, log, done } from '@nodepack/utils'
+import { log, done } from '@nodepack/utils'
 import { getExtensions } from './options'
 import fs from 'fs'
 import path from 'path'
@@ -8,6 +8,7 @@ import globby from 'globby'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CLIEngine } from 'eslint'
 import { normalizeConfig } from './util'
+import chalk from 'chalk'
 
 export function lint (args: any, api: ServicePluginAPI) {
   const cwd = api.getCwd()

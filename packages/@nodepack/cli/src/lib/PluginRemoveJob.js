@@ -1,10 +1,10 @@
+const chalk = require('chalk')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { Migrator, getMigratorPlugins } = require('@nodepack/app-migrator')
 const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
   log,
   error,
-  chalk,
   readPkg,
   writePkg,
 } = require('@nodepack/utils')

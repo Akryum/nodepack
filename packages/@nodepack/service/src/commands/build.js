@@ -31,7 +31,8 @@ module.exports = (api, options) => {
       api.service.isWatching = true
     }
 
-    const { info, warn, error, done, log, chalk } = require('@nodepack/utils')
+    const { info, warn, error, done, log } = require('@nodepack/utils')
+    const chalk = require('chalk')
     const compilerInstance = require('../util/compilerInstance')
 
     process.env.NODEPACK_IS_BUILD = 'true'

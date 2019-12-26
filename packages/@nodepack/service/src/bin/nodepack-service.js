@@ -6,7 +6,7 @@
 // @ts-ignore
 const pkg = require('../../package.json')
 
-const chalk = require('chalk').default
+const chalk = require('chalk')
 console.log(chalk.bold(pkg.name) + ' ' + chalk.blue(pkg.version))
 
 // Env Check

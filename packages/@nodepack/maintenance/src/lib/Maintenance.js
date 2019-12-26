@@ -8,7 +8,6 @@ const { getPlugins } = require('@nodepack/plugins-resolution')
 const {
   log,
   error,
-  chalk,
   readPkg,
   commitOnGit,
   shouldUseGit,
@@ -21,6 +20,7 @@ const { Hookable } = require('@nodepack/hookable')
 const { loadFragment } = require('@nodepack/fragment')
 const inquirer = require('inquirer')
 const execa = require('execa')
+const chalk = require('chalk')
 
 const FRAGMENTS = [
   'config',

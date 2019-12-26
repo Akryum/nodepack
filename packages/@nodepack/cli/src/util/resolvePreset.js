@@ -1,6 +1,7 @@
 /** @typedef {import('@nodepack/utils').Preset} Preset */
 
 const path = require('path')
+const chalk = require('chalk')
 const loadLocalPreset = require('./loadLocalPreset')
 const loadRemotePreset = require('./loadRemotePreset')
 const {
@@ -10,7 +11,6 @@ const {
   stopSpinner,
   log,
   error,
-  chalk,
   defaultPreset,
 } = require('@nodepack/utils')
 

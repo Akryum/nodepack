@@ -8,7 +8,7 @@
 
 const open = require('open')
 const execa = require('execa')
-const { default: chalk } = require('chalk')
+const chalk = require('chalk')
 const execSync = require('child_process').execSync
 
 // https://github.com/sindresorhus/opn#app

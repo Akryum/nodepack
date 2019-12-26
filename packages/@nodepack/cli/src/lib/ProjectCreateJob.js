@@ -11,6 +11,7 @@ const CreateModuleAPI = require('./CreateModuleAPI')
 const { runMaintenance } = require('@nodepack/maintenance')
 const inquirer = require('inquirer')
 const cloneDeep = require('lodash.clonedeep')
+const chalk = require('chalk')
 const {
   loadGlobalOptions,
   saveGlobalOptions,
@@ -20,7 +21,6 @@ const {
   log,
   warn,
   error,
-  chalk,
   getPkgCommand,
   installDeps,
   defaultPreset,

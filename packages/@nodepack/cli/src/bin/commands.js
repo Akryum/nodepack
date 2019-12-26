@@ -1,5 +1,6 @@
 const program = require('commander')
-const { chalk, error, checkDebug, terminate } = require('@nodepack/utils')
+const chalk = require('chalk')
+const { error, checkDebug, terminate } = require('@nodepack/utils')
 const isInProject = require('../util/isInProject')
 
 const cwd = process.cwd()

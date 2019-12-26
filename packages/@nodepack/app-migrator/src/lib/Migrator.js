@@ -40,6 +40,7 @@ const MigrationAPI = require('./MigrationAPI')
 const MigrationWhenAPI = require('./MigrationWhenAPI')
 const MigrationOperation = require('./MigrationOperation')
 // Utils
+const chalk = require('chalk')
 const {
   toShortPluginId,
   isPlugin,
@@ -52,7 +53,6 @@ const {
   error,
   logWithSpinner,
   stopSpinner,
-  chalk,
   ensureConfigFile,
   readConfigFile,
   writeConfigFile,

@@ -5,10 +5,10 @@
 /** @typedef {import('webpack-chain')} Config */
 
 const path = require('path')
+const chalk = require('chalk')
 const { matchesPluginId } = require('@nodepack/plugins-resolution')
 const {
   info,
-  chalk,
 } = require('@nodepack/utils')
 
 module.exports = class ServicePluginAPI {

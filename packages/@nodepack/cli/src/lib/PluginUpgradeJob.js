@@ -19,13 +19,13 @@
  * @prop {UpdateInfo} info
  */
 
+const chalk = require('chalk')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { resolvePluginId } = require('@nodepack/plugins-resolution')
 const {
   log,
   logWithSpinner,
   stopSpinner,
-  chalk,
   getPackageMetadata,
   getPackageVersionsInfo,
   updatePackage,

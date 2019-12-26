@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs-extra')
-const { chalk, clearConsole, error, stopSpinner } = require('@nodepack/utils')
+const chalk = require('chalk')
+const { clearConsole, error, stopSpinner } = require('@nodepack/utils')
 const validateProjectName = require('validate-npm-package-name')
 const inquirer = require('inquirer')
 const ProjectCreateJob = require('../lib/ProjectCreateJob')

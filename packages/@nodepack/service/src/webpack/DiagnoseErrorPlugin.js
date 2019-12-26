@@ -94,7 +94,8 @@ module.exports = class DiagnoseErrorPlugin {
    * @returns {Promise.<boolean>}
    */
   async suggestFix (suggestion) {
-    const { info, chalk, loadGlobalOptions, saveGlobalOptions } = require('@nodepack/utils')
+    const { info, loadGlobalOptions, saveGlobalOptions } = require('@nodepack/utils')
+    const chalk = require('chalk')
     const inquirer = require('inquirer')
 
     info(chalk.blue(`Error diagnostic: ${chalk.bold(suggestion.title)}`))

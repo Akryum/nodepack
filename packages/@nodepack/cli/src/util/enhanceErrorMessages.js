@@ -1,5 +1,5 @@
 const program = require('commander')
-const { chalk } = require('@nodepack/utils')
+const chalk = require('chalk')
 
 module.exports = (methodName, log) => {
   program.Command.prototype[methodName] = function (...args) {

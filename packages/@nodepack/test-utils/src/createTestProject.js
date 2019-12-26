@@ -13,7 +13,7 @@
 const path = require('path')
 const fs = require('fs-extra')
 const execa = require('execa')
-const { chalk } = require('@nodepack/utils')
+const chalk = require('chalk')
 
 /**
  * @param {string} cwd

@@ -14,7 +14,8 @@ module.exports = (api, options) => {
     api.service.isWatching = true
 
     const path = require('path')
-    const { info, error, chalk, terminate } = require('@nodepack/utils')
+    const { info, error, terminate } = require('@nodepack/utils')
+    const chalk = require('chalk')
     const compilerInstance = require('../util/compilerInstance')
     const debounce = require('lodash/debounce')
 

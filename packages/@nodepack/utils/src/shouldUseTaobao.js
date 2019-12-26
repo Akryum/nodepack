@@ -1,5 +1,5 @@
 const execa = require('execa')
-const { default: chalk } = require('chalk')
+const chalk = require('chalk')
 const { request } = require('./request')
 const inquirer = require('inquirer')
 const registries = require('./registries')

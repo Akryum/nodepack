@@ -1,4 +1,4 @@
-const { default: chalk } = require('chalk')
+const chalk = require('chalk')
 const readline = require('readline')
 const padStart = require('string.prototype.padstart')
 const { hasSpinner } = require('./spinner')
