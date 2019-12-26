@@ -1,12 +1,11 @@
-/**
- * @typedef FileMigrationRecord
- * @prop {string} file
- * @prop {string} date
- */
+import { Migrator as EnvMigrator } from '@nodepack/env-migrator'
 
-const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
+export interface FileMigrationRecord {
+  file: string
+  date: string
+}
 
-module.exports = class Migrator extends EnvMigrator {
+export class Migrator extends EnvMigrator {
   /**
    * @private
    */

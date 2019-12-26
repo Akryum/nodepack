@@ -15,11 +15,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "src/index.js",
-  "typings": "types/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "yarn test:lint",
-    "test:lint": "eslint src"
+    "test:lint": "eslint src",
+    "build": "tsc --outDir dist -d",
+    "dev": "yarn build -w",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "@nodepack/env-migrator": "^0.7.5"
