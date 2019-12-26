@@ -1,7 +1,7 @@
-module.exports = function extendJSConfig (value, source) {
-  const recast = require('recast')
-  const stringifyJS = require('./stringifyJS')
+import recast from 'recast'
+import { stringifyJS } from './stringifyJS'
 
+export function extendJSConfig (value: any, source: string) {
   let exportsIdentifier = null
 
   const ast = recast.parse(source)

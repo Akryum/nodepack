@@ -1,5 +1,6 @@
-module.exports = function stringifyJS (value) {
-  const { stringify } = require('javascript-stringify')
+import { stringify } from 'javascript-stringify'
+
+export function stringifyJS (value: any) {
   return stringify(value, (val, indent, stringify) => {
     if (val && val.__expression) {
       return val.__expression

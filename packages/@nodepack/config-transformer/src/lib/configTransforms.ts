@@ -1,25 +1,24 @@
-/**
- * @typedef ReadOptions
- * @prop {string} [filename]
- * @prop {string} [cwd]
- * @prop {string} [source]
- */
-/**
- * @typedef WriteOptions
- * @prop {any} value
- * @prop {any} existing
- * @prop {string?} [source]
- */
-/**
- * @typedef Transform
- * @prop {(options: ReadOptions) => any} read
- * @prop {(options: WriteOptions) => string} write
- */
+import merge from 'deepmerge'
+import { loadModule } from '@nodepack/module'
+import { extendJSConfig } from './extendJSConfig'
+import { stringifyJS } from './stringifyJS'
 
-const merge = require('deepmerge')
-const { loadModule } = require('@nodepack/module')
-const extendJSConfig = require('./extendJSConfig')
-const stringifyJS = require('./stringifyJS')
+export interface ReadOptions {
+  filename?: string
+  cwd?: string
+  source?: string
+}
+
+export interface WriteOptions {
+  value: any
+  existing: any
+  source?: string | null
+}
+
+export interface Transform {
+  read: (options: ReadOptions) => any
+  write: (options: WriteOptions) => string
+}
 
 const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
 const mergeOptions = {
@@ -28,8 +27,7 @@ const mergeOptions = {
 
 const isObject = val => val && typeof val === 'object'
 
-/** @type {Transform} */
-const transformJS = {
+const transformJS: Transform = {
   read: ({ filename, cwd }) => {
     try {
       return loadModule(filename, cwd, true)
@@ -59,16 +57,14 @@ const transformJS = {
   },
 }
 
-/** @type {Transform} */
-const transformJSON = {
+const transformJSON: Transform = {
   read: ({ source }) => JSON.parse(source),
   write: ({ value, existing }) => {
     return JSON.stringify(merge(existing, value, mergeOptions), null, 2)
   },
 }
 
-/** @type {Transform} */
-const transformYAML = {
+const transformYAML: Transform = {
   read: ({ source }) => require('js-yaml').safeLoad(source),
   write: ({ value, existing }) => {
     return require('js-yaml').safeDump(merge(existing, value, mergeOptions), {
@@ -77,8 +73,7 @@ const transformYAML = {
   },
 }
 
-/** @type {Transform} */
-const transformLines = {
+const transformLines: Transform = {
   read: ({ source }) => source.split('\n'),
   write: ({ value, existing }) => {
     if (existing) {
@@ -90,7 +85,7 @@ const transformLines = {
   },
 }
 
-module.exports = {
+export const transforms = {
   js: transformJS,
   json: transformJSON,
   yaml: transformYAML,
