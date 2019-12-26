@@ -37,7 +37,7 @@
     "lodash.clonedeep": "^4.5.0",
     "semver": "^7.1.1",
     "slash": "^3.0.0",
-    "yaml-front-matter": "^4.0.0"
+    "yaml-front-matter": "^4.1.0"
   },
   "devDependencies": {
     "@nodepack/service": "^0.7.5"

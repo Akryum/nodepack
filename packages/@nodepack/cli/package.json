@@ -38,7 +38,7 @@
     "cmd-shim": "^3.0.3",
     "commander": "^4.0.1",
     "download-git-repo": "^3.0.2",
-    "execa": "^2.0.4",
+    "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.1",
     "lodash.clonedeep": "^4.5.0",
