@@ -1,11 +1,12 @@
-/** @typedef {import('@nodepack/utils').Preset} Preset */
-/** @typedef {import('@nodepack/app-migrator').MigrationAllOptions} AppMigrationAllOptions */
-
-const { Migrator: AppMigrator, getMigratorPlugins: getAppMigratorPlugins } = require('@nodepack/app-migrator')
-const { Migrator: EnvMigrator } = require('@nodepack/env-migrator')
-const { Migrator: DbMigrator } = require('@nodepack/db-migrator')
-const { getPlugins } = require('@nodepack/plugins-resolution')
-const {
+import {
+  Migrator as AppMigrator,
+  getMigratorPlugins as getAppMigratorPlugins,
+  MigrationAllOptions as AppMigrationAllOptions,
+} from '@nodepack/app-migrator'
+import { Migrator as EnvMigrator } from '@nodepack/env-migrator'
+import { Migrator as DbMigrator } from '@nodepack/db-migrator'
+import { getPlugins } from '@nodepack/plugins-resolution'
+import {
   readPkg,
   commitOnGit,
   shouldUseGit,
@@ -13,13 +14,14 @@ const {
   installDeps,
   loadGlobalOptions,
   getPkgCommand,
-} = require('@nodepack/utils')
-const { Hookable } = require('@nodepack/hookable')
-const { loadFragment } = require('@nodepack/fragment')
-const inquirer = require('inquirer')
-const execa = require('execa')
-const chalk = require('chalk')
-const consola = require('consola')
+  Preset,
+} from '@nodepack/utils'
+import { Hookable, ConfigHooks } from '@nodepack/hookable'
+import { loadFragment } from '@nodepack/fragment'
+import inquirer from 'inquirer'
+import execa from 'execa'
+import chalk from 'chalk'
+import consola from 'consola'
 
 const FRAGMENTS = [
   'config',
@@ -30,46 +32,49 @@ const FRAGMENTS = [
 const ENV_MIGRATION_FOLDER = 'migration/env'
 const DB_MIGRATION_FOLDER = 'migration/db'
 
-/**
- * @typedef MaintenanceHookAPI
- * @prop {string} cwd
- * @prop {boolean} isTestOrDebug
- * @prop {string} packageManager
- * @prop {any} pkg
- * @prop {string[]} plugins
- * @prop {MaintenanceResults} results
- * @prop {typeof Maintenance.prototype.shouldCommitState} shouldCommitState
- * @prop {typeof Maintenance.prototype.installDeps} installDeps
- */
+export interface MaintenanceHookAPI {
+  cwd: string
+  isTestOrDebug: boolean
+  packageManager: string
+  pkg: any
+  plugins: string[]
+  results: MaintenanceResults
+  shouldCommitState: typeof Maintenance.prototype.shouldCommitState
+  installDeps: typeof Maintenance.prototype.installDeps
+}
 
-/** @typedef {(api: MaintenanceHookAPI) => Promise | void} MaintenanceHook */
+export type MaintenanceHook = (api: MaintenanceHookAPI) => Promise<void> | void
 
-/**
- * @typedef MaintenanceHooks
- * @prop {MaintenanceHook} [before]
- * @prop {MaintenanceHook} [afterAppMigrations]
- * @prop {MaintenanceHook} [afterEnvMigrations]
- * @prop {MaintenanceHook} [after]
- */
+export interface MaintenanceHooks extends ConfigHooks {
+  before?: MaintenanceHook
+  afterAppMigrations?: MaintenanceHook
+  afterEnvMigrations?: MaintenanceHook
+  after?: MaintenanceHook
+}
 
-/**
- * @typedef MaintenanceOptions
- * @prop {string} cwd Working directory
- * @prop {any} [cliOptions] CLI options if any
- * @prop {Preset?} [preset] Project preset (used for project creation)
- * @prop {boolean} [skipCommit] Don't try to commit with git
- * @prop {boolean} [skipPreInstall] Don't run install package at the begining of the maintenance
- * @prop {boolean} [skipBuild] Don't build app fragments like config
- * @prop {MaintenanceHooks?} [hooks] Hooks
- */
+export interface MaintenanceOptions {
+  /** Working directory */
+  cwd: string
+  /** CLI options if any */
+  cliOptions?: any
+  /** Project preset (used for project creation) */
+  preset?: Preset | null
+  /** Don't try to commit with git */
+  skipCommit?: boolean
+  /** Don't run install package at the begining of the maintenance */
+  skipPreInstall?: boolean
+  /** Don't build app fragments like config */
+  skipBuild?: boolean
+  /** Hooks */
+  hooks?: MaintenanceHooks | null
+}
 
-/**
- * @typedef MaintenanceResults
- * @prop {AppMigrationAllOptions?} appMigrationAllOptions
- * @prop {number} appMigrationCount
- * @prop {number} envMigrationCount
- * @prop {number} dbMigrationCount
- */
+export interface MaintenanceResults {
+ appMigrationAllOptions: AppMigrationAllOptions | null
+ appMigrationCount: number
+ envMigrationCount: number
+ dbMigrationCount: number
+}
 
 /**
  * A Maintenance is a special system that should be run on user project
@@ -77,10 +82,28 @@ const DB_MIGRATION_FOLDER = 'migration/db'
  * It will automatically execute maintenance operations like app and env migrations if needed.
  * It also has useful helpers for those occasions to reduce code duplication.
  */
-class Maintenance {
-  /**
-   * @param {MaintenanceOptions} options
-   */
+export class Maintenance {
+  cwd: string
+  cliOptions: any
+  preset: Preset | null
+  skipCommit: boolean
+  skipPreInstall: boolean
+  skipBuild: boolean
+  hooks: Hookable
+  isTestOrDebug: boolean
+  pkg: any
+  plugins: string[]
+  packageManager: string
+  results: MaintenanceResults = {
+    appMigrationAllOptions: null,
+    appMigrationCount: 0,
+    envMigrationCount: 0,
+    dbMigrationCount: 0,
+  }
+  completeCbs: Function[] = []
+  context: any = null
+  fragmentsBuilt = false
+
   constructor ({
     cwd,
     cliOptions = {},
@@ -89,7 +112,7 @@ class Maintenance {
     skipPreInstall = false,
     skipBuild = false,
     hooks = null,
-  }) {
+  }: MaintenanceOptions) {
     this.cwd = cwd
     this.cliOptions = cliOptions
     this.preset = preset
@@ -105,24 +128,10 @@ class Maintenance {
     this.pkg = readPkg(this.cwd)
     this.plugins = getPlugins(this.pkg)
 
-    this.packageManager = (
+    this.packageManager =
       this.cliOptions.packageManager ||
       loadGlobalOptions().packageManager ||
       getPkgCommand(this.cwd)
-    )
-
-    /** @type {MaintenanceResults} */
-    this.results = {
-      appMigrationAllOptions: null,
-      appMigrationCount: 0,
-      envMigrationCount: 0,
-      dbMigrationCount: 0,
-    }
-    /** @type {function[]} */
-    this.completeCbs = []
-
-    this.context = null
-    this.fragmentsBuilt = false
   }
 
   async preInstall () {
@@ -261,7 +270,9 @@ class Maintenance {
       } else {
         consola.error(e.message)
         // Commit failed confirmation
-        const answers = await inquirer.prompt([
+        const answers = await inquirer.prompt<{
+          continue: boolean
+        }>([
           {
             name: 'continue',
             type: 'confirm',
@@ -333,5 +344,3 @@ class Maintenance {
     this.context = await createContext()
   }
 }
-
-module.exports = Maintenance
