@@ -191,6 +191,7 @@ module.exports = (api, options) => {
     const envVars = {
       ...resolveClientEnv(options),
       'process.env.NODEPACK_ROOT': JSON.stringify(api.getCwd()),
+      'process.env.NODEPACK_MAINTENANCE_FRAGMENTS': process.env.NODEPACK_MAINTENANCE_FRAGMENTS === 'true',
     }
     config
       .plugin('define')

@@ -5,9 +5,11 @@ import { readMigrationRecords, writeMigrationRecords } from './migration'
 hook('create', async (ctx) => {
   if (ctx.config.knex) {
     ctx.knex = knex(ctx.config.knex)
-    // DB migrations
-    ctx.readDbMigrationRecords = () => readMigrationRecords(ctx)
-    ctx.writeDbMigrationRecords = (data) => writeMigrationRecords(ctx, data)
+    if (process.env.NODEPACK_MAINTENANCE_FRAGMENTS) {
+      // DB migrations
+      ctx.readDbMigrationRecords = () => readMigrationRecords(ctx)
+      ctx.writeDbMigrationRecords = (data) => writeMigrationRecords(ctx, data)
+    }
 
     hook('destroy', () => {
       ctx.destroy()

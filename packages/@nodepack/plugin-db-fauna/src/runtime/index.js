@@ -5,9 +5,11 @@ import { readMigrationRecords, writeMigrationRecords } from './migration'
 hook('create', async (ctx) => {
   if (ctx.config.fauna) {
     ctx.fauna = new FaunaClient(ctx.config.fauna)
-    // DB migrations
-    ctx.readDbMigrationRecords = () => readMigrationRecords(ctx)
-    ctx.writeDbMigrationRecords = (data) => writeMigrationRecords(ctx, data)
+    if (process.env.NODEPACK_MAINTENANCE_FRAGMENTS) {
+      // DB migrations
+      ctx.readDbMigrationRecords = () => readMigrationRecords(ctx)
+      ctx.writeDbMigrationRecords = (data) => writeMigrationRecords(ctx, data)
+    }
 
     hook('destroy', () => {
       ctx.destroy()
