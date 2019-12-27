@@ -1,3 +1,13 @@
+# [0.8.1](https://github.com/Akryum/nodepack/compare/v0.8.0...v0.8.1) (2019-12-27)
+
+## cli
+
+#### Bug Fixes
+
+* missing logs when creating project ([ce333a1](https://github.com/Akryum/nodepack/commit/ce333a1))
+
+
+
 # [0.8.0](https://github.com/Akryum/nodepack/compare/v0.7.5...v0.8.0) (2019-12-27)
 
 ## app-config
