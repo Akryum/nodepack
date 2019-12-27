@@ -1,5 +1,5 @@
-import MigrationWhenAPI from '../src/lib/MigrationWhenAPI'
-import MigrationOperationAPI from '../src/lib/MigrationOperationAPI'
+import { MigrationWhenAPI } from './MigrationWhenAPI'
+import { MigrationOperationAPI } from './MigrationOperationAPI'
 import { Question } from 'inquirer'
 
 export interface MigrationOptions {

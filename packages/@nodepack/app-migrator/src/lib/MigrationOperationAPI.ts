@@ -1,38 +1,33 @@
-/** @typedef {import('./MigrationOperation')} MigrationOperation */
-/** @typedef {import('./Migrator').NoticeType} NoticeType */
-/** @typedef {import('./MigrationOperation').FileMiddleware} FileMiddleware */
-/** @typedef {import('./MigrationOperation').FilePostProcessor} FilePostProcessor */
-/** @typedef {import('@nodepack/config-transformer/src/lib/ConfigTransform').ConfigTransformOptions} ConfigTransformOptions */
+import path from 'path'
+import fs from 'fs'
+import deepmerge from 'deepmerge'
+import { isBinaryFileSync } from 'isbinaryfile'
+import ejs from 'ejs'
+import { resolveFile, resolveFiles } from '../util/files'
+import { hasPlugin } from '../util/plugins'
+import consola from 'consola'
+import { ConfigTransform, stringifyJS, ConfigTransformOptions } from '@nodepack/config-transformer'
+import { mergeDeps } from '../util/mergeDeps'
+import { resolveModule } from '@nodepack/module'
+import { MigrationOperation, FileMiddleware, FilePostProcessor } from './MigrationOperation'
+import { NoticeType } from './Migrator'
 
-/**
- * @typedef SimpleFile
- * @prop {string} path Folder including last slash.
- * @prop {string} name File name without extension.
- * @prop {string} ext File extension without starting dot.
- */
+export interface SimpleFile {
+  /** Folder including last slash. */
+  path: string
+  /** File name without extension. */
+  name: string
+  /** File extension without starting dot. */
+  ext: string
+}
 
-const path = require('path')
-const fs = require('fs')
-const deepmerge = require('deepmerge')
-const { isBinaryFileSync } = require('isbinaryfile')
-const ejs = require('ejs')
-const { resolveFile, resolveFiles } = require('../util/files')
-const { hasPlugin } = require('../util/plugins')
-const consola = require('consola')
-const { ConfigTransform, stringifyJS } = require('@nodepack/config-transformer')
-const mergeDeps = require('../util/mergeDeps')
-const { resolveModule } = require('@nodepack/module')
-
-const isString = val => typeof val === 'string'
-const isFunction = val => typeof val === 'function'
 const isObject = val => val && typeof val === 'object'
 const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
 
-module.exports = class MigrationOperationAPI {
-  /**
-   * @param {MigrationOperation} migrationOperation
-   */
-  constructor (migrationOperation) {
+export class MigrationOperationAPI {
+  migrationOperation: MigrationOperation
+
+  constructor (migrationOperation: MigrationOperation) {
     this.migrationOperation = migrationOperation
   }
 
@@ -41,7 +36,7 @@ module.exports = class MigrationOperationAPI {
    *
    * @private
    */
-  _resolveData (additionalData) {
+  _resolveData (additionalData: any) {
     return Object.assign({
       options: this.migrationOperation.options,
       rootOptions: this.migrationOperation.rootOptions,
@@ -52,10 +47,10 @@ module.exports = class MigrationOperationAPI {
    * Inject a file processing middleware.
    *
    * @private
-   * @param {FileMiddleware} middleware - A middleware function that receives the
+   * @param middleware - A middleware function that receives the
    *   virtual files tree object, and an ejs render function. Can be async.
    */
-  _injectFileMiddleware (middleware) {
+  _injectFileMiddleware (middleware: FileMiddleware) {
     this.migrationOperation.fileMiddlewares.push(middleware)
   }
 
@@ -76,18 +71,18 @@ module.exports = class MigrationOperationAPI {
   /**
    * Resolve path in the project.
    *
-   * @param {string} filePath - Relative path from project root
-   * @return {string} The resolved absolute path.
+   * @param filePath - Relative path from project root
+   * @return The resolved absolute path.
    */
-  resolve (filePath) {
+  resolve (filePath: string) {
     return resolveFile(this.cwd, filePath)
   }
 
   /**
    * Check if the project has a plugin installed
-   * @param {string} id Plugin id
+   * @param id Plugin id
    */
-  hasPlugin (id) {
+  hasPlugin (id: string) {
     return hasPlugin(
       id,
       this.migrationOperation.migrator.plugins, this.migrationOperation.pkg,
@@ -97,10 +92,10 @@ module.exports = class MigrationOperationAPI {
   /**
    * Configure how config files are extracted.
    *
-   * @param {string} key - Config key in package.json (for example `'nodepack'` or `'babel'`)
-   * @param {ConfigTransformOptions} options - Options
+   * @param key - Config key in package.json (for example `'nodepack'` or `'babel'`)
+   * @param options - Options
    */
-  addConfigTransform (key, options) {
+  addConfigTransform (key: string, options: ConfigTransformOptions) {
     const hasReserved = Object.keys(this.migrationOperation.reservedConfigTransforms).includes(key)
     if (
       hasReserved ||
@@ -123,14 +118,14 @@ module.exports = class MigrationOperationAPI {
    * Tool configuration fields may be extracted into standalone files before
    * files are written to disk.
    *
-   * @param {object | ((pkg: any) => object)} fields - Fields to merge.
-   * @param {boolean} merge - Deep-merge nested fields.
+   * @param fields - Fields to merge.
+   * @param merge - Deep-merge nested fields.
    */
-  extendPackage (fields, merge = true) {
+  extendPackage<TFields = any> (fields: TFields | ((pkg: any) => TFields), merge = true) {
     const pkg = this.migrationOperation.pkg
-    const toMerge = isFunction(fields) ? fields(pkg) : fields
+    const toMerge = typeof fields === 'function' ? (fields as (pkg: any) => TFields)(pkg) : fields
     for (const key in toMerge) {
-      const value = toMerge[key]
+      const value: any = toMerge[key]
       const existing = pkg[key]
       if (isObject(value) && (key === 'dependencies' || key === 'devDependencies')) {
         // use special version resolution merge
@@ -155,22 +150,23 @@ module.exports = class MigrationOperationAPI {
   /**
    * Render template files into the virtual files tree object.
    *
-   * @param {string | object | FileMiddleware} source -
+   * @param source -
    *   Can be one of:
    *   - relative path to a directory;
    *   - Object hash of { sourceTemplate: targetFile } mappings;
    *   - a custom file middleware function.
-   * @param {object} [additionalData] - additional data available to templates.
-   * @param {object} [ejsOptions] - options for ejs.
+   * @param additionalData - additional data available to templates.
+   * @param ejsOptions - options for ejs.
    */
-  render (source, additionalData = {}, ejsOptions = {}) {
+  render<TSource = any> (source: string | TSource | FileMiddleware, additionalData: any = {}, ejsOptions: any = {}) {
     const baseDir = extractCallDir()
-    if (isString(source)) {
-      source = path.resolve(baseDir, source)
+    if (typeof source === 'string') {
+      let sourceBasePath = source as string
+      sourceBasePath = path.resolve(baseDir, sourceBasePath)
       this._injectFileMiddleware(async (files) => {
         const data = this._resolveData(additionalData)
         const globby = require('globby')
-        const _files = await globby(['**/*'], { cwd: source })
+        const _files = await globby(['**/*'], { cwd: sourceBasePath })
         for (const rawPath of _files) {
           const targetPath = rawPath.split('/').map(filename => {
             // dotfiles are ignored when published to npm, therefore in templates
@@ -183,7 +179,7 @@ module.exports = class MigrationOperationAPI {
             }
             return filename
           }).join('/')
-          const sourcePath = path.resolve(source, rawPath)
+          const sourcePath = path.resolve(sourceBasePath, rawPath)
           let content
           if (path.extname(sourcePath) !== '.ejs') {
             content = renderFile(sourcePath, data, ejsOptions)
@@ -197,33 +193,35 @@ module.exports = class MigrationOperationAPI {
         }
       })
     } else if (isObject(source)) {
+      const obj: any = source
       this._injectFileMiddleware(files => {
         const data = this._resolveData(additionalData)
-        for (const targetPath in source) {
-          const sourcePath = path.resolve(baseDir, source[targetPath])
+        for (const targetPath in obj) {
+          const sourcePath = path.resolve(baseDir, obj[targetPath])
           const content = renderFile(sourcePath, data, ejsOptions)
           if (Buffer.isBuffer(content) || content.trim()) {
             this.migrationOperation.writeFile(targetPath, content, files)
           }
         }
       })
-    } else if (isFunction(source)) {
-      this._injectFileMiddleware(source)
+    } else if (typeof source === 'function') {
+      const fm = source as FileMiddleware
+      this._injectFileMiddleware(fm)
     }
   }
 
   /**
    * Delete files from the virtual files tree object. Opposite of `render`.
    *
-   * @param {string | object | FileMiddleware} source -
+   * @param source -
    *   Can be one of:
    *   - relative path to a directory;
    *   - Object hash of { sourceTemplate: targetFile } mappings;
    *   - a custom file middleware function.
    */
-  unrender (source) {
+  unrender<TSource = any> (source: string | TSource | FileMiddleware) {
     const baseDir = extractCallDir()
-    if (isString(source)) {
+    if (typeof source === 'string') {
       source = path.resolve(baseDir, source)
       this._injectFileMiddleware(async (files) => {
         const globby = require('globby')
@@ -244,23 +242,25 @@ module.exports = class MigrationOperationAPI {
         }
       })
     } else if (isObject(source)) {
+      const obj: any = source
       this._injectFileMiddleware(files => {
-        for (const targetPath in source) {
+        for (const targetPath in obj) {
           delete files[targetPath]
         }
       })
-    } else if (isFunction(source)) {
-      this._injectFileMiddleware(source)
+    } else if (typeof source === 'function') {
+      const fm = source as FileMiddleware
+      this._injectFileMiddleware(fm)
     }
   }
 
   /**
    * Move files.
    *
-   * @param {string} from `globby` pattern.
-   * @param {(file: SimpleFile) => string} to Name transform.
+   * @param from `globby` pattern.
+   * @param to Name transform.
    */
-  move (from, to) {
+  move (from: string, to: (file: SimpleFile) => string) {
     this._injectFileMiddleware(async (files) => {
       const resolvedFiles = await resolveFiles(this.cwd, from)
       for (const file in resolvedFiles) {
@@ -282,10 +282,10 @@ module.exports = class MigrationOperationAPI {
   /**
    * Modify a file.
    *
-   * @param {string} filePath Path of the file in the project.
-   * @param {(content: string | Buffer) => string | Buffer | Promise.<string | Buffer>} cb File transform.
+   * @param filePath Path of the file in the project.
+   * @param cb File transform.
    */
-  modifyFile (filePath, cb) {
+  modifyFile (filePath: string, cb: (content: string | Buffer) => string | Buffer | Promise<string | Buffer>) {
     this._injectFileMiddleware(async (files) => {
       const file = files[filePath]
       if (file) {
@@ -297,26 +297,22 @@ module.exports = class MigrationOperationAPI {
   /**
    * Push a file middleware that will be applied after all normal file
    * middelwares have been applied.
-   *
-   * @param {FilePostProcessor} cb
    */
-  postProcessFiles (cb) {
+  postProcessFiles (cb: FilePostProcessor) {
     this.migrationOperation.postProcessFilesCbs.push(cb)
   }
 
   /**
    * convenience method for generating a js config file from json
    */
-  genJSConfig (value) {
+  genJSConfig (value: any) {
     return `module.exports = ${stringifyJS(value)}`
   }
 
   /**
    * Displays a message for the user at the end of all migration operations.
-   * @param {string} message
-   * @param {NoticeType} type
    */
-  addNotice (message, type = 'info') {
+  addNotice (message: string, type: NoticeType = 'info') {
     this.migrationOperation.migrator.notices.push({
       pluginId: this.migrationOperation.migration.plugin.id,
       type,
@@ -326,16 +322,15 @@ module.exports = class MigrationOperationAPI {
 
   /**
    * Called once after migration operation is completed.
-   * @param {function} cb
    */
-  onComplete (cb) {
+  onComplete (cb: Function) {
     this.migrationOperation.completeCbs.push(cb)
   }
 }
 
 function extractCallDir () {
   // extract api.render() callsite file location using error stack
-  const obj = {}
+  const obj: any = {}
   Error.captureStackTrace(obj)
   const callSite = obj.stack.split('\n')[3]
   const fileName = callSite.match(/\s\((.*):\d+:\d+\)$/)[1]

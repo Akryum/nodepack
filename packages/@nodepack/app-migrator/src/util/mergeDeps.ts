@@ -1,7 +1,22 @@
-const semver = require('semver')
-const consola = require('consola')
+import semver from 'semver'
+import consola from 'consola'
 
-module.exports = function resolveDeps (id, to, from, sources) {
+const leadRE = /^(~|\^|>=?)/
+const rangeToVersion = (r: string) => r.replace(leadRE, '').replace(/x/g, '0')
+const extractSemver = (r: string) => r.replace(/^.+#semver:/, '')
+const injectSemver = (r: string, v: string) => semver.validRange(r) ? v : r.replace(/#semver:.+$/, `#semver:${v}`)
+
+function tryGetNewerRange (r1: string, r2: string) {
+  const v1 = rangeToVersion(r1)
+  const v2 = rangeToVersion(r2)
+  if (semver.valid(v1) && semver.valid(v2)) {
+    return semver.gt(v1, v2) ? r1 : r2
+  }
+}
+
+type StringMap = { [key: string]: string }
+
+export function mergeDeps (id: string, to: StringMap, from: StringMap, sources: StringMap) {
   const res = Object.assign({}, to)
   for (const name in from) {
     const r1 = to[name]
@@ -48,17 +63,4 @@ module.exports = function resolveDeps (id, to, from, sources) {
     }
   }
   return res
-}
-
-const leadRE = /^(~|\^|>=?)/
-const rangeToVersion = r => r.replace(leadRE, '').replace(/x/g, '0')
-const extractSemver = r => r.replace(/^.+#semver:/, '')
-const injectSemver = (r, v) => semver.validRange(r) ? v : r.replace(/#semver:.+$/, `#semver:${v}`)
-
-function tryGetNewerRange (r1, r2) {
-  const v1 = rangeToVersion(r1)
-  const v2 = rangeToVersion(r2)
-  if (semver.valid(v1) && semver.valid(v2)) {
-    return semver.gt(v1, v2) ? r1 : r2
-  }
 }

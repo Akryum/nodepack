@@ -1,15 +1,17 @@
-const fs = require('fs')
-const path = require('path')
-const { isBinaryFileSync } = require('isbinaryfile')
+import fs from 'fs'
+import path from 'path'
+import { isBinaryFileSync } from 'isbinaryfile'
 
-module.exports = class MigrationOperationFile {
+export class MigrationOperationFile {
+  cwd: string
+  filename: string
+  _source: string | Buffer
+  modified: boolean
+
   /**
-   * @param {string} cwd
-   * @param {string} filename Path relative to project.
-   * @param {string | Buffer?} source
-   * @param {boolean} modified
+   * @param filename Path relative to project.
    */
-  constructor (cwd, filename, source = null, modified = false) {
+  constructor (cwd: string, filename: string, source: string | Buffer = null, modified = false) {
     this.cwd = cwd
     this.filename = filename
     this._source = source
@@ -18,7 +20,7 @@ module.exports = class MigrationOperationFile {
 
   /**
    * Lazy loaded file content or modified content
-   * @returns {string | Buffer} file source content
+   * @returns file source content
    */
   get source () {
     if (!this._source) {
@@ -35,7 +37,7 @@ module.exports = class MigrationOperationFile {
     this.modified = true
   }
 
-  move (newName) {
+  move (newName: string) {
     // Copy original source
     // eslint-disable-next-line no-self-assign
     this.source = this.source

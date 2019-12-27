@@ -1,12 +1,8 @@
-const MigratorPlugin = require('../lib/MigratorPlugin')
-const { sortArray } = require('@nodepack/utils')
-const { loadModule } = require('@nodepack/module')
+import { MigrationPlugin } from '../lib/MigrationPlugin'
+import { sortArray } from '@nodepack/utils'
+import { loadModule } from '@nodepack/module'
 
-/**
- * @param {string} cwd
- * @param {string []} rawIds
- */
-module.exports = async function (cwd, rawIds) {
+export async function getMigratorPlugins (cwd: string, rawIds: string[]) {
   // ensure service is invoked first
   rawIds = sortArray(rawIds, ['@nodepack/service'], true)
   const plugins = []
@@ -23,7 +19,7 @@ module.exports = async function (cwd, rawIds) {
           apply = apply.default
         }
         if (!apply) continue
-        plugins.push(new MigratorPlugin(id, apply))
+        plugins.push(new MigrationPlugin(id, apply))
         break
       } catch (e) {
         // File not found

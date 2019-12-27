@@ -1,27 +1,33 @@
-/** @typedef {import('@nodepack/service').ProjectOptions} ProjectOptions */
-/** @typedef {import('./Migrator')} Migrator */
-/** @typedef {import('./Migrator').Migration} Migration */
-
-/**
- * @typedef MigratorOperationOptions
- * @prop {function []} [completeCbs]
- * @prop {any} [options] Options from migration prompts
- * @prop {any} [rootOptions] Options from all migration prompts
- */
-
-/** @typedef {Object.<string, GeneratorFile>} FileTree */
-/** @typedef {(files: FileTree, render: function) => Promise | void} FileMiddleware */
-/** @typedef {(files: FileTree) => Promise | void} FilePostProcessor */
-
 // API
-const MigrationOperationAPI = require('./MigrationOperationAPI')
+import { MigrationOperationAPI } from './MigrationOperationAPI'
 // Utils
-const ejs = require('ejs')
-const { ConfigTransform } = require('@nodepack/config-transformer')
-const { ensureEOL, sortPkg, readPkg } = require('@nodepack/utils')
-const GeneratorFile = require('./MigrationOperationFile')
-const writeFileTree = require('../util/writeFileTree')
-const { readFiles, normalizeFilePaths } = require('../util/files')
+import ejs from 'ejs'
+import { ConfigTransform } from '@nodepack/config-transformer'
+import { ensureEOL, sortPkg, readPkg } from '@nodepack/utils'
+import { MigrationOperationFile as GeneratorFile } from './MigrationOperationFile'
+import { Migrator, Migration } from './Migrator'
+import { writeFileTree } from '../util/writeFileTree'
+import { readFiles, normalizeFilePaths } from '../util/files'
+
+export type FileTree = { [key: string]: GeneratorFile }
+
+export type FileMiddleware = (files: FileTree, render: Function) => Promise<void> | void
+
+export type FilePostProcessor = (files: FileTree) => Promise<void> | void
+
+export type MigrationType = 'up' | 'down'
+
+export interface RunOptions {
+  extractConfigFiles: boolean
+}
+
+export interface MigrationOperationOptions {
+  completeCbs?: Function[]
+  /** Options from migration prompts */
+  options?: any
+  /** Options from all migration prompts */
+  rootOptions?: any
+}
 
 const defaultConfigTransforms = {
   babel: new ConfigTransform({
@@ -51,50 +57,46 @@ const reservedConfigTransforms = {
   }),
 }
 
-module.exports = class MigrationOperation {
-  /**
-   * @param {Migrator} migrator
-   * @param {Migration} migration
-   * @param {MigratorOperationOptions} options
-   */
-  constructor (migrator, migration, {
+type ConfigTransforms = { [key: string]: ConfigTransform }
+
+export class MigrationOperation {
+  migrator: Migrator
+  migration: Migration
+  completeCbs: Function[]
+  options: any
+  rootOptions: any
+  configTransforms: ConfigTransforms = {}
+  originalPkg: any
+  pkg: any
+  // Config file transforms
+  defaultConfigTransforms: ConfigTransforms = defaultConfigTransforms
+  reservedConfigTransforms: ConfigTransforms = reservedConfigTransforms
+  // for conflict resolution
+  depSources: { [key: string]: string } = {}
+  // virtual file tree
+  files: FileTree = {}
+  fileMiddlewares: FileMiddleware[] = []
+  postProcessFilesCbs: FilePostProcessor[] = []
+
+  constructor (migrator: Migrator, migration: Migration, {
     completeCbs = [],
     options = {},
     rootOptions = {},
-  } = {}) {
+  }: MigrationOperationOptions = {}) {
     this.migrator = migrator
     this.migration = migration
     this.completeCbs = completeCbs
     this.options = options
     this.rootOptions = rootOptions
-
-    // Config file transforms
-    this.configTransforms = {}
-    this.defaultConfigTransforms = defaultConfigTransforms
-    this.reservedConfigTransforms = reservedConfigTransforms
-    // for conflict resolution
-    this.depSources = {}
-    // virtual file tree
-    /** @type {FileTree} */
-    this.files = {}
-    /** @type {FileMiddleware []} */
-    this.fileMiddlewares = []
-    /** @type {FilePostProcessor []} */
-    this.postProcessFilesCbs = []
   }
 
   get cwd () {
     return this.migrator.cwd
   }
 
-  /**
-   * @param {'up' | 'down'} type
-   * @param {object} param
-   * @param {boolean} param.extractConfigFiles
-   */
-  async run (type, {
+  async run (type: MigrationType, {
     extractConfigFiles,
-  }) {
+  }: RunOptions) {
     const method = this.migration.options[type]
 
     if (method) {
@@ -133,19 +135,16 @@ module.exports = class MigrationOperation {
 
   /**
    * Write a file content into virtual filesystem.
-   *
-   * @param {string} filename
-   * @param {string | Buffer} source
    */
-  writeFile (filename, source, files = this.files) {
+  writeFile (filename: string, source: string | Buffer, files = this.files) {
     if (typeof source === 'string') {
       source = ensureEOL(source)
     }
-    const file = this.files[filename]
+    const file = files[filename]
     if (file) {
       file.source = source
     } else {
-      this.files[filename] = new GeneratorFile(this.cwd, filename, source, true)
+      files[filename] = new GeneratorFile(this.cwd, filename, source, true)
     }
   }
 
@@ -153,12 +152,9 @@ module.exports = class MigrationOperation {
    * Extract config files into separate files.
    *
    * @private
-   * @param {boolean} extractAll
-   * @param {boolean} checkExisting
    */
-  extractConfigFiles (extractAll, checkExisting) {
-    /** @type {Object.<string, ConfigTransform>} */
-    const configTransforms = Object.assign({},
+  extractConfigFiles (extractAll: boolean, checkExisting: boolean) {
+    const configTransforms: ConfigTransforms = Object.assign({},
       defaultConfigTransforms,
       this.configTransforms,
       reservedConfigTransforms,

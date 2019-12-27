@@ -1,15 +1,9 @@
-/** @typedef {import('../lib/MigrationOperation').FileTree} FileTree */
+import fs from 'fs-extra'
+import path from 'path'
+import consola from 'consola'
+import { FileTree } from '../lib/MigrationOperation'
 
-const fs = require('fs-extra')
-const path = require('path')
-const consola = require('consola')
-
-/**
- * @param {string} cwd
- * @param {FileTree} newFiles
- * @param {string []} previousFileNames
- */
-function deleteRemovedFiles (cwd, newFiles, previousFileNames) {
+function deleteRemovedFiles (cwd: string, newFiles: FileTree, previousFileNames: string[] = []) {
   // get all files that are not in the new filesystem and are still existing
   const filesToDelete = previousFileNames.filter(filename => !newFiles[filename])
 
@@ -19,12 +13,7 @@ function deleteRemovedFiles (cwd, newFiles, previousFileNames) {
   }))
 }
 
-/**
- * @param {string} cwd
- * @param {FileTree} files
- * @param {string []} [previousFileNames]
- */
-module.exports = async function (cwd, files, previousFileNames) {
+export async function writeFileTree (cwd: string, files: FileTree, previousFileNames: string[] = []) {
   if (process.env.NODEPACK_SKIP_WRITE) {
     return
   }

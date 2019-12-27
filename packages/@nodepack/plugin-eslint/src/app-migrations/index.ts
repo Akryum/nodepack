@@ -1,7 +1,7 @@
-import { MigratorAPI } from '@nodepack/service'
 import { createDefaultConfig } from '../options'
+import { MigrationAPI } from '@nodepack/service'
 
-export default (api: MigratorAPI) => {
+export default (api: MigrationAPI) => {
   // Configs with templates
   const templates = ['airbnb', 'standard']
 

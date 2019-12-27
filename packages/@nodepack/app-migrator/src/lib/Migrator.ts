@@ -1,51 +1,14 @@
-/** @typedef {import('@nodepack/service').ProjectOptions} ProjectOptions */
-/** @typedef {import('./MigratorPlugin')} MigratorPlugin */
-/** @typedef {import('../../types/MigrationOptions').MigrationOptions} MigrationOptions */
-/** @typedef {import('@nodepack/utils').Preset} Preset */
-
-/** @typedef {Object.<string, Object.<string, any>>} MigrationAllOptions */
-
-/**
- * @typedef MigratorOptions
- * @prop {MigratorPlugin []} [plugins]
- * @prop {function []} [completeCbs]
- */
-
-/**
- * @typedef MigrationRecord
- * @prop {string} id
- * @prop {string} pluginId
- * @prop {string} pluginVersion
- * @prop {ProjectOptions} options
- * @prop {string} date
- */
-
-/**
- * @typedef Migration
- * @prop {MigratorPlugin} plugin
- * @prop {MigrationOptions} options
- */
-
-/** @typedef {'info'|'warn'|'error'|'done'|'log'} NoticeType */
-
-/**
- * @typedef Notice
- * @prop {string} pluginId
- * @prop {NoticeType} type
- * @prop {string} message
- */
-
 // API
-const MigrationAPI = require('./MigrationAPI')
-const MigrationWhenAPI = require('./MigrationWhenAPI')
-const MigrationOperation = require('./MigrationOperation')
+import { MigrationAPI } from './MigrationAPI'
+import { MigrationWhenAPI } from './MigrationWhenAPI'
+import { MigrationOperation } from './MigrationOperation'
 // Utils
-const chalk = require('chalk')
-const {
+import chalk from 'chalk'
+import {
   toShortPluginId,
   isPlugin,
-} = require('@nodepack/plugins-resolution')
-const {
+} from '@nodepack/plugins-resolution'
+import {
   logWithSpinner,
   stopSpinner,
   ensureConfigFile,
@@ -54,11 +17,42 @@ const {
   readPkg,
   FILE_APP_MIGRATIONS_PLUGIN_VERSIONS,
   FILE_APP_MIGRATIONS_RECORDS,
-} = require('@nodepack/utils')
-const consola = require('consola')
-const inquirer = require('inquirer')
-const { getVersion, hasPlugin } = require('../util/plugins')
-const printNoRollbackWarn = require('../util/printNoRollbackWarn')
+  Preset,
+} from '@nodepack/utils'
+import consola from 'consola'
+import inquirer from 'inquirer'
+import { getVersion, hasPlugin } from '../util/plugins'
+import { printNoRollbackWarn } from '../util/printNoRollbackWarn'
+import { MigrationPlugin } from './MigrationPlugin'
+import { MigrationOptions } from './MigrationOptions'
+
+export type MigrationAllOptions = { [key: string]: { [key2: string]: any } }
+
+export interface MigratorOptions {
+  plugins?: MigrationPlugin[]
+  completeCbs?: Function[]
+}
+
+export interface MigrationRecord {
+  id: string
+  pluginId: string
+  pluginVersion: string
+  options: any
+  date: string
+}
+
+export interface Migration {
+  plugin: MigrationPlugin
+  options: MigrationOptions
+}
+
+export type NoticeType = 'info' | 'warn' | 'error' | 'done' | 'success' | 'log'
+
+export interface Notice {
+  pluginId: string
+  type: NoticeType
+  message: string
+}
 
 const logTypes = {
   log: consola.log,
@@ -69,32 +63,29 @@ const logTypes = {
   error: consola.error,
 }
 
-module.exports = class Migrator {
-  /**
-   * @param {string} cwd
-   * @param {MigratorOptions} options
-   */
-  constructor (cwd, {
+export class Migrator {
+  cwd: string
+  plugins: MigrationPlugin[]
+  completeCbs: Function[]
+
+  upPrepared = false
+  downPrepared = false
+
+  migrations: Migration[] = []
+  queuedMigrations: Migration[] = []
+  migrationRecords: MigrationRecord[] = []
+  migratedIds: Map<string, boolean> = new Map()
+  notices: Notice[] = []
+
+  pkg: any
+
+  constructor (cwd: string, {
     plugins = [],
     completeCbs = [],
-  } = {}) {
+  }: MigratorOptions = {}) {
     this.cwd = cwd
     this.plugins = plugins
     this.completeCbs = completeCbs
-
-    this.upPrepared = false
-    this.downPrepared = false
-
-    /** @type {Migration []} */
-    this.migrations = []
-    /** @type {Migration []} */
-    this.queuedMigrations = []
-    /** @type {MigrationRecord []} */
-    this.migrationRecords = []
-    /** @type {Map<string, boolean>} */
-    this.migratedIds = new Map()
-    /** @type {Notice []} */
-    this.notices = []
   }
 
   async prepareUp () {
@@ -112,16 +103,12 @@ module.exports = class Migrator {
     }
   }
 
-  /**
-   * @param {Preset?} preset
-   */
-  async up (preset = null) {
+  async up (preset: Preset = null) {
     if (!this.upPrepared) {
       await this.prepareUp()
     }
 
-    /** @type {MigrationAllOptions?} */
-    let options = null
+    let options: MigrationAllOptions = null
     let extractConfigFiles = false
 
     if (preset) {
@@ -188,10 +175,7 @@ module.exports = class Migrator {
     }
   }
 
-  /**
-   * @param {string []} removedPlugins
-   */
-  async prepareRollback (removedPlugins) {
+  async prepareRollback (removedPlugins: string[]) {
     if (!this.downPrepared) {
       await this.setup()
 
@@ -206,10 +190,7 @@ module.exports = class Migrator {
     }
   }
 
-  /**
-   * @param {string []} removedPlugins
-   */
-  async down (removedPlugins) {
+  async down (removedPlugins: string[]) {
     if (!this.downPrepared) {
       await this.prepareRollback(removedPlugins)
     }
@@ -307,11 +288,9 @@ module.exports = class Migrator {
 
   /**
    * @private
-   * @returns {Promise.<Migration []>}
    */
-  async resolveMigrations () {
-    /** @type {Migration []} */
-    const list = []
+  async resolveMigrations (): Promise<Migration[]> {
+    const list: Migration[] = []
     for (const migration of this.migrations) {
       // Skip if migration already applied
       if (this.migratedIds.get(`${migration.plugin.id}${migration.options.id}`)) {
@@ -347,11 +326,9 @@ module.exports = class Migrator {
 
   /**
    * @private
-   * @param {string []} removedPlugins
    */
-  async resolveRollbacks (removedPlugins) {
-    /** @type {Migration []} */
-    const list = []
+  async resolveRollbacks (removedPlugins: string[]) {
+    const list: Migration[] = []
     for (const migration of this.migrations) {
       // Skip if the migration wasn't applied
       if (!this.migratedIds.get(`${migration.plugin.id}${migration.options.id}`)) {
@@ -380,13 +357,8 @@ module.exports = class Migrator {
     })
   }
 
-  /**
-   * @param {Migration []} migrations
-   * @returns {Promise.<MigrationAllOptions>}
-   */
-  async resolvePrompts (migrations) {
-    /** @type {MigrationAllOptions} */
-    const rootOptions = {}
+  async resolvePrompts (migrations: Migration[]) {
+    const rootOptions: MigrationAllOptions = {}
     for (const migration of migrations) {
       if (migration.options.prompts) {
         // Prompts
@@ -434,9 +406,8 @@ module.exports = class Migrator {
    * into the 'plugin-versions.json' config file.
    *
    * @private
-   * @param {string []} removedPlugins
    */
-  async writePluginVersions (removedPlugins = []) {
+  async writePluginVersions (removedPlugins: string[] = []) {
     const result = {}
     for (const plugin of this.plugins) {
       if (!removedPlugins.includes(plugin.id)) {

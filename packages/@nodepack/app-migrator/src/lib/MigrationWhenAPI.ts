@@ -1,17 +1,20 @@
-/** @typedef {import('./Migrator')} Migrator */
-/** @typedef {import('./MigratorPlugin')} MigratorPlugin */
+import { resolveFile } from '../util/files'
+import semver from 'semver'
+import { MigrationPlugin } from './MigrationPlugin'
+import { Migrator } from './Migrator'
 
-const { resolveFile } = require('../util/files')
-const semver = require('semver')
+export interface MigrationWhenAPIOptions {
+  pkg: any
+}
 
-module.exports = class MigrationWhenAPI {
-  /**
-   * @param {MigratorPlugin} plugin
-   * @param {Migrator} migrator
-   */
-  constructor (plugin, migrator, {
+export class MigrationWhenAPI {
+  plugin: MigrationPlugin
+  migrator: Migrator
+  pkg: any
+
+  constructor (plugin: MigrationPlugin, migrator: Migrator, {
     pkg,
-  }) {
+  }: MigrationWhenAPIOptions) {
     this.plugin = plugin
     this.migrator = migrator
     this.pkg = pkg
@@ -27,29 +30,25 @@ module.exports = class MigrationWhenAPI {
   /**
    * Resolve path in the project.
    *
-   * @param {string} filePath - Relative path from project root
-   * @return {string} The resolved absolute path.
+   * @param filePath - Relative path from project root
+   * @return The resolved absolute path.
    */
-  resolve (filePath) {
+  resolve (filePath: string) {
     return resolveFile(this.cwd, filePath)
   }
 
   /**
    * Test if the previous migrated version of the plugin satisfies a version range.
-   *
-   * @param {string} versionRange
    */
-  fromVersion (versionRange) {
+  fromVersion (versionRange: string) {
     if (!this.plugin.previousVersion) return false
     return semver.satisfies(this.plugin.previousVersion, versionRange)
   }
 
   /**
    * Test if the current version of the plugin satisfies a version range.
-   *
-   * @param {string} versionRange
    */
-  toVersion (versionRange) {
+  toVersion (versionRange: string) {
     if (!this.plugin.previousVersion) return false
     return semver.satisfies(this.plugin.previousVersion, versionRange)
   }

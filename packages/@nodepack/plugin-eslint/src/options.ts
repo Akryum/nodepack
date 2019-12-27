@@ -1,4 +1,4 @@
-import { ServicePluginAPI, MigratorOperationAPI } from '@nodepack/service'
+import { ServicePluginAPI, MigrationOperationAPI } from '@nodepack/service'
 import { Linter } from 'eslint'
 
 const baseExtensions = ['.js', '.jsx']
@@ -9,12 +9,13 @@ export const getExtensions = (api: ServicePluginAPI) => api.hasPlugin('typescrip
 // __expression is a special flag that allows us to customize stringification
 // output when extracting configs into standalone files
 function makeJSOnlyValue (str: string) {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const fn = () => {}
   fn.__expression = str
   return fn
 }
 
-export function createDefaultConfig (api: MigratorOperationAPI) {
+export function createDefaultConfig (api: MigrationOperationAPI) {
   const config: Linter.Config = {
     root: true,
     env: { node: true },
