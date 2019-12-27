@@ -1,3 +1,42 @@
+# [0.8.0](https://github.com/Akryum/nodepack/compare/v0.7.5...v0.8.0) (2019-12-27)
+
+## app-config
+
+#### Features
+
+* ask for node >= 10 ([ed31785](https://github.com/Akryum/nodepack/commit/ed31785))
+
+## maintenance
+
+#### Bug Fixes
+
+* **maintenance:** improve error message ([16a89f6](https://github.com/Akryum/nodepack/commit/16a89f6))
+
+## plugin-db-fauna
+
+#### Code Refactoring
+
+* don't use a common 'db' config name ([f9907da](https://github.com/Akryum/nodepack/commit/f9907da))
+#### Features
+
+* migrate db config files ([6ce6ce2](https://github.com/Akryum/nodepack/commit/6ce6ce2))
+* remove DB migration code from built app ([87e74e4](https://github.com/Akryum/nodepack/commit/87e74e4))
+
+## service
+
+#### Features
+
+* **service:** disable maintenance for build command ([bb61374](https://github.com/Akryum/nodepack/commit/bb61374))
+* update webpack ([2cfa933](https://github.com/Akryum/nodepack/commit/2cfa933))
+
+
+### BREAKING CHANGES
+
+* Node 10 is minimum requirement
+* each plugin-db-* config name has been changed from 'db' to a more specific name
+
+
+
 # [0.7.5](https://github.com/Akryum/nodepack/compare/v0.7.4...v0.7.5) (2019-12-24)
 
 ## plugin-db-fauna
