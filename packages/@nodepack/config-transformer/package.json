@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/config-transformer",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Utilities to read and write to config files",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nodepack/module": "^0.8.0",
-    "@nodepack/utils": "^0.8.0",
+    "@nodepack/utils": "^0.8.1",
     "deepmerge": "^4.2.2",
     "javascript-stringify": "^2.0.1",
     "js-yaml": "^3.13.1",
