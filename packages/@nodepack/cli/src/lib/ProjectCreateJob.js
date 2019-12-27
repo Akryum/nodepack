@@ -25,6 +25,7 @@ const {
   shouldUseGit,
   commitOnGit,
   run,
+  clearConsole,
 } = require('@nodepack/utils')
 const { MigrationOperationFile, writeFileTree } = require('@nodepack/app-migrator')
 const generateReadme = require('../util/generateReadme')
@@ -78,7 +79,7 @@ module.exports = class ProjectCreateJob {
     /** @type {Preset} */
     const finalPreset = cloneDeep(preset)
 
-    consola.clear()
+    clearConsole()
     logWithSpinner(`✨`, `Creating project in ${chalk.yellow(cwd)}.`)
 
     // generate package.json with plugin dependencies
@@ -188,7 +189,7 @@ module.exports = class ProjectCreateJob {
   async promptAndResolvePreset (answers = null) {
     // prompt
     if (!answers) {
-      consola.clear()
+      clearConsole()
       answers = await inquirer.prompt(this.resolveFinalPrompts())
     }
 

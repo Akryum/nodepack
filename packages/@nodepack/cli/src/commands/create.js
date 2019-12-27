@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const { stopSpinner } = require('@nodepack/utils')
+const { stopSpinner, clearConsole } = require('@nodepack/utils')
 const consola = require('consola')
 const validateProjectName = require('validate-npm-package-name')
 const inquirer = require('inquirer')
@@ -25,9 +25,9 @@ async function create (projectName, options) {
   // Name validation
   const result = validateProjectName(name)
   if (!result.validForNewPackages) {
-    console.error(chalk.red(`Invalid project name: "${name}"`))
+    consola.error(chalk.red(`Invalid project name: "${name}"`))
     result.errors && result.errors.forEach(err => {
-      console.error(chalk.red(err))
+      consola.error(chalk.red(err))
     })
     process.exit(1)
   }
@@ -37,7 +37,7 @@ async function create (projectName, options) {
     if (options.force) {
       await fs.remove(targetDir)
     } else {
-      consola.clear()
+      clearConsole()
       if (inCurrent) {
         const { ok } = await inquirer.prompt([
           {
@@ -65,7 +65,7 @@ async function create (projectName, options) {
         if (!action) {
           return
         } else if (action === 'overwrite') {
-          console.log(`\nRemoving ${chalk.cyan(targetDir)}...`)
+          consola.info(`\nRemoving ${chalk.cyan(targetDir)}...`)
           await fs.remove(targetDir)
         }
       }

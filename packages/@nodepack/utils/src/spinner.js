@@ -1,5 +1,6 @@
 const ora = require('ora')
 const chalk = require('chalk')
+const readline = require('readline')
 
 const spinner = ora()
 let lastMsg = null
@@ -44,3 +45,18 @@ exports.resumeSpinner = () => {
 }
 
 exports.hasSpinner = () => !!lastMsg
+
+/**
+ * @param {string?} [title]
+ */
+exports.clearConsole = title => {
+  if (process.stdout.isTTY) {
+    const blank = '\n'.repeat(process.stdout.rows || 100)
+    console.log(blank)
+    readline.cursorTo(process.stdout, 0, 0)
+    readline.clearScreenDown(process.stdout)
+    if (title) {
+      console.log(title)
+    }
+  }
+}
