@@ -1,3 +1,13 @@
+# [0.8.2](https://github.com/Akryum/nodepack/compare/v0.8.1...v0.8.2) (2019-12-27)
+
+## module
+
+#### Bug Fixes
+
+* **module:** remove resolve fallback and semver dependency ([3ef7249](https://github.com/Akryum/nodepack/commit/3ef7249))
+
+
+
 # [0.8.1](https://github.com/Akryum/nodepack/compare/v0.8.0...v0.8.1) (2019-12-27)
 
 ## cli
