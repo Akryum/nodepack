@@ -344,7 +344,12 @@ export class Maintenance {
   async createContext () {
     if (this.context != null) return
     await this.buildFragments(FRAGMENTS)
-    const { createContext } = loadFragment('context', this.cwd)
-    this.context = await createContext()
+    try {
+      const { createContext } = loadFragment('context', this.cwd)
+      this.context = await createContext()
+    } catch (e) {
+      consola.error('Failed loading context fragment')
+      throw e
+    }
   }
 }
