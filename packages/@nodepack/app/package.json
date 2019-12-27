@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Utils for Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -28,6 +28,6 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@nodepack/app-context": "^0.7.0"
+    "@nodepack/app-context": "^0.8.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-apollo",
-  "version": "0.7.4",
+  "version": "0.8.0",
   "description": "Nodepack plugin for Apollo Server (GraphQL)",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",

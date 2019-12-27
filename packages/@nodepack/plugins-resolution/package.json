@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugins-resolution",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "description": "Plugin resolution utilities for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",

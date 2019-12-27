@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-devtools",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Nodepack plugin development tools",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -30,6 +30,6 @@
     "nodemon": "^2.0.2"
   },
   "devDependencies": {
-    "@nodepack/plugin-devtools": "^0.7.0"
+    "@nodepack/plugin-devtools": "^0.8.0"
   }
 }

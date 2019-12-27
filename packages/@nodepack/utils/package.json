@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/utils",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "description": "Common utilities for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^15.1.0",
-    "@nodepack/module": "^0.7.0",
+    "@nodepack/module": "^0.8.0",
     "chalk": "^3.0.0",
     "consola": "^2.11.1",
     "execa": "^4.0.0",
