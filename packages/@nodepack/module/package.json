@@ -23,8 +23,5 @@
     "build": "tsc --outDir dist -d",
     "dev": "yarn build -w",
     "prepublishOnly": "yarn build"
-  },
-  "dependencies": {
-    "semver": "^7.1.1"
   }
 }
