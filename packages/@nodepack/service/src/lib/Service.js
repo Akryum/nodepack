@@ -49,6 +49,11 @@ const { loadModule } = require('@nodepack/module')
 const { runMaintenance } = require('@nodepack/maintenance')
 const { defaultOptions } = require('./options')
 
+const NO_MAINTENANCE_COMMANDS = [
+  'help',
+  'build',
+]
+
 module.exports = class Service {
   /**
    * @param {string} cwd
@@ -288,7 +293,7 @@ module.exports = class Service {
     this.commandName = name
     this.command = command
 
-    const maintenanceEnabled = name !== 'help' &&
+    const maintenanceEnabled = !NO_MAINTENANCE_COMMANDS.includes(name) &&
       process.env.NODEPACK_NO_MAINTENANCE !== 'true' &&
       args.maintenance !== false
     if (maintenanceEnabled) {
