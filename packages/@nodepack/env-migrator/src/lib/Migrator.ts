@@ -17,7 +17,14 @@ export interface FileMigrationRecord {
 
 export interface MigratorOptions {
   migrationsFolder: string
+}
+
+export interface RunOptions {
   context: any
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface UpOptions extends RunOptions {
 }
 
 export class Migrator {
@@ -30,11 +37,9 @@ export class Migrator {
 
   constructor (cwd: string, {
     migrationsFolder,
-    context,
   }: MigratorOptions) {
     this.cwd = cwd
     this.migrationsFolder = migrationsFolder
-    this.context = context
   }
 
   async prepareUp () {
@@ -53,8 +58,12 @@ export class Migrator {
     }
   }
 
-  async up () {
+  async up ({
+    context,
+  }: UpOptions) {
     await this.prepareUp()
+
+    this.context = context
 
     // Files
     let count = 0

@@ -151,7 +151,6 @@ export class Maintenance {
     await this.callHook('afterAppMigrations')
 
     // Prepare context
-    await this.buildFragments(FRAGMENTS)
     await this.createContext()
 
     // Env Migrations
@@ -197,13 +196,15 @@ export class Maintenance {
     const { cwd, context } = this
     const migrator = new EnvMigrator(cwd, {
       migrationsFolder: ENV_MIGRATION_FOLDER,
-      context,
     })
     const { files } = await migrator.prepareUp()
     if (files.length) {
+      // Migrate
       await this.shouldCommitState(`[nodepack] before env migration`)
       consola.log(`🚀  Migrating env...`)
-      const { migrationCount } = await migrator.up()
+      const { migrationCount } = await migrator.up({
+        context,
+      })
       consola.log(`💻️  ${migrationCount} env migration${migrationCount > 1 ? 's' : ''} applied!`)
       this.results.envMigrationCount = migrationCount
       // install additional deps (injected by migrations)
@@ -217,13 +218,15 @@ export class Maintenance {
     if (!context.readDbMigrationRecords) return
     const migrator = new DbMigrator(cwd, {
       migrationsFolder: DB_MIGRATION_FOLDER,
-      context,
     })
     const { files } = await migrator.prepareUp()
     if (files.length) {
+      // Migrate
       await this.shouldCommitState(`[nodepack] before db migration`)
       consola.log(`🚀  Migrating db...`)
-      const { migrationCount } = await migrator.up()
+      const { migrationCount } = await migrator.up({
+        context,
+      })
       consola.log(`🗄️  ${migrationCount} db migration${migrationCount > 1 ? 's' : ''} applied!`)
       this.results.dbMigrationCount = migrationCount
       await this.shouldCommitState(`[nodepack] after db migration`)
@@ -340,6 +343,7 @@ export class Maintenance {
 
   async createContext () {
     if (this.context != null) return
+    await this.buildFragments(FRAGMENTS)
     const { createContext } = loadFragment('context', this.cwd)
     this.context = await createContext()
   }
