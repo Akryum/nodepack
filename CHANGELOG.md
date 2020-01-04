@@ -1,3 +1,13 @@
+# [0.8.5](https://github.com/Akryum/nodepack/compare/v0.8.4...v0.8.5) (2020-01-04)
+
+## plugin-apollo
+
+#### Features
+
+* export ApolloError ([00a516f](https://github.com/Akryum/nodepack/commit/00a516f))
+
+
+
 # [0.8.4](https://github.com/Akryum/nodepack/compare/v0.8.3...v0.8.4) (2020-01-04)
 
 ## app-context
