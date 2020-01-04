@@ -1,3 +1,13 @@
+# [0.8.4](https://github.com/Akryum/nodepack/compare/v0.8.3...v0.8.4) (2020-01-04)
+
+## app-context
+
+#### Bug Fixes
+
+* **addProp:** set value ([b78db7d](https://github.com/Akryum/nodepack/commit/b78db7d))
+
+
+
 # [0.8.3](https://github.com/Akryum/nodepack/compare/v0.8.2...v0.8.3) (2020-01-04)
 
 ## app-context
