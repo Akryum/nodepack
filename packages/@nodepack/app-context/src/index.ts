@@ -29,3 +29,22 @@ export async function callHookWithPayload<T> (
   await callHook(hookName, ctx, payload, ...args)
   return payload
 }
+
+export function addProp<TProperty = any> (ctx: any, propertyName: string, init: () => TProperty) {
+  let isInitialized = false
+  let prop: TProperty
+  Object.defineProperty(ctx, propertyName, {
+    get () {
+      if (!isInitialized) {
+        prop = init()
+        isInitialized = true
+      }
+      return prop
+    },
+    set () {
+      return prop
+    },
+    enumerable: true,
+    configurable: false,
+  })
+}
