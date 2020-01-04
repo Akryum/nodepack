@@ -1,4 +1,4 @@
-import { hook } from '@nodepack/app-context'
+import { hook, addProp } from '@nodepack/app-context'
 import { Sequelize } from 'sequelize'
 import { loadModels } from './models'
 
@@ -6,8 +6,8 @@ let synced = false
 
 hook('create', async (ctx) => {
   if (ctx.config.sequelize) {
-    const sequelize = ctx.sequelize = new Sequelize(ctx.config.sequelize)
-    loadModels(ctx)
+    addProp(ctx, 'sequelize', () => new Sequelize(ctx.config.sequelize))
+    addProp(ctx, 'models', () => loadModels(ctx))
 
     // Sync models for development
     if (ctx.config.syncModels && !synced) {
@@ -16,11 +16,11 @@ hook('create', async (ctx) => {
       if (typeof ctx.config.syncModels === 'object') {
         options = ctx.config.syncModels
       }
-      await sequelize.sync(options)
+      await ctx.sequelize.sync(options)
     }
 
     hook('destroy', () => {
-      sequelize.close()
+      ctx.sequelize.close()
     })
   } else {
     console.warn('⚠️ No `sequelize` configuration found. Create a `config/sequelize.js` file that exports default a sequelize configuration object.')

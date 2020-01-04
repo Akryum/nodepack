@@ -1,10 +1,10 @@
-import { hook } from '@nodepack/app-context'
+import { hook, addProp } from '@nodepack/app-context'
 import knex from 'knex'
 import { readMigrationRecords, writeMigrationRecords } from './migration'
 
 hook('create', async (ctx) => {
   if (ctx.config.knex) {
-    ctx.knex = knex(ctx.config.knex)
+    addProp(ctx, 'knex', () => knex(ctx.config.knex))
     if (process.env.NODEPACK_MAINTENANCE_FRAGMENTS) {
       // DB migrations
       ctx.readDbMigrationRecords = () => readMigrationRecords(ctx)
