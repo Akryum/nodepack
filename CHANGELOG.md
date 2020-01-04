@@ -1,3 +1,25 @@
+# [0.8.3](https://github.com/Akryum/nodepack/compare/v0.8.2...v0.8.3) (2020-01-04)
+
+## app-context
+
+#### Features
+
+* **app-context:** addProp ([6e964fe](https://github.com/Akryum/nodepack/commit/6e964fe))
+
+## app-migrator
+
+#### Features
+
+* update deps ([7d5d90b](https://github.com/Akryum/nodepack/commit/7d5d90b))
+
+## plugin-db-sequelize
+
+#### Features
+
+* **db:** use ctx addProp ([aa43fc0](https://github.com/Akryum/nodepack/commit/aa43fc0))
+
+
+
 # [0.8.2](https://github.com/Akryum/nodepack/compare/v0.8.1...v0.8.2) (2019-12-27)
 
 ## module
