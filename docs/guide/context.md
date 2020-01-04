@@ -99,12 +99,19 @@ In your project, you can create files in the `src/context` folder. They will be 
 ```js
 // src/context/github.js
 
-import { onCreate } from '@nodepack/app-context'
+import { onCreate, addProp } from '@nodepack/app-context'
 import Octokit from '@octokit/rest'
 
 onCreate (context => {
-  context.github = new Octokit(context.config.github)
+  addProp(context, 'github', () => new Octokit(context.config.github))
 })
+```
+
+Most of the time, you should use `addProp` to create a lazy property on the context to improve performance. It will call the init function only once ever only if the property is accessed. If you need a fresh value for each new context, use a simple assignment instead:
+
+```js
+// Only if we need a fresh value for each context
+context.github = new Octokit(context.config.github)
 ```
 
 Don't forget to create the related configuration too!
@@ -142,12 +149,12 @@ If you are using Typescript, you can also export by defaut an interface describi
 ```ts
 // src/context/github.ts
 
-import { onCreate } from '@nodepack/app-context'
+import { onCreate, addProp } from '@nodepack/app-context'
 import Octokit from '@octokit/rest'
 import Context from '@context'
 
 onCreate ((context: Context) => {
-  context.github = new Octokit(context.config.github)
+  addProp(context, 'github', () => new Octokit(context.config.github))
 })
 
 export default interface GitHubContext {
