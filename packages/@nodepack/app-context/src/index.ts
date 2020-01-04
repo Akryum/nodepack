@@ -31,13 +31,11 @@ export async function callHookWithPayload<T> (
 }
 
 export function addProp<TProperty = any> (ctx: any, propertyName: string, init: () => TProperty) {
-  let isInitialized = false
   let prop: TProperty
   Object.defineProperty(ctx, propertyName, {
     get () {
-      if (!isInitialized) {
+      if (!prop) {
         prop = init()
-        isInitialized = true
       }
       return prop
     },
