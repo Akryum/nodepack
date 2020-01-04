@@ -42,7 +42,7 @@
     "chalk": "^3.0.0",
     "cli-highlight": "^2.1.4",
     "cliui": "^6.0.0",
-    "consola": "^2.11.1",
+    "consola": "^2.11.3",
     "cosmiconfig": "^6.0.0",
     "deasync": "^0.1.19",
     "dotenv": "^8.2.0",

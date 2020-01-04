@@ -37,7 +37,7 @@
     "cliui": "^6.0.0",
     "cmd-shim": "^3.0.3",
     "commander": "^4.0.1",
-    "consola": "^2.11.1",
+    "consola": "^2.11.3",
     "download-git-repo": "^3.0.2",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",

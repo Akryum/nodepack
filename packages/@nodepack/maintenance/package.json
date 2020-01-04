@@ -32,7 +32,7 @@
     "@nodepack/hookable": "^0.8.0",
     "@nodepack/utils": "^0.8.2",
     "chalk": "^3.0.0",
-    "consola": "^2.11.1",
+    "consola": "^2.11.3",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.1"

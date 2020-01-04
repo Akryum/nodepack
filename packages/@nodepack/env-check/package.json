@@ -25,6 +25,6 @@
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
     "semver": "^7.1.1",
-    "systeminformation": "^4.16.0"
+    "systeminformation": "^4.16.1"
   }
 }

@@ -24,7 +24,7 @@
     "@nodepack/module": "^0.8.2",
     "case": "^1.6.2",
     "comment-json": "^2.3.1",
-    "fork-ts-checker-webpack-plugin": "^4.0.0-beta.4",
+    "fork-ts-checker-webpack-plugin": "^4.0.0-beta.5",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "ts-loader": "^6.2.1",

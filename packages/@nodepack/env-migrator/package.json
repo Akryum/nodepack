@@ -27,7 +27,7 @@
   "dependencies": {
     "@nodepack/module": "^0.8.2",
     "@nodepack/utils": "^0.8.2",
-    "consola": "^2.11.1",
+    "consola": "^2.11.3",
     "globby": "^10.0.1"
   },
   "devDependencies": {
