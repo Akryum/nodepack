@@ -41,7 +41,8 @@ export function addProp<TProperty = any> (ctx: any, propertyName: string, init: 
       }
       return prop
     },
-    set () {
+    set (value) {
+      prop = value
       return prop
     },
     enumerable: true,
