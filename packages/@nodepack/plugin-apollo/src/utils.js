@@ -82,3 +82,5 @@ exports.getCustomField = function (fields, id) {
     return null
   }
 }
+
+exports.ApolloError = require('apollo-server-express').ApolloError

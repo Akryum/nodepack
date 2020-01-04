@@ -1,6 +1,7 @@
 import { DocumentNode, GraphQLResolveInfo } from 'graphql'
 import { Config } from 'apollo-server-express'
 import ApolloContext from './context'
+
 export { default as ApolloContext, Schema } from './context'
 
 export interface ApolloConfig {
@@ -36,3 +37,5 @@ export function getCustomField (
   fields: CustomField[],
   id: string
 ): CustomField
+
+export { ApolloError } from 'apollo-server-express'
