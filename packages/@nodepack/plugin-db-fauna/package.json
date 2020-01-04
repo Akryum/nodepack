@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-db-fauna",
-  "version": "0.8.0",
+  "version": "0.8.3",
   "description": "Database Nodepack plugin using FaunaDB",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
