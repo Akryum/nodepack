@@ -1,3 +1,13 @@
+# [0.8.7](https://github.com/Akryum/nodepack/compare/v0.8.6...v0.8.7) (2020-01-12)
+
+## env-migrator
+
+#### Bug Fixes
+
+* **db-migrator:** context is null ([fbd8880](https://github.com/Akryum/nodepack/commit/fbd8880))
+
+
+
 # [0.8.6](https://github.com/Akryum/nodepack/compare/v0.8.5...v0.8.6) (2020-01-12)
 
 ## plugin-db-fauna
