@@ -1,3 +1,13 @@
+# [0.8.10](https://github.com/Akryum/nodepack/compare/v0.8.9...v0.8.10) (2020-01-12)
+
+## db-migrator
+
+#### Bug Fixes
+
+* **db-migrator:** don't crash on read/write migration records error ([9c44deb](https://github.com/Akryum/nodepack/commit/9c44deb))
+
+
+
 # [0.8.9](https://github.com/Akryum/nodepack/compare/v0.8.8...v0.8.9) (2020-01-12)
 
 ## cli
