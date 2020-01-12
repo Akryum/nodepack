@@ -1,7 +1,6 @@
-import { hook } from '@nodepack/app-context'
+import { hook, addProp } from '@nodepack/app-context'
 import { Client as FaunaClient } from 'faunadb'
 import { readMigrationRecords, writeMigrationRecords } from './migration'
-import { addProp } from '@nodepack/app-context/src'
 
 hook('create', async (ctx) => {
   if (ctx.config.fauna) {
