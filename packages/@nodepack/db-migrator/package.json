@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/db-migrator",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "description": "Database Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -29,6 +29,6 @@
     "consola": "^2.11.3"
   },
   "devDependencies": {
-    "@nodepack/service": "^0.8.9"
+    "@nodepack/service": "^0.8.10"
   }
 }

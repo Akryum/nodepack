@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/maintenance",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "description": "Maintenance utils for Nodepack apps",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nodepack/app-migrator": "^0.8.9",
-    "@nodepack/db-migrator": "^0.8.9",
+    "@nodepack/db-migrator": "^0.8.10",
     "@nodepack/env-migrator": "^0.8.9",
     "@nodepack/fragment": "^0.8.2",
     "@nodepack/hookable": "^0.8.0",
