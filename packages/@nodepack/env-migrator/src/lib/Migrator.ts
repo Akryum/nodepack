@@ -42,8 +42,12 @@ export class Migrator {
     this.migrationsFolder = migrationsFolder
   }
 
-  async prepareUp () {
+  async prepareUp ({
+    context,
+  }: UpOptions) {
     if (!this.upPrepared) {
+      this.context = context
+
       await this.setup()
 
       let files = await findMigrations(this.cwd, this.migrationsFolder)
@@ -61,9 +65,9 @@ export class Migrator {
   async up ({
     context,
   }: UpOptions) {
-    await this.prepareUp()
-
-    this.context = context
+    await this.prepareUp({
+      context,
+    })
 
     // Files
     let count = 0

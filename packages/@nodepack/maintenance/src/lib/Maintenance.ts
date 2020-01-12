@@ -197,7 +197,9 @@ export class Maintenance {
     const migrator = new EnvMigrator(cwd, {
       migrationsFolder: ENV_MIGRATION_FOLDER,
     })
-    const { files } = await migrator.prepareUp()
+    const { files } = await migrator.prepareUp({
+      context,
+    })
     if (files.length) {
       // Migrate
       await this.shouldCommitState(`[nodepack] before env migration`)
@@ -219,7 +221,9 @@ export class Maintenance {
     const migrator = new DbMigrator(cwd, {
       migrationsFolder: DB_MIGRATION_FOLDER,
     })
-    const { files } = await migrator.prepareUp()
+    const { files } = await migrator.prepareUp({
+      context,
+    })
     if (files.length) {
       // Migrate
       await this.shouldCommitState(`[nodepack] before db migration`)
