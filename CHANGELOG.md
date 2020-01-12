@@ -1,3 +1,13 @@
+# [0.8.8](https://github.com/Akryum/nodepack/compare/v0.8.7...v0.8.8) (2020-01-12)
+
+## env-migrator
+
+#### Bug Fixes
+
+* **env-migrator:** don't crash on read/write migration records error ([679c1a9](https://github.com/Akryum/nodepack/commit/679c1a9))
+
+
+
 # [0.8.7](https://github.com/Akryum/nodepack/compare/v0.8.6...v0.8.7) (2020-01-12)
 
 ## env-migrator
