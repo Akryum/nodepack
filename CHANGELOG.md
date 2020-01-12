@@ -1,3 +1,13 @@
+# [0.8.9](https://github.com/Akryum/nodepack/compare/v0.8.8...v0.8.9) (2020-01-12)
+
+## cli
+
+#### Features
+
+* improve error messages ([da818a9](https://github.com/Akryum/nodepack/commit/da818a9))
+
+
+
 # [0.8.8](https://github.com/Akryum/nodepack/compare/v0.8.7...v0.8.8) (2020-01-12)
 
 ## env-migrator
