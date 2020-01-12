@@ -1,3 +1,13 @@
+# [0.8.6](https://github.com/Akryum/nodepack/compare/v0.8.5...v0.8.6) (2020-01-12)
+
+## plugin-db-fauna
+
+#### Bug Fixes
+
+* **db-fauna:** runtime error ([ce2cef8](https://github.com/Akryum/nodepack/commit/ce2cef8))
+
+
+
 # [0.8.5](https://github.com/Akryum/nodepack/compare/v0.8.4...v0.8.5) (2020-01-04)
 
 ## plugin-apollo
