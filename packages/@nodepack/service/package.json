@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/service",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "Local service powering Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "@nodepack/app-migrator": "^0.8.7",
     "@nodepack/env-check": "^0.8.3",
     "@nodepack/fragment": "^0.8.2",
-    "@nodepack/maintenance": "^0.8.7",
+    "@nodepack/maintenance": "^0.8.8",
     "@nodepack/module": "^0.8.2",
     "@nodepack/plugins-resolution": "^0.8.0",
     "@nodepack/utils": "^0.8.3",

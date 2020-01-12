@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/cli",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "Nodepack CLI",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -29,7 +29,7 @@
   "dependencies": {
     "@nodepack/app-migrator": "^0.8.7",
     "@nodepack/env-check": "^0.8.3",
-    "@nodepack/maintenance": "^0.8.7",
+    "@nodepack/maintenance": "^0.8.8",
     "@nodepack/module": "^0.8.2",
     "@nodepack/plugins-resolution": "^0.8.0",
     "@nodepack/utils": "^0.8.3",
