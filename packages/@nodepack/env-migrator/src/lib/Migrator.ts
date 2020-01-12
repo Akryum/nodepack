@@ -114,17 +114,26 @@ export class Migrator {
    * @private
    */
   async readMigrationRecords () {
-    const data = await readConfigFile(this.cwd, FILE_ENV_MIGRATIONS_RECORDS)
-    this.fileMigrationRecords = data.files
+    try {
+      const data = await readConfigFile(this.cwd, FILE_ENV_MIGRATIONS_RECORDS)
+      this.fileMigrationRecords = data.files
+    } catch (e) {
+      consola.error('Could not read migration records. Error:', e.stack)
+      this.fileMigrationRecords = []
+    }
   }
 
   /**
    * @private
    */
   async writeMigrationRecords () {
-    await writeConfigFile(this.cwd, FILE_ENV_MIGRATIONS_RECORDS, {
-      files: this.fileMigrationRecords,
-      plugins: [],
-    })
+    try {
+      await writeConfigFile(this.cwd, FILE_ENV_MIGRATIONS_RECORDS, {
+        files: this.fileMigrationRecords,
+        plugins: [],
+      })
+    } catch (e) {
+      consola.error('Could not write migration records. Error:', e.stack)
+    }
   }
 }
