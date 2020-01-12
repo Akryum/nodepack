@@ -152,7 +152,7 @@ module.exports = (api, options) => {
         child.kill('SIGINT')
         return true
       } catch (e) {
-        consola.error(`Couldn't terminate process ${child.pid}: ${e}`)
+        consola.error(`Couldn't terminate process ${child.pid}:`, e.stack || e)
       }
     }
 

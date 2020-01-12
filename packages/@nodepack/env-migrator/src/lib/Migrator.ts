@@ -83,7 +83,7 @@ export class Migrator {
           })
           count++
         } catch (e) {
-          consola.error(`Migration failed for ${module.file}\n${e.stack || e.message}`)
+          consola.error(`Migration failed for ${module.file}:`, e.stack || e)
           await this.writeMigrationRecords()
           process.exit(1)
         }
@@ -118,7 +118,7 @@ export class Migrator {
       const data = await readConfigFile(this.cwd, FILE_ENV_MIGRATIONS_RECORDS)
       this.fileMigrationRecords = data.files
     } catch (e) {
-      consola.error('Could not read migration records. Error:', e.stack)
+      consola.error('Could not read migration records. Error:', e.stack || e)
       this.fileMigrationRecords = []
     }
   }
@@ -133,7 +133,7 @@ export class Migrator {
         plugins: [],
       })
     } catch (e) {
-      consola.error('Could not write migration records. Error:', e.stack)
+      consola.error('Could not write migration records. Error:', e.stack || e)
     }
   }
 }

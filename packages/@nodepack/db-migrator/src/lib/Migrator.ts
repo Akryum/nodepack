@@ -25,7 +25,7 @@ export class Migrator extends EnvMigrator {
       const data = await this.context.readDbMigrationRecords()
       this.fileMigrationRecords = data.files
     } catch (e) {
-      consola.error('Could not read migration records. Error:', e.stack)
+      consola.error('Could not read migration records. Error:', e.stack || e)
       this.fileMigrationRecords = []
     }
   }
@@ -43,7 +43,7 @@ export class Migrator extends EnvMigrator {
         plugins: [],
       })
     } catch (e) {
-      consola.error('Could not write migration records. Error:', e.stack)
+      consola.error('Could not write migration records. Error:', e.stack || e)
     }
   }
 }
