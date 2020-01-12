@@ -1,4 +1,5 @@
 import { Migrator as EnvMigrator } from '@nodepack/env-migrator'
+import consola from 'consola'
 
 export interface FileMigrationRecord {
   file: string
@@ -17,23 +18,32 @@ export class Migrator extends EnvMigrator {
    * @private
    */
   async readMigrationRecords () {
-    if (!this.context.readDbMigrationRecords) {
-      throw new Error(`No 'readDbMigrationRecords' method provided by context`)
+    try {
+      if (!this.context.readDbMigrationRecords) {
+        throw new Error(`No 'readDbMigrationRecords' method provided by context`)
+      }
+      const data = await this.context.readDbMigrationRecords()
+      this.fileMigrationRecords = data.files
+    } catch (e) {
+      consola.error('Could not read migration records. Error:', e.stack)
+      this.fileMigrationRecords = []
     }
-    const data = await this.context.readDbMigrationRecords()
-    this.fileMigrationRecords = data.files
   }
 
   /**
    * @private
    */
   async writeMigrationRecords () {
-    if (!this.context.writeDbMigrationRecords) {
-      throw new Error(`No 'writeDbMigrationRecords' method provided by context`)
+    try {
+      if (!this.context.writeDbMigrationRecords) {
+        throw new Error(`No 'writeDbMigrationRecords' method provided by context`)
+      }
+      await this.context.writeDbMigrationRecords({
+        files: this.fileMigrationRecords,
+        plugins: [],
+      })
+    } catch (e) {
+      consola.error('Could not write migration records. Error:', e.stack)
     }
-    await this.context.writeDbMigrationRecords({
-      files: this.fileMigrationRecords,
-      plugins: [],
-    })
   }
 }

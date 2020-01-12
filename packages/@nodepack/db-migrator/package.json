@@ -25,7 +25,8 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@nodepack/env-migrator": "^0.8.9"
+    "@nodepack/env-migrator": "^0.8.9",
+    "consola": "^2.11.3"
   },
   "devDependencies": {
     "@nodepack/service": "^0.8.9"
