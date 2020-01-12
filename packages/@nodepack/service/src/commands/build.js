@@ -81,7 +81,7 @@ module.exports = (api, options) => {
     return new Promise((resolve, reject) => {
       const onError = (err) => {
         if (args.watch) {
-          consola.error(err)
+          consola.error(`Build error:`, err.stack || err)
         } else {
           reject(err)
         }

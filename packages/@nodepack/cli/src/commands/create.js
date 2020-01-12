@@ -80,7 +80,7 @@ module.exports = (...args) => {
   // @ts-ignore
   return create(...args).catch(err => {
     stopSpinner(false) // do not persist
-    consola.error(err)
+    consola.error(`Could not create project`, err.stack || err)
     if (!process.env.NODEPACK_TEST) {
       process.exit(1)
     }

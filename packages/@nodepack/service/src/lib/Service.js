@@ -209,7 +209,7 @@ module.exports = class Service {
             }
           }
         } catch (e) {
-          consola.error(e)
+          consola.error(`Could not load env for ${filePath}`, e.stack || e)
         }
       }
     }

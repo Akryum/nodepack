@@ -163,7 +163,7 @@ exports.getPackageTaggedVersion = async function (id, tag = 'latest') {
     const res = await exports.getPackageMetadata(id)
     if (res) return res['dist-tags'][tag]
   } catch (e) {
-    consola.error(e)
+    consola.error(`Could not get package tagged version ${id}@${tag}`, e.stack || e)
   }
   return null
 }

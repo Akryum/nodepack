@@ -275,7 +275,7 @@ export class Maintenance {
       if (success) {
         consola.log(chalk.grey(`commit ${message}`), 'git')
       } else {
-        consola.error(e.message)
+        consola.error(`Could not commit state`, e.stack || e)
         // Commit failed confirmation
         const answers = await inquirer.prompt<{
           continue: boolean

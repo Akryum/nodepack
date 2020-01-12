@@ -17,7 +17,7 @@ module.exports = (...args) => {
   // @ts-ignore
   return upgrade(...args).catch(err => {
     stopSpinner(false) // do not persist
-    consola.error(err)
+    consola.error(`Could not upgrade plugin(s)`, err.stack || err)
     if (!process.env.NODEPACK_TEST) {
       process.exit(1)
     }

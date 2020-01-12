@@ -24,7 +24,7 @@ async function run () {
 
   service.run(command, args, rawArgv).catch(err => {
     const consola = require('consola')
-    consola.error(err)
+    consola.error(`Error while running command ${command}:`, err.stack || err)
     process.exit(1)
   })
 }

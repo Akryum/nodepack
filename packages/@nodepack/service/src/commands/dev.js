@@ -66,7 +66,7 @@ module.exports = (api, options) => {
       webpackConfig.watchOptions,
       debounce(async (err, stats) => {
         if (err) {
-          consola.error(err)
+          consola.error(`Build error:`, err.stack || err)
         } else {
           // Kill previous process
           await terminateApp()
@@ -106,7 +106,7 @@ module.exports = (api, options) => {
             })
 
             child.on('error', err => {
-              consola.error(err)
+              consola.error(`App error:`, err.stack || err)
               terminated = true
             })
 
