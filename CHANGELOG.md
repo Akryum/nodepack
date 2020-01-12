@@ -1,3 +1,13 @@
+# [0.8.11](https://github.com/Akryum/nodepack/compare/v0.8.10...v0.8.11) (2020-01-12)
+
+## db-migrator
+
+#### Bug Fixes
+
+* improved error messages ([95eeb6a](https://github.com/Akryum/nodepack/commit/95eeb6a))
+
+
+
 # [0.8.10](https://github.com/Akryum/nodepack/compare/v0.8.9...v0.8.10) (2020-01-12)
 
 ## db-migrator
