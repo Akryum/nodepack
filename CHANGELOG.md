@@ -1,3 +1,14 @@
+# [0.8.12](https://github.com/Akryum/nodepack/compare/v0.8.11...v0.8.12) (2020-03-01)
+
+## service
+
+#### Bug Fixes
+
+* **dev:** don't detach process on windows ([5a6daaa](https://github.com/Akryum/nodepack/commit/5a6daaa))
+* **service:** bad file descriptor error on Windows ([03f38dc](https://github.com/Akryum/nodepack/commit/03f38dc))
+
+
+
 # [0.8.11](https://github.com/Akryum/nodepack/compare/v0.8.10...v0.8.11) (2020-01-12)
 
 ## db-migrator
