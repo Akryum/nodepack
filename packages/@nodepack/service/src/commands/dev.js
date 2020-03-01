@@ -1,4 +1,5 @@
 const commonCommandOptions = require('../util/commonCommandOptions')
+const os = require('os')
 
 /** @type {import('../../types/ServicePlugin').ServicePlugin} */
 module.exports = (api, options) => {
@@ -95,14 +96,14 @@ module.exports = (api, options) => {
             const file = api.resolve(path.join(webpackConfig.output.path, 'app.js'))
 
             // Spawn child process
-            const currentChild = child = execa('node', [
+            const currentChild = child = execa(process.argv0, [
               ...(args.dbg ? [`--inspect-brk=${args.dbg}`] : []),
               file,
             ], {
               stdio: [process.stdin, process.stdout, process.stderr],
               cwd: api.getCwd(),
               env: moreEnv,
-              detached: true,
+              detached: os.platform() !== 'win32',
             })
 
             child.on('error', err => {
