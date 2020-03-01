@@ -1651,6 +1651,28 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
+"@nodepack/app-config@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@nodepack/app-config/-/app-config-0.7.0.tgz#bec35c226428929a0e70f9b4aa2f802274e0e4c7"
+  integrity sha512-I1z0xof85BdSPbQpKCrw+TXchplC41tCNP8NP9REeWNfE3k6yOpFu2UX+fDpe0KLX80mjtDeHMuSRsdECHtDTQ==
+  dependencies:
+    "@nodepack/fragment" "^0.7.0"
+
+"@nodepack/app-context@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@nodepack/app-context/-/app-context-0.7.0.tgz#e373ea2e52516186c42cfaa94bebdb156dc4fe6e"
+  integrity sha512-R9NUnn2EyfCwrCmEUg2dYrUCxCsiVuIxmL3YMvsUPN+0axVB+h6h8rofTLwBlnmvQPtNuxaDA2qmSEtfghx/FA==
+  dependencies:
+    "@nodepack/app-config" "^0.7.0"
+    "@nodepack/hookable" "^0.7.0"
+
+"@nodepack/app@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@nodepack/app/-/app-0.7.0.tgz#6593e55bf2ae541139d918b3951df1efdc860159"
+  integrity sha512-c1/4bkEoSKyQSQtAbM7ExKQ09pnLh1Dt0b7EsDSa2EXgi6Uc67/tBBNOi636DxDSlVAL7925rwajFlCuYdiWHA==
+  dependencies:
+    "@nodepack/app-context" "^0.7.0"
+
 "@nodepack/conventional-changelog@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@nodepack/conventional-changelog/-/conventional-changelog-0.1.0.tgz#1cc7df099c19fee8e06909f965d8b7f103d98644"
@@ -1659,6 +1681,26 @@
     compare-func "^1.3.2"
     execa "^0.10.0"
     q "^1.5.1"
+
+"@nodepack/fragment@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@nodepack/fragment/-/fragment-0.7.0.tgz#671f09fd1d04f5f55df798f05cc7c9a143af69a7"
+  integrity sha512-9P8dYNMXBI3u0xxGTI2QH7WtsRgvg5KPu8bZPPvg8+NsoWKtUMmPRTrE4EhKNtgr+giY5f7Nxi6suV3YInCKbA==
+  dependencies:
+    "@nodepack/module" "^0.7.0"
+    fs-extra "^8.1.0"
+
+"@nodepack/hookable@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@nodepack/hookable/-/hookable-0.7.0.tgz#e2f2faf41bfb3f5c48d6f626f126d2f871e0035c"
+  integrity sha512-tS0zYr6TPLFB4cYeKcuilnO7RYxRHibdSXxOSS0nbPJ8rsNXTno4hkuJ4qFOLks70Ly82aeCIlr+EqN2btqD2A==
+
+"@nodepack/module@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@nodepack/module/-/module-0.7.0.tgz#c0d76523d9c10d7b0a0b1fd2f002357abafffd62"
+  integrity sha512-Yoian5qm8j7TwlSuInzvCGzksr2CiNMWO0U6Lmm8XkqkaWR0uQR8trnkcmmfsQB4G3MVO6q/bBHmHMW5KUzljw==
+  dependencies:
+    semver "^6.3.0"
 
 "@nuxt/friendly-errors-webpack-plugin@^2.5.0":
   version "2.5.0"
