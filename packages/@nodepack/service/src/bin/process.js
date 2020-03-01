@@ -6,7 +6,7 @@ function start () {
     child.kill()
   }
 
-  child = execa('node', [
+  child = execa(process.argv0, [
     require.resolve('./run'),
     ...process.argv.slice(2),
   ], {
@@ -25,7 +25,7 @@ function start () {
   })
 
   child.on('error', (error) => {
-    console.log(error)
+    console.error('Nodepack process error:', error)
   })
 
   child.on('close', (code, signal) => {
@@ -34,6 +34,9 @@ function start () {
       process.env._RESTARTED = true
       start()
     } else {
+      if (code !== 0) {
+        console.error(`Nodepack process exited with code ${code}`)
+      }
       process.exitCode = code
     }
   })
