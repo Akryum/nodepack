@@ -61,7 +61,6 @@ module.exports = (api, options) => {
       config
         .plugin('fork-ts-checker')
         .use(require('fork-ts-checker-webpack-plugin'), [{
-          tslint: fs.existsSync(api.resolve('tslint.json')),
           formatter: 'codeframe',
           // https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse
           checkSyntacticErrors: useThreads,
