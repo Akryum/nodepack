@@ -4,10 +4,10 @@ import { ExecutionParams } from 'subscriptions-transport-ws'
 import { IResolvers, PubSubEngine, ApolloServer } from 'apollo-server-express'
 
 export interface Schema {
-  typeDefs: DocumentNode
+  typeDefs: DocumentNode[]
   resolvers: IResolvers
-  internalTypeDefs: DocumentNode
-  mergeTypeDefs: DocumentNode
+  internalTypeDefs: DocumentNode[]
+  mergeTypeDefs: DocumentNode[]
   mergeResolvers: IResolvers
   schemaDirectives: { [key: string]: any }
 }
