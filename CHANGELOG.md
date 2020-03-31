@@ -1,3 +1,19 @@
+# [0.8.13](https://github.com/Akryum/nodepack/compare/v0.8.12...v0.8.13) (2020-03-31)
+
+## plugin-apollo
+
+#### Bug Fixes
+
+* **apollo:** context schema type ([a84b0f6](https://github.com/Akryum/nodepack/commit/a84b0f6))
+
+## plugin-typescript
+
+#### Bug Fixes
+
+* **ts:** drop tslint support ([7d4f172](https://github.com/Akryum/nodepack/commit/7d4f172))
+
+
+
 # [0.8.12](https://github.com/Akryum/nodepack/compare/v0.8.11...v0.8.12) (2020-03-01)
 
 ## service
