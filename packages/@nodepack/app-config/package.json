@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app-config",
-  "version": "0.8.2",
+  "version": "0.8.14",
   "description": "Configurations of a Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -28,6 +28,6 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@nodepack/fragment": "^0.8.2"
+    "@nodepack/fragment": "^0.8.14"
   }
 }

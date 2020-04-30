@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app-migrator",
-  "version": "0.8.12",
+  "version": "0.8.14",
   "description": "App Code Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -44,6 +44,6 @@
     "yaml-front-matter": "^4.1.0"
   },
   "devDependencies": {
-    "@nodepack/service": "^0.8.12"
+    "@nodepack/service": "^0.8.14"
   }
 }

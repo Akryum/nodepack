@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/service",
-  "version": "0.8.12",
+  "version": "0.8.14",
   "description": "Local service powering Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -27,11 +27,11 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/app-context": "^0.8.4",
-    "@nodepack/app-migrator": "^0.8.12",
+    "@nodepack/app-context": "^0.8.14",
+    "@nodepack/app-migrator": "^0.8.14",
     "@nodepack/env-check": "^0.8.3",
-    "@nodepack/fragment": "^0.8.2",
-    "@nodepack/maintenance": "^0.8.11",
+    "@nodepack/fragment": "^0.8.14",
+    "@nodepack/maintenance": "^0.8.14",
     "@nodepack/module": "^0.8.2",
     "@nodepack/plugins-resolution": "^0.8.0",
     "@nodepack/utils": "^0.8.9",
