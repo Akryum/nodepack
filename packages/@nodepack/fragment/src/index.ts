@@ -8,7 +8,12 @@ function getOutputConfig (cwd: string): any {
 }
 
 export function loadFragment<T = any> (file: string, cwd: string = process.cwd()): T {
-  const outputDir = process.env.NODEPACK_DIRNAME || getOutputConfig(cwd) || process.cwd()
-  const moduleFile = path.join(outputDir, file)
-  return loadModule(moduleFile, outputDir)
+  try {
+    const outputDir = process.env.NODEPACK_DIRNAME || getOutputConfig(cwd) || process.cwd()
+    const moduleFile = path.join(outputDir, file)
+    return loadModule(moduleFile, outputDir)
+  } catch (e) {
+    // Not in a Nodepack project
+    return null
+  }
 }
