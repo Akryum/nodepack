@@ -1,3 +1,13 @@
+# [0.8.14](https://github.com/Akryum/nodepack/compare/v0.8.13...v0.8.14) (2020-04-30)
+
+## fragment
+
+#### Bug Fixes
+
+* **app-config:** don't crash outside of nodepack project ([d4bee15](https://github.com/Akryum/nodepack/commit/d4bee15))
+
+
+
 # [0.8.13](https://github.com/Akryum/nodepack/compare/v0.8.12...v0.8.13) (2020-03-31)
 
 ## plugin-apollo
