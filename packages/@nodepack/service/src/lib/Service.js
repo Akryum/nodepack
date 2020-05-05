@@ -52,6 +52,7 @@ const { defaultOptions } = require('./options')
 const NO_MAINTENANCE_COMMANDS = [
   'help',
   'build',
+  'inspect',
 ]
 
 module.exports = class Service {
