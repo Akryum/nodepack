@@ -5,7 +5,7 @@
     "packages/test/*"
   ],
   "scripts": {
-    "dev": "lerna run dev --stream --scope '@nodepack/*'",
+    "dev": "lerna run dev --stream --scope '@nodepack/*' --no-sort --concurrency 99",
     "lint": "yarn run test:lint --fix",
     "build": "lerna run build --scope '@nodepack/*'",
     "clean": "rimraf packages/test/*",
