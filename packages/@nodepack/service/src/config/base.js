@@ -213,6 +213,7 @@ module.exports = (api, options) => {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all',
+          reuseExistingChunk: true,
         },
       },
     })
