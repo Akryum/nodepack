@@ -13,7 +13,7 @@ export function loadFragment<T = any> (file: string, cwd: string = process.cwd()
     const moduleFile = path.join(outputDir, file)
     return loadModule(moduleFile, outputDir)
   } catch (e) {
-    // Not in a Nodepack project
+    console.log(`Error while loading fragment ${file}`, e)
     return null
   }
 }
