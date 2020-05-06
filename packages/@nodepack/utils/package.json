@@ -23,11 +23,11 @@
   "dependencies": {
     "@hapi/joi": "^15.1.0",
     "@nodepack/module": "^0.8.2",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "consola": "^2.11.3",
     "execa": "^4.0.0",
     "find-up": "^4.1.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
     "inquirer": "^7.1.0",
     "launch-editor": "^2.2.1",
     "lodash.clonedeep": "^4.5.0",

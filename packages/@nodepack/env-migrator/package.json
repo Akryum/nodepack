@@ -28,7 +28,7 @@
     "@nodepack/module": "^0.8.2",
     "@nodepack/utils": "^0.8.15",
     "consola": "^2.11.3",
-    "globby": "^10.0.1"
+    "globby": "^11.0.0"
   },
   "devDependencies": {
     "@nodepack/service": "^0.8.15"

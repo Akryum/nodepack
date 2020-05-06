@@ -21,9 +21,9 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "execa": "^4.0.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
     "semver": "^7.3.2",
     "systeminformation": "^4.24.1"
   }

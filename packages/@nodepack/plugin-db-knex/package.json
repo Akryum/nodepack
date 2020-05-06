@@ -25,7 +25,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "knex": "^0.20.6"
+    "knex": "^0.21.1"
   },
   "peerDependencies": {
     "@nodepack/app-context": "^0.7.0",

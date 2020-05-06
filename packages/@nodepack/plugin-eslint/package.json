@@ -28,8 +28,8 @@
     "@nodepack/module": "^0.8.2",
     "@nodepack/utils": "^0.8.15",
     "consola": "^2.11.3",
-    "eslint-loader": "^3.0.3",
-    "globby": "^10.0.1",
+    "eslint-loader": "^4.0.2",
+    "globby": "^11.0.0",
     "yorkie": "^2.0.0"
   },
   "peerDependencies": {

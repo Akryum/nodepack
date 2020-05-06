@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "@nodepack/module": "^0.8.2",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^9.0.0"
   }
 }
