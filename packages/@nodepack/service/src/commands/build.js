@@ -109,7 +109,7 @@ module.exports = (api, options) => {
           )
 
           // Include tree-shaken dependencies
-          if (options.generateStandalone) {
+          if (options.generateStandalone && !process.env.NODEPACK_MAINTENANCE_FRAGMENTS) {
             const standaloneDir = 'standalone'
             const workspaceRoot = await findWorkspaceRoot()
             const json = stats.toJson({
