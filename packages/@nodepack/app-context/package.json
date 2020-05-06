@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/app-context",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "description": "Context management for Nodepack app",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@nodepack/app-config": "^0.8.14",
+    "@nodepack/app-config": "^0.8.15",
     "@nodepack/hookable": "^0.8.0"
   }
 }

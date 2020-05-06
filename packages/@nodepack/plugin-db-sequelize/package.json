@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-db-sequelize",
-  "version": "0.8.3",
+  "version": "0.8.15",
   "description": "Database Nodepack plugin using Sequelize ORM",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
