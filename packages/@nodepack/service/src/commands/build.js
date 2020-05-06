@@ -131,9 +131,14 @@ module.exports = (api, options) => {
             const relativeDir = path.relative(workspaceRoot, targetDir)
             const promises = []
             for (const file of fileList) {
+              const sourceFile = path.resolve(workspaceRoot, file)
+              if (fs.statSync(sourceFile).isDirectory()) {
+                consola.warn(`Is directory: ${sourceFile}`)
+                continue
+              }
               const targetFile = path.join(targetDir, standaloneDir, file)
               fs.ensureDirSync(path.dirname(targetFile))
-              promises.push(fs.copyFile(path.resolve(workspaceRoot, file), targetFile))
+              promises.push(fs.copyFile(sourceFile, targetFile))
             }
             await Promise.all(promises)
 
