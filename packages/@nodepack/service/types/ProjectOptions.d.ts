@@ -15,8 +15,7 @@ export interface ProjectOptions {
   entries?: { [key: string]: string }
   /** Enable sourcemaps in production build (can slow down build) */
   productionSourceMap?: boolean
-  /** Webpack externals packages */
-  externals?: any
+  generateStandalone?: boolean
   /** Minify production builds */
   minify?: boolean
   /** Whitelist option for webpack-node-externals */

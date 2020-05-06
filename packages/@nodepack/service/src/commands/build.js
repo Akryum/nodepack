@@ -12,7 +12,6 @@ module.exports = (api, options) => {
     usage: 'nodepack-service build [entry]',
     options: {
       '--no-clean': 'do not delete the dist folder before building',
-      '--externals': `do not bundle the dependencies into the final built files`,
       '--minify': 'minify the built files',
       '--watch': 'watch source files and automatically re-build',
       '--silent': 'suppress information messages',
@@ -34,6 +33,8 @@ module.exports = (api, options) => {
     const chalk = require('chalk')
     const consola = require('consola')
     const compilerInstance = require('../util/compilerInstance')
+    const nodeFileTrace = require('@zeit/node-file-trace')
+    const findWorkspaceRoot = require('find-workspace-root').default
 
     process.env.NODEPACK_IS_BUILD = 'true'
 
@@ -59,10 +60,6 @@ module.exports = (api, options) => {
     const formatStats = require('../util/formatStats')
     const { updateConfig } = require('../util/updateConfig')
 
-    if (args.externals) {
-      options.externals = true
-    }
-
     if (args.minify) {
       options.minify = true
     }
@@ -87,7 +84,7 @@ module.exports = (api, options) => {
         }
       }
 
-      const callback = (err, stats) => {
+      const callback = async (err, stats) => {
         if (process.env.NODEPACK_RAW_STATS) {
           console.log(stats.toString({
             colors: true,
@@ -110,6 +107,41 @@ module.exports = (api, options) => {
             api.service.cwd,
             targetDir,
           )
+
+          // Include tree-shaken dependencies
+          if (options.generateStandalone) {
+            const standaloneDir = 'standalone'
+            const workspaceRoot = await findWorkspaceRoot()
+            const json = stats.toJson({
+              hash: false,
+              modules: false,
+              chunks: false,
+            })
+            let assets = json.assets
+              ? json.assets
+              : json.children.reduce((acc, child) => acc.concat(child.assets), [])
+            assets = assets.filter(a => /\.js$/.test(a.name))
+            const jsAssetFiles = assets.map(a => path.resolve(targetDir, a.name))
+            // @ts-ignore
+            const { fileList } = await nodeFileTrace(jsAssetFiles, {
+              base: workspaceRoot || process.cwd(),
+              ts: true,
+              mixedModules: true,
+            })
+            const relativeDir = path.relative(workspaceRoot, targetDir)
+            const promises = []
+            for (const file of fileList) {
+              const targetFile = path.join(targetDir, standaloneDir, file)
+              fs.ensureDirSync(path.dirname(targetFile))
+              promises.push(fs.copyFile(path.resolve(workspaceRoot, file), targetFile))
+            }
+            await Promise.all(promises)
+
+            // Write entry
+            await fs.writeFile(path.resolve(targetDir, standaloneDir, 'index.js'), `module.exports = require('./${path.join(relativeDir)}/app.js');`)
+
+            consola.success(chalk.blue(`Generated ${targetDirShort}/${standaloneDir} with ${fileList.length} tree-shaken dependencies!\nYou can now use the ${targetDirShort}/${standaloneDir} folder outside of your project. In that case, use index.js to run the application standalone-style!\n`))
+          }
 
           if (!args.silent) {
             consola.log(formatStats(stats, targetDirShort, api))

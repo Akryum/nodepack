@@ -256,13 +256,6 @@ module.exports = class Service {
       options = defaultsDeep(result.config, defaultOptions())
     }
 
-    // Dev overrides
-    if (process.env.NODE_ENV === 'development') {
-      if (!options.externals) {
-        options.externals = true
-      }
-    }
-
     return options
   }
 

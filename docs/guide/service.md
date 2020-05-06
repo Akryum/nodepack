@@ -129,7 +129,6 @@ Usage: nodepack-service build [entry]
 Options:
 
   --no-clean      do not delete the dist folder before building
-  --externals     do not bundle the dependencies into the final built files
   --minify        minify the built files
   --git [message] Force git commit with message before maintenance
   --no-git        Skip git commit before maintenance
@@ -142,12 +141,6 @@ Options:
 By default, `build` will bundle all the dependencies (except for `@nodepack/module`).
 
 This is benificial since the built files will only contain the used dependencies and the code will be smaller. It results in faster downloads from npm and makes your app also compatible with any serverless platform.
-
-You can disable this optimization with the corresponding flag:
-
-```bash
-nodepack build --externals
-```
 
 You can also enable minimization if its compatible with all your dependencies:
 

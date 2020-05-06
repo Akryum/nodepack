@@ -104,24 +104,6 @@ module.exports = (api, options) => {
       .add(api.resolve('node_modules'))
       .add(resolveLocal('node_modules'))
 
-    // Rules
-
-    config.module
-      .rule('js-assets')
-      .test(/\.(js|mjs|tsx?|node)$/)
-      .parser({ amd: false })
-      .use('asset-relocator')
-      .loader('@zeit/webpack-asset-relocator-loader')
-      .options({
-        // optional, base folder for asset emission (eg assets/name.ext)
-        outputAssetBase: 'assets',
-        // optional, a list of asset names already emitted or
-        // defined that should not be emitted
-        existingAssetNames: [],
-        wrapperCompatibility: true, // optional, default
-        escapeNonAnalyzableRequires: true, // optional, default
-      })
-
     // See https://github.com/graphql/graphql-js/issues/1272
     config.module
       .rule('mjs$')
@@ -134,57 +116,45 @@ module.exports = (api, options) => {
 
     // Module
     config.module
-      .set('exprContextCritical', options.externals)
+      .set('exprContextCritical', true)
       // Allow usage of native require (instead of webpack require)
       .set('noParse', /\/native-require.js$/)
 
     // External modules (default are modules in package.json deps)
-    if (options.externals === true) {
-      const nodeExternals = require('webpack-node-externals')
-      const findUp = require('find-up')
-      const externalsConfig = {
-        whitelist: options.nodeExternalsWhitelist || [
-          /\.(eot|woff|woff2|ttf|otf)$/,
-          /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
-          /\.(mp4|mp3|ogg|swf|webp)$/,
-          /\.(css|scss|sass|less|styl)$/,
-        ],
-      }
-      const externals = [
-        // Read from package.json
-        nodeExternals({
-          ...externalsConfig,
-          modulesFromFile: true,
-        }),
-      ]
-      let cwd = api.getCwd()
-      let folder
-      // Find all node_modules folders (to support monorepos)
-      do {
-        folder = findUp.sync('node_modules', {
-          cwd,
-          type: 'directory',
-        })
-        if (folder) {
-          externals.push(nodeExternals({
-            ...externalsConfig,
-            modulesDir: folder,
-          }))
-          cwd = path.resolve(folder, '../..')
-        }
-      } while (folder)
-      config.externals(externals)
-    } else {
-      let optionsExternals = options.externals || []
-      if (typeof optionsExternals === 'function') {
-        throw new Error('externals function is not supported')
-      }
-      if (!Array.isArray(optionsExternals)) {
-        optionsExternals = [optionsExternals]
-      }
-      const externals = require('../util/externals')(api, optionsExternals)
-      config.externals([externals.checkExternals])
+    const nodeExternals = require('webpack-node-externals')
+    const findUp = require('find-up')
+    const externalsConfig = {
+      whitelist: options.nodeExternalsWhitelist || [
+        /\.(eot|woff|woff2|ttf|otf)$/,
+        /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
+        /\.(mp4|mp3|ogg|swf|webp)$/,
+        /\.(css|scss|sass|less|styl)$/,
+      ],
     }
+    const externals = [
+      // Read from package.json
+      nodeExternals({
+        ...externalsConfig,
+        modulesFromFile: true,
+      }),
+    ]
+    let cwd = api.getCwd()
+    let folder
+    // Find all node_modules folders (to support monorepos)
+    do {
+      folder = findUp.sync('node_modules', {
+        cwd,
+        type: 'directory',
+      })
+      if (folder) {
+        externals.push(nodeExternals({
+          ...externalsConfig,
+          modulesDir: folder,
+        }))
+        cwd = path.resolve(folder, '../..')
+      }
+    } while (folder)
+    config.externals(externals)
 
     // Plugins
     const resolveClientEnv = require('../util/resolveClientEnv')
