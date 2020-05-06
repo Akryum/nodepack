@@ -1,3 +1,14 @@
+# [0.9.0](https://github.com/Akryum/nodepack/compare/v0.8.15...v0.9.0) (2020-05-06)
+
+## service
+
+#### Bug Fixes
+
+* **build:** don't generate standalone build during maintenance ([85e246a](https://github.com/Akryum/nodepack/commit/85e246a))
+* **build:** skip directory copy ([63913a7](https://github.com/Akryum/nodepack/commit/63913a7))
+
+
+
 # [0.8.15](https://github.com/Akryum/nodepack/compare/v0.8.14...v0.8.15) (2020-05-06)
 
 ## fragment
