@@ -13,7 +13,9 @@ export function loadFragment<T = any> (file: string, cwd: string = process.cwd()
     const moduleFile = path.join(outputDir, file)
     return loadModule(moduleFile, outputDir)
   } catch (e) {
-    console.log(`Error while loading fragment ${file}`, e)
+    if (!process.env.NODEPACK_SUPPRESS_FRAGMENT_ERROR) {
+      console.log(`Error while loading fragment ${file}`, e)
+    }
     return null
   }
 }
