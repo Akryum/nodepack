@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/test-utils",
-  "version": "0.8.15",
+  "version": "0.9.0",
   "description": "Test utils for nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/utils": "^0.8.15",
+    "@nodepack/utils": "^0.9.0",
     "execa": "^4.0.0",
     "fs-extra": "^9.0.0"
   }

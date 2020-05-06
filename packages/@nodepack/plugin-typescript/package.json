@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/plugin-typescript",
-  "version": "0.8.15",
+  "version": "0.9.0",
   "description": "Nodepack plugin for Typescript",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "test:lint": "eslint src"
   },
   "dependencies": {
-    "@nodepack/module": "^0.8.2",
+    "@nodepack/module": "^0.9.0",
     "case": "^1.6.3",
     "comment-json": "^3.0.2",
     "fork-ts-checker-webpack-plugin": "^4.1.3",

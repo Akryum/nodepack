@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/env-migrator",
-  "version": "0.8.15",
+  "version": "0.9.0",
   "description": "Env Migration system for Nodepack",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
@@ -25,12 +25,12 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@nodepack/module": "^0.8.2",
-    "@nodepack/utils": "^0.8.15",
+    "@nodepack/module": "^0.9.0",
+    "@nodepack/utils": "^0.9.0",
     "consola": "^2.11.3",
     "globby": "^11.0.0"
   },
   "devDependencies": {
-    "@nodepack/service": "^0.8.15"
+    "@nodepack/service": "^0.9.0"
   }
 }
