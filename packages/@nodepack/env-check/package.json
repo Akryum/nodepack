@@ -24,7 +24,7 @@
     "chalk": "^3.0.0",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
-    "semver": "^7.1.1",
-    "systeminformation": "^4.16.1"
+    "semver": "^7.3.2",
+    "systeminformation": "^4.24.1"
   }
 }

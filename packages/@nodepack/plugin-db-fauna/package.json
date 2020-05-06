@@ -25,7 +25,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "faunadb": "^2.10.2"
+    "faunadb": "^2.13.1"
   },
   "peerDependencies": {
     "@nodepack/app-context": "^0.7.0",

@@ -28,15 +28,15 @@
     "execa": "^4.0.0",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
-    "inquirer": "^7.0.1",
+    "inquirer": "^7.1.0",
     "launch-editor": "^2.2.1",
     "lodash.clonedeep": "^4.5.0",
     "lru-cache": "^5.1.1",
-    "open": "^7.0.0",
-    "ora": "^4.0.3",
-    "request": "^2.88.0",
+    "open": "^7.0.3",
+    "ora": "^4.0.4",
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
-    "semver": "^7.1.1",
+    "semver": "^7.3.2",
     "slash": "^3.0.0"
   }
 }

@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
-    "copyfiles": "^2.1.1",
+    "copyfiles": "^2.2.0",
     "execa": "^4.0.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.3"
   },
   "devDependencies": {
     "@nodepack/plugin-devtools": "^0.8.0"

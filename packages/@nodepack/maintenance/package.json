@@ -35,7 +35,7 @@
     "consola": "^2.11.3",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
-    "inquirer": "^7.0.1"
+    "inquirer": "^7.1.0"
   },
   "devDependencies": {
     "@types/inquirer": "^0.0.43"
