@@ -1,3 +1,20 @@
+# [0.8.15](https://github.com/Akryum/nodepack/compare/v0.8.14...v0.8.15) (2020-05-06)
+
+## fragment
+
+#### Bug Fixes
+
+* **fragment:** display error ([3486f65](https://github.com/Akryum/nodepack/commit/3486f65))
+
+## service
+
+#### Bug Fixes
+
+* **vendors chunk:** reuse existing chunks ([b2c54ad](https://github.com/Akryum/nodepack/commit/b2c54ad))
+* skip maintenance for inspect command ([9600743](https://github.com/Akryum/nodepack/commit/9600743))
+
+
+
 # [0.8.14](https://github.com/Akryum/nodepack/compare/v0.8.13...v0.8.14) (2020-04-30)
 
 ## fragment
