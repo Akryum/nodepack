@@ -1,6 +1,6 @@
 {
   "name": "@nodepack/fragment",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Fragment utils",
   "author": "Guillaume Chau <guillaume.b.chau@gmail.com>",
   "license": "MIT",
