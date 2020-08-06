@@ -46,6 +46,9 @@ hook('bootstrap', async (ctx) => {
     next()
   })
 
+  // Setup other middlewares
+  await callHook('expressMiddleware', ctx)
+
   // Routes
   await loadRoutes(ctx)
 
