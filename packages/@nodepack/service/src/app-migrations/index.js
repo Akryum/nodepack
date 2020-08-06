@@ -1,3 +1,7 @@
+const {
+  getPackageTaggedVersion,
+} = require('@nodepack/utils')
+
 /** @type {import('@nodepack/service').MigrationPlugin} */
 module.exports = api => {
   api.register({
@@ -14,8 +18,8 @@ module.exports = api => {
           'start': 'node ./dist/app.js',
         },
         dependencies: {
-          '@nodepack/app': '^0.7.0',
-          '@nodepack/app-context': '^0.7.0',
+          '@nodepack/app': await getPackageTaggedVersion('@nodepack/app').then(version => version && `^${version}`) || 'latest',
+          '@nodepack/app-context': await getPackageTaggedVersion('@nodepack/app').then(version => version && `^${version}`) || 'latest',
         },
       })
     },
