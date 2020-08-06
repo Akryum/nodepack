@@ -1,3 +1,19 @@
+# [0.9.1](https://github.com/Akryum/nodepack/compare/v0.9.0...v0.9.1) (2020-08-06)
+
+## fragment
+
+#### Features
+
+* **fragment:** add NODEPACK_SUPPRESS_FRAGMENT_ERROR env var ([5b2e4e1](https://github.com/Akryum/nodepack/commit/5b2e4e1))
+
+## service
+
+#### Bug Fixes
+
+* **create project:** get latest versions of packages ([d0e7328](https://github.com/Akryum/nodepack/commit/d0e7328))
+
+
+
 # [0.9.0](https://github.com/Akryum/nodepack/compare/v0.8.15...v0.9.0) (2020-05-06)
 
 ## service
