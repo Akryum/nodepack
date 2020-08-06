@@ -1,3 +1,13 @@
+# [0.9.2](https://github.com/Akryum/nodepack/compare/v0.9.1...v0.9.2) (2020-08-06)
+
+## plugin-express
+
+#### Features
+
+* **express:** add expressMiddleware hook call ([de93c31](https://github.com/Akryum/nodepack/commit/de93c31))
+
+
+
 # [0.9.1](https://github.com/Akryum/nodepack/compare/v0.9.0...v0.9.1) (2020-08-06)
 
 ## fragment
