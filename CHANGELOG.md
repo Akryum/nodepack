@@ -1,3 +1,13 @@
+# [0.9.3](https://github.com/Akryum/nodepack/compare/v0.9.2...v0.9.3) (2020-10-09)
+
+## plugin-express
+
+#### Bug Fixes
+
+* use secret for cookie parser ([0563649](https://github.com/Akryum/nodepack/commit/0563649))
+
+
+
 # [0.9.2](https://github.com/Akryum/nodepack/compare/v0.9.1...v0.9.2) (2020-08-06)
 
 ## plugin-express
