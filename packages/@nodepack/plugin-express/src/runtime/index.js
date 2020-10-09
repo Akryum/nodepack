@@ -31,7 +31,7 @@ hook('bootstrap', async (ctx) => {
   }
 
   // Cookies
-  app.use(cookieParser())
+  app.use(cookieParser(ctx.config.cookie.secret))
 
   // Setup user auth hook
   await callHook('expressAuth', ctx)
