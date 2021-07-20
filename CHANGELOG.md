@@ -1,3 +1,13 @@
+# [0.9.4](https://github.com/Akryum/nodepack/compare/v0.9.3...v0.9.4) (2021-07-20)
+
+## plugin-express
+
+#### Bug Fixes
+
+* **express:** handle no cookie config ([83148cc](https://github.com/Akryum/nodepack/commit/83148cc))
+
+
+
 # [0.9.3](https://github.com/Akryum/nodepack/compare/v0.9.2...v0.9.3) (2020-10-09)
 
 ## plugin-express
