@@ -3492,11 +3492,6 @@ async-retry@^1.2.1:
   dependencies:
     retry "0.12.0"
 
-async@0.9.x:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/async/-/async-0.9.2.tgz#aea74d5e61c1f899613bf64bda66d4c78f2fd17d"
-  integrity sha1-rqdNXmHB+JlhO/ZL2mbUx48v0X0=
-
 async@>=0.6.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/async/-/async-3.2.0.tgz#b3a2685c5ebb641d3de02d161002c60fc9f85720"
@@ -3508,6 +3503,11 @@ async@^2.6.2:
   integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
   dependencies:
     lodash "^4.17.14"
+
+async@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.3.tgz#ac53dafd3f4720ee9e8a160628f18ea91df196c9"
+  integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
 
 async@~0.2.6:
   version "0.2.10"
@@ -4302,6 +4302,14 @@ chalk@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.0.0.tgz#6e98081ed2d17faab615eb52ac66ec1fe6209e72"
   integrity sha512-N9oWFcegS0sFr9oh1oz2d7Npos6vNoWW9HvtCg5N1KRFpUhaAhvTv5Y58g880fZaEYSNm3qDz8SU1UrGvp+n7A==
+  dependencies:
+    ansi-styles "^4.1.0"
+    supports-color "^7.1.0"
+
+chalk@^4.0.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
+  integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
@@ -5980,11 +5988,11 @@ ejs@^2.0.0:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 ejs@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.2.tgz#a9986e6920a60f2a3229e87d4f0f3c073209874c"
-  integrity sha512-zFuywxrAWtX5Mk2KAuoJNkXXbfezpNA0v7i+YC971QORguPekpjpAgeOv99YWSdKXwj7JxI2QAWDeDkE8fWtXw==
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.7.tgz#c544d9c7f715783dd92f0bddcf73a59e6962d006"
+  integrity sha512-BIar7R6abbUxDA3bfXrO4DSgwo8I+fB5/1zgujl3HLLjwd6+9iOnrT+t3grn2qbk9vOgBubXOFwX2m9axoFaGw==
   dependencies:
-    jake "^10.6.1"
+    jake "^10.8.5"
 
 electron-to-chromium@^1.3.390:
   version "1.3.391"
@@ -8690,13 +8698,13 @@ iterall@^1.1.3, iterall@^1.2.1, iterall@^1.2.2:
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.3.0.tgz#afcb08492e2915cbd8a0884eb93a8c94d0d72fea"
   integrity sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
 
-jake@^10.6.1:
-  version "10.6.1"
-  resolved "https://registry.yarnpkg.com/jake/-/jake-10.6.1.tgz#c9c476cfd6e726ef600ee9bb2b880d5425ff8c79"
-  integrity sha512-pHUK3+V0BjOb1XSi95rbBksrMdIqLVC9bJqDnshVyleYsET3H0XAq+3VB2E3notcYvv4wRdRHn13p7vobG+wfQ==
+jake@^10.8.5:
+  version "10.8.5"
+  resolved "https://registry.yarnpkg.com/jake/-/jake-10.8.5.tgz#f2183d2c59382cb274226034543b9c03b8164c46"
+  integrity sha512-sVpxYeuAhWt0OTWITwT98oyV0GsXyMlXCF+3L1SuafBVUIr/uILGRB+NqwkzhgXKvoJpDIpQvqkUALgdmQsQxw==
   dependencies:
-    async "0.9.x"
-    chalk "^2.4.2"
+    async "^3.2.3"
+    chalk "^4.0.2"
     filelist "^1.0.1"
     minimatch "^3.0.4"
 
